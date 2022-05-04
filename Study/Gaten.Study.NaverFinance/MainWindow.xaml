@@ -1,0 +1,439 @@
+﻿<Window x:Class="Gaten.Study.NaverFinance.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gaten.Study.NaverFinance"
+        mc:Ignorable="d"
+        Title="네이버 금융" Height="700" Width="1050">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Background="#03C75A">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="40"/>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Source="pack://application:,,,/Resources/naver.png"/>
+                <Image Grid.Column="1" Source="pack://application:,,,/Resources/finance.png"/>
+                <TextBox Grid.Column="2" Margin="10,5,0,5" Background="White" FontSize="16">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox"  xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                            <Style.Resources>
+                                <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                    <VisualBrush.Visual>
+                                        <Label Content="종목명 지수명 펀드명 환율명 원자재명 입력" Foreground="Gray" Background="White" />
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Style.Resources>
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="Text" Value="{x:Null}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter Property="Background" Value="White" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+                <Image Grid.Column="3" Source="pack://application:,,,/Resources/search.png"/>
+                <Image Grid.Column="4" Source="pack://application:,,,/Resources/all-search.png" Margin="5,0"/>
+                <TextBlock Grid.Column="6" Text="루루렌" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                <Image Grid.Column="7" Source="pack://application:,,,/Resources/alarm.png"/>
+                <Image Grid.Column="8" Source="pack://application:,,,/Resources/mail.png"/>
+                <Image Grid.Column="9" Source="pack://application:,,,/Resources/list.png"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="6*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="1"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Text="금융 홈" FontWeight="Bold"/>
+                <TextBlock Grid.Column="1" Text="국내증시" FontWeight="Bold"/>
+                <TextBlock Grid.Column="2" Text="해외증시" FontWeight="Bold"/>
+                <TextBlock Grid.Column="3" Text="시장지표" FontWeight="Bold"/>
+                <TextBlock Grid.Column="4" Text="펀드" FontWeight="Bold"/>
+                <TextBlock Grid.Column="5" Text="리서치" FontWeight="Bold"/>
+                <TextBlock Grid.Column="6" Text="뉴스" FontWeight="Bold"/>
+                <TextBlock Grid.Column="7" Text="MY" FontWeight="Bold"/>
+                <Rectangle Grid.Row="1" Grid.ColumnSpan="9" Fill="DimGray"/>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" BorderBrush="#A9AFBC" BorderThickness="1">
+                    <Grid Background="#FAFBFC">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Orientation="Vertical">
+                            <Image Source="pack://application:,,,/Resources/latest-item.png"/>
+                            <Image Source="pack://application:,,,/Resources/mystock.png"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="20,12,0,12">
+                            <TextBlock Text="대창솔루션" HorizontalAlignment="Left" FontWeight="Bold"/>
+                            <TextBlock Text="757 ▲2.30%" HorizontalAlignment="Left" Foreground="#FA1508"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Left" Margin="20,12,0,12">
+                            <TextBlock Text="삼성전자" HorizontalAlignment="Left" FontWeight="Bold"/>
+                            <TextBlock Text="79,700 ▼1.12%" HorizontalAlignment="Left" Foreground="#1B73EB"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="3" Orientation="Vertical" HorizontalAlignment="Left" Margin="20,12,0,12">
+                            <TextBlock Text="진원생명과학" HorizontalAlignment="Left" FontWeight="Bold"/>
+                            <TextBlock Text="50,300 ▲1.00%" HorizontalAlignment="Left" Foreground="#FA1508"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4" Orientation="Vertical" HorizontalAlignment="Left" Margin="20,12,0,12">
+                            <TextBlock Text="NAVER" HorizontalAlignment="Left" FontWeight="Bold"/>
+                            <TextBlock Text="454,000 ▲1.11%" HorizontalAlignment="Left" Foreground="#FA1508"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="5" Orientation="Vertical" HorizontalAlignment="Left" Margin="20,12,0,12">
+                            <TextBlock Text="카카오게임즈" HorizontalAlignment="Left" FontWeight="Bold"/>
+                            <TextBlock Text="85,600 ▲5.42%" HorizontalAlignment="Left" Foreground="#FA1508"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="22"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="600"/>
+                            <RowDefinition Height="22"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="22"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="120"/>
+                                    <RowDefinition Height="22"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="150"/>
+                                    <RowDefinition Height="22"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="150"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="주요뉴스" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold"/>
+                                    <TextBlock Grid.Column="1" Text="▷더보기" FontSize="11" TextAlignment="Right" Foreground="#777"/>
+                                </Grid>
+                                <StackPanel Grid.Row="1">
+                                    <StackPanel.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="FontSize" Value="15"/>
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                        </Style>
+                                    </StackPanel.Resources>
+                                    <TextBlock>[굿모닝 증시] 테이퍼링 멀었다고 하지만...부담...</TextBlock>
+                                    <TextBlock>[원자재시황] 국제유가, OPEC+증산 가능성에...</TextBlock>
+                                    <TextBlock>[외환브리핑] 美고용지표 개선에 强달러..환율, 1...</TextBlock>
+                                    <TextBlock>[유럽증시] 코로나19.인플레 우려에 일제 하락</TextBlock>
+                                    <TextBlock>好실적에도 주가..."시장가격에 先반영" [뉴욕마...</TextBlock>
+                                    <TextBlock>뉴욕증시, 혼조...낮 최고 기온 35도.곳곳에 소나...</TextBlock>
+                                </StackPanel>
+                                <Rectangle Grid.Row="2" Fill="#6980B8" Margin="10"/>
+
+                                <Grid Grid.Row="3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="TOP종목" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold"/>
+                                    <TextBlock Grid.Column="1" Text="▷더보기" FontSize="11" TextAlignment="Right" Foreground="#777"/>
+                                </Grid>
+                                <Grid Grid.Row="4">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Column="0" Content="거래상위"/>
+                                        <Button Grid.Column="1" Content="상한가"/>
+                                        <Button Grid.Column="2" Content="하한가"/>
+                                        <Button Grid.Column="3" Content="시가총액 상위"/>
+                                    </Grid>
+
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height="1*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Grid.Row="0" Grid.Column="0">옴니시스템</TextBlock>
+                                        <TextBlock Grid.Row="0" Grid.Column="1" Foreground="#FA1508">3,575</TextBlock>
+                                        <TextBlock Grid.Row="0" Grid.Column="2" Foreground="#FA1508">▲665</TextBlock>
+                                        <TextBlock Grid.Row="0" Grid.Column="3" Foreground="#FA1508">+22.85%</TextBlock>
+
+                                        <TextBlock Grid.Row="1" Grid.Column="0">에스씨디</TextBlock>
+                                        <TextBlock Grid.Row="1" Grid.Column="1" Foreground="#FA1508">3,010</TextBlock>
+                                        <TextBlock Grid.Row="1" Grid.Column="2" Foreground="#FA1508">▲465</TextBlock>
+                                        <TextBlock Grid.Row="1" Grid.Column="3" Foreground="#FA1508">+18.27%</TextBlock>
+
+                                        <TextBlock Grid.Row="2" Grid.Column="0">KODEX200선물인버스2X</TextBlock>
+                                        <TextBlock Grid.Row="2" Grid.Column="1" Foreground="#FA1508">1,895</TextBlock>
+                                        <TextBlock Grid.Row="2" Grid.Column="2" Foreground="#FA1508">▲25</TextBlock>
+                                        <TextBlock Grid.Row="2" Grid.Column="3" Foreground="#FA1508">+1.34%</TextBlock>
+
+                                        <TextBlock Grid.Row="3" Grid.Column="0">한신기계</TextBlock>
+                                        <TextBlock Grid.Row="3" Grid.Column="1" Foreground="#FA1508">4,190</TextBlock>
+                                        <TextBlock Grid.Row="3" Grid.Column="2" Foreground="#FA1508">▲245</TextBlock>
+                                        <TextBlock Grid.Row="3" Grid.Column="3" Foreground="#FA1508">+6.21%</TextBlock>
+
+                                        <TextBlock Grid.Row="4" Grid.Column="0">대영포장</TextBlock>
+                                        <TextBlock Grid.Row="4" Grid.Column="1" Foreground="#FA1508">3,485</TextBlock>
+                                        <TextBlock Grid.Row="4" Grid.Column="2" Foreground="#FA1508">▲115</TextBlock>
+                                        <TextBlock Grid.Row="4" Grid.Column="3" Foreground="#FA1508">+3.41%</TextBlock>
+
+                                        <TextBlock Grid.Row="5" Grid.Column="0">광명전기</TextBlock>
+                                        <TextBlock Grid.Row="5" Grid.Column="1" Foreground="#FA1508">3,995</TextBlock>
+                                        <TextBlock Grid.Row="5" Grid.Column="2" Foreground="#FA1508">▲215</TextBlock>
+                                        <TextBlock Grid.Row="5" Grid.Column="3" Foreground="#FA1508">+5.69%</TextBlock>
+                                    </Grid>
+                                </Grid>
+                                <Rectangle Grid.Row="5" Fill="#6980B8" Margin="10"/>
+
+                                <Grid Grid.Row="6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Grid.Column="0" Text="수익률 상위펀드" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold"/>
+                                        <TextBlock Grid.Column="1" Text="3개월수익률 순 | 2021.07.16기준" HorizontalAlignment="Left" FontSize="11" Foreground="#777"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="1" Text="▷더보기" FontSize="11" TextAlignment="Right" Foreground="#777"/>
+                                </Grid>
+                                <Grid Grid.Row="7">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Column="0" Content="국내펀드"/>
+                                        <Button Grid.Column="1" Content="해외펀드"/>
+                                        <Button Grid.Column="2" Content="브릭스"/>
+                                        <Button Grid.Column="3" Content="삼성그룹주"/>
+                                    </Grid>
+
+                                    <StackPanel Grid.Row="1">
+                                        <TextBlock HorizontalAlignment="Left">① 미래에셋TIGER미디어컨텐츠증권상장지수투자신탁(주식)</TextBlock>
+                                        <TextBlock HorizontalAlignment="Left">② 삼성KODEX운송증권상장지수투자신탁[주식]</TextBlock>
+                                        <TextBlock HorizontalAlignment="Left">③ NH-AmundiHANAROe커머스증권상장지수투자신탁[주식]</TextBlock>
+                                        <TextBlock HorizontalAlignment="Left">④ KBKBSTAR200중공업증권상장지수투자신탁(주식)</TextBlock>
+                                        <TextBlock HorizontalAlignment="Left">⑤ 미래에셋TIGER방송통신증권상장지수투자신탁(주식)</TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                            <Rectangle Grid.Column="1" Fill="#ECEDF1" Margin="10"/>
+
+                        </Grid>
+
+                        <Rectangle Grid.Row="1" Fill="#6980B8" Margin="10"/>
+
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="22"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="22"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="150"/>
+                                    <RowDefinition Height="22"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="150"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="환전 고시 환율" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold"/>
+                                    <TextBlock Grid.Column="1" Text="▷더보기" FontSize="11" TextAlignment="Right" Foreground="#777"/>
+                                </Grid>
+                                <Rectangle Grid.Row="2" Fill="#ECEDF1" Margin="10"/>
+
+                                <Grid Grid.Row="3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="유가" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold"/>
+                                    <TextBlock Grid.Column="1" Text="▷더보기" FontSize="11" TextAlignment="Right" Foreground="#777"/>
+                                </Grid>
+                            </Grid>
+
+                            <Rectangle Grid.Column="1" Fill="#ECEDF1" Margin="10"/>
+
+                            <Grid Grid.Column="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="150"/>
+                                    <RowDefinition Height="22"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="150"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="국제 시장 환율" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold"/>
+                                    <TextBlock Grid.Column="1" Text="▷더보기" FontSize="11" TextAlignment="Right" Foreground="#777"/>
+                                </Grid>
+                                <Rectangle Grid.Row="2" Fill="#ECEDF1" Margin="10"/>
+
+                                <Grid Grid.Row="3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="금 시세" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold"/>
+                                    <TextBlock Grid.Column="1" Text="▷더보기" FontSize="11" TextAlignment="Right" Foreground="#777"/>
+                                </Grid>
+                            </Grid>
+
+                            <Rectangle Grid.Column="3" Fill="#ECEDF1" Margin="10"/>
+
+                            <Grid Grid.Column="4">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="150"/>
+                                    <RowDefinition Height="22"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="150"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="금리" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold"/>
+                                    <TextBlock Grid.Column="1" Text="▷더보기" FontSize="11" TextAlignment="Right" Foreground="#777"/>
+                                </Grid>
+                                <Rectangle Grid.Row="2" Fill="#ECEDF1" Margin="10"/>
+
+                                <Grid Grid.Row="3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="원자재" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold"/>
+                                    <TextBlock Grid.Column="1" Text="▷더보기" FontSize="11" TextAlignment="Right" Foreground="#777"/>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                    <Rectangle Grid.Column="1" Fill="#ECEDF1" Margin="10"/>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+
+                <Rectangle Grid.Column="1" Fill="#ECEDF1" Margin="10"/>
+
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</Window>

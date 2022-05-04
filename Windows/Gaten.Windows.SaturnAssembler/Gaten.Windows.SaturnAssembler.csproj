@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Net\Gaten.Net.Extension\Gaten.Net.Extension.csproj" />
+    <ProjectReference Include="..\..\Net\Windows\Gaten.Net.Windows.PE\Gaten.Net.Windows.PE.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="SyntaxHighlighter">
+      <HintPath>SyntaxHighlighter.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

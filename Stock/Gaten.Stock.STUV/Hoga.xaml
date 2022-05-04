@@ -1,0 +1,305 @@
+﻿<UserControl x:Class="Gaten.Stock.STUV.Hoga"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Gaten.Stock.STUV"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="400">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock x:Name="CurrentPriceText" Grid.Column="0"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Text="15,600" FontSize="14" FontWeight="Bold" Foreground="Red"  />
+            <TextBlock x:Name="PreDayText" Grid.Column="1"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Text="▲1,200" FontSize="14" FontWeight="Bold" Foreground="Red"  />
+            <TextBlock x:Name="FlucRateText" Grid.Column="2"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Text="+8.75%" FontSize="14" FontWeight="Bold" Foreground="Red"  />
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock x:Name="TradingVolumeText" Grid.Column="0"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Text="1,753,345" FontSize="14" Foreground="Black"  />
+            <TextBlock x:Name="PreDayTradingVolumeText" Grid.Column="1"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Text="93.62%" FontSize="14" Foreground="Blue"  />
+            <TextBlock x:Name="TradingAmountText" Grid.Column="2"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Text="156,523,485,500" FontSize="14" Foreground="Black"  />
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="0" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <Rectangle Grid.Row="0" Fill="#E3EDFB"/>
+                <Rectangle Grid.Row="1" Fill="#E3EDFB"/>
+                <Rectangle Grid.Row="2" Fill="#E3EDFB"/>
+                <Rectangle Grid.Row="3" Fill="#E3EDFB"/>
+                <Rectangle Grid.Row="4" Fill="#E3EDFB"/>
+                <Rectangle Grid.Row="5" Fill="#E3EDFB"/>
+                <Rectangle Grid.Row="6" Fill="#E3EDFB"/>
+                <Rectangle Grid.Row="7" Fill="#E3EDFB"/>
+                <Rectangle Grid.Row="8" Fill="#E3EDFB"/>
+                <Rectangle Grid.Row="9" Fill="#E3EDFB"/>
+                <TextBlock x:Name="Sales10HogaText" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="16,050" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Sales09HogaText" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="16,000" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Sales08HogaText" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="15,950" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Sales07HogaText" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Text="15,900" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Sales06HogaText" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Text="15,850" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Sales05HogaText" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Text="15,800" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Sales04HogaText" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" Text="15,750" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Sales03HogaText" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center" Text="15,700" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Sales02HogaText" Grid.Row="8" HorizontalAlignment="Center" VerticalAlignment="Center" Text="15,650" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Sales01HogaText" Grid.Row="9" HorizontalAlignment="Center" VerticalAlignment="Center" Text="15,600" FontSize="14" Foreground="Red" />
+            </Grid>
+
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <Rectangle x:Name="Sales10VolumeBox" Grid.Row="0">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="Transparent" Offset="0.0"/>
+                            <GradientStop Color="Transparent" Offset="0.8"/>
+                            <GradientStop Color="#E3EDFB" Offset="0.8"/>
+                            <GradientStop Color="#E3EDFB" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <Rectangle x:Name="Sales09VolumeBox" Grid.Row="1" Fill="#E3EDFB"/>
+                <Rectangle x:Name="Sales08VolumeBox" Grid.Row="2" Fill="#E3EDFB"/>
+                <Rectangle x:Name="Sales07VolumeBox" Grid.Row="3" Fill="#E3EDFB"/>
+                <Rectangle x:Name="Sales06VolumeBox" Grid.Row="4" Fill="#E3EDFB"/>
+                <Rectangle x:Name="Sales05VolumeBox" Grid.Row="5" Fill="#E3EDFB"/>
+                <Rectangle x:Name="Sales04VolumeBox" Grid.Row="6" Fill="#E3EDFB"/>
+                <Rectangle x:Name="Sales03VolumeBox" Grid.Row="7" Fill="#E3EDFB"/>
+                <Rectangle x:Name="Sales02VolumeBox" Grid.Row="8" Fill="#E3EDFB"/>
+                <Rectangle x:Name="Sales01VolumeBox" Grid.Row="9" Fill="#E3EDFB"/>
+                <TextBlock x:Name="Sales10VolumeText" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Text="785" FontSize="14" Foreground="Black" />
+                <TextBlock x:Name="Sales09VolumeText" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Text="9,468" FontSize="14" Foreground="Black" />
+                <TextBlock x:Name="Sales08VolumeText" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Text="3,725" FontSize="14" Foreground="Black" />
+                <TextBlock x:Name="Sales07VolumeText" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center" Text="1,631" FontSize="14" Foreground="Black" />
+                <TextBlock x:Name="Sales06VolumeText" Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Center" Text="843" FontSize="14" Foreground="Black" />
+                <TextBlock x:Name="Sales05VolumeText" Grid.Row="5" HorizontalAlignment="Right" VerticalAlignment="Center" Text="162" FontSize="14" Foreground="Black" />
+                <TextBlock x:Name="Sales04VolumeText" Grid.Row="6" HorizontalAlignment="Right" VerticalAlignment="Center" Text="156" FontSize="14" Foreground="Black" />
+                <TextBlock x:Name="Sales03VolumeText" Grid.Row="7" HorizontalAlignment="Right" VerticalAlignment="Center" Text="3,684" FontSize="14" Foreground="Black" />
+                <TextBlock x:Name="Sales02VolumeText" Grid.Row="8" HorizontalAlignment="Right" VerticalAlignment="Center" Text="1,721" FontSize="14" Foreground="Black" />
+                <TextBlock x:Name="Sales01VolumeText" Grid.Row="9" HorizontalAlignment="Right" VerticalAlignment="Center" Text="105" FontSize="14" Foreground="Black" />
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <Rectangle Grid.Row="0" Fill="#FDE8E2"/>
+                <Rectangle Grid.Row="1" Fill="#FDE8E2"/>
+                <Rectangle Grid.Row="2" Fill="#FDE8E2"/>
+                <Rectangle Grid.Row="3" Fill="#FDE8E2"/>
+                <Rectangle Grid.Row="4" Fill="#FDE8E2"/>
+                <Rectangle Grid.Row="5" Fill="#FDE8E2"/>
+                <Rectangle Grid.Row="6" Fill="#FDE8E2"/>
+                <Rectangle Grid.Row="7" Fill="#FDE8E2"/>
+                <Rectangle Grid.Row="8" Fill="#FDE8E2"/>
+                <Rectangle Grid.Row="9" Fill="#FDE8E2"/>
+                <TextBlock x:Name="Purchase01HogaText" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="15,550" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Purchase02HogaText" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="15,500" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Purchase03HogaText" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="15,450" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Purchase04HogaText" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Text="15,400" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Purchase05HogaText" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Text="15,350" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Purchase06HogaText" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Text="15,300" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Purchase07HogaText" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" Text="15,250" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Purchase08HogaText" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center" Text="15,200" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Purchase09HogaText" Grid.Row="8" HorizontalAlignment="Center" VerticalAlignment="Center" Text="15,150" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Purchase10HogaText" Grid.Row="9" HorizontalAlignment="Center" VerticalAlignment="Center" Text="15,100" FontSize="14" Foreground="Red" />
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <Rectangle x:Name="Purchase01VolumeBox" Grid.Row="0" Fill="#FDE8E2"/>
+                <Rectangle x:Name="Purchase02VolumeBox" Grid.Row="1" Fill="#FDE8E2"/>
+                <Rectangle x:Name="Purchase03VolumeBox" Grid.Row="2" Fill="#FDE8E2"/>
+                <Rectangle x:Name="Purchase04VolumeBox" Grid.Row="3" Fill="#FDE8E2"/>
+                <Rectangle x:Name="Purchase05VolumeBox" Grid.Row="4" Fill="#FDE8E2"/>
+                <Rectangle x:Name="Purchase06VolumeBox" Grid.Row="5" Fill="#FDE8E2"/>
+                <Rectangle x:Name="Purchase07VolumeBox" Grid.Row="6" Fill="#FDE8E2"/>
+                <Rectangle x:Name="Purchase08VolumeBox" Grid.Row="7" Fill="#FDE8E2"/>
+                <Rectangle x:Name="Purchase09VolumeBox" Grid.Row="8" Fill="#FDE8E2"/>
+                <Rectangle x:Name="Purchase10VolumeBox" Grid.Row="9" Fill="#FDE8E2"/>
+                <TextBlock x:Name="Purchase01VolumeText" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Text="1,550" FontSize="14" Foreground="Black" />
+                <TextBlock x:Name="Purchase02VolumeText" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Text="941" FontSize="14" Foreground="Black" />
+                <TextBlock x:Name="Purchase03VolumeText" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Text="652" FontSize="14" Foreground="Black" />
+                <TextBlock x:Name="Purchase04VolumeText" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center" Text="321" FontSize="14" Foreground="Black" />
+                <TextBlock x:Name="Purchase05VolumeText" Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Center" Text="3,172" FontSize="14" Foreground="Black" />
+                <TextBlock x:Name="Purchase06VolumeText" Grid.Row="5" HorizontalAlignment="Right" VerticalAlignment="Center" Text="180" FontSize="14" Foreground="Black" />
+                <TextBlock x:Name="Purchase07VolumeText" Grid.Row="6" HorizontalAlignment="Right" VerticalAlignment="Center" Text="523" FontSize="14" Foreground="Black" />
+                <TextBlock x:Name="Purchase08VolumeText" Grid.Row="7" HorizontalAlignment="Right" VerticalAlignment="Center" Text="223" FontSize="14" Foreground="Black" />
+                <TextBlock x:Name="Purchase09VolumeText" Grid.Row="8" HorizontalAlignment="Right" VerticalAlignment="Center" Text="95" FontSize="14" Foreground="Black" />
+                <TextBlock x:Name="Purchase10VolumeText" Grid.Row="9" HorizontalAlignment="Right" VerticalAlignment="Center" Text="186" FontSize="14" Foreground="Black" />
+            </Grid>
+
+            <Grid Grid.Row="0" Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock x:Name="StartPriceText" Grid.Row="0" Text="14,600 시" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="Black"/>
+                <TextBlock x:Name="MaxPriceText" Grid.Row="1" Text="16,150 고" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="Red"/>
+                <TextBlock x:Name="MinPriceText" Grid.Row="2" Text="14,150 저" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="Blue"/>
+                <TextBlock x:Name="BasePriceText" Grid.Row="3" Text="14,400 기준" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="Black"/>
+                <TextBlock x:Name="UpperLimitPriceText" Grid.Row="4" Text="18,700 상" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="Red"/>
+                <TextBlock x:Name="LowerLimitPriceText" Grid.Row="5" Text="10,100 하" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="Blue"/>
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <Rectangle x:Name="Execution01VolumeBox" Grid.Row="0" Grid.ColumnSpan="2" Fill="#FFFFFF"/>
+                <Rectangle x:Name="Execution02VolumeBox" Grid.Row="1" Grid.ColumnSpan="2" Fill="#FFFFFF"/>
+                <Rectangle x:Name="Execution03VolumeBox" Grid.Row="2" Grid.ColumnSpan="2" Fill="#E6E6E6"/>
+                <Rectangle x:Name="Execution04VolumeBox" Grid.Row="3" Grid.ColumnSpan="2" Fill="#E6E6E6"/>
+                <Rectangle x:Name="Execution05VolumeBox" Grid.Row="4" Grid.ColumnSpan="2" Fill="#FFFFFF"/>
+                <Rectangle x:Name="Execution06VolumeBox" Grid.Row="5" Grid.ColumnSpan="2" Fill="#FFFFFF"/>
+                <Rectangle x:Name="Execution07VolumeBox" Grid.Row="6" Grid.ColumnSpan="2" Fill="#E6E6E6"/>
+                <Rectangle x:Name="Execution08VolumeBox" Grid.Row="7" Grid.ColumnSpan="2" Fill="#E6E6E6"/>
+                <Rectangle x:Name="Execution09VolumeBox" Grid.Row="8" Grid.ColumnSpan="2" Fill="#FFFFFF"/>
+                <Rectangle x:Name="Execution10VolumeBox" Grid.Row="9" Grid.ColumnSpan="2" Fill="#FFFFFF"/>
+
+                <TextBlock x:Name="Execution01PriceText" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Text="15,600" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Execution02PriceText" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Text="15,600" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Execution03PriceText" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Text="15,550" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Execution04PriceText" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Text="15,550" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Execution05PriceText" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Text="15,600" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Execution06PriceText" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Text="15,600" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Execution07PriceText" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Text="15,600" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Execution08PriceText" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Text="15,550" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Execution09PriceText" Grid.Row="8" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Text="15,550" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Execution10PriceText" Grid.Row="9" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Text="15,600" FontSize="14" Foreground="Red" />
+
+                <TextBlock x:Name="Execution01VolumeText" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Text="62" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Execution02VolumeText" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Text="17" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Execution03VolumeText" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Text="31" FontSize="14" Foreground="Blue" />
+                <TextBlock x:Name="Execution04VolumeText" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Text="8" FontSize="14" Foreground="Blue" />
+                <TextBlock x:Name="Execution05VolumeText" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Text="1,114" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Execution06VolumeText" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Text="150" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Execution07VolumeText" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Text="420" FontSize="14" Foreground="Red" />
+                <TextBlock x:Name="Execution08VolumeText" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Text="31" FontSize="14" Foreground="Blue" />
+                <TextBlock x:Name="Execution09VolumeText" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Text="1" FontSize="14" Foreground="Blue" />
+                <TextBlock x:Name="Execution10VolumeText" Grid.Row="9" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Text="1" FontSize="14" Foreground="Red" />
+            </Grid>
+
+
+        </Grid>
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock x:Name="SalesVolumeText" Grid.Column="0"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Text="17,236" FontSize="14" Foreground="Black"  />
+            <TextBlock x:Name="PurchaseVolumeText" Grid.Column="2"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Text="6,192" FontSize="14" Foreground="Black"  />
+        </Grid>
+    </Grid>
+</UserControl>

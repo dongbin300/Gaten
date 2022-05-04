@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Net\Gaten.Net.Extension\Gaten.Net.Extension.csproj" />
+    <ProjectReference Include="..\..\Net\Gaten.Net.Image\Gaten.Net.Image.csproj" />
+    <ProjectReference Include="..\..\Net\Windows\Gaten.Net.Windows.Forms\Gaten.Net.Windows.Forms.csproj" />
+  </ItemGroup>
+
+</Project>

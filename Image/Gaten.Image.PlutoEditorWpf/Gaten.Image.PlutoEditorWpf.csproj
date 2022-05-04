@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>pluto.ico</ApplicationIcon>
+    <Product>$(AssemblyName)</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="pluto.ico" />
+    <None Remove="Resources\exit-button.png" />
+    <None Remove="Resources\maximize-button.png" />
+    <None Remove="Resources\minimize-button.png" />
+    <None Remove="Resources\normal-button.png" />
+    <None Remove="Resources\pluto.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="pluto.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="pluto.ico" />
+    <Resource Include="Resources\maximize-button.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\exit-button.png" />
+    <Resource Include="Resources\minimize-button.png" />
+    <Resource Include="Resources\normal-button.png" />
+    <Resource Include="Resources\pluto.ico" />
+  </ItemGroup>
+
+</Project>

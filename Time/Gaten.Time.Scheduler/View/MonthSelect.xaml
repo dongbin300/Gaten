@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="Gaten.Time.Scheduler.View.MonthSelect"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Gaten.Time.Scheduler.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Style TargetType="Rectangle">
+            <Setter Property="Fill" Value="#eee"/>
+            <Setter Property="Stroke" Value="#ccc"/>
+            <Setter Property="StrokeThickness" Value="1"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontFamily" Value="고딕"/>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Rectangle x:Name="RECT01" Grid.Row="0" Grid.Column="0" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <Rectangle x:Name="RECT02" Grid.Row="0" Grid.Column="1" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <Rectangle x:Name="RECT03" Grid.Row="0" Grid.Column="2" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <Rectangle x:Name="RECT04" Grid.Row="0" Grid.Column="3" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <Rectangle x:Name="RECT05" Grid.Row="1" Grid.Column="0" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <Rectangle x:Name="RECT06" Grid.Row="1" Grid.Column="1" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <Rectangle x:Name="RECT07" Grid.Row="1" Grid.Column="2" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <Rectangle x:Name="RECT08" Grid.Row="1" Grid.Column="3" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <Rectangle x:Name="RECT09" Grid.Row="2" Grid.Column="0" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <Rectangle x:Name="RECT10" Grid.Row="2" Grid.Column="1" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <Rectangle x:Name="RECT11" Grid.Row="2" Grid.Column="2" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <Rectangle x:Name="RECT12" Grid.Row="2" Grid.Column="3" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <TextBlock x:Name="TEXT01" Text="1 월" Grid.Row="0" Grid.Column="0" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <TextBlock x:Name="TEXT02" Text="2 월" Grid.Row="0" Grid.Column="1" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <TextBlock x:Name="TEXT03" Text="3 월" Grid.Row="0" Grid.Column="2" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <TextBlock x:Name="TEXT04" Text="4 월" Grid.Row="0" Grid.Column="3" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <TextBlock x:Name="TEXT05" Text="5 월" Grid.Row="1" Grid.Column="0" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <TextBlock x:Name="TEXT06" Text="6 월" Grid.Row="1" Grid.Column="1" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <TextBlock x:Name="TEXT07" Text="7 월" Grid.Row="1" Grid.Column="2" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <TextBlock x:Name="TEXT08" Text="8 월" Grid.Row="1" Grid.Column="3" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <TextBlock x:Name="TEXT09" Text="9 월" Grid.Row="2" Grid.Column="0" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <TextBlock x:Name="TEXT10" Text="10 월" Grid.Row="2" Grid.Column="1" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <TextBlock x:Name="TEXT11" Text="11 월" Grid.Row="2" Grid.Column="2" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+        <TextBlock x:Name="TEXT12" Text="12 월" Grid.Row="2" Grid.Column="3" MouseLeftButtonDown="_MouseLeftButtonDown"/>
+    </Grid>
+</UserControl>

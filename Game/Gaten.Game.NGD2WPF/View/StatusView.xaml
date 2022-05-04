@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="Gaten.Game.NGD2WPF.View.StatusView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Gaten.Game.NGD2WPF.View"
+             mc:Ignorable="d" 
+              d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="White">
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="공격력 : "/>
+                <TextBlock x:Name="PowerText" Text="1" Foreground="#4FE953"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="공격속도 : "/>
+                <TextBlock x:Name="AttackSpeedText" Text="1" Foreground="#4FE953"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="크리율 : "/>
+                <TextBlock x:Name="CriticalRateText" Text="1" Foreground="#4FE953"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="크리뎀 : "/>
+                <TextBlock x:Name="CriticalDamageText" Text="1" Foreground="#4FE953"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="MP MAX : "/>
+                <TextBlock x:Name="MpMaxText" Text="1" Foreground="#4FE953"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="MP 회복 : "/>
+                <TextBlock x:Name="MpRegenText" Text="1" Foreground="#4FE953"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="근징드롭율 : "/>
+                <TextBlock x:Name="SpiritDropRateText" Text="1" Foreground="#4FE953"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="근징드롭량 : "/>
+                <TextBlock x:Name="SpiritDropText" Text="1" Foreground="#4FE953"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="스킬카드드롭율 : "/>
+                <TextBlock x:Name="SkillCardDropRateText" Text="1" Foreground="#4FE953"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="키드롭율 : "/>
+                <TextBlock x:Name="KeyDropRateText" Text="1" Foreground="#4FE953"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="무공드롭량 : "/>
+                <TextBlock x:Name="MugongDropText" Text="1" Foreground="#4FE953"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="염력필요량 : "/>
+                <TextBlock x:Name="PsychokinesisEnoughText" Text="1" Foreground="#4FE953"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
+

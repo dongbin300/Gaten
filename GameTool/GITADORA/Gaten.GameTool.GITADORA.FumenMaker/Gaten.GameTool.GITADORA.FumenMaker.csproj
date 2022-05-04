@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.39" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Net\GameRule\Gaten.Net.GameRule.GITADORA\Gaten.Net.GameRule.GITADORA.csproj" />
+    <ProjectReference Include="..\..\..\Net\Gaten.Net.Image\Gaten.Net.Image.csproj" />
+  </ItemGroup>
+
+</Project>

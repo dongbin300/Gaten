@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="Gaten.Time.Scheduler.View.YearSelect"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Gaten.Time.Scheduler.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+        <Style TargetType="Rectangle">
+            <Setter Property="Fill" Value="#eee"/>
+            <Setter Property="Stroke" Value="#ccc"/>
+            <Setter Property="StrokeThickness" Value="1"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontFamily" Value="고딕"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="up">
+            <Setter Property="Text" Value="▲"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontFamily" Value="고딕"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="down">
+            <Setter Property="Text" Value="▼"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontFamily" Value="고딕"/>
+        </Style>
+
+        <Style TargetType="Border">
+            <Setter Property="Background" Value="#ccc"/>
+            <Setter Property="CornerRadius" Value="40"/>
+            <Setter Property="Margin" Value="15"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="#fff"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="U1Text" Grid.Row="0" Grid.Column="0" Style="{StaticResource up}" MouseLeftButtonDown="UpDown_MouseLeftButtonDown"/>
+            <TextBlock x:Name="U2Text" Grid.Row="0" Grid.Column="1" Style="{StaticResource up}" MouseLeftButtonDown="UpDown_MouseLeftButtonDown"/>
+            <TextBlock x:Name="U3Text" Grid.Row="0" Grid.Column="2" Style="{StaticResource up}" MouseLeftButtonDown="UpDown_MouseLeftButtonDown"/>
+            <TextBlock x:Name="U4Text" Grid.Row="0" Grid.Column="3" Style="{StaticResource up}" MouseLeftButtonDown="UpDown_MouseLeftButtonDown"/>
+            <Border Grid.Row="1" Grid.Column="0">
+                <TextBlock x:Name="N1Text"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="1">
+                <TextBlock x:Name="N2Text"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="2">
+                <TextBlock x:Name="N3Text"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="3">
+                <TextBlock x:Name="N4Text"/>
+            </Border>
+            <TextBlock x:Name="D1Text" Grid.Row="2" Grid.Column="0" Style="{StaticResource down}" MouseLeftButtonDown="UpDown_MouseLeftButtonDown"/>
+            <TextBlock x:Name="D2Text" Grid.Row="2" Grid.Column="1" Style="{StaticResource down}" MouseLeftButtonDown="UpDown_MouseLeftButtonDown"/>
+            <TextBlock x:Name="D3Text" Grid.Row="2" Grid.Column="2" Style="{StaticResource down}" MouseLeftButtonDown="UpDown_MouseLeftButtonDown"/>
+            <TextBlock x:Name="D4Text" Grid.Row="2" Grid.Column="3" Style="{StaticResource down}" MouseLeftButtonDown="UpDown_MouseLeftButtonDown"/>
+        </Grid>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button x:Name="ok" Content="확인" Click="ok_Click"/>
+            <Button x:Name="cancel" Content="취소" Click="cancel_Click"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

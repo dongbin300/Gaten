@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\spirit.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Net\GameRule\Gaten.Net.GameRule.NGD2\Gaten.Net.GameRule.NGD2.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\spirit.png" />
+  </ItemGroup>
+
+</Project>

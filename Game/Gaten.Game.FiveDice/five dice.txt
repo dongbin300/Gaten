@@ -1,0 +1,20 @@
+1턴에 롤3
+
+*Score
+
+!Singles
+One - 주사위눈1의개수*1
+Two - 2의개수*2
+Three - 3의개수*3
+Four - 4의개수*4
+Five - 5의개수*5
+Six - 6의개수*6
+
+!Pairs
+Kind3
+Kind4
+FullHouse
+SmallStraight
+LargeStraight
+Yahtzee
+Chance

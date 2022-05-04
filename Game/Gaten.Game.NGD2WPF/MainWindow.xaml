@@ -1,0 +1,113 @@
+﻿<Window x:Class="Gaten.Game.NGD2WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gaten.Game.NGD2WPF"
+        mc:Ignorable="d"
+       Title="노가다게임2" Height="386" Width="1110"
+        Loaded="Window_Loaded"
+        Closed="Window_Closed"
+        ResizeMode="NoResize">
+    <Window.Resources>
+        <Style TargetType="Border" x:Key="ContentBorder">
+            <Setter Property="Margin" Value="7,5" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="250"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Rectangle x:Name="XpBar" Grid.Row="0" Grid.ColumnSpan="2" StrokeThickness="0">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#FFFDFF00" Offset="0.0"/>
+                    <GradientStop Color="#FFFDFF00" Offset="0.3" x:Name="XpBarBorder1"/>
+                    <!--<GradientStop Color="#FFFF7F27" Offset="0.3" x:Name="XpBarBorder3"/>
+                    <GradientStop Color="#FFFF7F27" Offset="0.33" x:Name="XpBarBorder4"/>-->
+                    <GradientStop Color="Transparent" Offset="0.3" x:Name="XpBarBorder2"/>
+                    <GradientStop Color="Transparent" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock x:Name="XpText" Text="1,764 / 17,287 (10.21%)"/>
+            <TextBlock x:Name="XpChangeText" Text="+39" Margin="5,0" Foreground="LimeGreen"/>
+        </StackPanel>
+
+        <ListBox x:Name="LogBox" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0"
+                 FontSize="12" Margin="5"
+                 ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+        </ListBox>
+
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Border x:Name="CharacterBorder" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource ContentBorder}"
+                    MouseLeftButtonDown="CharacterBorder_MouseLeftButtonDown">
+                <StackPanel Orientation="Vertical" >
+                    <TextBlock x:Name="NicknameText" Text="가튼"/>
+                    <TextBlock x:Name="LevelText" Text="레벨 234"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="MP "/>
+                        <Rectangle x:Name="MpBar" Grid.Column="1" StrokeThickness="0">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="#FF0090FF" Offset="0.0"/>
+                                    <GradientStop Color="#FF0090FF" Offset="0.3" x:Name="MpBarBorder1"/>
+                                    <GradientStop Color="Transparent" Offset="0.3" x:Name="MpBarBorder2"/>
+                                    <GradientStop Color="Transparent" Offset="1.0"/>
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock x:Name="MpText" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="12,347"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border x:Name="SpiritBorder" Grid.Row="0" Grid.Column="1" Style="{StaticResource ContentBorder}"
+                    MouseLeftButtonDown="SpiritBorder_MouseLeftButtonDown">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="30" Height="30">
+                        <Image.Source>
+                            <BitmapImage UriSource="pack://application:,,,/Gaten.Game.NGD2WPF;component/Resources/spirit.png"/>
+                        </Image.Source>
+                    </Image>
+                    <TextBlock x:Name="SpiritText" FontSize="14" Text="0" Width="80" TextAlignment="Right" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Border Style="{StaticResource ContentBorder}">
+                <ContentControl x:Name="CurrentControl" Margin="5"/>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

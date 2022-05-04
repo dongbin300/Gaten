@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\alarm.png" />
+    <None Remove="Resources\all-search.png" />
+    <None Remove="Resources\finance.png" />
+    <None Remove="Resources\latest-item.png" />
+    <None Remove="Resources\list.png" />
+    <None Remove="Resources\mail.png" />
+    <None Remove="Resources\mystock.png" />
+    <None Remove="Resources\naver.png" />
+    <None Remove="Resources\search.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\all-search.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\alarm.png" />
+    <Resource Include="Resources\finance.png" />
+    <Resource Include="Resources\latest-item.png" />
+    <Resource Include="Resources\list.png" />
+    <Resource Include="Resources\mail.png" />
+    <Resource Include="Resources\mystock.png" />
+    <Resource Include="Resources\naver.png" />
+    <Resource Include="Resources\search.png" />
+  </ItemGroup>
+
+</Project>
