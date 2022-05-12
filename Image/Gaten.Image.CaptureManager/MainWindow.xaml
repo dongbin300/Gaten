@@ -1,0 +1,46 @@
+﻿<Window x:Class="Gaten.Image.CaptureManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gaten.Image.CaptureManager"
+        mc:Ignorable="d"
+        Title="캡쳐 매니저" Height="230" Width="450" ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.ColumnSpan="2">
+            <TextBlock Text="저장위치" />
+            <Button x:Name="SaveDirectoryButton" Height="25" Click="SaveDirectoryButton_Click"/>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0">
+            <TextBlock Text="스크린 인덱스" Height="26" />
+            <TextBox x:Name="ScreenIndexText" Text="0" />
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox x:Name="PeriodicCheckBox" Content="주기적" IsChecked="True" />
+                <Button x:Name="PeriodCaptureButton" Content="캡쳐" Width="132" Height="20" Click="PeriodCaptureButton_Click" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="IntervalText" Text="60" Width="165" TextAlignment="Right" />
+                <TextBlock Text="초마다" />
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="0">
+            <TextBlock Text="캡쳐모드" Height="26" />
+            <StackPanel Orientation="Horizontal">
+                <RadioButton x:Name="ClipboardRadioButton" Content="클립보드" />
+                <RadioButton x:Name="FileRadioButton" Content="파일" IsChecked="True" />
+            </StackPanel>
+        </StackPanel>
+        <Button x:Name="CaptureButton" Grid.Row="2" Grid.Column="1" Content="캡쳐" Click="CaptureButton_Click" />
+    </Grid>
+</Window>

@@ -7,6 +7,8 @@ namespace Gaten.Net.Network
 {
     public class WebCrawler
     {
+        public static string Source;
+
         static readonly Encoding DefaultEncoding = Encoding.UTF8;
         static WebClient client;
         static HtmlDocument htmlDocument;
@@ -36,8 +38,8 @@ namespace Gaten.Net.Network
 
         public static void SetUrl(string url)
         {
-            string source = client.DownloadString(url);
-            htmlDocument.LoadHtml(source);
+            Source = client.DownloadString(url);
+            htmlDocument.LoadHtml(Source);
         }
 
         public static HtmlNode SelectNode(string xpath)

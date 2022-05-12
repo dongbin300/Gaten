@@ -143,6 +143,13 @@ namespace Gaten.Net.Windows
         [DllImport("User32.dll")]
         public static extern bool CloseClipboard();
 
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr GetOpenClipboardWindow();
+
+        // Process
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern int GetWindowThreadProcessId(IntPtr hWnd, out int processId);
+
         // 창 다루기
         [DllImport("User32.dll")]
         public static extern IntPtr GetForegroundWindow();

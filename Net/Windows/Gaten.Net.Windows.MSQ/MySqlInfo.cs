@@ -11,7 +11,7 @@
         {
             try
             {
-                var data = Data.IO.File.ReadToArray(Data.CommonResource.MySqlInfoFilePath);
+                var data = Data.CommonResource.MySqlInfoText;
                 ServerIp = data[0];
                 Port = data[1];
                 Id = data[2];

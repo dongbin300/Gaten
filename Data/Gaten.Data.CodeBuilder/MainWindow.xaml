@@ -1,0 +1,58 @@
+﻿<Window x:Class="Gaten.Data.CodeBuilder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gaten.Data.CodeBuilder"
+        mc:Ignorable="d"
+        Title="코드빌더" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Header="클래스" Grid.Column="0">
+            <StackPanel Orientation="Vertical">
+                <CheckBox x:Name="UsingCheckBox" Content="using" Checked="UsingCheckBox_Checked" Unchecked="UsingCheckBox_Unchecked"/>
+                <TextBlock Text="namespace.class"/>
+                <TextBox x:Name="NamespaceClassText" HorizontalAlignment="Left" Width="326" TextChanged="NamespaceClassText_TextChanged"/>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox x:Name="PublicCheckBox" Content="public"/>
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="DataTypeText" Width="90"/>
+                            <TextBox x:Name="PropertyNameText" Width="167" KeyDown="PropertyNameText_KeyDown"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox x:Name="GetCheckBox" Content="get" Unchecked="GetCheckBox_Unchecked"/>
+                            <CheckBox x:Name="SetCheckBox" Content="set" Checked="SetCheckBox_Checked"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="StringButton" Content="string" Click="StringButton_Click"/>
+                            <Button x:Name="IntButton" Content="int" Click="IntButton_Click"/>
+                            <Button x:Name="BoolButton" Content="bool" Click="BoolButton_Click"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="ListStringButton" Content="&lt;string&gt;" Click="ListStringButton_Click"/>
+                            <Button x:Name="ListIntButton" Content="&lt;int&gt;" Click="ListIntButton_Click"/>
+                            <Button x:Name="ListBoolButton" Content="&lt;bool&gt;" Click="ListBoolButton_Click"/>
+                        </StackPanel>
+                        <Button x:Name="AddButton" Content="추가" Height="36" Click="AddButton_Click"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <TextBox x:Name="OutText" IsReadOnly="True" VerticalContentAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+            <Button x:Name="ClipboardCopyButton" Grid.Row="1" Content="클립보드로 복사" Click="ClipboardCopyButton_Click"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -30,13 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.WeatherText = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.StockText = new System.Windows.Forms.Label();
             this.ColorDialog = new System.Windows.Forms.ColorDialog();
             this.ColorPickButton = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.BadukButtonChange = new System.Windows.Forms.Button();
             this.BadukButton12 = new System.Windows.Forms.Button();
             this.BadukButton11 = new System.Windows.Forms.Button();
@@ -53,47 +50,46 @@
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
             this.ClockTimer = new System.Windows.Forms.Timer(this.components);
             this.ClockText = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.DictListBox = new System.Windows.Forms.ListBox();
+            this.DictTextBox = new System.Windows.Forms.TextBox();
+            this.HardwarePriceDataGridView = new System.Windows.Forms.DataGridView();
+            this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.danawaColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cashColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.priceChangeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cashChangeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HardwareTextFileButton = new System.Windows.Forms.Button();
+            this.checkGroupBox2 = new Gaten.Windows.MintMonitor.CheckGroupBox();
+            this.checkGroupBox3 = new Gaten.Windows.MintMonitor.CheckGroupBox();
+            this.checkGroupBox4 = new Gaten.Windows.MintMonitor.CheckGroupBox();
+            this.checkGroupBox5 = new Gaten.Windows.MintMonitor.CheckGroupBox();
+            this.checkGroupBox6 = new Gaten.Windows.MintMonitor.CheckGroupBox();
+            this.DiskDriveText = new System.Windows.Forms.Label();
+            this.checkGroupBox7 = new Gaten.Windows.MintMonitor.CheckGroupBox();
+            this.UnseText = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.HardwarePriceDataGridView)).BeginInit();
+            this.checkGroupBox2.SuspendLayout();
+            this.checkGroupBox3.SuspendLayout();
+            this.checkGroupBox4.SuspendLayout();
+            this.checkGroupBox5.SuspendLayout();
+            this.checkGroupBox6.SuspendLayout();
+            this.checkGroupBox7.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.WeatherText);
-            this.groupBox1.Location = new System.Drawing.Point(15, 17);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(169, 100);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "날씨";
             // 
             // WeatherText
             // 
             this.WeatherText.AutoSize = true;
-            this.WeatherText.Location = new System.Drawing.Point(8, 27);
+            this.WeatherText.Location = new System.Drawing.Point(326, 724);
             this.WeatherText.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.WeatherText.Name = "WeatherText";
             this.WeatherText.Size = new System.Drawing.Size(69, 21);
             this.WeatherText.TabIndex = 0;
             this.WeatherText.Text = "weather";
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.StockText);
-            this.groupBox2.Location = new System.Drawing.Point(15, 124);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(280, 100);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "주식";
-            // 
             // StockText
             // 
             this.StockText.AutoSize = true;
-            this.StockText.Location = new System.Drawing.Point(8, 25);
+            this.StockText.Location = new System.Drawing.Point(7, 25);
             this.StockText.Name = "StockText";
             this.StockText.Size = new System.Drawing.Size(49, 21);
             this.StockText.TabIndex = 0;
@@ -117,28 +113,6 @@
             this.ColorPickButton.TabIndex = 2;
             this.ColorPickButton.UseVisualStyleBackColor = true;
             this.ColorPickButton.Click += new System.EventHandler(this.ColorPickButton_Click);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.BadukButtonChange);
-            this.groupBox3.Controls.Add(this.BadukButton12);
-            this.groupBox3.Controls.Add(this.BadukButton11);
-            this.groupBox3.Controls.Add(this.BadukButton10);
-            this.groupBox3.Controls.Add(this.BadukButton9);
-            this.groupBox3.Controls.Add(this.BadukButton8);
-            this.groupBox3.Controls.Add(this.BadukButton7);
-            this.groupBox3.Controls.Add(this.BadukButton6);
-            this.groupBox3.Controls.Add(this.BadukButton5);
-            this.groupBox3.Controls.Add(this.BadukButton4);
-            this.groupBox3.Controls.Add(this.BadukButton3);
-            this.groupBox3.Controls.Add(this.BadukButton2);
-            this.groupBox3.Controls.Add(this.BadukButton1);
-            this.groupBox3.Location = new System.Drawing.Point(15, 230);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(280, 425);
-            this.groupBox3.TabIndex = 3;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "바둑";
             // 
             // BadukButtonChange
             // 
@@ -285,22 +259,206 @@
             // ClockText
             // 
             this.ClockText.AutoSize = true;
-            this.ClockText.Location = new System.Drawing.Point(7, 660);
+            this.ClockText.Location = new System.Drawing.Point(15, 724);
             this.ClockText.Name = "ClockText";
             this.ClockText.Size = new System.Drawing.Size(48, 21);
             this.ClockText.TabIndex = 4;
             this.ClockText.Text = "clock";
             // 
+            // DictListBox
+            // 
+            this.DictListBox.FormattingEnabled = true;
+            this.DictListBox.ItemHeight = 21;
+            this.DictListBox.Location = new System.Drawing.Point(6, 64);
+            this.DictListBox.Name = "DictListBox";
+            this.DictListBox.Size = new System.Drawing.Size(455, 130);
+            this.DictListBox.TabIndex = 1;
+            // 
+            // DictTextBox
+            // 
+            this.DictTextBox.Location = new System.Drawing.Point(6, 29);
+            this.DictTextBox.Name = "DictTextBox";
+            this.DictTextBox.Size = new System.Drawing.Size(455, 29);
+            this.DictTextBox.TabIndex = 0;
+            this.DictTextBox.TextChanged += new System.EventHandler(this.DictTextBox_TextChanged);
+            this.DictTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DictTextBox_KeyDown);
+            // 
+            // HardwarePriceDataGridView
+            // 
+            this.HardwarePriceDataGridView.AllowUserToAddRows = false;
+            this.HardwarePriceDataGridView.AllowUserToDeleteRows = false;
+            this.HardwarePriceDataGridView.AllowUserToOrderColumns = true;
+            this.HardwarePriceDataGridView.AllowUserToResizeRows = false;
+            this.HardwarePriceDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.HardwarePriceDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nameColumn,
+            this.danawaColumn,
+            this.cashColumn,
+            this.priceChangeColumn,
+            this.cashChangeColumn});
+            this.HardwarePriceDataGridView.Location = new System.Drawing.Point(6, 28);
+            this.HardwarePriceDataGridView.Name = "HardwarePriceDataGridView";
+            this.HardwarePriceDataGridView.ReadOnly = true;
+            this.HardwarePriceDataGridView.RowHeadersVisible = false;
+            this.HardwarePriceDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.HardwarePriceDataGridView.RowTemplate.Height = 25;
+            this.HardwarePriceDataGridView.Size = new System.Drawing.Size(453, 345);
+            this.HardwarePriceDataGridView.TabIndex = 6;
+            this.HardwarePriceDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.HardwarePriceDataGridView_CellDoubleClick);
+            // 
+            // nameColumn
+            // 
+            this.nameColumn.HeaderText = "이름";
+            this.nameColumn.Name = "nameColumn";
+            this.nameColumn.ReadOnly = true;
+            this.nameColumn.Width = 150;
+            // 
+            // danawaColumn
+            // 
+            this.danawaColumn.HeaderText = "가격";
+            this.danawaColumn.Name = "danawaColumn";
+            this.danawaColumn.ReadOnly = true;
+            this.danawaColumn.Width = 70;
+            // 
+            // cashColumn
+            // 
+            this.cashColumn.HeaderText = "현금";
+            this.cashColumn.Name = "cashColumn";
+            this.cashColumn.ReadOnly = true;
+            this.cashColumn.Width = 70;
+            // 
+            // priceChangeColumn
+            // 
+            this.priceChangeColumn.HeaderText = "가변";
+            this.priceChangeColumn.Name = "priceChangeColumn";
+            this.priceChangeColumn.ReadOnly = true;
+            this.priceChangeColumn.Width = 80;
+            // 
+            // cashChangeColumn
+            // 
+            this.cashChangeColumn.HeaderText = "현변";
+            this.cashChangeColumn.Name = "cashChangeColumn";
+            this.cashChangeColumn.ReadOnly = true;
+            this.cashChangeColumn.Width = 80;
+            // 
+            // HardwareTextFileButton
+            // 
+            this.HardwareTextFileButton.Location = new System.Drawing.Point(6, 378);
+            this.HardwareTextFileButton.Name = "HardwareTextFileButton";
+            this.HardwareTextFileButton.Size = new System.Drawing.Size(453, 34);
+            this.HardwareTextFileButton.TabIndex = 7;
+            this.HardwareTextFileButton.Text = "텍스트 파일로 저장";
+            this.HardwareTextFileButton.UseVisualStyleBackColor = true;
+            this.HardwareTextFileButton.Click += new System.EventHandler(this.HardwareTextFileButton_Click);
+            // 
+            // checkGroupBox2
+            // 
+            this.checkGroupBox2.Controls.Add(this.StockText);
+            this.checkGroupBox2.Location = new System.Drawing.Point(15, 118);
+            this.checkGroupBox2.Name = "checkGroupBox2";
+            this.checkGroupBox2.Size = new System.Drawing.Size(280, 100);
+            this.checkGroupBox2.TabIndex = 9;
+            this.checkGroupBox2.TabStop = false;
+            this.checkGroupBox2.Text = "주식";
+            // 
+            // checkGroupBox3
+            // 
+            this.checkGroupBox3.Controls.Add(this.BadukButtonChange);
+            this.checkGroupBox3.Controls.Add(this.BadukButton12);
+            this.checkGroupBox3.Controls.Add(this.BadukButton1);
+            this.checkGroupBox3.Controls.Add(this.BadukButton11);
+            this.checkGroupBox3.Controls.Add(this.BadukButton2);
+            this.checkGroupBox3.Controls.Add(this.BadukButton10);
+            this.checkGroupBox3.Controls.Add(this.BadukButton3);
+            this.checkGroupBox3.Controls.Add(this.BadukButton9);
+            this.checkGroupBox3.Controls.Add(this.BadukButton4);
+            this.checkGroupBox3.Controls.Add(this.BadukButton8);
+            this.checkGroupBox3.Controls.Add(this.BadukButton5);
+            this.checkGroupBox3.Controls.Add(this.BadukButton7);
+            this.checkGroupBox3.Controls.Add(this.BadukButton6);
+            this.checkGroupBox3.Location = new System.Drawing.Point(15, 224);
+            this.checkGroupBox3.Name = "checkGroupBox3";
+            this.checkGroupBox3.Size = new System.Drawing.Size(280, 418);
+            this.checkGroupBox3.TabIndex = 9;
+            this.checkGroupBox3.TabStop = false;
+            this.checkGroupBox3.Text = "바둑";
+            // 
+            // checkGroupBox4
+            // 
+            this.checkGroupBox4.Controls.Add(this.DictListBox);
+            this.checkGroupBox4.Controls.Add(this.DictTextBox);
+            this.checkGroupBox4.Location = new System.Drawing.Point(301, 12);
+            this.checkGroupBox4.Name = "checkGroupBox4";
+            this.checkGroupBox4.Size = new System.Drawing.Size(467, 206);
+            this.checkGroupBox4.TabIndex = 9;
+            this.checkGroupBox4.TabStop = false;
+            this.checkGroupBox4.Text = "사전";
+            // 
+            // checkGroupBox5
+            // 
+            this.checkGroupBox5.Controls.Add(this.HardwarePriceDataGridView);
+            this.checkGroupBox5.Controls.Add(this.HardwareTextFileButton);
+            this.checkGroupBox5.Location = new System.Drawing.Point(301, 224);
+            this.checkGroupBox5.Name = "checkGroupBox5";
+            this.checkGroupBox5.Size = new System.Drawing.Size(467, 418);
+            this.checkGroupBox5.TabIndex = 9;
+            this.checkGroupBox5.TabStop = false;
+            this.checkGroupBox5.Text = "하드웨어";
+            // 
+            // checkGroupBox6
+            // 
+            this.checkGroupBox6.Controls.Add(this.DiskDriveText);
+            this.checkGroupBox6.Location = new System.Drawing.Point(15, 12);
+            this.checkGroupBox6.Name = "checkGroupBox6";
+            this.checkGroupBox6.Size = new System.Drawing.Size(233, 100);
+            this.checkGroupBox6.TabIndex = 10;
+            this.checkGroupBox6.TabStop = false;
+            this.checkGroupBox6.Text = "용량";
+            // 
+            // DiskDriveText
+            // 
+            this.DiskDriveText.AutoSize = true;
+            this.DiskDriveText.Location = new System.Drawing.Point(7, 25);
+            this.DiskDriveText.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DiskDriveText.Name = "DiskDriveText";
+            this.DiskDriveText.Size = new System.Drawing.Size(77, 21);
+            this.DiskDriveText.TabIndex = 0;
+            this.DiskDriveText.Text = "diskDrive";
+            // 
+            // checkGroupBox7
+            // 
+            this.checkGroupBox7.Controls.Add(this.UnseText);
+            this.checkGroupBox7.Location = new System.Drawing.Point(15, 648);
+            this.checkGroupBox7.Name = "checkGroupBox7";
+            this.checkGroupBox7.Size = new System.Drawing.Size(753, 73);
+            this.checkGroupBox7.TabIndex = 10;
+            this.checkGroupBox7.TabStop = false;
+            this.checkGroupBox7.Text = "운세";
+            // 
+            // UnseText
+            // 
+            this.UnseText.AutoSize = true;
+            this.UnseText.Location = new System.Drawing.Point(7, 25);
+            this.UnseText.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.UnseText.Name = "UnseText";
+            this.UnseText.Size = new System.Drawing.Size(44, 21);
+            this.UnseText.TabIndex = 0;
+            this.UnseText.Text = "unse";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(302, 690);
+            this.ClientSize = new System.Drawing.Size(1019, 754);
+            this.Controls.Add(this.checkGroupBox7);
+            this.Controls.Add(this.WeatherText);
+            this.Controls.Add(this.checkGroupBox6);
+            this.Controls.Add(this.checkGroupBox4);
+            this.Controls.Add(this.checkGroupBox5);
+            this.Controls.Add(this.checkGroupBox2);
+            this.Controls.Add(this.checkGroupBox3);
             this.Controls.Add(this.ClockText);
-            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.ColorPickButton);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
@@ -312,25 +470,29 @@
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.HardwarePriceDataGridView)).EndInit();
+            this.checkGroupBox2.ResumeLayout(false);
+            this.checkGroupBox2.PerformLayout();
+            this.checkGroupBox3.ResumeLayout(false);
+            this.checkGroupBox3.PerformLayout();
+            this.checkGroupBox4.ResumeLayout(false);
+            this.checkGroupBox4.PerformLayout();
+            this.checkGroupBox5.ResumeLayout(false);
+            this.checkGroupBox5.PerformLayout();
+            this.checkGroupBox6.ResumeLayout(false);
+            this.checkGroupBox6.PerformLayout();
+            this.checkGroupBox7.ResumeLayout(false);
+            this.checkGroupBox7.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private GroupBox groupBox1;
         private Label WeatherText;
-        private GroupBox groupBox2;
         private Label StockText;
         private ColorDialog ColorDialog;
         private Button ColorPickButton;
-        private GroupBox groupBox3;
         private Button BadukButton5;
         private Button BadukButton4;
         private Button BadukButton3;
@@ -347,5 +509,22 @@
         private System.Windows.Forms.Timer MainTimer;
         private System.Windows.Forms.Timer ClockTimer;
         private Label ClockText;
+        private ListBox DictListBox;
+        private TextBox DictTextBox;
+        private DataGridView HardwarePriceDataGridView;
+        private DataGridViewTextBoxColumn nameColumn;
+        private DataGridViewTextBoxColumn danawaColumn;
+        private DataGridViewTextBoxColumn cashColumn;
+        private DataGridViewTextBoxColumn priceChangeColumn;
+        private DataGridViewTextBoxColumn cashChangeColumn;
+        private Button HardwareTextFileButton;
+        private CheckGroupBox checkGroupBox2;
+        private CheckGroupBox checkGroupBox3;
+        private CheckGroupBox checkGroupBox4;
+        private CheckGroupBox checkGroupBox5;
+        private CheckGroupBox checkGroupBox6;
+        private Label DiskDriveText;
+        private CheckGroupBox checkGroupBox7;
+        private Label UnseText;
     }
 }

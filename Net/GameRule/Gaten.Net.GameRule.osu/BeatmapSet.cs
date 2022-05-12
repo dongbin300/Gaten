@@ -3,6 +3,10 @@
     public class BeatmapSet
     {
         public DirectoryInfo Directory { get; set; }
+        public string FullDirectory => Directory.FullName;
+        public string LastDirectory => Directory.Name;
+        public string Title => LastDirectory.Substring(LastDirectory.IndexOf(" - ") + 3);
+
         public FileInfo[] BeatmapFiles { get; set; }
         public List<int> FruitCounts { get; set; } = new();
 

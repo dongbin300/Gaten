@@ -19,7 +19,7 @@ namespace Gaten.Stock.MockTrader.Api
         {
             try
             {
-                var data = File.ReadAllLines(CommonResource.BinanceApiFilePath);
+                var data = CommonResource.BinanceApiKeyText;
 
                 binanceClient = new BinanceClient(new BinanceClientOptions
                 {
@@ -120,10 +120,6 @@ namespace Gaten.Stock.MockTrader.Api
                 new DateTime(2022, 4, 29, 14, 0, 0),
                 new DateTime(2022, 4, 29, 14, 30, 0));
             result.Wait();
-
-
-
-            
         }
     }
 }

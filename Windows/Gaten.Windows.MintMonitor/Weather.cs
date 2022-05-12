@@ -16,7 +16,7 @@ namespace Gaten.Windows.MintMonitor
             var mise = nodes[0].InnerText.Replace("\n", "").Replace("\t", "");
             var chomise = nodes[1].InnerText.Replace("\n", "").Replace("\t", "");
 
-            return $"{currentTemperature} {currentWeather}\n미세먼지: {mise}\n초미세먼지: {chomise}";
+            return $"{currentTemperature} {currentWeather}   미세: {mise}   초미세: {chomise}";
         }
     }
 }

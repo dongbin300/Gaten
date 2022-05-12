@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Resources\Music\**" />
+    <EmbeddedResource Remove="Resources\Music\**" />
+    <None Remove="Resources\Music\**" />
+    <Page Remove="Resources\Music\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Button\back_button.png" />
+    <None Remove="Resources\Button\front_button.png" />
+    <None Remove="Resources\Button\next_button.png" />
+    <None Remove="Resources\Button\pause_button.png" />
+    <None Remove="Resources\Button\play_button.png" />
+    <None Remove="Resources\Button\prev_button.png" />
+    <None Remove="Resources\Button\random_button.png" />
+    <None Remove="Resources\Button\seq_button.png" />
+    <None Remove="Resources\Button\single_button.png" />
+    <None Remove="Resources\Button\stop_button.png" />
+    <None Remove="Resources\Len02.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Net\Gaten.Net.Data\Gaten.Net.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Button\back_button.png" />
+    <Resource Include="Resources\Button\front_button.png" />
+    <Resource Include="Resources\Button\next_button.png" />
+    <Resource Include="Resources\Button\pause_button.png" />
+    <Resource Include="Resources\Button\play_button.png" />
+    <Resource Include="Resources\Button\prev_button.png" />
+    <Resource Include="Resources\Button\random_button.png" />
+    <Resource Include="Resources\Button\seq_button.png" />
+    <Resource Include="Resources\Button\single_button.png" />
+    <Resource Include="Resources\Button\stop_button.png" />
+    <Resource Include="Resources\Len02.jpg" />
+  </ItemGroup>
+
+</Project>

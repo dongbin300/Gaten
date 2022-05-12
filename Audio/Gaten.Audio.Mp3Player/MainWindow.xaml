@@ -1,0 +1,46 @@
+﻿<Window x:Class="Gaten.Audio.Mp3Player.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gaten.Audio.Mp3Player"
+        mc:Ignorable="d"
+        Title="MP3 Player" Height="518" Width="800">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush Opacity="0.3" ImageSource="/Resources/Len02.jpg"/>
+        </Grid.Background>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ListBox x:Name="PlayListBox"/>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <Image x:Name="PrevButton" Source="/Resources/Button/prev_button.png"/>
+                    <Image x:Name="BackButton" Source="/Resources/Button/back_button.png"/>
+                    <Image x:Name="PauseResumeButton" Source="/Resources/Button/pause_button.png"/>
+                    <Image x:Name="StopButton" Source="/Resources/Button/stop_button.png"/>
+                    <Image x:Name="FrontButton" Source="/Resources/Button/front_button.png"/>
+                    <Image x:Name="NextButton" Source="/Resources/Button/next_button.png"/>
+                    <TextBlock x:Name="MusicProgressText" Width="180" />
+                    <Image x:Name="PlayRuleButton" Source="/Resources/Button/seq_button.png"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <ProgressBar Grid.Row="1" x:Name="MusicProgressBar"/>
+    </Grid>
+</Window>
