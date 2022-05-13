@@ -42,6 +42,7 @@
             this.StartGameButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.PlayerHitPointsText = new System.Windows.Forms.Label();
             this.DungeonListBox = new System.Windows.Forms.ListBox();
             this.PlayerLevelText = new System.Windows.Forms.Label();
             this.PlayerNameText = new System.Windows.Forms.Label();
@@ -53,8 +54,8 @@
             this.RightButton = new System.Windows.Forms.Button();
             this.LeftButton = new System.Windows.Forms.Button();
             this.DownButton = new System.Windows.Forms.Button();
+            this.DescendButton = new System.Windows.Forms.Button();
             this.UpButton = new System.Windows.Forms.Button();
-            this.PlayerHitPointsText = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.PlayerImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MobImage)).BeginInit();
             this.SceneControl.SuspendLayout();
@@ -141,7 +142,7 @@
             this.RunAwayButton.Name = "RunAwayButton";
             this.RunAwayButton.Size = new System.Drawing.Size(125, 42);
             this.RunAwayButton.TabIndex = 2;
-            this.RunAwayButton.Text = "도망허기";
+            this.RunAwayButton.Text = "도멍허기";
             this.RunAwayButton.UseVisualStyleBackColor = true;
             this.RunAwayButton.Click += new System.EventHandler(this.RunAwayButton_Click);
             // 
@@ -229,6 +230,17 @@
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // PlayerHitPointsText
+            // 
+            this.PlayerHitPointsText.AutoSize = true;
+            this.PlayerHitPointsText.BackColor = System.Drawing.Color.Transparent;
+            this.PlayerHitPointsText.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.PlayerHitPointsText.Location = new System.Drawing.Point(523, 71);
+            this.PlayerHitPointsText.Name = "PlayerHitPointsText";
+            this.PlayerHitPointsText.Size = new System.Drawing.Size(32, 17);
+            this.PlayerHitPointsText.TabIndex = 2;
+            this.PlayerHitPointsText.Text = "HP: ";
+            // 
             // DungeonListBox
             // 
             this.DungeonListBox.FormattingEnabled = true;
@@ -278,6 +290,7 @@
             this.tabPage4.Controls.Add(this.RightButton);
             this.tabPage4.Controls.Add(this.LeftButton);
             this.tabPage4.Controls.Add(this.DownButton);
+            this.tabPage4.Controls.Add(this.DescendButton);
             this.tabPage4.Controls.Add(this.UpButton);
             this.tabPage4.Location = new System.Drawing.Point(4, 5);
             this.tabPage4.Name = "tabPage4";
@@ -351,6 +364,17 @@
             this.DownButton.UseVisualStyleBackColor = true;
             this.DownButton.Click += new System.EventHandler(this.DownButton_Click);
             // 
+            // DescendButton
+            // 
+            this.DescendButton.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.DescendButton.Location = new System.Drawing.Point(97, 181);
+            this.DescendButton.Name = "DescendButton";
+            this.DescendButton.Size = new System.Drawing.Size(417, 33);
+            this.DescendButton.TabIndex = 0;
+            this.DescendButton.Text = "아래층으로 내려가기";
+            this.DescendButton.UseVisualStyleBackColor = true;
+            this.DescendButton.Click += new System.EventHandler(this.DescendButton_Click);
+            // 
             // UpButton
             // 
             this.UpButton.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -362,24 +386,13 @@
             this.UpButton.UseVisualStyleBackColor = true;
             this.UpButton.Click += new System.EventHandler(this.UpButton_Click);
             // 
-            // PlayerHitPointsText
-            // 
-            this.PlayerHitPointsText.AutoSize = true;
-            this.PlayerHitPointsText.BackColor = System.Drawing.Color.Transparent;
-            this.PlayerHitPointsText.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.PlayerHitPointsText.Location = new System.Drawing.Point(523, 71);
-            this.PlayerHitPointsText.Name = "PlayerHitPointsText";
-            this.PlayerHitPointsText.Size = new System.Drawing.Size(32, 17);
-            this.PlayerHitPointsText.TabIndex = 2;
-            this.PlayerHitPointsText.Text = "HP: ";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(624, 411);
+            this.ClientSize = new System.Drawing.Size(624, 421);
             this.Controls.Add(this.SceneControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "MainForm";
@@ -428,5 +441,6 @@
         private ListBox DungeonInfo;
         private ListBox PlayerInfo;
         private Label PlayerHitPointsText;
+        private Button DescendButton;
     }
 }
