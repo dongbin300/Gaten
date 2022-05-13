@@ -22,7 +22,7 @@ namespace Gaten.Game.Dung_Eo_Ri
             thread = new Thread(new ThreadStart(Key));
             thread.Start();
 
-            SceneControl.SelectedIndex = 1;
+            ChangeSceneTo(GameRule.Game.Scene.Main);
         }
 
         bool IsActive(IntPtr handle)
@@ -40,10 +40,10 @@ namespace Gaten.Game.Dung_Eo_Ri
                     switch (e.KeyCode)
                     {
                         case Keys.Escape:
-                            switch (SceneControl.SelectedIndex)
+                            switch (GetCurrentScene())
                             {
-                                case 2:
-                                    SceneControl.SelectedIndex = 1;
+                                case GameRule.Game.Scene.DungeonSelection:
+                                    ChangeSceneTo(GameRule.Game.Scene.Main);
                                     break;
 
                                 default:
@@ -57,7 +57,7 @@ namespace Gaten.Game.Dung_Eo_Ri
 
         private void StartGameButton_Click(object sender, EventArgs e)
         {
-            SceneControl.SelectedIndex = 2;
+            ChangeSceneTo(GameRule.Game.Scene.DungeonSelection);
         }
 
         private void ExitButton_Click(object sender, EventArgs e)
@@ -70,42 +70,56 @@ namespace Gaten.Game.Dung_Eo_Ri
 
         private void DungeonListBox_DoubleClick(object sender, EventArgs e)
         {
-            SceneControl.SelectedIndex = 3;
+            if (DungeonListBox.SelectedItem == null) return;
+            ChangeSceneTo(GameRule.Game.Scene.InDungeon);
         }
 
         private void SceneControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (SceneControl.SelectedIndex)
+            switch (GetCurrentScene())
             {
-                case 0: // 전투 scene
+                case GameRule.Game.Scene.Battle:
+                    PlayerStats.Items.Clear();
+                    PlayerImage.Image = null;
+                    MobStats.Items.Clear();
+                    MobImage.Image = null;
                     LogListBox.Items.Clear();
                     runAwayTryCount = 0;
 
                     PlayerImage.Image = game.Player.Picture;
-                    PlayerStats.Items.Clear();
                     PlayerStats.Items.Add("[" + game.Player.Name + "]");
                     PlayerStats.Items.Add("레벨: " + game.Player.Level);
                     PlayerStats.Items.Add("HP: " + game.Player.CurrentHitPoints);
                     PlayerStats.Items.Add("데미지: " + game.Player.BaseDamage);
 
-                    int dungeonLevel = 1;
-                    int newMobLevel = game.Player.CurrentDungeon.GetNewMobLevel(dungeonLevel);
-                    var newMobProto = game.Mobs[newMobLevel][r.Next(0, game.Mobs[newMobLevel].Count)];
-                    var newMob = new GameRule.Mob(newMobProto.Name, newMobProto.Picture, newMobProto.Level, newMobProto.BaseHitPoints, newMobProto.BaseDamage, newMobProto.Equips);
+                    int dungeonLevel = game.Player.CurrentDungeonLevel;
+                    GameRule.Mob newMob;
+                    if (IsBossFloor())
+                    {
+                        newMob = game.Player.CurrentDungeon.BossMob;
+                        MessageBox.Show($"보스몹 {newMob.Name}를 만났습니다!");
+                    }
+                    else
+                    {
+                        int newMobLevel = game.Player.CurrentDungeon.GetNewMobLevel(dungeonLevel);
+                        var newMobProto = game.Mobs[newMobLevel][r.Next(0, game.Mobs[newMobLevel].Count)];
+                        newMob = new GameRule.Mob(newMobProto.Name, newMobProto.Picture, newMobProto.Level, newMobProto.BaseHitPoints, newMobProto.BaseDamage, newMobProto.Equips);
+                    }
+                    
                     MobImage.Image = newMob.Picture;
-                    MobStats.Items.Clear();
                     MobStats.Items.Add("[" + newMob.Name + "]");
                     MobStats.Items.Add("레벨: " + newMob.Level);
                     MobStats.Items.Add("HP: " + newMob.CurrentHitPoints);
                     MobStats.Items.Add("데미지: " + newMob.BaseDamage);
+                    MobStats.Items.Add("경험치: " + newMob.RewardExp);
 
                     game.Player.CurrentDungeon.CurrentMob = newMob;
                     break;
 
-                case 1: // 메인 scene
+                case GameRule.Game.Scene.Main:
                     break;
 
-                case 2: // Select Dungeon scene
+                case GameRule.Game.Scene.DungeonSelection:
                     DungeonListBox.Items.Clear();
                     foreach (var dungeon in game.Dungeons)
                     {
@@ -117,10 +131,18 @@ namespace Gaten.Game.Dung_Eo_Ri
                     PlayerNameText.Text = "이름: " + game.Player.Name;
                     PlayerLevelText.Text = "레벨: " + game.Player.Level;
                     PlayerHitPointsText.Text = "HP: " + game.Player.GetMaxHitPoints();
+
+                    game.Player.CurrentDungeon = null;
                     break;
 
-                case 3: // Dungeon scene
-                    game.Player.EnterDungeon(game.Dungeons[DungeonListBox.SelectedItem.ToString()]);
+                case GameRule.Game.Scene.InDungeon:
+                    if (DungeonListBox.SelectedItem == null) break;
+                    string dungeonName = DungeonListBox.SelectedItem.ToString();
+
+                    if (game.Player.CurrentDungeon == null)
+                    {
+                        game.Player.EnterDungeon(game.Dungeons[dungeonName]);
+                    }
                     RefreshDungeonStatus();
                     break;
             }
@@ -128,8 +150,8 @@ namespace Gaten.Game.Dung_Eo_Ri
 
         private void GiveUpButton_Click(object sender, EventArgs e)
         {
-            SceneControl.SelectedIndex = 2;
             game.Player.GiveUpDungeon();
+            ChangeSceneTo(GameRule.Game.Scene.DungeonSelection);
         }
 
         void CheckAvailableDirections()
@@ -149,7 +171,7 @@ namespace Gaten.Game.Dung_Eo_Ri
             PlayerInfo.Items.Add("이름: " + game.Player.Name);
             PlayerInfo.Items.Add("레벨: " + game.Player.Level);
             PlayerInfo.Items.Add("HP: " + game.Player.CurrentHitPoints + "/" + game.Player.GetMaxHitPoints());
-            PlayerInfo.Items.Add("EXP: " + game.Player.CurrentExp);
+            PlayerInfo.Items.Add("경험치: " + game.Player.CurrentExp + "/" + game.Player.GetLevelUpExp());
 
             DungeonInfo.Items.Clear();
             DungeonInfo.Items.Add("- 던전 정보");
@@ -158,55 +180,58 @@ namespace Gaten.Game.Dung_Eo_Ri
 #if DEBUG
             DungeonInfo.Items.Add("좌표: (" + game.Player.CurrentCoordX + ", " + game.Player.CurrentCoordY + ")");
 #endif
+
+            DescendButton.Visible =
+                game.Player.CurrentDungeon.DungeonLevels[game.Player.CurrentDungeonLevel-1].StairX == game.Player.CurrentCoordX &&
+                game.Player.CurrentDungeon.DungeonLevels[game.Player.CurrentDungeonLevel-1].StairY == game.Player.CurrentCoordY;
+
         }
 
         void RefreshBattleStatus()
         {
-
+            LogListBox.TopIndex = LogListBox.Items.Count - 1;
         }
 
         private void UpButton_Click(object sender, EventArgs e)
         {
             game.Player.MoveUp();
             RefreshDungeonStatus();
-
-            if (IsMobThere())
-            {
-                StartBattle();
-            }
+            ProcessBattle();
         }
 
         private void DownButton_Click(object sender, EventArgs e)
         {
             game.Player.MoveDown();
             RefreshDungeonStatus();
-
-            if (IsMobThere())
-            {
-                StartBattle();
-            }
+            ProcessBattle();
         }
 
         private void LeftButton_Click(object sender, EventArgs e)
         {
             game.Player.MoveLeft();
             RefreshDungeonStatus();
-
-            if (IsMobThere())
-            {
-                StartBattle();
-            }
+            ProcessBattle();
         }
 
         private void RightButton_Click(object sender, EventArgs e)
         {
             game.Player.MoveRight();
             RefreshDungeonStatus();
+            ProcessBattle();
+        }
 
-            if (IsMobThere())
+        private void ProcessBattle()
+        {
+            if (IsBossFloor() || IsMobThere())
             {
                 StartBattle();
             }
+        }
+
+        private bool IsBossFloor()
+        {
+            // 보스 층 == 해당 던전의 최하층
+            return game.Player.CurrentDungeonLevel == game.Player.CurrentDungeon.DungeonLevels.Count;
         }
 
         private bool IsMobThere()
@@ -216,7 +241,7 @@ namespace Gaten.Game.Dung_Eo_Ri
 
         private void StartBattle()
         {
-            SceneControl.SelectedIndex = 0;
+            ChangeSceneTo(GameRule.Game.Scene.Battle);
         }
 
         private void AttackButton_Click(object sender, EventArgs e)
@@ -235,12 +260,27 @@ namespace Gaten.Game.Dung_Eo_Ri
             if (userHitPoints == 0)
             {
                 MessageBox.Show("전투에서 패배하였다! 던전 공략 실패... 덩어리 ㅠㅠ", "전투 패배");
-                SceneControl.SelectedIndex = 2;
+                game.Player.ApplyEndGameDefeatStatus();
+                ChangeSceneTo(GameRule.Game.Scene.DungeonSelection);
             }
             else if (mobHitPoints == 0)
             {
                 MessageBox.Show("전투에서 승리하였다!", "전투 승리");
-                SceneControl.SelectedIndex = 3;
+                game.Player.CurrentExp += game.Player.CurrentDungeon.CurrentMob.RewardExp;
+                game.Player.CurrentDungeon.AccumulatedRewardExp += game.Player.CurrentDungeon.CurrentMob.RewardExp;
+
+                if (game.Player.CurrentDungeon.CurrentMob == game.Player.CurrentDungeon.BossMob)
+                {
+                    int accumulatedRewardExp = game.Player.CurrentDungeon.AccumulatedRewardExp;
+                    int previousLevel = game.Player.Level;
+                    game.Player.ApplyEndGameVictoryStatus();
+                    int currentLevel = game.Player.Level;
+                    MessageBox.Show($"보스를 잡았습니다!\n{game.Player.CurrentDungeon.Name} 클리어!\n총 획득 경험치: {accumulatedRewardExp}\n레벨 {previousLevel} -> {currentLevel}");
+                    ChangeSceneTo(GameRule.Game.Scene.DungeonSelection);
+                    return true;
+                }
+
+                ChangeSceneTo(GameRule.Game.Scene.InDungeon);
                 return true;
             }
 
@@ -249,6 +289,12 @@ namespace Gaten.Game.Dung_Eo_Ri
 
         private void RunAwayButton_Click(object sender, EventArgs e)
         {
+            if (IsBossBattle())
+            {
+                MessageBox.Show("보스전에서는 도멍허기 불가 ㅠㅠ");
+                return;
+            }
+
             int maxRate = 80;
             int rate;
             int baseValue = (game.Player.CurrentDungeon.CurrentMob.Level - game.Player.Level) + 2;
@@ -257,17 +303,22 @@ namespace Gaten.Game.Dung_Eo_Ri
 
             if (r.Next(0, 100) < rate)
             {
-                SceneControl.SelectedIndex = 3;
+                ChangeSceneTo(GameRule.Game.Scene.InDungeon);
             }
             else
             {
-                LogListBox.Items.Add("도망허기에 실패했다! (시도 횟수: " + ++runAwayTryCount + ")");
+                LogListBox.Items.Add("도멍허기에 실패했다! (시도 횟수: " + ++runAwayTryCount + ")");
 
                 bool isUserDefeated = AttackUser();
                 if (isUserDefeated) return;
 
                 RefreshBattleStatus();
             }
+        }
+
+        private bool IsBossBattle()
+        {
+            return IsBossFloor() && GetCurrentScene() == GameRule.Game.Scene.Battle;
         }
 
         private bool AttackMob()
@@ -294,6 +345,27 @@ namespace Gaten.Game.Dung_Eo_Ri
             LogListBox.Items.Add(mobName + "에게 " + mobFinalDamage + "만큼 덩어리화 (내 HP: " + userHitPoints + ", 몹 HP: " + mobHitPoints + ")");
 
             return CheckAndProcessGameFinish(userHitPoints, mobHitPoints);
+        }
+
+        private void DescendButton_Click(object sender, EventArgs e)
+        {
+            game.Player.DescendDungeonLevel();
+            RefreshDungeonStatus();
+        }
+
+        private GameRule.Game.Scene GetCurrentScene()
+        {
+            if (SceneControl.SelectedIndex == -1)
+            {
+                throw new ArgumentException("이런 일은 발생하지 않아야 하는맨");
+            }
+
+            return (GameRule.Game.Scene)SceneControl.SelectedIndex;
+        }
+
+        private void ChangeSceneTo(GameRule.Game.Scene targetScene)
+        {
+            SceneControl.SelectedIndex = (int)targetScene;
         }
     }
 }

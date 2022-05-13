@@ -21,7 +21,12 @@ namespace Gaten.Game.Dung_Eo_Ri.GameRule
         public User(string name, Image picture) : base(name, picture)
         {
             Level = 1;
-            BaseHitPoints = Level * 10 + 90;
+            UpdateStats();
+        }
+
+        public void UpdateStats()
+        {
+            BaseHitPoints = (Level - 1) * 30 + 500;
             CurrentHitPoints = GetMaxHitPoints();
             BaseDamage = Level + 4;
         }
@@ -36,7 +41,7 @@ namespace Gaten.Game.Dung_Eo_Ri.GameRule
 
         public void GiveUpDungeon()
         {
-
+            ApplyEndGameDefeatStatus();
         }
 
         public bool CanGoUp()
@@ -89,6 +94,41 @@ namespace Gaten.Game.Dung_Eo_Ri.GameRule
             {
                 CurrentCoordX++;
             }
+        }
+
+        public void ApplyEndGameDefeatStatus()
+        {
+            CurrentExp -= CurrentDungeon.AccumulatedRewardExp;
+            CurrentDungeon.AccumulatedRewardExp = 0;
+        }
+
+        public void ApplyEndGameVictoryStatus()
+        {
+            ApplyLevelUp();
+            CurrentDungeon.AccumulatedRewardExp = 0;
+
+        }
+
+        public void ApplyLevelUp()
+        {
+            int requiredExp = GetLevelUpExp();
+            while (CurrentExp >= requiredExp)
+            {
+                CurrentExp -= requiredExp;
+                Level++;
+                requiredExp = Level * 20;
+            }
+            UpdateStats();
+        }
+
+        public int GetLevelUpExp()
+        {
+            return Level * 20;
+        }
+
+        public void DescendDungeonLevel()
+        {
+            CurrentDungeonLevel++;
         }
     }
 }
