@@ -13,6 +13,7 @@ namespace Gaten.Stock.MockTrader.BinanceTrade
         {
             Symbol = symbol;
             Time = time;
+            Trades = new List<Trade>();
         }
 
         public new string ToString()
@@ -20,14 +21,19 @@ namespace Gaten.Stock.MockTrader.BinanceTrade
             return $"{Symbol}, {Time:yyyy-MM-dd HH:mm:ss}, {EstimatedAssets} USDT";
         }
 
-        public new string ToTradeString()
+        public string ToTradeString()
         {
             StringBuilder builder = new StringBuilder();
-            foreach(var trade in Trades)
+            foreach (var trade in Trades)
             {
                 builder.AppendLine(trade.ToString());
             }
             return builder.ToString();
+        }
+
+        public string ToRsiString(int up, int down)
+        {
+            return $"[{up}+, {down}-] {Symbol}, {Time:yyyy-MM-dd HH:mm:ss}, {EstimatedAssets} USDT";
         }
     }
 }

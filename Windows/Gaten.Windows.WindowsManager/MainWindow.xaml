@@ -1,0 +1,56 @@
+﻿<Window x:Class="Gaten.Windows.WindowsManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gaten.Windows.WindowsManager"
+        mc:Ignorable="d"
+        Title="윈도우 매니저" Height="510" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Header="컴퓨터 정보">
+            <StackPanel Orientation="Vertical">
+                <TextBlock x:Name="WindowsVersionText" Text="[]" />
+                <TextBlock x:Name="ProcessorText" Text="[]" />
+                <TextBlock x:Name="MemoryText" Text="[]" />
+                <TextBlock x:Name="GraphicCardText" Text="[]" />
+                <TextBlock x:Name="ComputerNameText" Text="[]" />
+                <TextBlock x:Name="AuthText" Text="[]" />
+            </StackPanel>
+        </GroupBox>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Header="정품 인증">
+                <StackPanel Orientation="Vertical">
+                    <Button x:Name="W7Button" Content="Windows 7" Click="W7Button_Click"/>
+                    <Button x:Name="W10ProButton" Content="Windows 10 Pro" Click="W10ProButton_Click"/>
+                    <Button x:Name="W10HomeButton" Content="Windows 10 Home" Click="W10HomeButton_Click"/>
+                    <Button x:Name="W10EnterpriseButton" Content="Windows 10 Enterprise" Click="W10EnterpriseButton_Click"/>
+                    <Button x:Name="W10EducationButton" Content="Windows 10 Education" Click="W10EducationButton_Click"/>
+                    <Button x:Name="Office2016Button" Content="Office 2016" Click="Office2016Button_Click"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="실시간 보호" Grid.Column="1">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock x:Name="RtpText1" Text="[]"/>
+                    <TextBlock x:Name="RtpText2" Text="[]"/>
+                    <TextBlock x:Name="RtpText3" Text="[]"/>
+                    <TextBlock x:Name="RtpText4" Text="[]"/>
+                    <TextBlock x:Name="RtpText5" Text="[]"/>
+                    <TextBlock x:Name="RtpHelpText" Text="[]" Foreground="Red" TextWrapping="Wrap"/>
+                    <Button x:Name="RtpOffButton" Content="실시간 보호 끄기" Height="43" Click="RtpOffButton_Click"/>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</Window>

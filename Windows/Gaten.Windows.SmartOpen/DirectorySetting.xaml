@@ -1,0 +1,27 @@
+﻿<Window x:Class="Gaten.Windows.SmartOpen.DirectorySetting"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gaten.Windows.SmartOpen"
+        mc:Ignorable="d"
+        Title="DirectorySetting" Height="70" Width="365"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded">
+    <Grid Background="{StaticResource SoftBlack}">
+        <Border BorderBrush="White" BorderThickness="1">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="NameText" Width="200" Height="28"/>
+                    <Button x:Name="DeleteButton" Content="삭제" Width="45" Background="Fuchsia" Click="DeleteButton_Click"/>
+                    <Button x:Name="OKButton" Content="확인" Width="45" Background="SpringGreen" Foreground="Black" Click="OKButton_Click"/>
+                    <Button x:Name="CancelButton" Content="취소" Width="45" Background="Gainsboro" Foreground="Black" Click="CancelButton_Click"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBox x:Name="DirectoryText" Height="28"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

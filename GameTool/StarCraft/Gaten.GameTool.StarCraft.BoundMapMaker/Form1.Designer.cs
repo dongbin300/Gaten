@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.boundPanel = new BoundMapMaker.DoubleBufferPanel();
+            this.boundPanel = new Gaten.GameTool.StarCraft.BoundMapMaker.DoubleBufferPanel();
             this.TileEditSizeButton1 = new System.Windows.Forms.Button();
             this.TileEditSizeButton2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -36,6 +36,7 @@
             // boundPanel
             // 
             this.boundPanel.Location = new System.Drawing.Point(0, 0);
+            this.boundPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.boundPanel.Name = "boundPanel";
             this.boundPanel.Size = new System.Drawing.Size(800, 600);
             this.boundPanel.TabIndex = 0;
@@ -46,7 +47,8 @@
             // TileEditSizeButton1
             // 
             this.TileEditSizeButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.TileEditSizeButton1.Location = new System.Drawing.Point(806, 3);
+            this.TileEditSizeButton1.Location = new System.Drawing.Point(806, 4);
+            this.TileEditSizeButton1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.TileEditSizeButton1.Name = "TileEditSizeButton1";
             this.TileEditSizeButton1.Size = new System.Drawing.Size(60, 60);
             this.TileEditSizeButton1.TabIndex = 1;
@@ -57,7 +59,8 @@
             // TileEditSizeButton2
             // 
             this.TileEditSizeButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.TileEditSizeButton2.Location = new System.Drawing.Point(872, 3);
+            this.TileEditSizeButton2.Location = new System.Drawing.Point(872, 4);
+            this.TileEditSizeButton2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.TileEditSizeButton2.Name = "TileEditSizeButton2";
             this.TileEditSizeButton2.Size = new System.Drawing.Size(60, 60);
             this.TileEditSizeButton2.TabIndex = 1;
@@ -65,15 +68,16 @@
             this.TileEditSizeButton2.UseVisualStyleBackColor = true;
             this.TileEditSizeButton2.Click += new System.EventHandler(this.TileEditSizeButton2_Click);
             // 
-            // MainForm
+            // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(964, 635);
+            this.ClientSize = new System.Drawing.Size(937, 606);
             this.Controls.Add(this.TileEditSizeButton2);
             this.Controls.Add(this.TileEditSizeButton1);
             this.Controls.Add(this.boundPanel);
-            this.Name = "MainForm";
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Name = "Form1";
             this.Text = "Bound Map Maker V0.1.1 by Gaten";
             this.ResumeLayout(false);
 

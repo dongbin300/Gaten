@@ -1,5 +1,8 @@
 ﻿namespace Gaten.Stock.MockTrader.Chart
 {
+    /// <summary>
+    /// 지금은 사용하지 않음
+    /// </summary>
     internal class Band
     {
         public double Upper { get; set; }

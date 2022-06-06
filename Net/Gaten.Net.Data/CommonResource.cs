@@ -18,5 +18,9 @@
         public static void SetText(string subPath, string text) => File.WriteAllText(Path.Combine(BaseFilePath, subPath), text);
         public static void SetTextLines(string subPath, string[] text) => File.WriteAllLines(Path.Combine(BaseFilePath, subPath), text);
         public static void SetTextDictionary(string subPath, Dictionary<string, string> text) => IO.File.WriteByDictionary(Path.Combine(BaseFilePath, subPath), text);
+
+        public static void AppendText(string subPath, string text) => File.AppendAllText(Path.Combine(BaseFilePath, subPath), text);
+        public static void AppendTextLines(string subPath, string[] text) => File.AppendAllLines(Path.Combine(BaseFilePath, subPath), text);
+        public static void AppendTextDictionary(string subPath, Dictionary<string, string> text) => IO.File.AppendByDictionary(Path.Combine(BaseFilePath, subPath), text);
     }
 }

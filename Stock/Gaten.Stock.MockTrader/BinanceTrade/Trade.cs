@@ -23,7 +23,8 @@
         
         public new string ToString()
         {
-            return $"{Price}, {(Side == SideType.Long ? "+" : "-")}{Size}, {Assets.CoinSize[Symbol]} {Symbol}, {Assets.Amount + Assets.CoinSize[Symbol] * Price} USDT";
+            return "";
+            //return $"{Price}, {(Side == SideType.Long ? "+" : "-")}{Size}, {Assets.CoinSize[Symbol]} {Symbol}, {Assets.Amount + Assets.CoinSize[Symbol] * Price} USDT";
         }
     }
 }

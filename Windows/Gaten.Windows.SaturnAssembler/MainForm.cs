@@ -77,11 +77,11 @@ namespace Gaten.Windows.SaturnAssembler
 
         void LoadInitialAssemblyFile()
         {
-            BindFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "test2.asm");
-            FileName = BindFilePath.Substring(BindFilePath.LastIndexOf('\\') + 1).Replace(".asm", "");
-            filename.Text = FileName;
-            richTextBox.Text = File.ReadAllText(BindFilePath);
-            AllText = richTextBox.Text;
+            //BindFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "test2.asm");
+            //FileName = BindFilePath.Substring(BindFilePath.LastIndexOf('\\') + 1).Replace(".asm", "");
+            //filename.Text = FileName;
+            //richTextBox.Text = File.ReadAllText(BindFilePath);
+            //AllText = richTextBox.Text;
 
             RichTextBox_TextChanged(null, null);
 

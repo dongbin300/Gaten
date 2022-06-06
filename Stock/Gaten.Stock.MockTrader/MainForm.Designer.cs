@@ -58,6 +58,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.AllPeriodCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -189,6 +190,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.AllPeriodCheckBox);
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.BackTestPeriodTextBox);
             this.groupBox2.Controls.Add(this.StartDayComboBox);
@@ -426,6 +428,17 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "로그";
             // 
+            // AllPeriodCheckBox
+            // 
+            this.AllPeriodCheckBox.AutoSize = true;
+            this.AllPeriodCheckBox.Location = new System.Drawing.Point(114, 66);
+            this.AllPeriodCheckBox.Name = "AllPeriodCheckBox";
+            this.AllPeriodCheckBox.Size = new System.Drawing.Size(78, 19);
+            this.AllPeriodCheckBox.TabIndex = 7;
+            this.AllPeriodCheckBox.Text = "모든 기간";
+            this.AllPeriodCheckBox.UseVisualStyleBackColor = true;
+            this.AllPeriodCheckBox.CheckedChanged += new System.EventHandler(this.AllPeriodCheckBox_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -486,5 +499,6 @@
         private GroupBox groupBox4;
         private Label label9;
         private ComboBox CandleIntervalComboBox;
+        private CheckBox AllPeriodCheckBox;
     }
 }

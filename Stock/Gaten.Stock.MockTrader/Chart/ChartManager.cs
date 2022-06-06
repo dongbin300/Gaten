@@ -37,12 +37,12 @@ namespace Gaten.Stock.MockTrader.Chart
                 {
                     Symbol = symbol,
                     Candles = candles,
-                    MA = quotes.GetSma(112),
-                    EMA = quotes.GetEma(112),
-                    RSI = quotes.GetRsi(14),
-                    MACD = quotes.GetMacd(12, 26, 9),
-                    BollingerBands = quotes.GetBollingerBands(20, 3),
-                    BollingerBands2 = quotes.GetBollingerBands(20, 0.5)
+                    MA = quotes.GetSma(112).ToList(),
+                    EMA = quotes.GetEma(112).ToList(),
+                    RSI = quotes.GetRsi(14).ToList(),
+                    MACD = quotes.GetMacd(12, 26, 9).ToList(),
+                    BollingerBands = quotes.GetBollingerBands(20, 3).ToList(),
+                    BollingerBands2 = quotes.GetBollingerBands(20, 0.5).ToList()
                 };
             }
             catch (FileNotFoundException)

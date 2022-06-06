@@ -12,8 +12,8 @@ namespace Gaten.Windows.MintMonitor
                 
                 string[] splitSource = WebCrawler.Source.Substring(WebCrawler.Source.IndexOf("[개띠]"), 500).Split(new string[] { "<br />" }, StringSplitOptions.RemoveEmptyEntries);
 
-                var allDog = splitSource[1].Replace("\n", "");
-                var Dog94 = splitSource[6].Replace("1994년생, ", "").Replace("\n", "");
+                var allDog = splitSource[1].Replace("\r\n", "").Replace("\n","");
+                var Dog94 = splitSource[6].Replace("1994년생, ", "").Replace("\r\n", "").Replace("\n","");
 
                 return allDog + "\n" + Dog94;
             }
