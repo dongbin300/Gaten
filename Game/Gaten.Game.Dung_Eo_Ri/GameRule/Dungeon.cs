@@ -8,18 +8,25 @@ namespace Gaten.Game.Dung_Eo_Ri.GameRule
 	{
 		public string Name { get; set; }
 		public int MinMobLevel { get; set; }
+		public int BaseWidth { get; set; }
+		public int BaseHeight { get; set; }
+		public int Depth { get; set; }
 		public Mob BossMob { get; set; }
 		public List<DungeonLevel> DungeonLevels { get; set; }
 		public List<Equip> RewardEquips { get; set; }
 		public Mob CurrentMob { get; set; }
+		public int AccumulatedRewardExp { get; set; }
 
 		private Random r = new Random();
 
-		public Dungeon(string name, int minMobLevel, Mob bossMob)
+		public Dungeon(string name, int minMobLevel, int baseWidth, int baseHeight, int depth, Mob bossMob)
 		{
 			Name = name;
-			BossMob = bossMob;
 			MinMobLevel = minMobLevel;
+			BaseWidth = baseWidth;
+			BaseHeight = baseHeight;
+			Depth = depth;
+			BossMob = bossMob;
 
 			Initialize();
 		}
@@ -27,16 +34,17 @@ namespace Gaten.Game.Dung_Eo_Ri.GameRule
 		public void Initialize()
         {
 			DungeonLevels = new List<DungeonLevel>();
-			for(int i = 0; i < 5; i++)
+			for(int i = 0; i < Depth - 1; i++)
             {
-				DungeonLevels.Add(new DungeonLevel(3, 3, r.Next(3), r.Next(3)));
+				DungeonLevels.Add(new DungeonLevel(BaseWidth, BaseHeight, r.Next(BaseWidth), r.Next(BaseHeight)));
 			}
+			DungeonLevels.Add(new DungeonLevel(BaseWidth, BaseHeight, -1, -1));
 		}
 
         public int GetNewMobLevel(int dungeonLevel)
         {
-			int minLevel = (dungeonLevel - 1) * 2 + MinMobLevel;
-			int maxLevel = dungeonLevel * 2 + MinMobLevel;
+			int minLevel = MinMobLevel + (dungeonLevel - 1);
+			int maxLevel = minLevel + 2;
 
 			return r.Next(minLevel, maxLevel + 1);
         }
