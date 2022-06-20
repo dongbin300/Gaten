@@ -1,7 +1,6 @@
 ﻿using Gaten.Net.Data;
 using Gaten.Net.Network;
-
-using System.Text;
+using Gaten.Net.Windows;
 
 namespace Gaten.Windows.MintMonitor
 {
@@ -10,6 +9,7 @@ namespace Gaten.Windows.MintMonitor
         public MainForm()
         {
             InitializeComponent();
+
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -25,12 +25,14 @@ namespace Gaten.Windows.MintMonitor
             HardwarePrice.Init();
             CheckListCollection.Init();
             RNG.Init();
+            RefreshPowerOption();
 
             DictListBox.HorizontalScrollbar = true;
             CheckListListBox.HorizontalScrollbar = true;
             WinSplitHComboBox.SelectedIndex = 2;
             WinSplitVComboBox.SelectedIndex = 2;
             TranslationComboBox.SelectedIndex = 1;
+
         }
 
         private void RefreshButton_Click(object sender, EventArgs e)
@@ -70,7 +72,7 @@ namespace Gaten.Windows.MintMonitor
             }
 
             /* 매일 0시 10분 */
-            if(now.Hour == 0 && now.Minute == 10)
+            if (now.Hour == 0 && now.Minute == 10)
             {
                 DiskDriveText.Text = DiskDrive.Get();
                 UnseText.Text = Unse.Get();
@@ -130,7 +132,7 @@ namespace Gaten.Windows.MintMonitor
         {
             CheckListListBox.Items.Clear();
             CheckListListBox.DisplayMember = "Info";
-            foreach(var checkList in CheckListCollection.CheckLists)
+            foreach (var checkList in CheckListCollection.CheckLists)
             {
                 CheckListListBox.Items.Add(checkList);
             }
@@ -140,7 +142,7 @@ namespace Gaten.Windows.MintMonitor
         {
             var checkList = CheckListListBox.SelectedItem as CheckList;
 
-            if(checkList == null)
+            if (checkList == null)
             {
                 return;
             }
@@ -164,6 +166,8 @@ namespace Gaten.Windows.MintMonitor
         {
             try
             {
+                HardwarePriceDataGridView.Rows.Clear();
+
                 foreach (Device device in HardwarePrice.Devices)
                 {
                     WebCrawler.SetUrl(device.url);
@@ -217,7 +221,7 @@ namespace Gaten.Windows.MintMonitor
                 WinSplitProcessComboBox.Items.Add(process);
             }
 
-            if(WinSplitProcessComboBox.Items.Count > 0)
+            if (WinSplitProcessComboBox.Items.Count > 0)
             {
                 WinSplitProcessComboBox.SelectedIndex = 0;
             }
@@ -244,7 +248,7 @@ namespace Gaten.Windows.MintMonitor
         {
             if (WinSplitAllProcessCheckBox.Checked)
             {
-                if(MessageBox.Show(this, "정말 모든 프로세스를 종료하시겠습니까?", "경고", MessageBoxButtons.YesNoCancel) != DialogResult.Yes)
+                if (MessageBox.Show(this, "정말 모든 프로세스를 종료하시겠습니까?", "경고", MessageBoxButtons.YesNoCancel) != DialogResult.Yes)
                 {
                     return;
                 }
@@ -298,8 +302,43 @@ namespace Gaten.Windows.MintMonitor
 
             TranslationText2.Text = text;
         }
+
         #endregion
 
+        #region Power Option
+        private void RefreshPowerOption()
+        {
+            PowerOptionButton.FlatAppearance.BorderColor = PowerOption.Get()?.Type switch
+            {
+                PowerType.Balance => Color.Green,
+                PowerType.Save => Color.Gray,
+                _ => Color.Red,
+            };
+        }
+
+        private void PowerOptionButton_Click(object sender, EventArgs e)
+        {
+            var powerScheme = PowerOption.Get();
+            var powerSchemeInfo = Cmd.Run("powercfg /l");
+
+            switch (powerScheme?.Type)
+            {
+                case PowerType.Balance:
+                    string? guid = powerSchemeInfo.Split("\r\n", StringSplitOptions.RemoveEmptyEntries).ToList().Find(s => s.Contains("절전"))?.Split(':', '(')[1].Trim();
+
+                    Cmd.Run($"powercfg /s {guid}");
+                    break;
+
+                case PowerType.Save:
+                    string? guid2 = powerSchemeInfo.Split("\r\n", StringSplitOptions.RemoveEmptyEntries).ToList().Find(s => s.Contains("균형 조정"))?.Split(':', '(')[1].Trim();
+
+                    Cmd.Run($"powercfg /s {guid2}");
+                    break;
+            }
+
+            RefreshPowerOption();
+        }
+        #endregion
 
     }
 }

@@ -1,8 +1,7 @@
 ﻿using Gaten.Net.Extension;
 using Gaten.Net.Data;
 
-PerformanceChecker checker = new(a, b, 100000000);
-Console.WriteLine(checker.PerformResult());
+Console.WriteLine("123456");
 
 
 void a()

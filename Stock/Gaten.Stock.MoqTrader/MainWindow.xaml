@@ -1,0 +1,44 @@
+﻿<Window x:Class="Gaten.Stock.MoqTrader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gaten.Stock.MoqTrader"
+        mc:Ignorable="d"
+        Icon="/Gaten.Stock.MoqTrader;component/Resources/Images/moq.ico"
+        Title="MainWindow" Height="800" Width="400">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <GroupBox Header="바이낸스 데이터">
+                <StackPanel Orientation="Vertical">
+                    <UniformGrid Rows="1">
+                        <Button x:Name="SymbolDataButton" Content="심볼 데이터" Click="SymbolDataButton_Click"/>
+                        <Button x:Name="CandleDataButton" Content="1분봉 데이터" Click="CandleDataButton_Click"/>
+                    </UniformGrid>
+                    <TextBlock x:Name="LastUpdateText" Text="업데이트: " />
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="자산 운용">
+                <UniformGrid>
+                    <TextBlock Text="시드머니 ($)"/>
+                    <TextBlock Text="분할률 (1/n)"/>
+                    <TextBox x:Name="AmountTextBox" />
+                    <TextBox x:Name="DivisionRateTextBox" />
+                </UniformGrid>
+            </GroupBox>
+            <GroupBox Header="백테스트 범위">
+                <UniformGrid>
+                    <UniformGrid Rows="1">
+                        <TextBlock Text="코인"/>
+                        <CheckBox x:Name="AllSymbolCheckBox" Content="모든 코인"/>
+                    </UniformGrid>
+                    <UniformGrid Rows="1">
+                        <TextBlock Text="기간"/>
+                    </UniformGrid>
+                    <ComboBox x:Name="SymbolComboBox" Width="Auto" />
+
+                </UniformGrid>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</Window>

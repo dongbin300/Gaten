@@ -95,6 +95,7 @@
             this.TranslationText1 = new System.Windows.Forms.TextBox();
             this.TranslationComboBox = new System.Windows.Forms.ComboBox();
             this.RefreshButton = new System.Windows.Forms.Button();
+            this.PowerOptionButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.HardwarePriceDataGridView)).BeginInit();
             this.checkGroupBox2.SuspendLayout();
             this.checkGroupBox3.SuspendLayout();
@@ -820,11 +821,27 @@
             this.RefreshButton.UseVisualStyleBackColor = true;
             this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
             // 
+            // PowerOptionButton
+            // 
+            this.PowerOptionButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("PowerOptionButton.BackgroundImage")));
+            this.PowerOptionButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.PowerOptionButton.FlatAppearance.BorderSize = 3;
+            this.PowerOptionButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.PowerOptionButton.Location = new System.Drawing.Point(263, 54);
+            this.PowerOptionButton.Margin = new System.Windows.Forms.Padding(10);
+            this.PowerOptionButton.Name = "PowerOptionButton";
+            this.PowerOptionButton.Padding = new System.Windows.Forms.Padding(5);
+            this.PowerOptionButton.Size = new System.Drawing.Size(32, 32);
+            this.PowerOptionButton.TabIndex = 18;
+            this.PowerOptionButton.UseVisualStyleBackColor = true;
+            this.PowerOptionButton.Click += new System.EventHandler(this.PowerOptionButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1041, 828);
+            this.Controls.Add(this.PowerOptionButton);
             this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.checkGroupBox12);
             this.Controls.Add(this.checkGroupBox11);
@@ -950,5 +967,6 @@
         private TextBox TranslationText1;
         private ComboBox TranslationComboBox;
         private Button RefreshButton;
+        private Button PowerOptionButton;
     }
 }

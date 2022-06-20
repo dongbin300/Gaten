@@ -33,7 +33,7 @@
             <CheckBox x:Name="GammaCheckBox" Content="감마사용?" IsEnabled="False"/>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="콤보수치" />
-                <ComboBox x:Name="ComboNumComboBox" sWidth="100" IsEnabled="False"/>
+                <ComboBox x:Name="ComboNumComboBox" Width="100" IsEnabled="False"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="과일크기" />

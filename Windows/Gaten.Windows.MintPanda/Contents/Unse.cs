@@ -1,6 +1,8 @@
 ﻿using Gaten.Net.Network;
 
-namespace Gaten.Windows.MintMonitor
+using System;
+
+namespace Gaten.Windows.MintPanda.Contents
 {
     internal class Unse
     {

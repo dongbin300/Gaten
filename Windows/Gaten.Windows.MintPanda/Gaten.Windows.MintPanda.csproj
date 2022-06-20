@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>MintPanda</AssemblyName>
+    <ApplicationIcon>Resources\Images\panda.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Images\color-pick.png" />
+    <None Remove="Resources\Images\panda.png" />
+    <None Remove="Resources\Images\panda1.ico" />
+    <None Remove="Resources\Images\panda1.png" />
+    <None Remove="Resources\Images\panda2.ico" />
+    <None Remove="Resources\Images\panda2.png" />
+    <None Remove="Resources\Images\power-option.png" />
+    <None Remove="Resources\Images\shield.png" />
+    <None Remove="Resources\Images\taskbar.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\panda.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Net\Gaten.Net.Network\Gaten.Net.Network.csproj" />
+    <ProjectReference Include="..\..\Net\Gaten.Net.Windows\Gaten.Net.Windows.csproj" />
+    <ProjectReference Include="..\..\Net\Gaten.Net.Wpf\Gaten.Net.Wpf.csproj" />
+    <ProjectReference Include="..\..\Net\Windows\Gaten.Net.Windows.Wpf\Gaten.Net.Windows.Wpf.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\color-pick.png" />
+    <Resource Include="Resources\Images\panda.png" />
+    <Resource Include="Resources\Images\panda1.ico" />
+    <Resource Include="Resources\Images\panda1.png" />
+    <Resource Include="Resources\Images\panda2.ico" />
+    <Resource Include="Resources\Images\panda2.png" />
+    <Resource Include="Resources\Images\power-option.png" />
+    <Resource Include="Resources\Images\shield.png" />
+    <Resource Include="Resources\Images\taskbar.png" />
+  </ItemGroup>
+
+</Project>
