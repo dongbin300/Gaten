@@ -1,0 +1,21 @@
+﻿<Window x:Class="Gaten.Network.YouTubeExplorer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gaten.Network.YouTubeExplorer"
+        mc:Ignorable="d"
+        Title="YouTube Explorer" Height="160" Width="100">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="IntervalTextBox" Text="15000" HorizontalContentAlignment="Right"/>
+        <Button Grid.Row="1" x:Name="StartButton" Content="시작" Click="StartButton_Click"/>
+        <Button Grid.Row="2" x:Name="StopButton" Content="중지" Click="StopButton_Click"/>
+        <TextBlock Grid.Row="3" x:Name="StatusText" TextWrapping="Wrap" FontSize="9" Foreground="Blue"/>
+    </Grid>
+</Window>

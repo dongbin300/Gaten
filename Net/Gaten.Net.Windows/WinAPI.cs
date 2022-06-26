@@ -171,6 +171,9 @@ namespace Gaten.Net.Windows
         [DllImport("User32.dll")]
         public static extern bool GetWindowRect(IntPtr hWnd, ref RECT rect);
 
+        [DllImport("User32.dll", SetLastError = true)]
+        public static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
+
         [DllImport("User32.dll")]
         public static extern bool MoveWindow(IntPtr hWnd, int x, int y, int width, int height, bool repaint);
 
@@ -219,6 +222,25 @@ namespace Gaten.Net.Windows
             public short X;
             [FieldOffset(2)]
             public short Y;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct WINDOWPLACEMENT
+        {
+            public int length;
+            public int flags;
+            public ShowWindowCommands showCmd;
+            public System.Drawing.Point ptMinPosition;
+            public System.Drawing.Point ptMaxPosition;
+            public Rectangle rcNormalPosition;
+        }
+
+        public enum ShowWindowCommands : int
+        {
+            Hide = 0,
+            Normal = 1,
+            Minimized = 2,
+            Maximized = 3,
         }
 
         public const int GENERIC_READ = unchecked((int)0x80000000);
@@ -397,6 +419,14 @@ namespace Gaten.Net.Windows
             GetWindowRect(hWnd, ref rect);
 
             return rect;
+        }
+
+        public static WINDOWPLACEMENT GetWindowPlacement(IntPtr hWnd)
+        {
+            var windowPlacement = new WINDOWPLACEMENT();
+            GetWindowPlacement(hWnd, ref windowPlacement);
+
+            return windowPlacement;
         }
 
         public static string GetClassName(IntPtr hWnd)

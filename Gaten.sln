@@ -301,9 +301,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Audio.VirtualKeyboard
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Study.TestWpf", "Study\Gaten.Study.TestWpf\Gaten.Study.TestWpf.csproj", "{F340DBA7-E3EA-45B4-B8DA-07C698C090C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.Windows.MintPanda", "Windows\Gaten.Windows.MintPanda\Gaten.Windows.MintPanda.csproj", "{4B8B19BB-CB8B-443D-9C4A-11F9B858C099}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Windows.MintPanda", "Windows\Gaten.Windows.MintPanda\Gaten.Windows.MintPanda.csproj", "{4B8B19BB-CB8B-443D-9C4A-11F9B858C099}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.Stock.MoqTrader", "Stock\Gaten.Stock.MoqTrader\Gaten.Stock.MoqTrader.csproj", "{57B32CC5-54FA-4311-9A29-C86D8258E68B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Stock.MoqTrader", "Stock\Gaten.Stock.MoqTrader\Gaten.Stock.MoqTrader.csproj", "{57B32CC5-54FA-4311-9A29-C86D8258E68B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Network.YouTubeExplorer", "Network\Gaten.Network.YouTubeExplorer\Gaten.Network.YouTubeExplorer.csproj", "{19D089DE-7EED-4687-8E99-A76B3FDCB31C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.Windows.RestoreWindow", "Windows\Gaten.Windows.RestoreWindow\Gaten.Windows.RestoreWindow.csproj", "{09717A83-D6E1-42C1-B594-47A2F74413B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -811,6 +815,14 @@ Global
 		{57B32CC5-54FA-4311-9A29-C86D8258E68B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57B32CC5-54FA-4311-9A29-C86D8258E68B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57B32CC5-54FA-4311-9A29-C86D8258E68B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19D089DE-7EED-4687-8E99-A76B3FDCB31C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19D089DE-7EED-4687-8E99-A76B3FDCB31C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19D089DE-7EED-4687-8E99-A76B3FDCB31C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19D089DE-7EED-4687-8E99-A76B3FDCB31C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09717A83-D6E1-42C1-B594-47A2F74413B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09717A83-D6E1-42C1-B594-47A2F74413B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09717A83-D6E1-42C1-B594-47A2F74413B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09717A83-D6E1-42C1-B594-47A2F74413B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -953,6 +965,8 @@ Global
 		{F340DBA7-E3EA-45B4-B8DA-07C698C090C0} = {41776F7A-DFC6-4386-B5B0-7EE49458C378}
 		{4B8B19BB-CB8B-443D-9C4A-11F9B858C099} = {0D20CAEA-6673-4319-8F89-D093A669596D}
 		{57B32CC5-54FA-4311-9A29-C86D8258E68B} = {52D9C7E1-3FAB-4B6A-B5A6-BEB99AC028F3}
+		{19D089DE-7EED-4687-8E99-A76B3FDCB31C} = {17A44341-550C-4DBB-95A5-6B0B3E8BE24B}
+		{09717A83-D6E1-42C1-B594-47A2F74413B1} = {0D20CAEA-6673-4319-8F89-D093A669596D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9E22E9A6-DD7D-4809-95DD-888B759F780F}

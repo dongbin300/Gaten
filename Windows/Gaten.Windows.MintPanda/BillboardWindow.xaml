@@ -1,0 +1,14 @@
+﻿<Window x:Class="Gaten.Windows.MintPanda.BillboardWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gaten.Windows.MintPanda"
+        xmlns:wpf="clr-namespace:Gaten.Net.Wpf.Controls;assembly=Gaten.Net.Wpf"
+        mc:Ignorable="d"
+        Title="BillboardWindow" Height="30" Width="1024"
+        WindowStartupLocation="Manual" WindowStyle="None"
+        Topmost="True" Margin="0" Padding="0" ResizeMode="NoResize"
+        Background="#282828">
+    <wpf:MarqueeText x:Name="marquee" />
+</Window>

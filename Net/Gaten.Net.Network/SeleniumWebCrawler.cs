@@ -1,10 +1,9 @@
-﻿using System.Net;
-using System.Text;
-
-using HtmlAgilityPack;
+﻿using Gaten.Net.Data;
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+
+using System.Text;
 
 namespace Gaten.Net.Network
 {
@@ -12,10 +11,20 @@ namespace Gaten.Net.Network
     {
         static readonly Encoding DefaultEncoding = Encoding.UTF8;
         static IWebDriver driver;
+        public static string Source => driver.PageSource;
+
+        public static bool CreateNoWindow = false;
 
         public static void Open(string url = "")
         {
-            driver = new ChromeDriver();
+            var driverService = ChromeDriverService.CreateDefaultService(CommonResource.BaseFilePath, "chromedriver.exe");
+            driverService.HideCommandPromptWindow = CreateNoWindow;
+            ChromeOptions options = new ChromeOptions();
+            if (CreateNoWindow)
+            {
+                options.AddArgument("headless");
+            }
+            driver = new ChromeDriver(driverService, options);
 
             if (!string.IsNullOrEmpty(url))
             {
@@ -26,6 +35,11 @@ namespace Gaten.Net.Network
         public static void Close()
         {
             driver.Dispose();
+        }
+
+        public static void Refresh()
+        {
+            driver.Navigate().Refresh();
         }
 
         public static void SetUrl(string url)
@@ -112,6 +126,11 @@ namespace Gaten.Net.Network
             return isContain ?
                 $".//{tag}[contains(@{attribute}, '{argument}')]" :
                 $".//{tag}[@{attribute}='{argument}']";
+        }
+
+        public static By ToBy(string tag, string attribute, string argument, bool isContain = false)
+        {
+            return By.XPath(ToXPath(tag, attribute, argument, isContain));
         }
     }
 }

@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Gaten.Stock.MoqTrader"
         mc:Ignorable="d"
         Icon="/Gaten.Stock.MoqTrader;component/Resources/Images/moq.ico"
-        Title="MainWindow" Height="800" Width="400">
+        Title="MainWindow" Height="800" Width="400"
+        Loaded="Window_Loaded">
     <Grid>
         <StackPanel Orientation="Vertical">
             <GroupBox Header="바이낸스 데이터">
@@ -22,23 +23,46 @@
                 <UniformGrid>
                     <TextBlock Text="시드머니 ($)"/>
                     <TextBlock Text="분할률 (1/n)"/>
-                    <TextBox x:Name="AmountTextBox" />
-                    <TextBox x:Name="DivisionRateTextBox" />
+                    <TextBox x:Name="AmountTextBox" Width="Auto" />
+                    <TextBox x:Name="DivisionRateTextBox" Width="Auto" />
                 </UniformGrid>
             </GroupBox>
             <GroupBox Header="백테스트 범위">
-                <UniformGrid>
-                    <UniformGrid Rows="1">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
                         <TextBlock Text="코인"/>
-                        <CheckBox x:Name="AllSymbolCheckBox" Content="모든 코인"/>
-                    </UniformGrid>
-                    <UniformGrid Rows="1">
-                        <TextBlock Text="기간"/>
-                    </UniformGrid>
+                        <CheckBox x:Name="AllSymbolCheckBox" Content="모든 코인" Checked="AllSymbolCheckBox_CheckedChanged" Unchecked="AllSymbolCheckBox_CheckedChanged"/>
+                    </StackPanel>
                     <ComboBox x:Name="SymbolComboBox" Width="Auto" />
 
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="기간"/>
+                        <CheckBox x:Name="AllPeriodCheckBox" Content="모든 기간" Checked="AllPeriodCheckBox_CheckedChanged" Unchecked="AllPeriodCheckBox_CheckedChanged"/>
+                    </StackPanel>
+                       
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox x:Name="StartYearComboBox" Width="60"/>
+                        <TextBlock Text="년"/>
+                        <ComboBox x:Name="StartMonthComboBox" Width="30"/>
+                        <TextBlock Text="월"/>
+                        <ComboBox x:Name="StartDayComboBox" Width="30"/>
+                        <TextBlock Text="일"/>
+                        <TextBox x:Name="BackTestPeriodTextBox" Width="30"/>
+                        <TextBlock Text="일간"/>
+                        <ComboBox x:Name="CandleIntervalComboBox" Width="30"/>
+                        <TextBlock Text="분봉"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="로그">
+                <UniformGrid Rows="1">
+                    <CheckBox x:Name="DayLogCheckBox" Content="일별 로그 출력"/>
+                    <CheckBox x:Name="TradeLogCheckBox" Content="매매 로그 출력"/>
                 </UniformGrid>
             </GroupBox>
+            <Button x:Name="BackTestButton" Content="백테스트" Click="BackTestButton_Click"/>
+            <ProgressBar x:Name="SimulateProgressBar" Height="30" Foreground="AliceBlue" />
+            <TextBlock x:Name="StatusText"/>
         </StackPanel>
     </Grid>
 </Window>

@@ -4,13 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaten.Windows.MintPanda"
+        xmlns:wpf="clr-namespace:Gaten.Net.Wpf.Controls;assembly=Gaten.Net.Wpf"
         mc:Ignorable="d"
-        Title="Mint Panda" Height="300" Width="600" Icon="/MintPanda;component/Resources/Images/panda.ico"
+        Title="Mint Panda" Height="470" Width="400" Icon="/MintPanda;component/Resources/Images/panda.ico"
         WindowStyle="None"
         Loaded="Window_Loaded" Closing="Window_Closing" Topmost="True" MinHeight="70" AllowsTransparency="True"
         MouseMove="Window_MouseMove"
         MouseEnter="Window_MouseEnter"
-        MouseLeave="Window_MouseLeave">
+        MouseLeave="Window_MouseLeave"
+        MouseDoubleClick="Window_MouseDoubleClick"
+        KeyDown="Window_KeyDown">
     <Window.Resources>
         <SolidColorBrush x:Key="MainColor" Color="#00FFC0" Opacity="0.8"/>
 
@@ -48,111 +51,10 @@
 
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="400"/>
             <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
-
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel Orientation="Vertical">
-                <Expander Header="DiskDrive">
-                    <TextBlock x:Name="DiskDriveText" />
-                </Expander>
-                <Expander Header="Stock">
-                    <TextBlock x:Name="StockText" />
-                </Expander>
-                <Expander Header="Go">
-                    <StackPanel>
-                        <Button Content="我想下棋，欢迎向我申请对局。" Click="BadukButton_Click" />
-                        <Button Content="有没有人下棋？" Click="BadukButton_Click" />
-                        <Button Content="谁能下棋？" Click="BadukButton_Click" />
-                        <Button Content="有人下棋吗？" Click="BadukButton_Click" />
-                        <Button Content="有没有人下棋？" Click="BadukButton_Click" />
-                        <Button Content="你还在吗？请落子。" Click="BadukButton_Click" />
-                        <Button Content="太慢了。" Click="BadukButton_Click" />
-                        <Button Content="不要走，决战到天亮！" Click="BadukButton_Click" />
-                        <Button Content="快点吧，我等到花儿也谢了！" Click="BadukButton_Click" />
-                        <UniformGrid Columns="4">
-                            <Button Content="3到5段" Click="BadukButton_Click" />
-                            <Button Content="19路" Click="BadukButton_Click" />
-                            <Button Content="14级" Click="BadukButton_Click" />
-                            <Button Content="韩↔中" Click="BadukButtonChange_Click" />
-                        </UniformGrid>
-                    </StackPanel>
-                </Expander>
-                <Expander Header="Random Hanja">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock x:Name="RandomHanjaText" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" FontSize="70" Margin="5,0,0,20" />
-                        <Button x:Name="RandomHanjaButton" Grid.Row="0" Grid.Column="1" Content="생성" Click="RandomHanjaButton_Click" />
-                        <TextBlock x:Name="RandomHanjaMeanText" Grid.Row="1" Grid.Column="1" />
-                    </Grid>
-                </Expander>
-                <Expander Header="Random Word">
-                    <StackPanel>
-                        <Button x:Name="RandomWordButton" Content="생성" Click="RandomWordButton_Click" />
-                        <TextBlock x:Name="RandomWordText" TextWrapping="Wrap" />
-                    </StackPanel>
-                </Expander>
-                <Expander Header="RNG">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox x:Name="RNGMin" Width="50" Text="1" />
-                        <TextBlock Text="~" />
-                        <TextBox x:Name="RNGMax" Width="50" Text="100" />
-                        <Button x:Name="RNGButton" Content="생성" Click="RNGButton_Click" />
-                        <TextBlock x:Name="RNGResultText" />
-                    </StackPanel>
-                </Expander>
-                <Expander Header="Check List">
-                    <ListBox x:Name="CheckListListBox" Height="150" DisplayMemberPath="Info" ScrollViewer.HorizontalScrollBarVisibility="Auto" />
-                </Expander>
-                <Expander Header="Dictionary">
-                    <StackPanel>
-                        <TextBox x:Name="DictTextBox" KeyDown="DictTextBox_KeyDown" />
-                        <ListBox x:Name="DictListBox" Height="150" ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
-                    </StackPanel>
-                </Expander>
-                <Expander Header="Translation">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="100"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="100"/>
-                        </Grid.RowDefinitions>
-                        <TextBox Grid.Row="0" x:Name="TranslationText1" Height="100" />
-                        <UniformGrid Grid.Row="1" Columns="2">
-                            <ComboBox x:Name="TranslationComboBox" Width="160">
-                                <ComboBoxItem Content="-> 한국어"/>
-                                <ComboBoxItem Content="-> 영어" IsSelected="True"/>
-                                <ComboBoxItem Content="-> 일본어"/>
-                                <ComboBoxItem Content="-> 중국어"/>
-                            </ComboBox>
-                            <Button x:Name="TranslationButton" Content="번역" Click="TranslationButton_Click" />
-                        </UniformGrid>
-                        <TextBox Grid.Row="2" x:Name="TranslationText2" Height="100" IsReadOnly="True"/>
-                    </Grid>
-                </Expander>
-                <Expander Header="Win Split">
-                    <StackPanel>
-                        <ComboBox x:Name="WinSplitHComboBox" />
-                        <ComboBox x:Name="WinSplitVComboBox" />
-                    </StackPanel>
-                </Expander>
-                <Expander Header="Hardware">
-                    <TextBlock x:Name="HardwareMonitoringText" />
-                </Expander>
-                <Expander Header="Unse">
-                    <TextBlock x:Name="UnseText" TextWrapping="Wrap" />
-                </Expander>
-            </StackPanel>
-        </ScrollViewer>
-
+        <ContentControl x:Name="control" Grid.Row="0"/>
 
         <DockPanel Grid.Row="1">
             <Border DockPanel.Dock="Bottom">
@@ -201,8 +103,7 @@
                         </Button>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Orientation="Horizontal">
-                        <TextBlock x:Name="ClockText" />
-                        <TextBlock x:Name="WeatherText" />
+                        <wpf:MarqueeText x:Name="monitorText" Width="400" MarqueeTimeInSeconds="5" MarqueeType="RightToLeft"/>
                         <Button x:Name="RefreshButton" Content="Refresh" Click="RefreshButton_Click" />
                     </StackPanel>
                 </Grid>
