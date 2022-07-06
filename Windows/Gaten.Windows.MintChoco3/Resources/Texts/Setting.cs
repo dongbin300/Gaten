@@ -44,7 +44,7 @@ namespace Gaten.Windows.MintChoco3.Resources.Texts
                 List<ModuleCollection> moduleCollections = new List<ModuleCollection>();
                 List<Module> modules = new List<Module>();
 
-                var items = Net.Data.IO.File.ReadToArray(PathCollection.MintChocoSettingPath);
+                var items = Net.Data.IO.GFile.ReadToArray(PathCollection.MintChocoSettingPath);
 
                 foreach (string item in items)
                 {

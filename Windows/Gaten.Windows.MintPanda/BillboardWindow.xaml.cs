@@ -25,7 +25,7 @@ namespace Gaten.Windows.MintPanda
 
             double screenWidth = SystemParameters.PrimaryScreenWidth;
             double screenHeight = SystemParameters.PrimaryScreenHeight;
-            double taskbarHeight = 30;
+            double taskbarHeight = 40;
 
             Left = 0;
             Top = screenHeight - taskbarHeight - 30;
@@ -33,8 +33,15 @@ namespace Gaten.Windows.MintPanda
             Height = 30;
         }
 
+        public void SetMarqueeText(string text)
+        {
+            Visibility = string.IsNullOrWhiteSpace(text) ? Visibility.Collapsed : Visibility.Visible;
+            marquee.MarqueeContent = text;
+        }
+
         public void SetMarqueeText(List<string> text)
         {
+            Visibility = text.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
             marquee.MarqueeContent = string.Join("  ", text);
         }
     }

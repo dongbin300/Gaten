@@ -16,6 +16,15 @@
     <sys:Double x:Key="BasicControlHeight">30</sys:Double>
     <!--#endregion-->
 
+    <Style TargetType="{x:Type Window}" x:Key="ContentWindow">
+        <Setter Property="Topmost" Value="True" />
+        <Setter Property="ResizeMode" Value="NoResize" />
+        <Setter Property="ShowInTaskbar" Value="False" />
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="0" />
+    </Style>
+
     <Style TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="{StaticResource SoftBlack}" />
     </Style>
@@ -66,16 +75,16 @@
         </Setter>
     </Style>-->
 
-    <Style TargetType="{x:Type ToggleButton}" x:Key="NeonToggleButton">
+    <Style TargetType="{x:Type Button}" x:Key="NeonButton">
         <Setter Property="Background" Value="#5B5D60" />
         <Setter Property="Foreground" Value="#F6F6F6" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Margin" Value="3" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                            Tag="#00FFC0">
+                            Tag="#00FFC0" Background="Transparent">
                         <ContentPresenter x:Name="contentPresenter"
                                           ContentTemplate="{TemplateBinding ContentTemplate}" 
                                           Content="{TemplateBinding Content}" 
@@ -89,7 +98,48 @@
                             </ContentPresenter.Resources>
                         </ContentPresenter>
                         <Border.Effect>
-                            <DropShadowEffect Color="{Binding Tag, ElementName=border}" ShadowDepth="0" Direction="0" Opacity="1" BlurRadius="20" />
+                            <DropShadowEffect Color="{Binding Tag, ElementName=border}" ShadowDepth="1" Direction="0" Opacity="1" BlurRadius="10" />
+                        </Border.Effect>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="#45484A" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="BorderThickness" Value="2" />
+                            <Setter Property="BorderBrush" Value="#00FFC0" />
+                            <Setter Property="Tag" Value="#00FFC0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type ToggleButton}" x:Key="NeonToggleButton">
+        <Setter Property="Background" Value="#5B5D60" />
+        <Setter Property="Foreground" Value="#F6F6F6" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                            Tag="#00FFC0" Background="Transparent">
+                        <ContentPresenter x:Name="contentPresenter"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                          Content="{TemplateBinding Content}" 
+                                          Margin="{TemplateBinding Padding}" 
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <ContentPresenter.Resources>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                </Style>
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
+                        <Border.Effect>
+                            <DropShadowEffect Color="{Binding Tag, ElementName=border}" ShadowDepth="1" Direction="0" Opacity="1" BlurRadius="10" />
                         </Border.Effect>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -97,6 +147,7 @@
                             <Setter Property="BorderBrush" Value="#45484A" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="BorderThickness" Value="2" />
                             <Setter Property="BorderBrush" Value="#00FFC0" />
                             <Setter Property="Tag" Value="#00FFC0" />
                         </Trigger>
@@ -205,7 +256,8 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Foreground" Value="#F4F4F4" />
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="Width" Value="120"/>
+        <Setter Property="MinWidth" Value="120"/>
+        <Setter Property="Width" Value="Auto"/>
         <Setter Property="Height" Value="30"/>
         <Setter Property="CaretBrush" Value="{StaticResource CaretColor}" />
         <Setter Property="Template">

@@ -4,7 +4,7 @@ using SystemFile = System.IO.File;
 
 namespace Gaten.Net.Data.IO
 {
-    public class File
+    public class GFile
     {
         //public static string ArraySeparator { get; set; } = "\r\n";
         public static string DictionarySeparator { get; set; } = ":";

@@ -8,7 +8,5 @@ namespace Gaten.Stock.MoqTrader.Utils
         public static string BinanceFuturesDataBasePath => Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
             "BinanceFuturesData");
-
-
     }
 }

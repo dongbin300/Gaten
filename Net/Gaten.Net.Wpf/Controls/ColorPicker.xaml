@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="Gaten.Net.Wpf.Controls.ColorPicker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Gaten.Net.Wpf.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="400"
+             x:Name="UserControl" Width="Auto" Height="Auto" Background="{x:Null}" ClipToBounds="True" MinWidth="265" MinHeight="168">
+    <Grid x:Name="LayoutRoot" Background="{x:Null}" Width="Auto" Height="Auto" Margin="1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="102.307"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.ColumnSpan="2" Background="#FF808080" CornerRadius="3" x:Name="_background"/>
+        <Border x:Name="_ColorPickerUnit" Margin="3,3,22,27" Width="Auto" Height="Auto" BorderBrush="#333" BorderThickness="1" 
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ClipToBounds="True" 
+                MouseMove="ColorPickerUnit_MouseMove" PreviewMouseLeftButtonDown="ColorPickerUnit_PreviewMouseLeftButtonDown" 
+                PreviewMouseLeftButtonUp="ColorPickerUnit_PreviewMouseLeftButtonUp" MouseEnter="ColorPickerUnit_MouseEnter">
+            <Grid x:Name="_colorPicker" Width="Auto" Height="Auto" Margin="0">
+                <Canvas x:Name="_BaseColor" Background="#F00" Margin="0,0,0.1,0.5"/>
+                <Canvas x:Name="_WhiteUnit" Visibility="Visible">
+                    <Canvas.Background>
+                        <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                            <GradientStop Color="#00FFFFFF" Offset="0.991"/>
+                            <GradientStop Color="#FFFFFFFF" Offset="0.004"/>
+                        </LinearGradientBrush>
+                    </Canvas.Background>
+                </Canvas>
+                <Canvas x:Name="_BlackUnit" Visibility="Visible">
+                    <Canvas.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#00FFFFFF" Offset="0.004"/>
+                            <GradientStop Color="#FF000000" Offset="0.987"/>
+                        </LinearGradientBrush>
+                    </Canvas.Background>
+                </Canvas>
+                <Border Margin="0,0,0,0" x:Name="_colorPickerCliping">
+                    <Canvas x:Name="_PickerStylus" Width="15" Height="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-7.5,-7.5,0,0">
+                        <Path Fill="{x:Null}" Stretch="Fill" Stroke="#FFFFFFFF" StrokeThickness="2" Width="15" Height="15" Data="M14,7.5 C14,11.089851 11.089851,14 7.5,14 C3.9101491,14 1,11.089851 1,7.5 C1,3.9101491 3.9101491,1 7.5,1 C11.089851,1 14,3.9101491 14,7.5 z"/>
+                        <Path Fill="{x:Null}" Stretch="Fill" Stroke="#FF000000" StrokeThickness="1" Width="14" Height="14" Canvas.Left="0.5" Canvas.Top="0.5" Data="M13.5,7 C13.5,10.589851 10.589851,13.5 7,13.5 C3.4101491,13.5 0.5,10.589851 0.5,7 C0.5,3.4101491 3.4101491,0.5 7,0.5 C10.589851,0.5 13.5,3.4101491 13.5,7 z"/>
+                    </Canvas>
+                </Border>
+            </Grid>
+        </Border>
+        <Border Margin="0,3,0,27" BorderThickness="0,1,1,1" BorderBrush="#FF333333" x:Name="_ColorSelectorUnit" Width="22" HorizontalAlignment="Right" MouseMove="ColorSelectorUnit_MouseMove" PreviewMouseLeftButtonDown="ColorSelectorUnit_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="ColorSelectorUnit_PreviewMouseLeftButtonUp" MouseEnter="ColorSelectorUnit_MouseEnter">
+            <Grid x:Name="_colorSelector" Width="Auto" Height="Auto" ClipToBounds="True">
+                <Path Fill="#FF000000" Stretch="Fill" StrokeThickness="0" Margin="0,-4,0,0" x:Name="_stylus" VerticalAlignment="Top" Height="8" Data="M20.976,0 L20.976,7 14.976,3.4999998 z M0.00024036384,0 L6,3.4999993 0,7 z"/>
+                <Canvas Margin="10.192,0,10.191,0" x:Name="_colorSelectorCliping"/>
+            </Grid>
+        </Border>
+        <Grid Margin="3,3,3,3" Grid.Column="1" x:Name="_ColorInfoUnit">
+            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Height="Auto" Foreground="#FFFFFFFF" Text="R" TextWrapping="Wrap" Margin="5.5,7,0,0"/>
+            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Height="Auto" Foreground="#FFFFFFFF" Text="G" TextWrapping="Wrap" Margin="5.5,31.723,0,0"/>
+            <TextBlock HorizontalAlignment="Left" Width="Auto" Height="Auto" Foreground="#FFFFFFFF" Text="B" TextWrapping="Wrap" VerticalAlignment="Top" Margin="5.5,58,0,0"/>
+            <TextBlock Width="Auto" Height="Auto" Foreground="#FFFFFFFF" Text="Copy" TextWrapping="Wrap" Margin="36.307,0,35.86,59" VerticalAlignment="Bottom" d:LayoutOverrides="Width, Height"/>
+        </Grid>
+        <Grid Margin="3,0,0,3" VerticalAlignment="Bottom" Height="24" x:Name="_ColorBarUnit"/>
+    </Grid>
+</UserControl>

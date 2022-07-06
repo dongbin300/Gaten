@@ -16,6 +16,10 @@ using System.Windows;
 
 using Path = System.IO.Path;
 using Gaten.Stock.MoqTrader.BinanceTrades.TradeModels;
+using System.ComponentModel;
+using Gaten.Net.Wpf;
+using Gaten.Net.Wpf.Models;
+using Gaten.Net.Data.Diagnostics;
 
 namespace Gaten.Stock.MoqTrader
 {
@@ -26,6 +30,7 @@ namespace Gaten.Stock.MoqTrader
     {
         DateTime mockStartTime;
         StringBuilder builder;
+        List<Worker> workers;
         int c = 0;
 
         public MainWindow()
@@ -38,19 +43,57 @@ namespace Gaten.Stock.MoqTrader
             BinanceClientApi.Init();
             //Assets.Init();
 
+            workers = new List<Worker>();
+            for (int up = 69; up < 70; up++)
+            {
+                for (int down = 30; down > 29; down--)
+                {
+                    workers.Add(new Worker()
+                    {
+                        ProgressBar = SimulateProgressBar,
+                        Action = DoWork,
+                        Arguments = (up, down)
+                    });
+                }
+            }
+
+                    
+
             mockStartTime = DateTime.Parse(Path.GetFileNameWithoutExtension(new DirectoryInfo(Path.Combine(PathUtil.BinanceFuturesDataBasePath, "BTCUSDT")).GetFiles()[^1].FullName).Split('_')[1]);
             LastUpdateText.Text = "업데이트: " + mockStartTime.ToString("yyyy-MM-dd");
-
-            StartYearComboBox.SelectedIndex = 3;
-            StartMonthComboBox.SelectedIndex = 3;
-            StartDayComboBox.SelectedIndex = 0;
-            CandleIntervalComboBox.SelectedIndex = 0;
             StatusText.Text = "";
 
             var symbols = LocalStorageApi.GetSymbols();
-            SymbolComboBox.DataSource = symbols;
+            SymbolComboBox.ItemsSource = symbols;
             AllSymbolCheckBox.IsChecked = false;
             AllPeriodCheckBox.IsChecked = true;
+        }
+
+        private void DoWork(Worker worker, object obj)
+        {
+            (var up, var down) = (ValueTuple<int, int>)obj;
+
+            int seed = 0;
+            int divisionRate = 0;
+            bool tradeLog = false;
+            bool dayLog = false;
+            DispatcherService.Invoke(() =>
+            {
+                seed = int.Parse(AmountTextBox.Text);
+                divisionRate = int.Parse(DivisionRateTextBox.Text);
+                tradeLog = TradeLogCheckBox.IsChecked ?? true;
+                dayLog = DayLogCheckBox.IsChecked ?? true;
+            });
+
+            var tradeMarket = new TradeMarket(seed, worker);
+            tradeMarket.Symbol = new Symbols.SymbolRange("BTCUSDT");
+            tradeMarket.CandleInterval = KlineInterval.OneMinute;
+            tradeMarket.TradePeriod = new DateTimes.Period(
+                new DateTime(2021, 3, 1),
+                new DateTime(2021, 3, 31));
+            tradeMarket.TradeModel = new RsiTradeModel(divisionRate, up, down);
+            var results = tradeMarket.Run(tradeLog, dayLog);
+
         }
 
         (DateTime, int) GetPeriod()
@@ -92,7 +135,6 @@ namespace Gaten.Stock.MoqTrader
         async void Trading()
         {
             builder = new();
-            var tradeMarkets = new List<TradeMarket>();
 
             (var startDate, var dayCount) = GetPeriod();
             var candleInterval = GetCandleInterval();
@@ -119,35 +161,20 @@ namespace Gaten.Stock.MoqTrader
                 //SimulateProgressBar.Maximum = 25;
                 try
                 {
-                    for (int up = 69; up < 70; up++)
+                    foreach(var worker in workers)
                     {
-                        for (int down = 30; down > 29; down--)
-                        {
-                            var tradeMarket = new TradeMarket(int.Parse(AmountTextBox.Text));
-
-                            tradeMarket.Symbol = new Symbols.SymbolRange("BTCUSDT");
-                            tradeMarket.CandleInterval = KlineInterval.OneMinute;
-                            tradeMarket.TradePeriod = new DateTimes.Period(
-                                new DateTime(2021, 1, 1),
-                                new DateTime(2021, 6, 30));
-                            tradeMarket.TradeModel = new RsiTradeModel(int.Parse(DivisionRateTextBox.Text), up, down);
-
-                            tradeMarkets.Add(tradeMarket);
-                        }
+                        worker.Start();
                     }
-
-                    var tasks = new List<Task<List<TradingResult>>>();
-                    foreach (var market in tradeMarkets)
-                    {
-                        tasks.Add(market.RunAsync(TradeLogCheckBox.IsChecked ?? true, DayLogCheckBox.IsChecked ?? true));
-                    }
-
-                    var result = await Task.WhenAll(tasks);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
+            }
+
+            while (workers.Any(x=>x.IsRunning))
+            {
+                Thread.Sleep(10);
             }
 
             builder.AppendLine();
@@ -160,7 +187,7 @@ namespace Gaten.Stock.MoqTrader
             string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "MockTrader", $"MockTrader_{DateTime.Now:yyyyMMddHHmmss}.txt");
             File.WriteAllText(filePath, builder.ToString());
 
-            Net.Data.Process.Start(filePath);
+            GProcess.Start(filePath);
 
             Close();
         }
@@ -187,7 +214,7 @@ namespace Gaten.Stock.MoqTrader
                         builder.AppendLine(result.ToString());
                     }
                     StatusText.Text = result.ToString();
-                    SimulateProgressBar.Value = ++c;
+                    //SimulateProgressBar.Value = ++c;
                     results.Add(result);
                 }
             }
@@ -265,22 +292,38 @@ namespace Gaten.Stock.MoqTrader
 
         private void BackTestButton_Click(object sender, RoutedEventArgs e)
         {
-            BtcusdtChartManager.Init(GetCandleInterval());
-            Trading();
+            Worker worker = new Worker()
+            {
+                ProgressBar = SimulateProgressBar,
+                Action = InitBtcusdt,
+            };
+            worker.Start();
+
+            //Trading();
         }
 
-        private void AllSymbolCheckBox_Checked(object sender, RoutedEventArgs e)
+        private void InitBtcusdt(Worker worker, object? obj)
         {
-            SymbolComboBox.IsEnabled = AllSymbolCheckBox.IsChecked ?? false;
+            KlineInterval interval = KlineInterval.OneMinute;
+            DispatcherService.Invoke(() =>
+            {
+                interval = GetCandleInterval();
+            });
+            BtcusdtChartManager.Init(interval, worker);
         }
 
-        private void AllPeriodCheckBox_Checked(object sender, RoutedEventArgs e)
+        private void AllSymbolCheckBox_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            SymbolComboBox.IsEnabled = !AllSymbolCheckBox.IsChecked ?? true;
+        }
+
+        private void AllPeriodCheckBox_CheckedChanged(object sender, RoutedEventArgs e)
         {
             StartYearComboBox.IsEnabled =
                 StartMonthComboBox.IsEnabled =
                 StartDayComboBox.IsEnabled =
                 BackTestPeriodTextBox.IsEnabled =
-                AllPeriodCheckBox.IsChecked ?? false;
+                !AllPeriodCheckBox.IsChecked ?? true;
         }
     }
 }

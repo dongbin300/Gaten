@@ -1,5 +1,6 @@
 using Binance.Net.Enums;
 
+using Gaten.Net.Data.Diagnostics;
 using Gaten.Stock.MockTrader.Api;
 using Gaten.Stock.MockTrader.BinanceTrade;
 using Gaten.Stock.MockTrader.BinanceTrade.TradeModels;
@@ -148,7 +149,7 @@ namespace Gaten.Stock.MockTrader
             string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "MockTrader", $"MockTrader_{DateTime.Now:yyyyMMddHHmmss}.txt");
             File.WriteAllText(filePath, builder.ToString());
 
-            Net.Data.Process.Start(filePath);
+            GProcess.Start(filePath);
 
             Close();
         }

@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Gaten.Net.Wpf;
+using Gaten.Net.Wpf.Controls;
+using Gaten.Net.Wpf.Models;
+
+using System;
+using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Gaten.Study.TestWpf
 {
@@ -21,22 +15,27 @@ namespace Gaten.Study.TestWpf
     /// </summary>
     public partial class MainWindow : Window
     {
+        Worker worker;
+
         public MainWindow()
         {
             InitializeComponent();
 
-            
-            //EventTrigger check = new EventTrigger(ToggleButton.CheckedEvent);
-            //TriggerAction action = new TriggerAction();
-            //check.Actions.Add(Act());
-            //EventTrigger uncheck = new EventTrigger(ToggleButton.UncheckedEvent);
+            worker = new()
+            {
+                ProgressBar = progressBar,
+                Action = TestMethod
+            };
+            worker.Start().Wait();
+        }
 
-            //Style style = new Style();
-            //style.Triggers.Add(check);
-            //style.Triggers.Add(uncheck);
-
-            //var a = box;
-            //box.Resources.Add(typeof(GroupBox), style);
+        private void TestMethod(Worker worker, object? obj)
+        {
+            int sum = 0;
+            worker.For(0, 10000, 1, (i) =>
+            {
+                sum += i;
+            });
         }
     }
 }

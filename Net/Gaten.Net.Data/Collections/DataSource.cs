@@ -29,7 +29,7 @@ namespace Gaten.Net.Data.Collections
         public DataSource(string csvPath)
         {
             table = new DataTable();
-            var data = IO.File.ReadToArray(csvPath);
+            var data = IO.GFile.ReadToArray(csvPath);
             AddColumns(data[0].Split(',').Select(x=>x.Replace('ꪪ', ',')).ToArray());
             for (int i = 1; i < data.Length; i++)
             {
@@ -60,7 +60,7 @@ namespace Gaten.Net.Data.Collections
             {
                 contents.Add(string.Join(',', row.ItemArray.Cast<string>().Select(r=>r.Replace(',', 'ꪪ')).ToArray()));
             }
-            IO.File.WriteByArray(path, contents);
+            IO.GFile.WriteByArray(path, contents);
         }
     }
 }

@@ -3,7 +3,7 @@ using Gaten.Net.GameRule.osu.OsuFile.Headers.Events;
 
 using System.Text;
 
-using File = Gaten.Net.Data.IO.File;
+using GFile = Gaten.Net.Data.IO.GFile;
 
 namespace Gaten.Net.GameRule.osu.OsuFile
 {
@@ -36,7 +36,7 @@ namespace Gaten.Net.GameRule.osu.OsuFile
         public void Read()
         {
             //string[] data = Regex.Split(File.Read(FileName), @"(\[\w+\]\r\n)");
-            string[] data = File.ReadToArray(FileName);
+            string[] data = GFile.ReadToArray(FileName);
 
             Version = data[0].Split('v')[1].Trim();
 
@@ -283,7 +283,7 @@ namespace Gaten.Net.GameRule.osu.OsuFile
                 builder.AppendLine();
             }
 
-            File.Write(newFileName == "" ? FileName : newFileName, builder.ToString());
+            GFile.Write(newFileName == "" ? FileName : newFileName, builder.ToString());
         }
 
         public void WriteByAnotherObject(OsuFileObject obj)
@@ -422,7 +422,7 @@ namespace Gaten.Net.GameRule.osu.OsuFile
                 builder.AppendLine();
             }
 
-            File.Write(FileName, builder.ToString());
+            GFile.Write(FileName, builder.ToString());
         }
 
 

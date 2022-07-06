@@ -1,18 +1,37 @@
-﻿using Gaten.Net.Data;
+﻿using Gaten.Net.Data.IO;
 using Gaten.Net.Network;
 
 using System;
 using System.Text.Json;
+using System.Windows;
+using System.Windows.Input;
+
 
 namespace Gaten.Windows.MintPanda.Contents
 {
-    internal class RNG
+    /// <summary>
+    /// RNG.xaml에 대한 상호 작용 논리
+    /// </summary>
+    public partial class RNG : Window
     {
         public static string key = string.Empty;
 
+        public RNG()
+        {
+            InitializeComponent();
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                DragMove();
+            }
+        }
+
         public static void Init()
         {
-            key = CommonResource.GetText("randomorg_api.txt");
+            key = GResource.GetText("randomorg_api.txt");
         }
 
         public static string Get(int min, int max)
@@ -37,6 +56,11 @@ namespace Gaten.Windows.MintPanda.Contents
             }
 
             return string.Empty;
+        }
+
+        private void RNGButton_Click(object sender, RoutedEventArgs e)
+        {
+            RNGResultText.Text = Get(int.Parse(RNGMin.Text), int.Parse(RNGMax.Text));
         }
     }
 

@@ -24,7 +24,7 @@ namespace Gaten.Net.GameRule.osu.OsbFile
             contents.Add("//Storyboard Layer 4 (Overlay)");
             contents.Add("//Storyboard Sound Samples");
 
-            Data.IO.File.WriteByArray(FileName, contents);
+            Data.IO.GFile.WriteByArray(FileName, contents);
         }
     }
 }

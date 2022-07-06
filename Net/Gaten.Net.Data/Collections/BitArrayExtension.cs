@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using Gaten.Net.Data.Converter;
+
+using System.Collections;
 
 namespace Gaten.Net.Data.Collections
 {

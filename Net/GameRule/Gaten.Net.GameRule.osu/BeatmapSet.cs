@@ -36,7 +36,7 @@
             int fruitCount = 0;
             bool hoStart = false;
 
-            var data = Data.IO.File.ReadToArray(fileName);
+            var data = Data.IO.GFile.ReadToArray(fileName);
             foreach(var str in data)
             {
                 if (hoStart) // 과일 정보 문자열

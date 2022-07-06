@@ -1,4 +1,4 @@
-﻿using Gaten.Net.Data;
+﻿using Gaten.Net.Data.IO;
 using Gaten.Net.Network;
 
 using System.Text.Json;
@@ -11,7 +11,7 @@ namespace Gaten.Windows.MintMonitor
 
         public static void Init()
         {
-            key = CommonResource.GetText("randomorg_api.txt");
+            key = GResource.GetText("randomorg_api.txt");
         }
 
         public static string Get(int min, int max)

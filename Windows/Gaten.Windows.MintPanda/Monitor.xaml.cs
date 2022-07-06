@@ -1,21 +1,15 @@
-﻿using Gaten.Net.Network;
+﻿using Gaten.Net.Data.Diagnostics;
+using Gaten.Net.Data.IO;
+using Gaten.Net.Extension;
+using Gaten.Net.Network;
 using Gaten.Net.Wpf;
 using Gaten.Windows.MintPanda.Contents;
+using Gaten.Windows.MintPanda.Utils;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Gaten.Windows.MintPanda
 {
@@ -24,56 +18,112 @@ namespace Gaten.Windows.MintPanda
     /// </summary>
     public partial class Monitor : UserControl
     {
+        #region Variables
         readonly System.Timers.Timer MainTimer = new(60000);
         readonly System.Timers.Timer ClockTimer = new(1000);
+        Action<string> action;
+
         string ClockText = string.Empty;
         string WeatherText = string.Empty;
         string DiskDriveText = string.Empty;
         string StockText = string.Empty;
         string UnseText = string.Empty;
 
-        public Monitor()
+        Go go = new();
+        RandomHanja randomHanja = new();
+        RandomWord randomWord = new();
+        CheckList checkList = new();
+        ColorPick colorPick = new();
+        Dictionary dictionary = new();
+        HardwarePrice hardwarePrice = new();
+        RNG rng = new();
+        Translation translation = new();
+        WinSplit winSplit = new();
+        TaskBarWindow taskBarWindow = new();
+        #endregion
+
+        #region Initialize
+        public Monitor(Action<string> action)
         {
             InitializeComponent();
+            InitContentWindow();
+
+            this.action = action;
+            RefreshPowerOption();
+
+            WebCrawler.Open();
+            DiskDriveText = DiskDrive.Get();
+            HardwarePrice.Init();
+            CheckList.Init();
+            RNG.Init();
+            RefreshPowerOption();
+        }
+
+        private void InitLazy()
+        {
+            WinSplit.GetProcessList();
+            WeatherText = Weather.Get();
+            StockText = Stock.Get();
+            hardwarePrice.SearchHardwarePrice();
+            checkList.RefreshCheckList();
+            UnseText = Unse.Get();
+            DiskDriveText = DiskDrive.Get();
+            randomHanja.Refresh();
+            randomWord.Refresh();
+        }
+
+        void InitContentWindow()
+        {
+            WindowUtil.InitWindow(go);
+            WindowUtil.InitWindow(randomHanja);
+            WindowUtil.InitWindow(randomWord);
+            WindowUtil.InitWindow(checkList);
+            WindowUtil.InitWindow(colorPick);
+            WindowUtil.InitWindow(dictionary);
+            WindowUtil.InitWindow(hardwarePrice);
+            WindowUtil.InitWindow(rng);
+            WindowUtil.InitWindow(translation);
+            WindowUtil.InitWindow(winSplit);
+            WindowUtil.InitWindow(taskBarWindow);
+        }
+
+        private void WindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowUtil.CheckVisibility(go, GoButton);
+            WindowUtil.CheckVisibility(randomHanja, RandomHanjaButton);
+            WindowUtil.CheckVisibility(randomWord, RandomWordButton);
+            WindowUtil.CheckVisibility(checkList, CheckListButton);
+            WindowUtil.CheckVisibility(colorPick, ColorPickButton);
+            WindowUtil.CheckVisibility(dictionary, DictionaryButton);
+            WindowUtil.CheckVisibility(hardwarePrice, HardwarePriceButton);
+            WindowUtil.CheckVisibility(rng, RNGButton);
+            WindowUtil.CheckVisibility(translation, TranslationButton);
+            WindowUtil.CheckVisibility(winSplit, WinSplitButton);
+            WindowUtil.CheckVisibility(taskBarWindow, CamoBarButton);
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             DiskDriveText = DiskDrive.Get();
             HardwarePrice.Init();
-            CheckListCollection.Init();
+            CheckList.Init();
             RNG.Init();
-
-            TranslationComboBox.SelectedIndex = 1;
 
             MainTimer.Elapsed += MainTimer_Elapsed;
             MainTimer.Start();
             ClockTimer.Elapsed += ClockTimer_Elapsed;
             ClockTimer.Start();
         }
+        #endregion
 
+        #region Timer
         private void ClockTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
             DispatcherService.Invoke(() =>
             {
                 ClockText = Clock.Get();
+                RefreshMarqueeText();
             });
-        }
-
-        private void RefreshMarqueeText()
-        {
-            StringBuilder builder = new ();
-            builder.Append(ClockButton.IsChecked ?? true ? ClockText : "");
-            builder.Append(WeatherButton.IsChecked ?? true ? WeatherText : "");
-            builder.Append(DiskDriveButton.IsChecked ?? true ? DiskDriveText : "");
-            builder.Append(StockButton.IsChecked ?? true ? StockText : "");
-            builder.Append(UnseButton.IsChecked ?? true ? UnseText : "");
-            builder.ToString()
-        }
-
-        private void TextButton_Click(object sender, RoutedEventArgs e)
-        {
-            RefreshMarqueeText();
         }
 
         private void MainTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
@@ -109,218 +159,92 @@ namespace Gaten.Windows.MintPanda
                 }
             });
         }
+        #endregion
 
-        #region Baduk
-        private void BadukButton_Click(object sender, RoutedEventArgs e)
+        #region Billboard
+        private void RefreshMarqueeText()
         {
-            Clipboard.SetText((sender as Button)?.Content.ToString());
+            List<string> strings = new List<string>();
+
+            strings.Add(ClockButton.IsChecked ?? true ? ClockText : "");
+            strings.Add(WeatherButton.IsChecked ?? true ? WeatherText : "");
+            strings.Add(DiskDriveButton.IsChecked ?? true ? DiskDriveText : "");
+            strings.Add(StockButton.IsChecked ?? true ? StockText : "");
+            strings.Add(UnseButton.IsChecked ?? true ? UnseText : "");
+
+            action(string.Join("  ", strings));
         }
 
-        private void BadukButtonChange_Click(object sender, RoutedEventArgs e)
+        private void TextButton_Click(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText(Clipboard.GetText().Replace("韩", "ㅁ").Replace("中", "韩").Replace("ㅁ", "中"));
+            RefreshMarqueeText();
         }
         #endregion
 
-        #region Dictionary
-        private void DictTextBox_KeyDown(object sender, KeyEventArgs e)
+        #region Power Option
+        private void RefreshPowerOption()
         {
-            if (e.Key == Key.Enter)
+            PowerOptionButton.IsChecked = PowerOption.Get()?.Type switch
             {
-                WebCrawler.SetUrl($"https://dict.naver.com/search.nhn?dicQuery={DictTextBox.Text}&query={DictTextBox.Text}&target=dic&ie=utf8&query_utf=&isOnlyViewEE=");
+                PowerType.Balance => true,
+                PowerType.Save => false,
+                _ => false,
+            };
+        }
 
-                DictListBox.Items.Clear();
-                var nodes = WebCrawler.SelectNodes("//dl[@class='dic_search_result']/dd");
-                foreach (var node in nodes)
-                {
-                    DictListBox.Items.Add(
-                        node.InnerText.Trim()
-                        .Replace("\t ", "")
-                        .Replace("\t", "")
-                        .Replace("\r\n", ""));
-                }
-            }
+        private void PowerOptionButton_Click(object sender, RoutedEventArgs e)
+        {
+            PowerOption.Switch();
+            RefreshPowerOption();
         }
         #endregion
 
-        #region CheckList Collection
-        void RefreshCheckList()
+        #region Application
+        public void CloseWindow()
         {
-            CheckListListBox.Items.Clear();
-            foreach (var checkList in CheckListCollection.CheckLists)
-            {
-                CheckListListBox.Items.Add(checkList);
-            }
+            go.Close();
+            randomHanja.Close();
+            randomWord.Close();
+            checkList.Close();
+            colorPick.Close();
+            dictionary.Close();
+            hardwarePrice.Close();
+            rng.Close();
+            translation.Close();
+            winSplit.Close();
+            taskBarWindow.Close();
         }
 
-        private void CheckListListBox_DoubleClick(object sender, EventArgs e)
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-            var checkList = CheckListListBox.SelectedItem as CheckList;
-
-            if (checkList == null)
-            {
-                return;
-            }
-
-            checkList.Start();
-        }
-        #endregion
-
-        #region Hardware Price Monitoring
-        //private void HardwareTextFileButton_Click(object sender, EventArgs e)
-        //{
-        //    HardwarePrice.SaveTextFile();
-        //}
-
-        //private void HardwarePriceDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    Process.Start(HardwarePrice.Devices[e.RowIndex].url);
-        //}
-
-        //public void SearchHardwarePrice()
-        //{
-        //    try
-        //    {
-        //        HardwarePriceDataGridView.Rows.Clear();
-
-        //        foreach (Device device in HardwarePrice.Devices)
-        //        {
-        //            WebCrawler.SetUrl(device.url);
-        //            var a = WebCrawler.SelectNode("//div[contains(@class,'lowest_price')]//em[@class='prc_c']");
-        //            device.price = a == null ? "0" : a.InnerText;
-        //            a = WebCrawler.SelectNode("//div[contains(@id,'lowPriceCash')]//em[@class='prc_c']");
-        //            device.cashPrice = a == null ? "0" : a.InnerText;
-
-        //            int gap = int.Parse(device.price.Replace(",", "")) - int.Parse(device.forePrice.Replace(",", ""));
-        //            device.changePrice = gap >= 0 ? $"▲{Math.Abs(gap)}" : $"▼{Math.Abs(gap)}";
-        //            gap = int.Parse(device.cashPrice.Replace(",", "")) - int.Parse(device.foreCashPrice.Replace(",", ""));
-        //            device.changeCash = gap >= 0 ? $"▲{Math.Abs(gap)}" : $"▼{Math.Abs(gap)}";
-
-        //            HardwarePriceDataGridView.Rows.Add(new string[] { device.name, device.price, device.changePrice });
-        //        }
-        //        HardwarePrice.first = false;
-        //    }
-        //    catch
-        //    {
-
-        //    }
-        //}
-
-        //public void RefreshHardwarePrice()
-        //{
-        //    // 이전에 조사했던 가격은 이전가격으로 설정
-        //    foreach (Device device in HardwarePrice.Devices)
-        //    {
-        //        if (device.price == null) continue;
-        //        device.forePrice = device.price;
-        //        if (device.cashPrice == null) continue;
-        //        device.foreCashPrice = device.cashPrice;
-        //    }
-
-        //    // 지우고
-        //    HardwarePriceDataGridView.Rows.Clear();
-
-        //    // 새롭게 조사
-        //    SearchHardwarePrice();
-        //}
-
-        #endregion
-
-        #region WinSplit
-        //private void WinSplitGetProcessList()
-        //{
-        //    var processes = WinSplit.GetProcessList();
-        //    WinSplitProcessComboBox.Items.Clear();
-        //    foreach (var process in processes)
-        //    {
-        //        WinSplitProcessComboBox.Items.Add(process);
-        //    }
-
-        //    if (WinSplitProcessComboBox.Items.Count > 0)
-        //    {
-        //        WinSplitProcessComboBox.SelectedIndex = 0;
-        //    }
-        //}
-
-        //private void WinSplitAllProcessCheckBox_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    WinSplitProcessComboBox.Enabled = !WinSplitAllProcessCheckBox.Checked;
-        //}
-
-        //private void WinSplitButton_Click(object sender, EventArgs e)
-        //{
-        //    var processName = WinSplitAllProcessCheckBox.Checked ? "" : WinSplitProcessComboBox.Text;
-
-        //    WinSplit.Split(
-        //        int.Parse(WinSplitHComboBox.Text),
-        //        int.Parse(WinSplitVComboBox.Text),
-        //        WinSplitTaskBarNoneCheckBox.Checked,
-        //        WinSplitAllProcessCheckBox.Checked,
-        //        processName);
-        //}
-
-        //private void WinSplitSuperKillButton_Click(object sender, EventArgs e)
-        //{
-        //    if (WinSplitAllProcessCheckBox.Checked)
-        //    {
-        //        if (MessageBox.Show(this, "정말 모든 프로세스를 종료하시겠습니까?", "경고", MessageBoxButtons.YesNoCancel) != DialogResult.Yes)
-        //        {
-        //            return;
-        //        }
-        //    }
-
-        //    var processName = WinSplitAllProcessCheckBox.Checked ? "" : WinSplitProcessComboBox.Text;
-
-        //    WinSplit.SuperKill(WinSplitAllProcessCheckBox.Checked, processName);
-        //}
-
-        //private void WinSplitRefreshButton_Click(object sender, EventArgs e)
-        //{
-        //    WinSplitGetProcessList();
-        //}
-
-        #endregion
-
-        #region Random Package
-        private void RNGButton_Click(object sender, RoutedEventArgs e)
-        {
-            RNGResultText.Text = RNG.Get(int.Parse(RNGMin.Text), int.Parse(RNGMax.Text));
+            InitLazy();
         }
 
-        private void RandomWordButton_Click(object sender, RoutedEventArgs e)
+        private void RestartButton_Click(object sender, RoutedEventArgs e)
         {
-            RandomWordText.Text = RandomWord.Get();
-        }
-
-        private void RandomHanjaButton_Click(object sender, RoutedEventArgs e)
-        {
-            var a = RandomHanja.Get();
-            RandomHanjaText.Text = a.Item1;
-            RandomHanjaMeanText.Text = a.Item2;
+            Application.Current.Shutdown();
+            System.Windows.Forms.Application.Restart();
         }
         #endregion
 
-        #region Translation
-        private void TranslationButton_Click(object sender, RoutedEventArgs e)
+        private void RegistryButton_Click(object sender, RoutedEventArgs e)
         {
-            if (TranslationText1.Text.Length < 1)
-            {
-                return;
-            }
-
-            string text = Translation.Get((Language)TranslationComboBox.SelectedIndex, TranslationText1.Text);
-
-            if (string.IsNullOrEmpty(text))
-            {
-                return;
-            }
-
-            TranslationText2.Text = text;
+            GProcess.Start(GPath.Windows.Down("regedit.exe"));
         }
 
+        private void NotepadButton_Click(object sender, RoutedEventArgs e)
+        {
+            GProcess.Start(GPath.Windows.Down("notepad.exe"));
+        }
 
-        #endregion
+        private void PasswordManagerButton_Click(object sender, RoutedEventArgs e)
+        {
+            GProcess.StartLocalExe("passwordmanager");
+        }
 
-        
+        private void MintConsoleButton_Click(object sender, RoutedEventArgs e)
+        {
+            GProcess.StartLocalExe("windows.console");
+        }
     }
 }

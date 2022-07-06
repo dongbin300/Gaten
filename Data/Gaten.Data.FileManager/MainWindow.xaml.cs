@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Gaten.Net.Data.Diagnostics;
+using Gaten.Net.Data.IO;
+
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -46,7 +49,7 @@ namespace Gaten.Data.FileManager
                 return;
 
             string fullPath = TreeNodeUtil.GetFullPath(selectedItem);
-            Net.Data.Process.Start(fullPath);
+            GProcess.Start(fullPath);
         }
 
         private void searchButton_Click(object sender, EventArgs e)
@@ -76,7 +79,7 @@ namespace Gaten.Data.FileManager
 
         string GetLocalPath()
         {
-            return Net.Data.CommonResource.GetText("fm-dir.ini");
+            return GResource.GetText("fm-dir.ini");
         }
 
         private void RootPathButton_Click(object sender, RoutedEventArgs e)
@@ -109,7 +112,7 @@ namespace Gaten.Data.FileManager
             var selectedString = selectedItem.ToString();
             var fullPath = selectedString.Substring(selectedString.IndexOf('(') + 1, selectedString.Length - selectedString.IndexOf('(') -2);
 
-            Net.Data.Process.Start(fullPath);
+            GProcess.Start(fullPath);
         }
     }
 }

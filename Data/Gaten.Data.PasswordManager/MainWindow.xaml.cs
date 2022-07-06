@@ -1,5 +1,5 @@
-﻿using Gaten.Net.Data;
-using Gaten.Net.Data.Collections;
+﻿using Gaten.Net.Data.Collections;
+using Gaten.Net.Data.IO;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -102,12 +102,12 @@ namespace Gaten.Data.PasswordManager
 
         void Save(Account account)
         {
-            CommonResource.AppendText("pm-data.txt", "\n" + account.SerialData);
+            GResource.AppendText("pm-data.txt", "\n" + account.SerialData);
         }
 
         void Load()
         {
-            string[] data = CommonResource.GetTextLines("pm-data.txt");
+            string[] data = GResource.GetTextLines("pm-data.txt");
 
             accounts.Clear();
             foreach (string d in data)

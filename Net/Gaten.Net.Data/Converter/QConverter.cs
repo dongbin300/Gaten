@@ -1,4 +1,4 @@
-﻿namespace Gaten.Net.Data
+﻿namespace Gaten.Net.Data.Converter
 {
     /// <summary>
     /// 테스트가 안 끝난 임시 다중 컨버터

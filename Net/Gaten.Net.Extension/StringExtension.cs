@@ -236,5 +236,10 @@ namespace Gaten.Net.Extension
 
             return !ch.Where(b => b == false).Any();
         }
+
+        public static string Down(this string path, params string[] downPaths)
+        {
+            return Path.Combine(path, Path.Combine(downPaths));
+        }
     }
 }

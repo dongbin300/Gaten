@@ -1,0 +1,14 @@
+﻿<Window x:Class="Gaten.Windows.MintPanda.Contents.ColorPick"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gaten.Windows.MintPanda.Contents"
+        xmlns:wpf="clr-namespace:Gaten.Net.Wpf.Controls;assembly=Gaten.Net.Wpf"
+        mc:Ignorable="d"
+        Title="ColorPick" Height="450" Width="800"
+        Style="{StaticResource ContentWindow}" WindowStartupLocation="CenterScreen" MouseDown="Window_MouseDown">
+    <Grid>
+        <wpf:ColorPicker />
+    </Grid>
+</Window>

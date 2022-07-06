@@ -1,7 +1,8 @@
-﻿using System.Diagnostics;
+﻿
+using System.Diagnostics;
 using System.Text;
 
-namespace Gaten.Net.Data
+namespace Gaten.Net.Data.Diagnostics
 {
     public class PerformanceChecker
     {

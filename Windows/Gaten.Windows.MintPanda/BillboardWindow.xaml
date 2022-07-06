@@ -9,6 +9,6 @@
         Title="BillboardWindow" Height="30" Width="1024"
         WindowStartupLocation="Manual" WindowStyle="None"
         Topmost="True" Margin="0" Padding="0" ResizeMode="NoResize"
-        Background="#282828">
-    <wpf:MarqueeText x:Name="marquee" />
+        ShowInTaskbar="False" Background="#282828">
+    <wpf:MarqueeText x:Name="marquee" MarqueeTimeInSeconds="20" MarqueeType="RightToLeft" />
 </Window>

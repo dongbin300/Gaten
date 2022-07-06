@@ -19,7 +19,7 @@ namespace Gaten.Windows.MintPanda.Contents
                     string availableFreeSpace = di.AvailableFreeSpace / 1_000_000_000 + "GB";
                     string usingPercent = (int)(100 - (double)di.AvailableFreeSpace / di.TotalSize * 100) + "%";
 
-                    builder.AppendLine($"{label}({volume}) {availableFreeSpace}({usingPercent})");
+                    builder.Append($"{label}({volume}) {availableFreeSpace}({usingPercent}) ");
                 }
 
                 return builder.ToString();

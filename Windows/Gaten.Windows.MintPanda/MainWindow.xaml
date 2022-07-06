@@ -6,109 +6,19 @@
         xmlns:local="clr-namespace:Gaten.Windows.MintPanda"
         xmlns:wpf="clr-namespace:Gaten.Net.Wpf.Controls;assembly=Gaten.Net.Wpf"
         mc:Ignorable="d"
-        Title="Mint Panda" Height="470" Width="400" Icon="/MintPanda;component/Resources/Images/panda.ico"
-        WindowStyle="None"
+        Title="Mint Panda" Height="450" Width="450" Icon="/MintPanda;component/Resources/Images/panda.ico"
+        WindowStyle="None" WindowStartupLocation="Manual"
         Loaded="Window_Loaded" Closing="Window_Closing" Topmost="True" MinHeight="70" AllowsTransparency="True"
-        MouseMove="Window_MouseMove"
         MouseEnter="Window_MouseEnter"
         MouseLeave="Window_MouseLeave"
+        MouseDown="Window_MouseDown"
         MouseDoubleClick="Window_MouseDoubleClick"
         KeyDown="Window_KeyDown">
     <Window.Resources>
         <SolidColorBrush x:Key="MainColor" Color="#00FFC0" Opacity="0.8"/>
-
-        <Style TargetType="{x:Type Expander}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Expander}">
-                        <DockPanel Margin="3">
-                            <ToggleButton x:Name="ExpanderButton" DockPanel.Dock="Top" OverridesDefaultStyle="True" Content="{TemplateBinding Header}"
-                                      IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}" >
-                                <ToggleButton.Template>
-                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                        <Border Grid.Row="0" BorderThickness="1" BorderBrush="{StaticResource MainColor}" Background="{StaticResource MainColor}">
-                                            <Label Foreground="White">
-                                                <ContentPresenter x:Name="HeaderContent" Margin="4" ContentSource="Content" RecognizesAccessKey="True" />
-                                            </Label>
-                                        </Border>
-                                    </ControlTemplate>
-                                </ToggleButton.Template>
-                            </ToggleButton>
-                            <Border Grid.Row="1" BorderThickness="3,0,3,3" BorderBrush="{StaticResource MainColor}">
-                                <ContentPresenter x:Name="ExpanderContent" Visibility="Collapsed" DockPanel.Dock="Bottom"/>
-                            </Border>
-                        </DockPanel>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsExpanded" Value="True">
-                                <Setter TargetName="ExpanderContent" Property="Visibility" Value="Visible"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </Window.Resources>
 
     <Grid x:Name="MainGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="400"/>
-            <RowDefinition Height="70"/>
-        </Grid.RowDefinitions>
-        <ContentControl x:Name="control" Grid.Row="0"/>
-
-        <DockPanel Grid.Row="1">
-            <Border DockPanel.Dock="Bottom">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="36"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0" Orientation="Horizontal">
-                        <Border x:Name="PowerOptionBorder" BorderThickness="3">
-                            <Button x:Name="PowerOptionButton" Width="30" Height="30" Margin="0" Click="PowerOptionButton_Click">
-                                <Button.Content>
-                                    <Image Source="/MintPanda;component/Resources/Images/power-option.png" />
-                                </Button.Content>
-                            </Button>
-                        </Border>
-                        <Button x:Name="ColorPickButton" Width="30" Height="30" Margin="3" Click="ColorPickButton_Click">
-                            <Button.Content>
-                                <Image Source="/MintPanda;component/Resources/Images/color-pick.png" />
-                            </Button.Content>
-                        </Button>
-                        <Button x:Name="ShieldButton" Width="30" Height="30" Margin="3" Click="ShieldButton_Click">
-                            <Button.Content>
-                                <Image Source="/MintPanda;component/Resources/Images/shield.png" />
-                            </Button.Content>
-                        </Button>
-                        <Button x:Name="RegeditButton" Width="30" Height="30" Margin="3" Click="RegeditButton_Click">
-                            <Button.Content>
-                                <Image Source="/MintPanda;component/Resources/Images/shield.png" />
-                            </Button.Content>
-                        </Button>
-                        <Button x:Name="NotepadButton" Width="30" Height="30" Margin="3" Click="NotepadButton_Click">
-                            <Button.Content>
-                                <Image Source="/MintPanda;component/Resources/Images/shield.png" />
-                            </Button.Content>
-                        </Button>
-                        <Button x:Name="PasswordManagerButton" Width="30" Height="30" Margin="3" Click="PasswordManagerButton_Click">
-                            <Button.Content>
-                                <Image Source="/MintPanda;component/Resources/Images/shield.png" />
-                            </Button.Content>
-                        </Button>
-                        <Button x:Name="ConsoleButton" Width="30" Height="30" Margin="3" Click="ConsoleButton_Click">
-                            <Button.Content>
-                                <Image Source="/MintPanda;component/Resources/Images/shield.png" />
-                            </Button.Content>
-                        </Button>
-                    </StackPanel>
-                    <StackPanel Grid.Row="1" Orientation="Horizontal">
-                        <wpf:MarqueeText x:Name="monitorText" Width="400" MarqueeTimeInSeconds="5" MarqueeType="RightToLeft"/>
-                        <Button x:Name="RefreshButton" Content="Refresh" Click="RefreshButton_Click" />
-                    </StackPanel>
-                </Grid>
-
-            </Border>
-        </DockPanel>
+        <ContentControl x:Name="control"/>
     </Grid>
 </Window>

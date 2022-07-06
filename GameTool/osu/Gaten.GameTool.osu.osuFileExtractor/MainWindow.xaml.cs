@@ -15,10 +15,9 @@ using System.Windows.Shapes;
 using System.IO;
 using Path = System.IO.Path;
 using System.Windows.Forms;
-
-using Gaten.Net.Data;
 using Gaten.Net.GameRule.osu;
 using System.Runtime.InteropServices;
+using Gaten.Net.Data.IO;
 
 namespace Gaten.GameTool.osu.osuFileExtractor
 {
@@ -204,7 +203,7 @@ namespace Gaten.GameTool.osu.osuFileExtractor
         {
             try
             {
-                var data = CommonResource.GetTextDictionary("fe-dir.ini");
+                var data = GResource.GetTextDictionary("fe-dir.ini");
                 inDir = data["IN"];
                 outDir = data["OUT"];
             }
@@ -225,7 +224,7 @@ namespace Gaten.GameTool.osu.osuFileExtractor
                 { "OUT", outDir }
             };
 
-            CommonResource.SetTextDictionary("fe-dir.ini", data);
+            GResource.SetTextDictionary("fe-dir.ini", data);
         }
 
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)

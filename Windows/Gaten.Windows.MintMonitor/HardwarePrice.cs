@@ -1,5 +1,6 @@
-﻿using Gaten.Net.Data;
+﻿using Gaten.Net.Data.IO;
 using Gaten.Net.Network;
+
 using System.Text;
 
 namespace Gaten.Windows.MintMonitor
@@ -43,12 +44,12 @@ namespace Gaten.Windows.MintMonitor
                 }
             }
 
-            File.WriteAllText(Path.Combine(CommonResource.GetPath("hm"), "" + now.Year + now.Month + now.Day + now.Hour + now.Minute + now.Second + ".txt"), builder.ToString());
+            File.WriteAllText(Path.Combine(GResource.GetPath("hm"), "" + now.Year + now.Month + now.Day + now.Hour + now.Minute + now.Second + ".txt"), builder.ToString());
         }
 
         public static void LoadTextFile()
         {
-            var files = new DirectoryInfo(CommonResource.GetPath("hm")).GetFiles("*.txt").ToList();
+            var files = new DirectoryInfo(GResource.GetPath("hm")).GetFiles("*.txt").ToList();
             var filePath = files[Enumerable.Range(0, files.Count).Aggregate((max, i) => files[max].LastWriteTime > files[i].LastWriteTime ? max : i)].FullName;
 
             var data = File.ReadAllLines(filePath);

@@ -17,7 +17,7 @@ namespace Gaten.Windows.MintPanda.Contents
                 var allDog = splitSource[1].Replace("\r\n", "").Replace("\n", "");
                 var dog94 = splitSource[6].Replace("1994년생, ", "").Replace("\r\n", "").Replace("\n", "");
 
-                return allDog + "\n" + dog94;
+                return allDog + " " + dog94;
             }
             catch
             {

@@ -1,4 +1,4 @@
-using Gaten.Net.Data;
+using Gaten.Net.Data.IO;
 
 namespace Gaten.Study.AiChat
 {
@@ -10,7 +10,7 @@ namespace Gaten.Study.AiChat
         public MainForm()
         {
             InitializeComponent();
-            log = new KakaoTalkChatLog(CommonResource.GetTextLines("aic-test.txt"));
+            log = new KakaoTalkChatLog(GResource.GetTextLines("aic-test.txt"));
         }
 
         /// <summary>

@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using Gaten.Net.Data.Diagnostics;
+
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -129,7 +131,7 @@ namespace Gaten.Windows.SmartOpen
                 return;
             }
 
-            Net.Data.Process.Start(navigator.Directory);
+            GProcess.Start(navigator.Directory);
         }
     }
 }

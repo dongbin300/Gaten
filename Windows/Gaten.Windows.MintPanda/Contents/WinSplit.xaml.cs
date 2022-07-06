@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Shapes;
 
 namespace Gaten.Windows.MintPanda.Contents
 {
-    internal class WinSplit
+    /// <summary>
+    /// WinSplit.xaml에 대한 상호 작용 논리
+    /// </summary>
+    public partial class WinSplit : Window
     {
         [DllImport("user32.dll", SetLastError = true)]
         static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
@@ -27,19 +30,32 @@ namespace Gaten.Windows.MintPanda.Contents
             "nvidia share"
         };
 
+        public WinSplit()
+        {
+            InitializeComponent();
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                DragMove();
+            }
+        }
+
         public static void Split(int widthCount, int heightCount, bool taskBarNone, bool allProcess, string processName = "")
         {
             if (taskBarNone)
             {
-                screenRectangle.Height = (int)System.Windows.SystemParameters.PrimaryScreenHeight - TaskBarHeight;
+                screenRectangle.Height = SystemParameters.PrimaryScreenHeight - TaskBarHeight;
             }
             else
             {
-                screenRectangle.Height = (int)System.Windows.SystemParameters.PrimaryScreenHeight;
+                screenRectangle.Height = SystemParameters.PrimaryScreenHeight;
             }
 
-            int appWidth = screenRectangle.Width / widthCount;
-            int appHeight = screenRectangle.Height / heightCount;
+            var appWidth = screenRectangle.Width / widthCount;
+            var appHeight = screenRectangle.Height / heightCount;
 
             var processes = allProcess ? GetWindowProcesses() : GetWindowProcesses(processName);
 
@@ -54,7 +70,7 @@ namespace Gaten.Windows.MintPanda.Contents
 
                 if (handle != IntPtr.Zero)
                 {
-                    MoveWindow(handle, appWidth * (i % widthCount), appHeight * (i / heightCount), appWidth, appHeight, true);
+                    MoveWindow(handle, (int)(appWidth * (i % widthCount)), (int)(appHeight * (i / heightCount)), (int)appWidth, (int)appHeight, true);
                 }
             }
         }

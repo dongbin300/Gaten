@@ -9,10 +9,10 @@ namespace Gaten.Net.GameRule.NGD2
             Spirit.Init();
 
             // 설정 불러오기
-            var odata = Data.IO.File.ReadToDictionary("option.ini");
+            var odata = Data.IO.GFile.ReadToDictionary("option.ini");
 
             // 캐릭터 불러오기
-            var cdata = Data.IO.File.ReadToDictionary("stats.txt");
+            var cdata = Data.IO.GFile.ReadToDictionary("stats.txt");
 
             Character.Level = int.Parse(cdata["Level"]);
             Character.Xp = int.Parse(cdata["Xp"]);

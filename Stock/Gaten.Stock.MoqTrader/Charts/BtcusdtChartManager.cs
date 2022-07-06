@@ -1,5 +1,6 @@
 ﻿using Binance.Net.Enums;
 
+using Gaten.Net.Wpf.Models;
 using Gaten.Stock.MoqTrader.Apis;
 using Gaten.Stock.MoqTrader.Utils;
 
@@ -17,16 +18,16 @@ namespace Gaten.Stock.MoqTrader.Charts
         public static List<ChartInfo>? Charts { get; set; }
         public static ChartInfo? GetChart(DateTime date) => Charts?.Find(c => c.Date.Equals(date));
 
-        public static void Init(KlineInterval candleInterval)
+        public static void Init(KlineInterval candleInterval, Worker worker)
         {
             Charts = new List<ChartInfo>();
 
             var symbol = "BTCUSDT";
-            var baseDate = new DateTime(2020, 1, 1);
+            var baseDate = new DateTime(2021, 1, 1);
 
             try
             {
-                for (int i = 0; i < 730; i++)
+                worker.For(0, 365, 1, (i) =>
                 {
                     DateTime startTime = baseDate.AddDays(i);
                     var candles = LocalStorageApi.GetCandlesForOneDay(symbol, candleInterval, startTime);
@@ -44,7 +45,7 @@ namespace Gaten.Stock.MoqTrader.Charts
                         quotes.GetBollingerBands(20, 3).ToList(),
                         quotes.GetBollingerBands(20, 0.5).ToList()
                     ));
-                }
+                });
             }
             catch (FileNotFoundException)
             {

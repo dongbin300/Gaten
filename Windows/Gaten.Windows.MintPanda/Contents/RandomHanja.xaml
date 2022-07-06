@@ -1,0 +1,23 @@
+﻿<Window x:Class="Gaten.Windows.MintPanda.Contents.RandomHanja"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gaten.Windows.MintPanda.Contents"
+        xmlns:wpf="clr-namespace:Gaten.Net.Wpf.Controls;assembly=Gaten.Net.Wpf"
+        mc:Ignorable="d" Title="RandomHanja" Height="100" Width="180" 
+        Style="{StaticResource ContentWindow}" WindowStartupLocation="CenterScreen" MouseDown="Window_MouseDown">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="RandomHanjaText" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" FontSize="70" Margin="5,0,0,20" />
+        <Button x:Name="RandomHanjaButton" Grid.Row="0" Grid.Column="1" Content="생성" Click="RandomHanjaButton_Click" />
+        <TextBlock x:Name="RandomHanjaMeanText" Grid.Row="1" Grid.Column="1" />
+    </Grid>
+</Window>

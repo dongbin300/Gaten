@@ -1,6 +1,6 @@
 using CoinMarketCap;
 
-using Gaten.Net.Data;
+using Gaten.Net.Data.IO;
 
 namespace Gaten.Stock.CMCMonitor
 {
@@ -15,7 +15,7 @@ namespace Gaten.Stock.CMCMonitor
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            string apiKey = CommonResource.GetText("coinmarketcap_api.txt");
+            string apiKey = GResource.GetText("coinmarketcap_api.txt");
             client = new CoinMarketCapClient(apiKey);
             var result = Task.Run(async () =>
             {

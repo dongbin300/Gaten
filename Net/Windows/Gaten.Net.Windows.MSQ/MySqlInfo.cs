@@ -1,4 +1,6 @@
-﻿namespace Gaten.Net.Windows.MSQ
+﻿using Gaten.Net.Data.IO;
+
+namespace Gaten.Net.Windows.MSQ
 {
     public class MySqlInfo
     {
@@ -11,7 +13,7 @@
         {
             try
             {
-                var data = Data.CommonResource.MySqlInfoText;
+                var data = GResource.MySqlInfoText;
                 ServerIp = data[0];
                 Port = data[1];
                 Id = data[2];

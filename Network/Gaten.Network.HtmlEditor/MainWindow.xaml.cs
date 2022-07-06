@@ -1,4 +1,4 @@
-﻿using Gaten.Net.Data;
+﻿using Gaten.Net.Data.IO;
 
 using System;
 using System.Collections.Generic;
@@ -27,7 +27,7 @@ namespace Gaten.Network.HtmlEditor
         {
             InitializeComponent();
 
-            Editor.Text = CommonResource.GetText("he-test.html");
+            Editor.Text = GResource.GetText("he-test.html");
         }
 
         private void Editor_TextChanged(object sender, TextChangedEventArgs e)
@@ -51,8 +51,8 @@ namespace Gaten.Network.HtmlEditor
 
             try
             {
-                CommonResource.SetText("he-test.html", Editor.Text);
-                PreviewWebBrowser.Navigate(CommonResource.GetPath("he-test.html"));
+                GResource.SetText("he-test.html", Editor.Text);
+                PreviewWebBrowser.Navigate(GResource.GetPath("he-test.html"));
             }
             catch
             {

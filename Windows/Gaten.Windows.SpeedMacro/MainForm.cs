@@ -1,4 +1,5 @@
 ﻿using Gaten.Net.Windows.Forms;
+using Gaten.Net.Windows;
 
 using System.Runtime.InteropServices;
 
@@ -6,20 +7,7 @@ namespace Gaten.Windows.SpeedMacro
 {
     public partial class MainForm : Form
     {
-        [DllImport("user32.dll")]
-        static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
-        private const int MOUSEEVENTF_ABSOLUTE = 0x8000;
-        private const int MOUSEEVENTF_LEFTDOWN = 0x0002;
-        private const int MOUSEEVENTF_LEFTUP = 0x0004;
-        private const int MOUSEEVENTF_MIDDLEDOWN = 0x0020;
-        private const int MOUSEEVENTF_MIDDLEUP = 0x0040;
-        private const int MOUSEEVNETF_MOVE = 0x0001;
-        private const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
-        private const int MOUSEEVENTF_RIGHTUP = 0x0010;
-        private const int MOUSEEVENTF_WHEEL = 0x0800;
-        private const int MOUSEEVENTF_XDOWN = 0x0080;
-        private const int MOUSEEVENTF_XUP = 0x0100;
-        private const int MOUSEEVENTF_HWHEEL = 0x1000;
+        
         private bool isStart = false;
         private bool fastInputMode = false;
         private bool loopMode = false;
@@ -71,46 +59,6 @@ namespace Gaten.Windows.SpeedMacro
                 ProcedureListBox.BackColor = Color.White;
                 ProcedureListBox.ForeColor = Color.Black;
             }
-        }
-
-        private new void MouseClick()
-        {
-            mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-            Thread.Sleep(50);
-            mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
-        }
-
-        private new void MouseClick(int x, int y)
-        {
-            Cursor.Position = new Point(x, y);
-            MouseClick();
-        }
-
-        private new void MouseDoubleClick()
-        {
-            MouseClick();
-            Thread.Sleep(50);
-            MouseClick();
-        }
-
-        private new void MouseDoubleClick(int x, int y)
-        {
-            MouseClick(x, y);
-            Thread.Sleep(50);
-            MouseClick(x, y);
-        }
-
-        private void MouseRightClick()
-        {
-            mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
-            Thread.Sleep(50);
-            mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
-        }
-
-        private void MouseRightClick(int x, int y)
-        {
-            Cursor.Position = new Point(x, y);
-            MouseRightClick();
         }
 
         private void ClickButton_Click(object sender, EventArgs e)
@@ -588,17 +536,17 @@ namespace Gaten.Windows.SpeedMacro
                             case "Click":
                                 x = int.Parse(DataSubstring(str, "(", ",", 0));
                                 y = int.Parse(DataSubstring(str, ", ", ")", 0));
-                                MouseClick(x, y);
+                                InputSimulator.MouseClick(x, y);
                                 break;
                             case "DClick":
                                 x = int.Parse(DataSubstring(str, "(", ",", 0));
                                 y = int.Parse(DataSubstring(str, ", ", ")", 0));
-                                MouseDoubleClick(x, y);
+                                InputSimulator.MouseDoubleClick(x, y);
                                 break;
                             case "RClick":
                                 x = int.Parse(DataSubstring(str, "(", ",", 0));
                                 y = int.Parse(DataSubstring(str, ", ", ")", 0));
-                                MouseRightClick(x, y);
+                                InputSimulator.MouseRightClick(x, y);
                                 break;
                             case "Press":
                                 SendKeys.SendWait(SendKeysString(DataSubstring(str, "(", ")", 0)));
@@ -676,15 +624,15 @@ namespace Gaten.Windows.SpeedMacro
                 case "Click":
                 case "DClick":
                 case "RClick":
-                    msForm.Location = new Point(Cursor.Position.X + 10, Cursor.Position.Y + 10);
+                    msForm.Location = new System.Drawing.Point(Cursor.Position.X + 10, Cursor.Position.Y + 10);
                     msForm.ShowDialog();
                     break;
                 case "Press":
-                    kbsForm.Location = new Point(Cursor.Position.X + 10, Cursor.Position.Y + 10);
+                    kbsForm.Location = new System.Drawing.Point(Cursor.Position.X + 10, Cursor.Position.Y + 10);
                     kbsForm.ShowDialog();
                     break;
                 case "Wait":
-                    tsForm.Location = new Point(Cursor.Position.X + 10, Cursor.Position.Y + 10);
+                    tsForm.Location = new System.Drawing.Point(Cursor.Position.X + 10, Cursor.Position.Y + 10);
                     tsForm.ShowDialog();
                     break;
             }

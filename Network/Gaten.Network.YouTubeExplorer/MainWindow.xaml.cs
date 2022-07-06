@@ -1,5 +1,4 @@
-﻿using Gaten.Net.Data;
-using Gaten.Net.Network;
+﻿using Gaten.Net.Network;
 
 using OpenQA.Selenium;
 
@@ -11,6 +10,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Gaten.Net.Wpf;
+using Gaten.Net.Data.IO;
 
 namespace Gaten.Network.YouTubeExplorer
 {
@@ -20,7 +20,7 @@ namespace Gaten.Network.YouTubeExplorer
     public partial class MainWindow : Window
     {
         Random random = new Random();
-        string path = CommonResource.GetPath("yt/log.csv");
+        string path = GResource.GetPath("yt/log.csv");
         bool IsRunning = false;
         Thread worker;
 
@@ -53,7 +53,7 @@ namespace Gaten.Network.YouTubeExplorer
                     Thread.Sleep(1500);
 
                     var str = string.Join(',', videoInfo.Video.Name, videoInfo.Video.Url, videoInfo.Channel.Name, videoInfo.Channel.Url, videoInfo.View, videoInfo.Upload) + "\r\n";
-                    CommonResource.AppendText("yt/log.csv", str);
+                    GResource.AppendText("yt/log.csv", str);
                     DispatcherService.Invoke(() =>
                     {
                         StatusText.Text = str;
@@ -69,7 +69,7 @@ namespace Gaten.Network.YouTubeExplorer
             {
                 if (!File.Exists(path))
                 {
-                    CommonResource.SetText("yt/log.csv", "Title,Url,Channel,Channel_Url,View,Upload\r\n");
+                    GResource.SetText("yt/log.csv", "Title,Url,Channel,Channel_Url,View,Upload\r\n");
                 }
 
                 SeleniumWebCrawler.CreateNoWindow = true;

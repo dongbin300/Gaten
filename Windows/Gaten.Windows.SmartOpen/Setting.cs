@@ -1,4 +1,4 @@
-﻿using Gaten.Net.Data;
+﻿using Gaten.Net.Data.IO;
 using Gaten.Net.Windows.Wpf;
 
 using System.Collections.Generic;
@@ -37,12 +37,12 @@ namespace Gaten.Windows.SmartOpen
             contents.Add(MainForegroundColor.Color.G.ToString());
             contents.Add(MainForegroundColor.Color.B.ToString());
 
-            CommonResource.SetTextLines("so-set.ini", contents.ToArray());
+            GResource.SetTextLines("so-set.ini", contents.ToArray());
         }
 
         public static void LoadSettingsData()
         {
-            var data = CommonResource.GetTextLines("so-set.ini");
+            var data = GResource.GetTextLines("so-set.ini");
 
             Count = int.Parse(data[0]);
             Size = int.Parse(data[1]);
@@ -63,12 +63,12 @@ namespace Gaten.Windows.SmartOpen
                 contents.Add(nav.Directory);
             }
 
-            CommonResource.SetTextLines("so-dset.ini", contents.ToArray());
+            GResource.SetTextLines("so-dset.ini", contents.ToArray());
         }
 
         public static void LoadDirectoryData()
         {
-            var data = CommonResource.GetTextLines("so-dset.ini");
+            var data = GResource.GetTextLines("so-dset.ini");
 
             Navigators = new List<Navigator>();
             for (int i = 0; i < data.Length; i += 3)

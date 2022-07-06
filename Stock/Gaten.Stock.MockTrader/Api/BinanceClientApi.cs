@@ -4,7 +4,7 @@ using Binance.Net.Objects;
 
 using CryptoExchange.Net.Authentication;
 
-using Gaten.Net.Data;
+using Gaten.Net.Data.IO;
 using Gaten.Stock.MockTrader.Chart;
 
 using System.Text;
@@ -19,7 +19,7 @@ namespace Gaten.Stock.MockTrader.Api
         {
             try
             {
-                var data = CommonResource.BinanceApiKeyText;
+                var data = GResource.BinanceApiKeyText;
 
                 binanceClient = new BinanceClient(new BinanceClientOptions
                 {

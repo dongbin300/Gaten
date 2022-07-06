@@ -1,4 +1,4 @@
-﻿using Gaten.Net.Data;
+﻿using Gaten.Net.Data.Diagnostics;
 using Gaten.Net.Network;
 using Gaten.Net.Windows;
 
@@ -159,7 +159,7 @@ namespace Gaten.Windows.MintMonitor
 
         private void HardwarePriceDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            Process.Start(HardwarePrice.Devices[e.RowIndex].url);
+            GProcess.Start(HardwarePrice.Devices[e.RowIndex].url);
         }
 
         public void SearchHardwarePrice()

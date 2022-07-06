@@ -20,7 +20,7 @@ namespace Gaten.Windows.MintPanda.Contents
             //var source = client.DownloadString("https://coinmarketcap.com/ko/currencies/green-satoshi-token/");
             
 
-            return $"현대차  {value1}  {rate1}\n현우산업  {value2}  {rate2}";
+            return $"현대차 {value1} {rate1}  현우산업 {value2} {rate2}";
         }
     }
 }

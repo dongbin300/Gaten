@@ -1,4 +1,6 @@
-﻿namespace Gaten.Stock.MoqTrader.Progresses
+﻿using System;
+
+namespace Gaten.Stock.MoqTrader.Progresses
 {
     internal class RunProgress
     {

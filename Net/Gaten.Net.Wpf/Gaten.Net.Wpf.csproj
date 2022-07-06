@@ -10,4 +10,8 @@
     <Folder Include="Extensions\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Gaten.Net.Windows\Gaten.Net.Windows.csproj" />
+  </ItemGroup>
+
 </Project>

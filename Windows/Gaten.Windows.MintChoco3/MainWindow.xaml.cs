@@ -52,7 +52,7 @@ namespace Gaten.Windows.MintChoco3
 
         void LoadModuleData()
         {
-            var data = Net.Data.IO.File.ReadToArray(PathCollection.MintChocoSettingPath);
+            var data = Net.Data.IO.GFile.ReadToArray(PathCollection.MintChocoSettingPath);
 
             foreach (var d in data)
             {

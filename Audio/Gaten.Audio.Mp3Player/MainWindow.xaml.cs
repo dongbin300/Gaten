@@ -1,4 +1,4 @@
-﻿using Gaten.Net.Data;
+﻿using Gaten.Net.Data.IO;
 
 using System;
 using System.Collections.Generic;
@@ -60,7 +60,7 @@ namespace Gaten.Audio.Mp3Player
         {
             try
             {
-                List<FileInfo> files = new DirectoryInfo(CommonResource.GetText("mpp-dir.txt")).GetFiles("*.mp3").ToList();
+                List<FileInfo> files = new DirectoryInfo(GResource.GetText("mpp-dir.txt")).GetFiles("*.mp3").ToList();
 
                 foreach (FileInfo fi in files)
                 {

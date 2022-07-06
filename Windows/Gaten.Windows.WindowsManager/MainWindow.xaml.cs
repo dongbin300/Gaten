@@ -1,4 +1,4 @@
-﻿using Gaten.Net.Data;
+﻿using Gaten.Net.Data.IO;
 
 using Microsoft.Win32;
 
@@ -60,7 +60,7 @@ namespace Gaten.Windows.WindowsManager
         #region 정품인증
         private void W7Button_Click(object sender, RoutedEventArgs e)
         {
-            string path = CommonResource.GetPath("wauth/w7.bat");
+            string path = GResource.GetPath("wauth/w7.bat");
             ProcessStartInfo psi = new()
             {
                 FileName = path,
@@ -74,7 +74,7 @@ namespace Gaten.Windows.WindowsManager
 
         private void W10ProButton_Click(object sender, RoutedEventArgs e)
         {
-            string path = CommonResource.GetPath("wauth/w10pro.bat");
+            string path = GResource.GetPath("wauth/w10pro.bat");
             ProcessStartInfo psi = new()
             {
                 FileName = path,
@@ -88,7 +88,7 @@ namespace Gaten.Windows.WindowsManager
 
         private void W10HomeButton_Click(object sender, RoutedEventArgs e)
         {
-            string path = CommonResource.GetPath("wauth/w10home.bat");
+            string path = GResource.GetPath("wauth/w10home.bat");
             ProcessStartInfo psi = new()
             {
                 FileName = path,
@@ -102,7 +102,7 @@ namespace Gaten.Windows.WindowsManager
 
         private void W10EnterpriseButton_Click(object sender, RoutedEventArgs e)
         {
-            string path = CommonResource.GetPath("wauth/w10ep.bat");
+            string path = GResource.GetPath("wauth/w10ep.bat");
             ProcessStartInfo psi = new()
             {
                 FileName = path,
@@ -116,7 +116,7 @@ namespace Gaten.Windows.WindowsManager
 
         private void W10EducationButton_Click(object sender, RoutedEventArgs e)
         {
-            string path = CommonResource.GetPath("wauth/w10edu.bat");
+            string path = GResource.GetPath("wauth/w10edu.bat");
             ProcessStartInfo psi = new()
             {
                 FileName = path,

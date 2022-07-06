@@ -1,4 +1,6 @@
-﻿namespace Gaten.Windows.MintMonitor
+﻿using Gaten.Net.Data.Diagnostics;
+
+namespace Gaten.Windows.MintMonitor
 {
     internal class CheckList
     {
@@ -16,7 +18,7 @@
 
         public void Start()
         {
-            Net.Data.Process.Start(Url);
+            GProcess.Start(Url);
         }
     }
 }

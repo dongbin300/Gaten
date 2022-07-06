@@ -1,4 +1,5 @@
 ﻿using Gaten.Net.Data.Collections;
+using Gaten.Net.Data.Diagnostics;
 using Gaten.Net.Windows;
 
 using System;
@@ -87,7 +88,7 @@ namespace Gaten.Windows.RestoreWindow
                 var dataSource = new DataSource("data.csv");
                 foreach (DataRow row in dataSource.table.Rows)
                 {
-                    var process = Net.Data.Process.Start(row["FileName"].ToString());
+                    var process = GProcess.Start(row["FileName"].ToString());
                     process.WaitForExit();
                     var handle = process.MainWindowHandle;
                     WinAPI.MoveWindow(handle, int.Parse(row["X"].ToString()), int.Parse(row["Y"].ToString()), int.Parse(row["Width"].ToString()), int.Parse(row["Height"].ToString()), false);

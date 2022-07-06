@@ -177,7 +177,7 @@ namespace Gaten.GameTool.osu.osuBeatmapDownloader
         {
             try
             {
-                Net.Data.IO.File.AppendLine(General.DownloadedListPath, beatmapNumber);
+                Net.Data.IO.GFile.AppendLine(General.DownloadedListPath, beatmapNumber);
             }
             catch (Exception ex)
             {
@@ -200,7 +200,7 @@ namespace Gaten.GameTool.osu.osuBeatmapDownloader
                 }
 
                 downloadedLists.Clear();
-                var lists = Net.Data.IO.File.ReadToArray(General.DownloadedListPath);
+                var lists = Net.Data.IO.GFile.ReadToArray(General.DownloadedListPath);
                 foreach (string str in lists)
                 {
                     downloadedLists.Add(str);

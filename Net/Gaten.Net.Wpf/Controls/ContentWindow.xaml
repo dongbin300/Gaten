@@ -1,0 +1,15 @@
+﻿<Window x:Class="Gaten.Net.Wpf.Controls.ContentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gaten.Net.Wpf.Controls"
+        mc:Ignorable="d"
+        Title="ContentWindow" Height="450" Width="800"
+        Style="{StaticResource ContentWindow}" MouseMove="Window_MouseMove">
+    <Border BorderBrush="White" BorderThickness="0.5">
+        <Grid>
+            
+        </Grid>
+    </Border>
+</Window>
