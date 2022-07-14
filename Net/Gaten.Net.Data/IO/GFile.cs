@@ -101,5 +101,18 @@ namespace Gaten.Net.Data.IO
 
             Append(path, builder.ToString());
         }
+
+        public static void CopyDirectory(string sourcePath, string destPath)
+        {
+            foreach (var dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+            {
+                Directory.CreateDirectory(dirPath.Replace(sourcePath, destPath));
+            }
+
+            foreach (var newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
+            {
+                SystemFile.Copy(newPath, newPath.Replace(sourcePath, destPath), true);
+            }
+        }
     }
 }

@@ -23,9 +23,19 @@ namespace Gaten.Net.Data.Diagnostics
             return Process.Start(info);
         }
 
-        public static Process? StartLocalExe(string keyword)
+        public static Process? StartExe(string keyword)
         {
             return Start(IO.GResource.SmartExePath(keyword));
+        }
+
+        public static Process? StartExe(string keyword, string mainPath)
+        {
+            return Start(IO.GResource.SmartExePath(keyword, mainPath));
+        }
+
+        public static Process? StartInstaller(string keyword, string mainPath)
+        {
+            return Start(IO.GResource.SmartInstallerPath(keyword, mainPath));
         }
     }
 }

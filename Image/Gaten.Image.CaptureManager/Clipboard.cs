@@ -20,28 +20,28 @@ namespace Gaten.Image.CaptureManager
         {
             Format = 0;
 
-            bool isClipboardOpen = WinAPI.OpenClipboard(clipboardOwner);
+            bool isClipboardOpen = WinApi.OpenClipboard(clipboardOwner);
             if (!isClipboardOpen) throw new CannotOpenException();
-            do { Format = WinAPI.EnumClipboardFormats(Format); }
+            do { Format = WinApi.EnumClipboardFormats(Format); }
             while (Format >= 0x200 || Format == 0);
 
-            IntPtr pointer = WinAPI.GetClipboardData(Format);
+            IntPtr pointer = WinApi.GetClipboardData(Format);
             switch (Format)
             {
-                case WinAPI.CF_TEXT:
+                case WinApi.CF_TEXT:
                     Data = Marshal.PtrToStringAnsi(pointer);
                     MemoryHandle = Marshal.StringToHGlobalAnsi((string)Data);
                     break;
-                case WinAPI.CF_UNICODETEXT:
+                case WinApi.CF_UNICODETEXT:
                     Data = Marshal.PtrToStringUni(pointer);
                     MemoryHandle = Marshal.StringToHGlobalUni((string)Data);
                     break;
-                case WinAPI.CF_BITMAP:
+                case WinApi.CF_BITMAP:
                     Data = System.Drawing.Image.FromHbitmap(pointer);
                     MemoryHandle = ((Bitmap)Data).GetHbitmap();
                     break;
             }
-            WinAPI.CloseClipboard();
+            WinApi.CloseClipboard();
 
             HasDataToRestore = true;
         }
@@ -53,30 +53,30 @@ namespace Gaten.Image.CaptureManager
         {
             if (!HasDataToRestore) return;
 
-            if (Format == WinAPI.CF_TEXT || Format == WinAPI.CF_UNICODETEXT)
+            if (Format == WinApi.CF_TEXT || Format == WinApi.CF_UNICODETEXT)
             {
-                bool isClipboardOpen = WinAPI.OpenClipboard(clipboardOwner);
+                bool isClipboardOpen = WinApi.OpenClipboard(clipboardOwner);
                 if (!isClipboardOpen) throw new CannotOpenException();
             }
 
             switch (Format)
             {
-                case WinAPI.CF_TEXT:
-                    WinAPI.SetClipboardData(Format, MemoryHandle);
+                case WinApi.CF_TEXT:
+                    WinApi.SetClipboardData(Format, MemoryHandle);
                     break;
-                case WinAPI.CF_UNICODETEXT:
-                    WinAPI.SetClipboardData(Format, MemoryHandle);
+                case WinApi.CF_UNICODETEXT:
+                    WinApi.SetClipboardData(Format, MemoryHandle);
                     break;
-                case WinAPI.CF_BITMAP:
-                case WinAPI.CF_DIB:
-                    Format = WinAPI.CF_BITMAP;
+                case WinApi.CF_BITMAP:
+                case WinApi.CF_DIB:
+                    Format = WinApi.CF_BITMAP;
                     SetImage(MemoryHandle, clipboardOwner);
                     (Data as Bitmap).Dispose();
                     break;
             }
-            if (Format == WinAPI.CF_TEXT || Format == WinAPI.CF_UNICODETEXT) WinAPI.CloseClipboard();
+            if (Format == WinApi.CF_TEXT || Format == WinApi.CF_UNICODETEXT) WinApi.CloseClipboard();
 
-            WinAPI.DeleteObject(MemoryHandle);
+            WinApi.DeleteObject(MemoryHandle);
             Data = null;
             MemoryHandle = IntPtr.Zero;
             HasDataToRestore = false;
@@ -89,16 +89,16 @@ namespace Gaten.Image.CaptureManager
         {
             string text = null;
 
-            bool isClipboardOpen = WinAPI.OpenClipboard(clipboardOwner);
+            bool isClipboardOpen = WinApi.OpenClipboard(clipboardOwner);
             if (!isClipboardOpen) throw new CannotOpenException();
-            IntPtr pointer = WinAPI.GetClipboardData(WinAPI.CF_UNICODETEXT);
+            IntPtr pointer = WinApi.GetClipboardData(WinApi.CF_UNICODETEXT);
             if (pointer == IntPtr.Zero)
             {
-                pointer = WinAPI.GetClipboardData(WinAPI.CF_TEXT);
+                pointer = WinApi.GetClipboardData(WinApi.CF_TEXT);
                 if (pointer != IntPtr.Zero) text = Marshal.PtrToStringAnsi(pointer);
             }
             else text = Marshal.PtrToStringUni(pointer);
-            WinAPI.CloseClipboard();
+            WinApi.CloseClipboard();
 
             return text;
         }
@@ -109,12 +109,12 @@ namespace Gaten.Image.CaptureManager
         /// <param name="text">저장할 텍스트</param>
         public static void SetText(string text, IntPtr clipboardOwner)
         {
-            bool isClipboardOpen = WinAPI.OpenClipboard(clipboardOwner);
+            bool isClipboardOpen = WinApi.OpenClipboard(clipboardOwner);
             if (!isClipboardOpen) throw new CannotOpenException();
-            WinAPI.EmptyClipboard();
-            WinAPI.SetClipboardData(WinAPI.CF_TEXT, Marshal.StringToHGlobalAnsi(text));
-            WinAPI.SetClipboardData(WinAPI.CF_UNICODETEXT, Marshal.StringToHGlobalUni(text));
-            WinAPI.CloseClipboard();
+            WinApi.EmptyClipboard();
+            WinApi.SetClipboardData(WinApi.CF_TEXT, Marshal.StringToHGlobalAnsi(text));
+            WinApi.SetClipboardData(WinApi.CF_UNICODETEXT, Marshal.StringToHGlobalUni(text));
+            WinApi.CloseClipboard();
         }
 
         /// <summary>
@@ -138,38 +138,38 @@ namespace Gaten.Image.CaptureManager
             Bitmap tempImage = new Bitmap(image.Width, image.Height);
             using (Graphics graphics = Graphics.FromImage(tempImage))
             {
-                IntPtr hScreenDC = WinAPI.GetWindowDC(IntPtr.Zero); // 기본적인 Device Context의 속성들을 카피하기 위한 작업
-                IntPtr hDestDC = WinAPI.CreateCompatibleDC(hScreenDC);
-                IntPtr hDestBitmap = WinAPI.CreateCompatibleBitmap(hScreenDC, image.Width, image.Height); // destDC와 destBitmap 모두 반드시 screenDC의 속성들을 기반으로 해야 함.
-                IntPtr hPrevDestObject = WinAPI.SelectObject(hDestDC, hDestBitmap);
+                IntPtr hScreenDC = WinApi.GetWindowDC(IntPtr.Zero); // 기본적인 Device Context의 속성들을 카피하기 위한 작업
+                IntPtr hDestDC = WinApi.CreateCompatibleDC(hScreenDC);
+                IntPtr hDestBitmap = WinApi.CreateCompatibleBitmap(hScreenDC, image.Width, image.Height); // destDC와 destBitmap 모두 반드시 screenDC의 속성들을 기반으로 해야 함.
+                IntPtr hPrevDestObject = WinApi.SelectObject(hDestDC, hDestBitmap);
 
                 IntPtr hSourceDC = graphics.GetHdc();
                 IntPtr hSourceBitmap = image.GetHbitmap();
-                IntPtr hPrevSourceObject = WinAPI.SelectObject(hSourceDC, hSourceBitmap);
+                IntPtr hPrevSourceObject = WinApi.SelectObject(hSourceDC, hSourceBitmap);
 
-                WinAPI.BitBlt(hDestDC, 0, 0, image.Width, image.Height, hSourceDC, 0, 0, WinAPI.SRCCOPY);
+                WinApi.BitBlt(hDestDC, 0, 0, image.Width, image.Height, hSourceDC, 0, 0, WinApi.SRCCOPY);
 
-                WinAPI.DeleteObject(WinAPI.SelectObject(hSourceDC, hPrevSourceObject));
-                WinAPI.SelectObject(hDestDC, hPrevDestObject); // 리턴값 : hDestBitmap
+                WinApi.DeleteObject(WinApi.SelectObject(hSourceDC, hPrevSourceObject));
+                WinApi.SelectObject(hDestDC, hPrevDestObject); // 리턴값 : hDestBitmap
                 graphics.ReleaseHdc(hSourceDC);
-                WinAPI.DeleteDC(hDestDC);
+                WinApi.DeleteDC(hDestDC);
 
-                bool isClipboardOpen = WinAPI.OpenClipboard(clipboardOwner);
+                bool isClipboardOpen = WinApi.OpenClipboard(clipboardOwner);
                 if (!isClipboardOpen)
                 {
-                    WinAPI.DeleteObject(hDestBitmap);
-                    WinAPI.DeleteObject(hSourceDC);
-                    WinAPI.DeleteObject(hSourceBitmap);
+                    WinApi.DeleteObject(hDestBitmap);
+                    WinApi.DeleteObject(hSourceDC);
+                    WinApi.DeleteObject(hSourceBitmap);
                     tempImage.Dispose();
                     throw new CannotOpenException();
                 }
-                WinAPI.EmptyClipboard();
-                WinAPI.SetClipboardData(WinAPI.CF_BITMAP, hDestBitmap);
-                WinAPI.CloseClipboard();
+                WinApi.EmptyClipboard();
+                WinApi.SetClipboardData(WinApi.CF_BITMAP, hDestBitmap);
+                WinApi.CloseClipboard();
 
-                WinAPI.DeleteObject(hDestBitmap);
-                WinAPI.DeleteObject(hSourceDC);
-                WinAPI.DeleteObject(hSourceBitmap);
+                WinApi.DeleteObject(hDestBitmap);
+                WinApi.DeleteObject(hSourceDC);
+                WinApi.DeleteObject(hSourceBitmap);
             }
             tempImage.Dispose();
         }

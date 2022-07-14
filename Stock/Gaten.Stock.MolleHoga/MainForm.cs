@@ -66,8 +66,8 @@ namespace Gaten.Stock.MolleHoga
         {
             if (e.Button == MouseButtons.Left)
             {
-                WinAPI.ReleaseCapture();
-                WinAPI.SendMessage(Handle, WinAPI.WM_NCLBUTTONDOWN, WinAPI.HT_CAPTION, 0);
+                WinApi.ReleaseCapture();
+                WinApi.SendMessage(Handle, WinApi.WM_NCLBUTTONDOWN, WinApi.HT_CAPTION, 0);
             }
         }
 

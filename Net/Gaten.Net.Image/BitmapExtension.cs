@@ -28,5 +28,18 @@ namespace Gaten.Net.Image
 
             return rgbValues;
         }
+
+        public static List<Color> GetPixelColor(this Bitmap b)
+        {
+            List<Color> results = new List<Color>();
+            var data = GetPixelData(b);
+
+            for(int i = 0; i < data.Length; i += 4)
+            {
+                results.Add(Color.FromArgb(data[i + 3], data[i + 2], data[i + 1], data[i]));
+            }
+
+            return results;
+        }
     }
 }

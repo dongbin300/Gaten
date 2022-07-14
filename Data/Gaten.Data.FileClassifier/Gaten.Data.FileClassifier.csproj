@@ -8,4 +8,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Net\Gaten.Net.Extension\Gaten.Net.Extension.csproj" />
+  </ItemGroup>
+
 </Project>

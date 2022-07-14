@@ -5,12 +5,47 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaten.Windows.MintPanda.Contents"
         mc:Ignorable="d"
-        Title="WinSplit" Height="450" Width="800"
+        Title="WinSplit" Height="140" Width="300"
         Style="{StaticResource ContentWindow}" WindowStartupLocation="CenterScreen" MouseDown="Window_MouseDown">
     <Grid>
         <StackPanel>
-            <ComboBox x:Name="WinSplitHComboBox" SelectedIndex="2"/>
-            <ComboBox x:Name="WinSplitVComboBox" SelectedIndex="2"/>
+            <StackPanel Orientation="Horizontal">
+                <ComboBox x:Name="WinSplitHComboBox" SelectedIndex="2" Width="70">
+                    <ComboBox.Items>
+                        <ComboBoxItem Content="1"/>
+                        <ComboBoxItem Content="2"/>
+                        <ComboBoxItem Content="3"/>
+                        <ComboBoxItem Content="4"/>
+                        <ComboBoxItem Content="5"/>
+                        <ComboBoxItem Content="6"/>
+                        <ComboBoxItem Content="7"/>
+                        <ComboBoxItem Content="8"/>
+                    </ComboBox.Items>
+                </ComboBox>
+                <ComboBox x:Name="WinSplitVComboBox" SelectedIndex="2" Width="70">
+                    <ComboBox.Items>
+                        <ComboBoxItem Content="1"/>
+                        <ComboBoxItem Content="2"/>
+                        <ComboBoxItem Content="3"/>
+                        <ComboBoxItem Content="4"/>
+                        <ComboBoxItem Content="5"/>
+                        <ComboBoxItem Content="6"/>
+                        <ComboBoxItem Content="7"/>
+                        <ComboBoxItem Content="8"/>
+                    </ComboBox.Items>
+                </ComboBox>
+                <CheckBox x:Name="ExceptTaskBarCheckBox" Content="작업표시줄 제외" IsChecked="True"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <ComboBox x:Name="ProcessComboBox" Width="223"/>
+                <CheckBox x:Name="AllProcessCheckBox" Content="전체" Checked="AllProcessCheckBox_Checked" Unchecked="AllProcessCheckBox_Unchecked"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="50">
+                <Button x:Name="RefreshButton" Content="새로고침" Width="70" Click="RefreshButton_Click"/>
+                <Button x:Name="SplitButton" Content="분할" Width="90" Click="SplitButton_Click"/>
+                <Button x:Name="KillButton" Content="강제 종료" Width="100" Background="Red" Click="KillButton_Click"/>
+            </StackPanel>
         </StackPanel>
+        
     </Grid>
 </Window>

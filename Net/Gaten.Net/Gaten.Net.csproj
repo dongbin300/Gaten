@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Costura.Fody" Version="5.7.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Gaten.Net.Data\Gaten.Net.Data.csproj" />
+    <ProjectReference Include="..\Gaten.Net.Exception\Gaten.Net.Exception.csproj" />
+    <ProjectReference Include="..\Gaten.Net.Extension\Gaten.Net.Extension.csproj" />
+    <ProjectReference Include="..\Gaten.Net.Image\Gaten.Net.Image.csproj" />
+    <ProjectReference Include="..\Gaten.Net.Network\Gaten.Net.Network.csproj" />
+    <ProjectReference Include="..\Gaten.Net.Windows\Gaten.Net.Windows.csproj" />
+  </ItemGroup>
+
+</Project>

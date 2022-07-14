@@ -1,4 +1,5 @@
-﻿using Gaten.Net.Windows;
+﻿using Gaten.Net.Data.IO;
+using Gaten.Net.Windows;
 
 using InputSimulatorStandard.Native;
 
@@ -6,10 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Windows;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
-using Gaten.Net.Data.IO;
+using System.Windows;
 
 namespace Gaten.Language.DotNetExtractor
 {

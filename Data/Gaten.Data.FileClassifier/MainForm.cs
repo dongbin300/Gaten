@@ -1,3 +1,5 @@
+using Gaten.Net.Extension;
+
 namespace Gaten.Data.FileClassifier
 {
     public partial class MainForm : Form
@@ -24,13 +26,13 @@ namespace Gaten.Data.FileClassifier
 
 			foreach (FileInfo f in files)
 			{
-				if (File.Exists(Path.Combine(root, f.Name)))
+				if (File.Exists(root.Down(f.Name)))
 				{
-					File.Move(f.FullName, Path.Combine(root, Path.GetFileNameWithoutExtension(f.FullName) + "_" + Path.GetRandomFileName() + f.Extension));
+					File.Move(f.FullName, root.Down(Path.GetFileNameWithoutExtension(f.FullName) + "_" + Path.GetRandomFileName() + f.Extension));
 				}
 				else
 				{
-					File.Move(f.FullName, Path.Combine(root, f.Name));
+					File.Move(f.FullName, root.Down(f.Name));
 				}
 			}
 
@@ -45,12 +47,12 @@ namespace Gaten.Data.FileClassifier
 
 			foreach (FileInfo f in files)
 			{
-				if (!Directory.Exists(Path.Combine(root, f.Extension)))
+				if (!Directory.Exists(root.Down(f.Extension)))
 				{
-					Directory.CreateDirectory(Path.Combine(root, f.Extension));
+					Directory.CreateDirectory(root.Down(f.Extension));
 				}
 
-				File.Move(f.FullName, Path.Combine(root, f.Extension, f.Name));
+				File.Move(f.FullName, root.Down(f.Extension, f.Name));
 			}
 		}
 	}

@@ -61,7 +61,7 @@ namespace Gaten.Windows.MintPanda
 
         private void InitLazy()
         {
-            WinSplit.GetProcessList();
+            winSplit.RefreshProcessList();
             WeatherText = Weather.Get();
             StockText = Stock.Get();
             hardwarePrice.SearchHardwarePrice();
@@ -239,12 +239,27 @@ namespace Gaten.Windows.MintPanda
 
         private void PasswordManagerButton_Click(object sender, RoutedEventArgs e)
         {
-            GProcess.StartLocalExe("passwordmanager");
+            GProcess.StartExe("passwordmanager");
         }
 
         private void MintConsoleButton_Click(object sender, RoutedEventArgs e)
         {
-            GProcess.StartLocalExe("windows.console");
+            GProcess.StartExe("windows.console");
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+        private void TaskmgrButton_Click(object sender, RoutedEventArgs e)
+        {
+            GProcess.Start(GPath.SystemX86.Down("taskmgr.exe"));
+        }
+
+        private void EventViewerButton_Click(object sender, RoutedEventArgs e)
+        {
+            GProcess.Start(GPath.SystemX86.Down("eventvwr.msc"));
         }
     }
 }

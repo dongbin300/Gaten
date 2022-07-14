@@ -61,6 +61,13 @@ namespace Gaten.Windows.MintPanda.Contents
 
             TranslationText2.Text = text;
         }
+
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            TranslationText1.Text = "";
+            TranslationText2.Text = "";
+            TranslationText1.Focus();
+        }
     }
 
     public enum Language

@@ -9,11 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Net\Gaten.Net.Windows\Gaten.Net.Windows.csproj" />
+    <ProjectReference Include="..\..\Net\Gaten.Net.Image\Gaten.Net.Image.csproj" />
     <ProjectReference Include="..\..\Net\Gaten.Net.Wpf\Gaten.Net.Wpf.csproj" />
   </ItemGroup>
 

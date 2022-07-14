@@ -1,4 +1,4 @@
-using static Gaten.Net.Windows.WinAPI;
+using static Gaten.Net.Windows.WinApi;
 
 namespace Gaten.Image.ImageViewer
 {

@@ -58,8 +58,8 @@ namespace Gaten.Stock.MolleHogaDeluxe
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                WinAPI.ReleaseCapture();
-                WinAPI.SendMessage(windowHandle, WinAPI.WM_NCLBUTTONDOWN, WinAPI.HT_CAPTION, 0);
+                WinApi.ReleaseCapture();
+                WinApi.SendMessage(windowHandle, WinApi.WM_NCLBUTTONDOWN, WinApi.HT_CAPTION, 0);
             }
         }
 

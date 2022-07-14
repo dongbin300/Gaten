@@ -36,9 +36,9 @@ namespace Gaten.Windows.RestoreWindow
                 processWindows.Clear();
                 foreach (var process in processes)
                 {
-                    var placement = WinAPI.GetWindowPlacement(process.MainWindowHandle);
+                    var placement = WinApi.GetWindowPlacement(process.MainWindowHandle);
 
-                    if (placement.showCmd == WinAPI.ShowWindowCommands.Normal && placement.rcNormalPosition.X == 0 && placement.rcNormalPosition.Y == 0 && placement.rcNormalPosition.Width == screenWidth && placement.rcNormalPosition.Height == screenHeight)
+                    if (placement.showCmd == WinApi.ShowWindowCommands.Normal && placement.rcNormalPosition.X == 0 && placement.rcNormalPosition.Y == 0 && placement.rcNormalPosition.Width == screenWidth && placement.rcNormalPosition.Height == screenHeight)
                     {
                         continue;
                     }
@@ -58,10 +58,10 @@ namespace Gaten.Windows.RestoreWindow
                         Height = placement.rcNormalPosition.Height,
                         WindowState = placement.showCmd switch
                         {
-                            WinAPI.ShowWindowCommands.Hide => WindowState.Minimized,
-                            WinAPI.ShowWindowCommands.Normal => WindowState.Normal,
-                            WinAPI.ShowWindowCommands.Minimized => WindowState.Minimized,
-                            WinAPI.ShowWindowCommands.Maximized => WindowState.Maximized,
+                            WinApi.ShowWindowCommands.Hide => WindowState.Minimized,
+                            WinApi.ShowWindowCommands.Normal => WindowState.Normal,
+                            WinApi.ShowWindowCommands.Minimized => WindowState.Minimized,
+                            WinApi.ShowWindowCommands.Maximized => WindowState.Maximized,
                             _ => WindowState.Normal
                         }
                     });
@@ -91,7 +91,7 @@ namespace Gaten.Windows.RestoreWindow
                     var process = GProcess.Start(row["FileName"].ToString());
                     process.WaitForExit();
                     var handle = process.MainWindowHandle;
-                    WinAPI.MoveWindow(handle, int.Parse(row["X"].ToString()), int.Parse(row["Y"].ToString()), int.Parse(row["Width"].ToString()), int.Parse(row["Height"].ToString()), false);
+                    WinApi.MoveWindow(handle, int.Parse(row["X"].ToString()), int.Parse(row["Y"].ToString()), int.Parse(row["Width"].ToString()), int.Parse(row["Height"].ToString()), false);
                 }
             }
             catch (Exception ex)

@@ -20,8 +20,8 @@ namespace Gaten.Net.Wpf.Controls
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                WinAPI.ReleaseCapture();
-                WinAPI.SendMessage(new WindowInteropHelper(this).Handle, WinAPI.WM_NCLBUTTONDOWN, WinAPI.HT_CAPTION, 0);
+                WinApi.ReleaseCapture();
+                WinApi.SendMessage(new WindowInteropHelper(this).Handle, WinApi.WM_NCLBUTTONDOWN, WinApi.HT_CAPTION, 0);
             }
         }
     }

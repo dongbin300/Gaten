@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Auth\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Gaten.Net.Data\Gaten.Net.Data.csproj" />
+    <ProjectReference Include="..\..\Gaten.Net.Extension\Gaten.Net.Extension.csproj" />
+    <ProjectReference Include="..\..\Gaten.Net.Image\Gaten.Net.Image.csproj" />
+    <ProjectReference Include="..\..\Gaten.Net.Windows\Gaten.Net.Windows.csproj" />
+  </ItemGroup>
+
+</Project>

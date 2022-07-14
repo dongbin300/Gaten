@@ -610,8 +610,8 @@ namespace Gaten.GameTool.osu.osuBeatmapDownloader
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    WinAPI.ReleaseCapture();
-                    _ = WinAPI.SendMessage(Handle, WinAPI.WM_NCLBUTTONDOWN, WinAPI.HT_CAPTION, 0);
+                    WinApi.ReleaseCapture();
+                    _ = WinApi.SendMessage(Handle, WinApi.WM_NCLBUTTONDOWN, WinApi.HT_CAPTION, 0);
                 }
             }
             catch (Exception ex)

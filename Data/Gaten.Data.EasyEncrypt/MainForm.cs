@@ -1,3 +1,5 @@
+using Gaten.Net.Extension;
+
 namespace Gaten.Data.EasyEncrypt
 {
     public partial class MainForm : Form
@@ -40,7 +42,7 @@ namespace Gaten.Data.EasyEncrypt
 
             var ModifiedBytes = Encrypt(bytes);
 
-            string outPath = Path.Combine(Path.GetDirectoryName(fileTextBox.Text), Path.GetFileNameWithoutExtension(fileTextBox.Text) + "_e" + Path.GetExtension(fileTextBox.Text));
+            string outPath = Path.GetDirectoryName(fileTextBox.Text).Down(Path.GetFileNameWithoutExtension(fileTextBox.Text) + "_e" + Path.GetExtension(fileTextBox.Text));
             using (FileStream fs = new FileStream(outPath, FileMode.Create))
             {
                 using (BinaryWriter bw = new BinaryWriter(fs))
@@ -83,7 +85,7 @@ namespace Gaten.Data.EasyEncrypt
 
             var ModifiedBytes = Decrypt(bytes);
 
-            string outPath = Path.Combine(Path.GetDirectoryName(fileTextBox.Text), Path.GetFileNameWithoutExtension(fileTextBox.Text) + "_d" + Path.GetExtension(fileTextBox.Text));
+            string outPath = Path.GetDirectoryName(fileTextBox.Text).Down(Path.GetFileNameWithoutExtension(fileTextBox.Text) + "_d" + Path.GetExtension(fileTextBox.Text));
             using (FileStream fs = new FileStream(outPath, FileMode.Create))
             {
                 using (BinaryWriter bw = new BinaryWriter(fs))

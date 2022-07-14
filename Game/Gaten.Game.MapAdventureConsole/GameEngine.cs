@@ -106,7 +106,7 @@ namespace Gaten.Game.MapAdventureConsole
         /// </summary>
         private void Render()
         {
-            using (Graphics g = Graphics.FromHwnd(WinAPI.GetConsoleWindow()))
+            using (Graphics g = Graphics.FromHwnd(WinApi.GetConsoleWindow()))
             {
                 using (Image image = Image.FromFile("me.png"))
                 {

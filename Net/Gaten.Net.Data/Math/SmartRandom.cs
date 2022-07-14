@@ -11,8 +11,6 @@
 
         public int Next()
         {
-            Thread.Sleep(1);
-
             long abc = System.Math.Abs((GetCurrentMicroseconds() * seed % 1_000_000_000L) / 10);
             seed += 13;
 

@@ -5,8 +5,70 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Gaten.Windows.MintPanda"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="DimGray">
-            
-    </Grid>
+             d:DesignHeight="450" d:DesignWidth="450">
+    <UserControl.Resources>
+        <Style TargetType="ToggleButton" BasedOn="{StaticResource NeonToggleButton}"/>
+        <Style TargetType="Button" BasedOn="{StaticResource NeonButton}"/>
+    </UserControl.Resources>
+    <UniformGrid Columns="8" Rows="8">
+        <ToggleButton x:Name="CheckListButton" Content="체크리스트" Click="WindowButton_Click"/>
+
+        <!-- 설정 -->
+        <Button x:Name="InstallFontButton" Content="폰트 설치" Click="InstallFontButton_Click"/>
+        
+        <!-- 설치 -->
+        <Button x:Name="RmeMfButton" Content="RME MF" Tag="rmeinstaller_mf" Click="InstallButton_Click"/>
+        <Button x:Name="RmeTbButton" Content="RME TB" Tag="rmeinstaller_tb" Click="InstallButton_Click"/>
+        <Button x:Name="SamsungPrinterButton" Content="삼성 프린터" Tag="SamsungUniversalPrintDriver" Click="InstallButton_Click"/>
+        <Button x:Name="SamsungScannerButton" Content="삼성 스캔" Tag="UniversalScanDriver" Click="InstallButton_Click"/>
+        <Button x:Name="DpNetButton" Content="3DP Net" Tag="3DP_Net" Click="InstallButton_Click"/>
+        <Button x:Name="DpChipButton" Content="3DP Chip" Tag="3DP_Chip_Lite" Click="InstallButton_Click"/>
+        <Button x:Name="CpuZButton" Content="CPU Z" Tag="cpu-z" Click="InstallButton_Click"/>
+        <Button x:Name="HwMonitorButton" Content="HW모니터" Tag="hwmonitor" Click="InstallButton_Click"/>
+        <Button x:Name="Gtx960Button" Content="GTX960" Tag="GTX960" Click="InstallButton_Click"/>
+        <Button x:Name="HuionTabletButton" Content="휴이온 타블렛" Tag="HuionTablet_WinDriver" Click="InstallButton_Click"/>
+        <Button x:Name="SamsungSsdButton" Content="삼성 SSD 드라이버" Tag="삼성 SSD 드라이버" Click="InstallButton_Click"/>
+        <Button x:Name="Masm32Button" Content="MASM32" Tag="MASM32" Click="InstallButton_Click"/>
+        <Button x:Name="Vs2019Button" Content="VS 2019" Tag="vs 2019" Click="InstallButton_Click"/>
+        <Button x:Name="Vs2022Button" Content="VS 2022" Tag="vs 2022" Click="InstallButton_Click"/>
+        <Button x:Name="VsCodeButton" Content="VS Code" Tag="VSCode" Click="InstallButton_Click"/>
+        <Button x:Name="VmwareButton" Content="VMware" Tag="VMware-workstation-full" Click="InstallButton_Click"/>
+        <Button x:Name="IVideoMateButton" Content="iVideoMate" Tag="iVideoMate" Click="InstallButton_Click"/>
+        <Button x:Name="WinScpButton" Content="WinSCP" Tag="WinSCP" Click="InstallButton_Click"/>
+        <Button x:Name="Photoshop2021Button" Content="포토샵2021" Tag="Photoshop2021" Click="InstallButton_Click"/>
+        <Button x:Name="Vocaloid4Button" Content="보컬로이드4" Tag="vocaloid4" Click="InstallButton_Click"/>
+        <Button x:Name="IZotopeOzoneButton" Content="iZotope Ozone" Tag="iZotope_Ozone_Advanced_v9" Click="InstallButton_Click"/>
+        <Button x:Name="Gobbler2Button" Content="Gobbler2" Tag="Gobbler2.0-windows" Click="InstallButton_Click"/>
+        <Button x:Name="IZotopeNectarButton" Content="iZotope Nectar" Tag="iZotope_Nectar_Elements" Click="InstallButton_Click"/>
+        <Button x:Name="IZotopeProductButton" Content="iZotope Product" Tag="iZotope_Product_Portal" Click="InstallButton_Click"/>
+        <Button x:Name="AimpButton" Content="AIMP" Tag="aimp" Click="InstallButton_Click"/>
+        <Button x:Name="MuseScoreButton" Content="MuseScore" Tag="MuseScore" Click="InstallButton_Click"/>
+        <Button x:Name="Cubase11Button" Content="큐베이스11" Tag="Steinberg_Download_Assistant" Click="InstallButton_Click"/>
+        <Button x:Name="Premiere2021Button" Content="프리미어2021" Tag="premiere2021" Click="InstallButton_Click"/>
+        <Button x:Name="PotPlayerButton" Content="팟플레이어" Tag="PotPlayerSetup" Click="InstallButton_Click"/>
+        <Button x:Name="TeamViewerButton" Content="팀뷰어" Tag="TeamViewer" Click="InstallButton_Click"/>
+        <Button x:Name="KiwoomHeroButton" Content="영웅문" Tag="KiwoomHero" Click="InstallButton_Click"/>
+        <Button x:Name="KairosButton" Content="카이로스" Tag="Setup_KairosHTS" Click="InstallButton_Click"/>
+        <Button x:Name="ObsStudioButton" Content="OBS스튜디오" Tag="OBS-Studio" Click="InstallButton_Click"/>
+        <Button x:Name="OcamButton" Content="오캠" Tag="oCam" Click="InstallButton_Click"/>
+        <Button x:Name="PicpickButton" Content="픽픽" Tag="picpick" Click="InstallButton_Click"/>
+        <Button x:Name="MsOffice2021Button" Content="MS오피스2021" Tag="OInstall" Click="InstallButton_Click"/>
+        <Button x:Name="Hancom2021Button" Content="한컴오피스2014" Tag="Hancom" Click="InstallButton_Click"/>
+        <Button x:Name="CheatEngineButton" Content="치트엔진" Tag="CheatEngine" Click="InstallButton_Click"/>
+        <Button x:Name="HxDButton" Content="HxD" Tag="HxDSetup" Click="InstallButton_Click"/>
+        <Button x:Name="BandizipButton" Content="반디집" Tag="BANDIZIP" Click="InstallButton_Click"/>
+        <Button x:Name="DiscordButton" Content="디스코드" Tag="DiscordSetup" Click="InstallButton_Click"/>
+        <Button x:Name="KakaoTalkButton" Content="카카오톡" Tag="KakaoTalk_Setup" Click="InstallButton_Click"/>
+        <Button x:Name="LdPlayerButton" Content="LD플레이어" Tag="LDPlayer" Click="InstallButton_Click"/>
+        <Button x:Name="LineButton" Content="라인" Tag="LineInst" Click="InstallButton_Click"/>
+        <Button x:Name="QtTabBarButton" Content="QT탭바" Tag="QTTabBar" Click="InstallButton_Click"/>
+        <Button x:Name="VpnGateButton" Content="VPN게이트" Tag="vpngate-client" Click="InstallButton_Click"/>
+        <Button x:Name="BattleNetButton" Content="배틀넷" Tag="Battle.net" Click="InstallButton_Click"/>
+
+        <!-- 실행 -->
+        <Button x:Name="ModPanelButton" Content="MOD패널" Tag="MODPanel" Click="ExecuteButton_Click"/>
+        <Button x:Name="SfxrButton" Content="sfxr" Tag="sfxr" Click="ExecuteButton_Click"/>
+
+        <Button x:Name="RefreshButton" Content="새로고침" Click="RefreshButton_Click"/>
+    </UniformGrid>
 </UserControl>

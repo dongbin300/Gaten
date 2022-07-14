@@ -51,7 +51,7 @@ namespace Gaten.Image.CaptureManager
         private static Process GetProcessLockingClipboard()
         {
             int processId;
-            WinAPI.GetWindowThreadProcessId(WinAPI.GetOpenClipboardWindow(), out processId);
+            WinApi.GetWindowThreadProcessId(WinApi.GetOpenClipboardWindow(), out processId);
 
             return Process.GetProcessById(processId);
         }
@@ -85,10 +85,12 @@ namespace Gaten.Image.CaptureManager
                 switch (saveMode)
                 {
                     case SaveMode.Clipboard:
-                        ScreenShot.SaveToClipboard(bounds.Left, bounds.Top, bounds.Width, bounds.Height);
+                        var bitmap = Net.Image.ScreenShot.Take(bounds.Left, bounds.Top, bounds.Width, bounds.Height);
+                        Clipboard.SetImage(bitmap.GetHbitmap(), Process.GetCurrentProcess().MainWindowHandle);
+                        bitmap.Dispose();
                         break;
                     case SaveMode.File:
-                        ScreenShot.SaveAsFile(bounds.Left, bounds.Top, bounds.Width, bounds.Height, dirPath, fileName, imageFormat);
+                        Net.Image.ScreenShot.SaveAsFile(bounds.Left, bounds.Top, bounds.Width, bounds.Height, dirPath, fileName, imageFormat);
                         break;
                     default:
                         System.Windows.MessageBox.Show($"Unsupported Save Mode ({saveMode})");

@@ -30,10 +30,13 @@
         <ToggleButton x:Name="ColorPickButton" Content="색상" Click="WindowButton_Click"/>
         <ToggleButton x:Name="DictionaryButton" Content="사전" Click="WindowButton_Click"/>
         <ToggleButton x:Name="RestartButton" Content="재시작" Click="RestartButton_Click"/>
+        <ToggleButton x:Name="ExitButton" Content="종료" Click="ExitButton_Click"/>
         
         <Button x:Name="RefreshButton" Content="새로고침" Click="RefreshButton_Click"/>
         <Button x:Name="RegistryButton" Content="레지스트리" Click="RegistryButton_Click"/>
         <Button x:Name="NotepadButton" Content="메모장" Click="NotepadButton_Click"/>
+        <Button x:Name="TaskmgrButton" Content="작업관리자" Click="TaskmgrButton_Click"/>
+        <Button x:Name="EventViewerButton" Content="이벤트뷰어" Click="EventViewerButton_Click"/>
         <Button x:Name="PasswordManagerButton" Content="패스워드   매니저" Click="PasswordManagerButton_Click"/>
         <Button x:Name="MintConsoleButton" Content="민트콘솔" Click="MintConsoleButton_Click"/>
     </UniformGrid>

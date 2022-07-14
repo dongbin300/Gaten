@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Gaten.Windows.MintPanda.Contents
@@ -46,13 +47,13 @@ namespace Gaten.Windows.MintPanda.Contents
             builder.AppendLine();
             foreach (Device d in Devices)
             {
-                switch (d.type)
+                switch (d.Type)
                 {
                     case Device.Types.Product:
-                        builder.AppendLine($"P|{d.name}|{d.url}|{d.price}|{d.cashPrice}|{d.changePrice}|{d.changeCash}");
+                        builder.AppendLine($"P|{d.Name}|{d.Url}|{d.Price}|{d.CashPrice}|{d.ChangePrice}|{d.ChangeCash}");
                         break;
                     case Device.Types.Sum:
-                        builder.AppendLine($"S|{d.name}|{d.price}|{d.cashPrice}|{d.changePrice}|{d.changeCash}");
+                        builder.AppendLine($"S|{d.Name}|{d.Price}|{d.CashPrice}|{d.ChangePrice}|{d.ChangeCash}");
                         break;
                 }
             }
@@ -74,20 +75,20 @@ namespace Gaten.Windows.MintPanda.Contents
                     case "P":
                         Devices.Add(new Device
                         {
-                            type = Device.Types.Product,
-                            name = d2[1],
-                            url = d2[2],
-                            forePrice = d2[3],
-                            foreCashPrice = d2[4]
+                            Type = Device.Types.Product,
+                            Name = d2[1],
+                            Url = d2[2],
+                            PrevPrice = d2[3],
+                            PrevCashPrice = d2[4]
                         });
                         break;
                     case "S":
                         Devices.Add(new Device
                         {
-                            type = Device.Types.Sum,
-                            name = d2[1],
-                            forePrice = d2[2],
-                            foreCashPrice = d2[3]
+                            Type = Device.Types.Sum,
+                            Name = d2[1],
+                            PrevPrice = d2[2],
+                            PrevCashPrice = d2[3]
                         });
                         break;
                 }
@@ -101,7 +102,7 @@ namespace Gaten.Windows.MintPanda.Contents
 
         private void HardwareDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            GProcess.Start(Devices[HardwareDataGrid.Items.IndexOf(HardwareDataGrid.CurrentItem)].url);
+            GProcess.Start(Devices[HardwareDataGrid.Items.IndexOf(HardwareDataGrid.CurrentItem)].Url);
         }
 
         public void SearchHardwarePrice()
@@ -109,21 +110,20 @@ namespace Gaten.Windows.MintPanda.Contents
             try
             {
                 HardwareDataGrid.Items.Clear();
-
                 foreach (Device device in Devices)
                 {
-                    WebCrawler.SetUrl(device.url);
+                    WebCrawler.SetUrl(device.Url);
                     var a = WebCrawler.SelectNode("//div[contains(@class,'lowest_price')]//em[@class='prc_c']");
-                    device.price = a == null ? "0" : a.InnerText;
+                    device.Price = a == null ? "0" : a.InnerText;
                     a = WebCrawler.SelectNode("//div[contains(@id,'lowPriceCash')]//em[@class='prc_c']");
-                    device.cashPrice = a == null ? "0" : a.InnerText;
+                    device.CashPrice = a == null ? "0" : a.InnerText;
 
-                    int gap = int.Parse(device.price.Replace(",", "")) - int.Parse(device.forePrice.Replace(",", ""));
-                    device.changePrice = gap >= 0 ? $"▲{Math.Abs(gap)}" : $"▼{Math.Abs(gap)}";
-                    gap = int.Parse(device.cashPrice.Replace(",", "")) - int.Parse(device.foreCashPrice.Replace(",", ""));
-                    device.changeCash = gap >= 0 ? $"▲{Math.Abs(gap)}" : $"▼{Math.Abs(gap)}";
+                    int gap = int.Parse(device.Price.Replace(",", "")) - int.Parse(device.PrevPrice.Replace(",", ""));
+                    device.ChangePrice = gap >= 0 ? $"▲{Math.Abs(gap)}" : $"▼{Math.Abs(gap)}";
+                    gap = int.Parse(device.CashPrice.Replace(",", "")) - int.Parse(device.PrevCashPrice.Replace(",", ""));
+                    device.ChangeCash = gap >= 0 ? $"▲{Math.Abs(gap)}" : $"▼{Math.Abs(gap)}";
 
-                    HardwareDataGrid.Items.Add(new string[] { device.name, device.price, device.changePrice });
+                    HardwareDataGrid.Items.Add(new { Name = device.Name, Price = device.Price, ChangePrice = device.ChangePrice });
                 }
                 First = false;
             }
@@ -138,10 +138,10 @@ namespace Gaten.Windows.MintPanda.Contents
             // 이전에 조사했던 가격은 이전가격으로 설정
             foreach (Device device in Devices)
             {
-                if (device.price == null) continue;
-                device.forePrice = device.price;
-                if (device.cashPrice == null) continue;
-                device.foreCashPrice = device.cashPrice;
+                if (device.Price == null) continue;
+                device.PrevPrice = device.Price;
+                if (device.CashPrice == null) continue;
+                device.PrevCashPrice = device.CashPrice;
             }
 
             // 지우고
@@ -167,11 +167,20 @@ namespace Gaten.Windows.MintPanda.Contents
 
     public class Device
     {
-        public enum Types { Product, Sum }
-        public Types type;
-        public string name;
-        public string url;
-        public string price, forePrice, changePrice;
-        public string cashPrice, foreCashPrice, changeCash;
+        public enum Types
+        { 
+            Product,
+            Sum 
+        }
+
+        public Types Type { get; set; }
+        public string Name { get; set; }
+        public string Url { get; set; }
+        public string Price { get; set; }
+        public string PrevPrice { get; set; }
+        public string ChangePrice { get; set; }
+        public string CashPrice { get; set; }
+        public string PrevCashPrice { get; set; }
+        public string ChangeCash { get; set; }
     }
 }

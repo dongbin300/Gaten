@@ -13,8 +13,8 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="200"/>
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" x:Name="TranslationText1" Width="Auto" Height="Auto" />
-        <UniformGrid Grid.Row="1" Columns="2">
+        <TextBox Grid.Row="0" x:Name="TranslationText1" Width="Auto" Height="Auto" TextWrapping="Wrap" AcceptsReturn="True"/>
+        <UniformGrid Grid.Row="1" Columns="3">
             <ComboBox x:Name="TranslationComboBox" Width="Auto" SelectedIndex="1">
                 <ComboBoxItem Content="-> 한국어"/>
                 <ComboBoxItem Content="-> 영어" IsSelected="True"/>
@@ -22,7 +22,8 @@
                 <ComboBoxItem Content="-> 중국어"/>
             </ComboBox>
             <Button x:Name="TranslationButton" Content="번역" Click="TranslationButton_Click" />
+            <Button x:Name="ResetButton" Content="지우기" Click="ResetButton_Click" />
         </UniformGrid>
-        <TextBox Grid.Row="2" x:Name="TranslationText2" Width="Auto" Height="Auto" IsReadOnly="True"/>
+        <TextBox Grid.Row="2" x:Name="TranslationText2" Width="Auto" Height="Auto" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True"/>
     </Grid>
 </Window>

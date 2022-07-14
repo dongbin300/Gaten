@@ -309,7 +309,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Network.YouTubeExplor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Windows.RestoreWindow", "Windows\Gaten.Windows.RestoreWindow\Gaten.Windows.RestoreWindow.csproj", "{09717A83-D6E1-42C1-B594-47A2F74413B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.Language.DotNetExtractor", "Language\Gaten.Language.DotNetExtractor\Gaten.Language.DotNetExtractor.csproj", "{C0F0066D-0863-4462-86FB-62343637F472}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Language.DotNetExtractor", "Language\Gaten.Language.DotNetExtractor\Gaten.Language.DotNetExtractor.csproj", "{C0F0066D-0863-4462-86FB-62343637F472}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Net", "Net\Gaten.Net\Gaten.Net.csproj", "{461F851D-15A2-474F-A42F-73BD7BAA90C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.Windows.MintKakao", "Windows\Gaten.Windows.MintKakao\Gaten.Windows.MintKakao.csproj", "{F2F3672D-52EA-441B-A222-60B933F50306}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.Net.Windows.KakaoTalk", "Net\Windows\Gaten.Net.Windows.KakaoTalk\Gaten.Net.Windows.KakaoTalk.csproj", "{6833C0E5-B471-4238-8E1B-7E2F8346D2DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -829,6 +835,18 @@ Global
 		{C0F0066D-0863-4462-86FB-62343637F472}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0F0066D-0863-4462-86FB-62343637F472}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0F0066D-0863-4462-86FB-62343637F472}.Release|Any CPU.Build.0 = Release|Any CPU
+		{461F851D-15A2-474F-A42F-73BD7BAA90C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{461F851D-15A2-474F-A42F-73BD7BAA90C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{461F851D-15A2-474F-A42F-73BD7BAA90C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{461F851D-15A2-474F-A42F-73BD7BAA90C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2F3672D-52EA-441B-A222-60B933F50306}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2F3672D-52EA-441B-A222-60B933F50306}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2F3672D-52EA-441B-A222-60B933F50306}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2F3672D-52EA-441B-A222-60B933F50306}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6833C0E5-B471-4238-8E1B-7E2F8346D2DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6833C0E5-B471-4238-8E1B-7E2F8346D2DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6833C0E5-B471-4238-8E1B-7E2F8346D2DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6833C0E5-B471-4238-8E1B-7E2F8346D2DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -974,6 +992,9 @@ Global
 		{19D089DE-7EED-4687-8E99-A76B3FDCB31C} = {17A44341-550C-4DBB-95A5-6B0B3E8BE24B}
 		{09717A83-D6E1-42C1-B594-47A2F74413B1} = {0D20CAEA-6673-4319-8F89-D093A669596D}
 		{C0F0066D-0863-4462-86FB-62343637F472} = {1CAEFC72-FD02-4532-8E1F-FB20FA5649E1}
+		{461F851D-15A2-474F-A42F-73BD7BAA90C8} = {38435F98-33CA-467B-A5EA-D309264E96C0}
+		{F2F3672D-52EA-441B-A222-60B933F50306} = {0D20CAEA-6673-4319-8F89-D093A669596D}
+		{6833C0E5-B471-4238-8E1B-7E2F8346D2DD} = {40F45517-3431-4D7F-A39B-8F2B32A31E62}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9E22E9A6-DD7D-4809-95DD-888B759F780F}

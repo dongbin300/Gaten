@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Gaten.Net.Windows;
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -14,11 +16,7 @@ namespace Gaten.Windows.MintPanda.Contents
     /// </summary>
     public partial class WinSplit : Window
     {
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
-
         static int TaskBarHeight => 36;
-        static Rectangle screenRectangle;
 
         static string[] blacklist =
         {
@@ -43,8 +41,11 @@ namespace Gaten.Windows.MintPanda.Contents
             }
         }
 
+
         public static void Split(int widthCount, int heightCount, bool taskBarNone, bool allProcess, string processName = "")
         {
+            Rectangle screenRectangle = new Rectangle();
+
             if (taskBarNone)
             {
                 screenRectangle.Height = SystemParameters.PrimaryScreenHeight - TaskBarHeight;
@@ -70,7 +71,7 @@ namespace Gaten.Windows.MintPanda.Contents
 
                 if (handle != IntPtr.Zero)
                 {
-                    MoveWindow(handle, (int)(appWidth * (i % widthCount)), (int)(appHeight * (i / heightCount)), (int)appWidth, (int)appHeight, true);
+                    WinApi.MoveWindow(handle, (int)(appWidth * (i % widthCount)), (int)(appHeight * (i / heightCount)), (int)appWidth, (int)appHeight, true);
                 }
             }
         }
@@ -87,7 +88,7 @@ namespace Gaten.Windows.MintPanda.Contents
 
         static List<Process> GetWindowProcesses(string processName = "")
         {
-            List<Process> result = new List<Process>();
+            List<Process> result = new();
             var processes = processName == "" ? Process.GetProcesses() : Process.GetProcessesByName(processName);
 
             foreach (Process process in processes)
@@ -119,6 +120,66 @@ namespace Gaten.Windows.MintPanda.Contents
             }
 
             return result;
+        }
+
+        public void RefreshProcessList()
+        {
+            var processes = GetProcessList();
+            ProcessComboBox.Items.Clear();
+            foreach (var process in processes)
+            {
+                ProcessComboBox.Items.Add(process);
+            }
+
+            if (ProcessComboBox.Items.Count > 0)
+            {
+                ProcessComboBox.SelectedIndex = 0;
+            }
+        }
+
+        private void SplitButton_Click(object sender, RoutedEventArgs e)
+        {
+            var processName = AllProcessCheckBox.IsChecked ?? true ? "" : ProcessComboBox.Text;
+
+            Split(
+                int.Parse(WinSplitHComboBox.Text),
+                int.Parse(WinSplitVComboBox.Text),
+                ExceptTaskBarCheckBox.IsChecked ?? true,
+                AllProcessCheckBox.IsChecked ?? true,
+                processName);
+
+        }
+
+        private void KillButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(ProcessComboBox.Text))
+            {
+                return;
+            }
+
+            if (MessageBox.Show(this, "정말 프로세스를 종료하시겠습니까?", "경고", MessageBoxButton.YesNoCancel) != MessageBoxResult.Yes)
+            {
+                return;
+            }
+
+            var processName = AllProcessCheckBox.IsChecked ?? true ? "" : ProcessComboBox.Text;
+
+            SuperKill(AllProcessCheckBox.IsChecked ?? true, processName);
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshProcessList();
+        }
+
+        private void AllProcessCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            ProcessComboBox.IsEnabled = false;
+        }
+
+        private void AllProcessCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ProcessComboBox.IsEnabled = true;
         }
     }
 }

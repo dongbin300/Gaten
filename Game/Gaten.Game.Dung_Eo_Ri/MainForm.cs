@@ -27,7 +27,7 @@ namespace Gaten.Game.Dung_Eo_Ri
 
         bool IsActive(IntPtr handle)
         {
-            IntPtr activeHandle = WinAPI.GetForegroundWindow();
+            IntPtr activeHandle = WinApi.GetForegroundWindow();
             return activeHandle == handle;
         }
 

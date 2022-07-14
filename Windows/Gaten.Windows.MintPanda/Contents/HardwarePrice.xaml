@@ -13,7 +13,11 @@
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <DataGrid x:Name="HardwareDataGrid" MouseDoubleClick="HardwareDataGrid_MouseDoubleClick">
-            
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="이름" Binding="{Binding Name}" Width="10*"/>
+                <DataGridTextColumn Header="가격" Binding="{Binding Price}" Width="5*"/>
+                <DataGridTextColumn Header="변동" Binding="{Binding ChangePrice}" Width="5*"/>
+            </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="SaveButton" Grid.Row="1" Content="저장" Click="SaveButton_Click"/>
     </Grid>

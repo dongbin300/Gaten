@@ -1,20 +1,43 @@
 ﻿using Gaten.Net.Extension;
 using Gaten.Net.Data;
+using Gaten.Net.Data.Math;
+using Gaten.Net.Image;
+using System.Drawing;
 
-Console.WriteLine("123456");
 
 
-void a()
+namespace Gaten.Study.TestConsole
 {
-    int b1 = 61 + 1231124;
-    int b2 = 16 + 1231324;
-    int b3 = 611 + 1231224;
-    int b4 = 612 + 12231224;
-    int b5 = 6321 + 11123124;
-}
+    public class Program
+    {
+        public static void Main()
+        {
+            Bitmap bitmap = new Bitmap(Image.FromFile("C:\\AATEST\\aa.png"));
 
-void b()
-{
-    int bb = 3 * 6 * 1231241;
-    int c = Math.Max(5, 1);
+            var _a = bitmap.GetPixelData();
+
+            var a = bitmap.GetPixelColor();
+        }
+
+        public static List<Color> GetPixel(Bitmap bitmap)
+        {
+            List<Color> colors = new List<Color>();
+            LockBitmap lockBitmap = new LockBitmap(bitmap);
+            lockBitmap.LockBits();
+
+            for (int i = 0; i < lockBitmap.Height; i++)
+            {
+                for (int j = 0; j < lockBitmap.Width; j++)
+                {
+                    colors.Add(lockBitmap.GetPixel(j, i));
+                }
+            }
+
+            lockBitmap.UnlockBits();
+            lockBitmap.Dispose();
+
+
+            return colors;
+        }
+    }
 }

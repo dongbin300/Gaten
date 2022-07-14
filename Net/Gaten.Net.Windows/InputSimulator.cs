@@ -8,7 +8,7 @@ namespace Gaten.Net.Windows
         private static readonly KeyboardSimulator keyboardSimulator = new();
         private static readonly MouseSimulator mouseSimulator = new();
 
-        public static void MouseMove(int x, int y) => WinAPI.SetCursorPos(x, y);
+        public static void MouseMove(int x, int y) => WinApi.SetCursorPos(x, y);
         public static void MouseClick() => mouseSimulator.LeftButtonClick();
         public static void MouseClick(int x, int y)
         {

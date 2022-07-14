@@ -461,7 +461,8 @@
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="Width" Value="120"/>
-        <Setter Property="Height" Value="30"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Margin" Value="4,1"/>
         <Setter Property="Foreground" Value="#F4F4F4"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -482,7 +483,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="HasItems" Value="false">
-                            <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
+                            <Setter TargetName="DropDownBorder" Property="MinHeight" Value="35"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Foreground" Value="#888"/>
@@ -496,7 +497,7 @@
                         </Trigger>
                         <Trigger Property="IsEditable" Value="true">
                             <Setter Property="IsTabStop" Value="false"/>
-                            <Setter TargetName="PART_EditableTextBox" Property="Visibility"    Value="Visible"/>
+                            <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -594,6 +595,31 @@
                             </Label>
                         </Border>
                         <Border Grid.Row="1" BorderThickness="3,0,3,3" BorderBrush="{StaticResource GroupBoxColor}">
+                            <ContentPresenter Margin="4" />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type GroupBox}" x:Key="MintGroupBox">
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GroupBox">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" BorderThickness="1" BorderBrush="#9BDBCD" Background="#9BDBCD">
+                            <Label Foreground="White">
+                                <ContentPresenter Margin="4" ContentSource="Header" RecognizesAccessKey="True"/>
+                            </Label>
+                        </Border>
+                        <Border Grid.Row="1" BorderThickness="3,0,3,3" BorderBrush="#9BDBCD">
                             <ContentPresenter Margin="4" />
                         </Border>
                     </Grid>
