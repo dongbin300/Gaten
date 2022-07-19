@@ -1,5 +1,7 @@
 ﻿using Gaten.Net.Data.Math;
 using Gaten.Net.Windows.KakaoTalk.Chat;
+using Gaten.Net.Wpf;
+using Gaten.Net.Wpf.Extensions;
 
 using System;
 using System.Collections.Generic;
@@ -17,6 +19,7 @@ namespace Gaten.Windows.MintKakao
     {
         KakaoTalkChatWindow window;
         List<KakaoTalkChatMessage> latestMessages;
+        System.Timers.Timer mainTimer = new(500);
 
         public MainWindow()
         {
@@ -29,11 +32,38 @@ namespace Gaten.Windows.MintKakao
             AdminTextBox3.Text = Settings.Default.AdminNickname3;
             AdminTextBox4.Text = Settings.Default.AdminNickname4;
             AdminTextBox5.Text = Settings.Default.AdminNickname5;
+            MonitorIntervalTextBox.Text = Settings.Default.MonitorInterval;
+
+            mainTimer.Elapsed += MainTimer_Elapsed;
+            mainTimer.Start();
+        }
+
+        private void MainTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
+        {
+            DispatcherService.Invoke(() =>
+            {
+                if (int.TryParse(MonitorIntervalTextBox.Text, out int interval))
+                {
+                    KakaoTalkChatBot.WorkInterval = interval;
+                }
+                else
+                {
+                    KakaoTalkChatBot.WorkInterval = 2000;
+                }
+                
+                DebugText.Text = $"{KakaoTalkChatBot.CurrentProfileCount}명, {KakaoTalkChatBot.CurrentChatCount}개";
+
+                if (KakaoTalkChatBot.ChatRoomImage != null)
+                {
+                    ChatRoomMonitorImage.Source = KakaoTalkChatBot.ChatRoomImage.ToImageSource();
+                }
+            });
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             KakaoTalkChatBot.Stop();
+            mainTimer.Stop();
 
             Settings.Default.TargetRoomName = RoomNameTextBox.Text;
             Settings.Default.MyNickname = MyNicknameTextBox.Text;
@@ -42,6 +72,7 @@ namespace Gaten.Windows.MintKakao
             Settings.Default.AdminNickname3 = AdminTextBox3.Text;
             Settings.Default.AdminNickname4 = AdminTextBox4.Text;
             Settings.Default.AdminNickname5 = AdminTextBox5.Text;
+            Settings.Default.MonitorInterval = MonitorIntervalTextBox.Text;
             Settings.Default.Save();
         }
         
@@ -98,6 +129,7 @@ namespace Gaten.Windows.MintKakao
                         "Export" => "내보내기",
                         "Encrypt" => "랜덤",
                         "KoreanName" => "이름",
+                        "Test" => "테스트",
                         _ => "에러"
                     };
                     MainBorder.BorderBrush = new SolidColorBrush(Colors.White);

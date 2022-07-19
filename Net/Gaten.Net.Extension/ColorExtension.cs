@@ -21,6 +21,17 @@ namespace Gaten.Net.Extension
         }
 
         /// <summary>
+        /// 하얀색인지 확인
+        /// </summary>
+        /// <param name="color">픽셀 컬러</param>
+        /// <param name="margin">오차범위, 10일 경우 (246,246,246)까지는 허용함</param>
+        /// <returns></returns>
+        public static bool IsWhite(this Color color, int margin = 10)
+        {
+            return color.R + color.G + color.B >= (256 - margin) * 3;
+        }
+
+        /// <summary>
         /// 같은 색인지 확인
         /// </summary>
         /// <param name="color1">픽셀 컬러1</param>

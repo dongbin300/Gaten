@@ -12,32 +12,23 @@ namespace Gaten.Study.TestConsole
     {
         public static void Main()
         {
-            Bitmap bitmap = new Bitmap(Image.FromFile("C:\\AATEST\\aa.png"));
+            int[,] a = new int[4, 3];
 
-            var _a = bitmap.GetPixelData();
+            a[0, 0] = 1;
+            a[0, 1] = 2;
+            a[0, 2] = 3;
+            a[1, 0] = 4;
+            a[1, 1] = 5;
+            a[1, 2] = 6;
+            a[2, 0] = 7;
+            a[2, 1] = 8;
+            a[2, 2] = 9;
+            a[3, 0] = 10;
+            a[3, 1] = 11;
+            a[3, 2] = 12;
 
-            var a = bitmap.GetPixelColor();
-        }
-
-        public static List<Color> GetPixel(Bitmap bitmap)
-        {
-            List<Color> colors = new List<Color>();
-            LockBitmap lockBitmap = new LockBitmap(bitmap);
-            lockBitmap.LockBits();
-
-            for (int i = 0; i < lockBitmap.Height; i++)
-            {
-                for (int j = 0; j < lockBitmap.Width; j++)
-                {
-                    colors.Add(lockBitmap.GetPixel(j, i));
-                }
-            }
-
-            lockBitmap.UnlockBits();
-            lockBitmap.Dispose();
-
-
-            return colors;
+            var b = a.Split(1, 1, 3, 2);
+            Console.WriteLine(b);
         }
     }
 }

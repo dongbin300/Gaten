@@ -1,10 +1,8 @@
-﻿using Gaten.Net.Image;
+﻿using Gaten.Net.Data.Math;
 using Gaten.Net.Extension;
+using Gaten.Net.Image;
 
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Threading;
-using Gaten.Net.Data.Math;
 using System.Text;
 
 namespace Gaten.Net.Windows.KakaoTalk.Chat
@@ -14,11 +12,21 @@ namespace Gaten.Net.Windows.KakaoTalk.Chat
         public static bool IsRunning { get; private set; }
         public static KakaoTalkChatWindow Window { get; set; }
         public static List<KakaoTalkChatMessage> Messages { get; private set; }
-        //static System.Timers.Timer timer = new System.Timers.Timer(2000);
         static Thread worker;
         private static int pointerIndex = 0;
         private readonly static int InitMessasgeCount = 8;
         private static SmartRandom r = new SmartRandom();
+
+        public static int CurrentProfileCount { get; set; }
+        public static int CurrentChatCount { get; set; }
+
+        public static int WorkInterval = 2000;
+        private readonly static int ProfileSize = 43;
+        private readonly static int ChatWidth = 25;
+        private readonly static int ChatHeight = 30;
+        private static int ChatHeightMultiLine(int lineCount) => ChatHeight + (lineCount - 1) * 18;
+
+        public static Bitmap ChatRoomImage { get; set; }
 
         public KakaoTalkChatBot()
         {
@@ -28,22 +36,18 @@ namespace Gaten.Net.Windows.KakaoTalk.Chat
         public static void Init(KakaoTalkChatWindow window)
         {
             Messages = new List<KakaoTalkChatMessage>();
-            //timer.Elapsed += Timer_Elapsed;
             worker = new Thread(new ThreadStart(DoWork));
             Window = window;
         }
 
         public static void Start()
         {
-            //pointerIndex = 0;
-            //timer.Start();
             worker.Start();
             IsRunning = true;
         }
 
         public static void Stop()
         {
-            //timer.Stop();
             if (worker != null)
             {
                 if (worker.ThreadState == ThreadState.Running)
@@ -83,9 +87,13 @@ namespace Gaten.Net.Windows.KakaoTalk.Chat
                         case BotMode.Export:
                             ExportMode();
                             break;
+
+                        case BotMode.Test:
+                            AnalyzeCurrentChat();
+                            break;
                     }
 
-                    Thread.Sleep(2000);
+                    Thread.Sleep(WorkInterval);
                 }
                 catch
                 {
@@ -93,33 +101,110 @@ namespace Gaten.Net.Windows.KakaoTalk.Chat
             }
         }
 
-        //private static void Timer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
-        //{
+        public static void AnalyzeCurrentChat()
+        {
+            var chatRoomImages = new List<Bitmap>();
+            var rect = KakaoTalkChatApi.GetChatListRect(Window);
 
-        //}
+            var chatWindowBitmap = ScreenShot.Take(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
+            var profileBitmap = chatWindowBitmap.CropImage(new Rectangle(14, 55, ProfileSize, chatWindowBitmap.Height - 55));
+            var chatBitmap = chatWindowBitmap.CropImage(new Rectangle(14 + profileBitmap.Width, 55, chatWindowBitmap.Width - profileBitmap.Width - 30, chatWindowBitmap.Height - 55));
+
+            var profileColor = profileBitmap.GetPixelColor2D();
+            var chatColor = chatBitmap.GetPixelColor2D();
+
+            /* Profile */
+            CurrentProfileCount = 0;
+            using (Graphics g = Graphics.FromImage(profileBitmap))
+            {
+                for (int i = 0; i < profileBitmap.Height - ProfileSize; i += 3)
+                {
+                    var targetColor = profileColor.Split(0, i, ProfileSize, ProfileSize);
+                    if (targetColor.Cast<Color>().Where(x => x.IsGrayColor(1) && x.IsBlack(50)).Count() < targetColor.Length * 0.25)
+                    {
+                        Pen pen = new Pen(Brushes.Red, 1);
+                        g.DrawRectangle(pen, new Rectangle(0, i, ProfileSize - 1, ProfileSize - 1));
+                        i += ProfileSize;
+                        CurrentProfileCount++;
+                    }
+                }
+            }
+            chatRoomImages.Add(profileBitmap);
+
+            /* Chat */
+            CurrentChatCount = 0;
+            using (Graphics g = Graphics.FromImage(chatBitmap))
+            {
+                for (int i = 0; i < chatBitmap.Height - ChatHeight; i += 3)
+                {
+                    var targetColor = chatColor.Split(10, i, ChatWidth, ChatHeight);
+                    var isChat = false;
+                    // Horizontal inspection
+                    while (targetColor.Cast<Color>().Where(x => x.IsGrayColor(1) && x.IsWhite(100)).Count() > targetColor.Length * 0.8)
+                    {
+                        isChat = true;
+                        targetColor = chatColor.Split(10, i, targetColor.GetLength(0) + 5, targetColor.GetLength(1));
+                    }
+
+                    if (isChat)
+                    {
+                        targetColor = chatColor.Split(10, i, targetColor.GetLength(0), targetColor.GetLength(1) + 5);
+                        var target2Color = chatColor.Split(10, i + targetColor.GetLength(1), targetColor.GetLength(0), 3);
+            
+                        int p = 1;
+                        int lastChatHeight = ChatHeight;
+                        // Vertical inspection
+                        while (target2Color.Cast<Color>().Where(x => x.IsGrayColor(1) && x.IsBlack(50)).Count() < targetColor.Length * 0.05)
+                        {
+                            if(i + ChatHeightMultiLine(p) + 3 > chatBitmap.Height)
+                            {
+                                lastChatHeight = chatBitmap.Height - i - 4;
+                                break;
+                            }
+                            else
+                            {
+                                lastChatHeight = ChatHeightMultiLine(p);
+                            }
+                            
+                            target2Color = chatColor.Split(10, i + lastChatHeight, target2Color.GetLength(0), 3);
+                            p++;
+                        }
+                        Pen pen = new Pen(Brushes.Red, 1);
+                        g.DrawRectangle(pen, new Rectangle(10, i, target2Color.GetLength(0) - 1, lastChatHeight - 1));
+                        i += lastChatHeight;
+                        CurrentChatCount++;
+                    }
+                }
+            }
+            chatRoomImages.Add(chatBitmap);
+
+            /* Merge */
+            ChatRoomImage = chatRoomImages.Merge(MergeType.Horizontal);
+        }
 
         public static void ExportMode()
         {
             var rect = KakaoTalkChatApi.GetChatListRect(Window);
 
-            //ScreenShot.SaveAsFile(rect.left + 14, rect.top, 43, rect.bottom - rect.top, "C:\\AATEST\\", "aa.png", ImageFormat.Png);
+            //ScreenShot.SaveAsFile(rect.left + 14, rect.top, 43, rect.bottom - rect.top, "C:\\", "aa.png", ImageFormat.Png);
 
             int width = 43;
             int height = rect.bottom - rect.top;
             int profileSize = width;
             var profileSection = ScreenShot.Take(rect.left + 14, rect.top, width, height);
-            var colors = profileSection.GetPixelColor();
+            var colors = profileSection.GetPixelColor2D();
 
-            //using (Graphics g = Graphics.FromImage(profileSection))
+            using (Graphics g = Graphics.FromImage(profileSection))
             {
                 for (int i = 0; i < height - profileSize; i += 3)
                 {
                     var pixelLength = profileSize * profileSize;
-                    var targetColors = colors.Skip(i * width).Take(pixelLength);
-                    if (targetColors.Where(x => x.IsBlack(50)).Count() < pixelLength * 0.35)
+                    var targetColors = colors.Split(0, i, profileSize, profileSize);
+                    //var targetColors = colors.Skip(i * width).Take(pixelLength);
+                    if (targetColors.Cast<Color>().Where(x => x.IsBlack(50)).Count() < pixelLength * 0.35)
                     {
-                        //Pen pen = new Pen(Brushes.Red, 1);
-                        //g.DrawRectangle(pen, new Rectangle(0, i, profileSize - 1, profileSize - 1));
+                        Pen pen = new Pen(Brushes.Red, 1);
+                        g.DrawRectangle(pen, new Rectangle(0, i, profileSize - 1, profileSize - 1));
 
                         // profile picture click
                         InputSimulator.MouseClick(rect.left + width / 2 + 5, rect.top + i + width / 2 + 5);
@@ -130,16 +215,12 @@ namespace Gaten.Net.Windows.KakaoTalk.Chat
                         //crownSection.Save("C:\\AATEST\\CROWN.png");
 
                         // export click
-
-
                         i += profileSize;
                     }
                 }
             }
 
-            //profileSection.Save("C:\\AATEST\\BB.png");
-
-
+            //profileSection.Save("C:\\BB.png");
         }
 
         public static void ParrotMode()

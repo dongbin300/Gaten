@@ -52,8 +52,7 @@ namespace Gaten.Net.Image
                 }
 
                 // Lock bitmap and return bitmap data
-                bitmapData = source.LockBits(rect, ImageLockMode.ReadWrite,
-                                             source.PixelFormat);
+                bitmapData = source.LockBits(rect, ImageLockMode.ReadWrite, source.PixelFormat);
 
                 // create byte array to copy pixel values
                 RowSize = bitmapData.Stride < 0 ? -bitmapData.Stride : bitmapData.Stride;

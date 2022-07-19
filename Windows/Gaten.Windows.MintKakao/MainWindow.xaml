@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaten.Windows.MintKakao"
         mc:Ignorable="d"
-        Title="민트 카카오 V0.2" Height="450" Width="800" Closing="Window_Closing">
+        Title="민트 카카오 V0.3" Height="520" Width="1200" Closing="Window_Closing">
     <Window.Resources>
         <Style TargetType="GroupBox" BasedOn="{StaticResource MintGroupBox}"/>
     </Window.Resources>
@@ -13,6 +13,7 @@
     <Border x:Name="MainBorder" BorderBrush="White" BorderThickness="1">
         <Grid>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
@@ -46,13 +47,25 @@
                 </GroupBox>
 
                 <GroupBox Grid.Row="1" Header="봇 설정">
-                    <UniformGrid Columns="3">
-                        <Button x:Name="BotStartButton" Tag="Parrot" Content="앵무새" Click="BotStartButton_Click"/>
-                        <Button x:Name="BotStartButton2" Tag="Blind" Content="가리기" Click="BotStartButton_Click"/>
-                        <Button x:Name="BotStartButton3" Tag="Export" Content="내보내기" Click="BotStartButton_Click"/>
-                        <Button x:Name="BotStartButton4" Tag="Encrypt" Content="랜덤" Click="BotStartButton_Click"/>
-                        <Button x:Name="BotStartButton5" Tag="KoreanName" Content="이름" Click="BotStartButton_Click"/>
-                    </UniformGrid>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <UniformGrid Grid.Row="0" Rows="1" Columns="2">
+                            <TextBlock Text="모니터링 주기(ms)"/>
+                            <TextBox x:Name="MonitorIntervalTextBox" Text=""/>
+                        </UniformGrid>
+                        <UniformGrid Grid.Row="1" Columns="3">
+                            <Button x:Name="BotStartButton" Tag="Parrot" Content="앵무새" Click="BotStartButton_Click"/>
+                            <Button x:Name="BotStartButton2" Tag="Blind" Content="가리기" Click="BotStartButton_Click"/>
+                            <Button x:Name="BotStartButton3" Tag="Export" Content="내보내기" Click="BotStartButton_Click"/>
+                            <Button x:Name="BotStartButton4" Tag="Encrypt" Content="랜덤" Click="BotStartButton_Click"/>
+                            <Button x:Name="BotStartButton5" Tag="KoreanName" Content="이름" Click="BotStartButton_Click"/>
+                            <Button x:Name="BotStartButton6" Tag="Test" Content="테스트" Click="BotStartButton_Click"/>
+                        </UniformGrid>
+                    </Grid>
                 </GroupBox>
             </Grid>
 
@@ -69,6 +82,9 @@
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
                     </Grid.RowDefinitions>
                     <TextBox Grid.Row="0" Grid.Column="0" x:Name="SendMacroTextBox1"/>
                     <Button Grid.Row="0" Grid.Column="1" x:Name="SendMacroButton1" Content="전송" Click="SendMacroButton1_Click"/>
@@ -76,8 +92,14 @@
                     <Button Grid.Row="1" Grid.Column="1" x:Name="SendMacroButton2" Content="전송" Click="SendMacroButton2_Click"/>
                     <TextBox Grid.Row="2" Grid.Column="0" x:Name="SendMacroTextBox3"/>
                     <Button Grid.Row="2" Grid.Column="1" x:Name="SendMacroButton3" Content="전송" Click="SendMacroButton3_Click"/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" x:Name="DebugText"/>
                 </Grid>
+            </GroupBox>
 
+            <GroupBox Grid.Column="2" Header="채팅방 모니터">
+                <Grid>
+                    <Image x:Name="ChatRoomMonitorImage" Stretch="Fill"/>
+                </Grid>
             </GroupBox>
         </Grid>
     </Border>

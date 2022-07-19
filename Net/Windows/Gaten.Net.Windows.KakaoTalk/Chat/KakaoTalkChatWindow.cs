@@ -21,6 +21,7 @@
         Blind,
         Export,
         Encrypt,
-        KoreanName
+        KoreanName,
+        Test
     }
 }

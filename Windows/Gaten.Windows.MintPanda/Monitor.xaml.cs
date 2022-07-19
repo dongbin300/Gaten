@@ -254,12 +254,12 @@ namespace Gaten.Windows.MintPanda
 
         private void TaskmgrButton_Click(object sender, RoutedEventArgs e)
         {
-            GProcess.Start(GPath.SystemX86.Down("taskmgr.exe"));
+            GProcess.Start(GPath.System.Down("taskmgr.exe"));
         }
 
         private void EventViewerButton_Click(object sender, RoutedEventArgs e)
         {
-            GProcess.Start(GPath.SystemX86.Down("eventvwr.msc"));
+            GProcess.Start(GPath.System.Down("eventvwr.msc"));
         }
     }
 }

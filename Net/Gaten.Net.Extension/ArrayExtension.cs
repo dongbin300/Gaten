@@ -22,5 +22,20 @@
                 }
             }
         }
+
+        public static T[,] Split<T>(this T[,] array, int startX, int startY, int width, int height)
+        {
+            T[,] results = new T[width, height];
+
+            for (var i = startX; i < startX + width; i++)
+            {
+                for (var j = startY; j < startY + height; j++)
+                {
+                    results[i - startX, j - startY] = array[i, j];
+                }
+            }
+
+            return results;
+        }
     }
 }

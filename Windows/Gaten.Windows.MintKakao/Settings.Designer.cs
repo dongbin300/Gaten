@@ -106,5 +106,17 @@ namespace Gaten.Windows.MintKakao {
                 this["AdminNickname5"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MonitorInterval {
+            get {
+                return ((string)(this["MonitorInterval"]));
+            }
+            set {
+                this["MonitorInterval"] = value;
+            }
+        }
     }
 }
