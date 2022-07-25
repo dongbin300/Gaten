@@ -9,6 +9,77 @@
     <SolidColorBrush x:Key="SoftWhite" Color="#E0E4E8"/>
     <SolidColorBrush x:Key="GroupBoxColor" Color="#25A0DA"/>
     <SolidColorBrush x:Key="CaretColor" Color="#25A0DA"/>
+
+    <!--Control colors.-->
+    <Color x:Key="WindowColor">#FFE8EDF9</Color>
+    <Color x:Key="ContentAreaColorLight">#FFC5CBF9</Color>
+    <Color x:Key="ContentAreaColorDark">#FF7381F9</Color>
+
+    <Color x:Key="DisabledControlLightColor">#FFE8EDF9</Color>
+    <Color x:Key="DisabledControlDarkColor">#FFC5CBF9</Color>
+    <Color x:Key="DisabledForegroundColor">#FF888888</Color>
+
+    <Color x:Key="SelectedBackgroundColor">#FFC5CBF9</Color>
+    <Color x:Key="SelectedUnfocusedColor">#FFDDDDDD</Color>
+
+    <Color x:Key="ControlLightColor">White</Color>
+    <Color x:Key="ControlMediumColor">#FF7381F9</Color>
+    <Color x:Key="ControlDarkColor">#FF211AA9</Color>
+
+    <Color x:Key="ControlMouseOverColor">#FF3843C4</Color>
+    <Color x:Key="ControlPressedColor">#FF211AA9</Color>
+
+
+    <Color x:Key="GlyphColor">#FF444444</Color>
+    <Color x:Key="GlyphMouseOver">sc#1, 0.004391443, 0.002428215, 0.242281124</Color>
+
+    <!--Border colors-->
+    <Color x:Key="BorderLightColor">#FFCCCCCC</Color>
+    <Color x:Key="BorderMediumColor">#FF888888</Color>
+    <Color x:Key="BorderDarkColor">#FF444444</Color>
+
+    <Color x:Key="PressedBorderLightColor">#FF888888</Color>
+    <Color x:Key="PressedBorderDarkColor">#FF444444</Color>
+
+    <Color x:Key="DisabledBorderLightColor">#FFAAAAAA</Color>
+    <Color x:Key="DisabledBorderDarkColor">#FF888888</Color>
+
+    <Color x:Key="DefaultBorderBrushDarkColor">Black</Color>
+
+    <!--Control-specific resources.-->
+    <Color x:Key="HeaderTopColor">#FFC5CBF9</Color>
+    <Color x:Key="DatagridCurrentCellBorderColor">Black</Color>
+    <Color x:Key="SliderTrackDarkColor">#FFC5CBF9</Color>
+
+    <Color x:Key="NavButtonFrameColor">#FF3843C4</Color>
+
+    <LinearGradientBrush x:Key="MenuPopupBrush"
+                     EndPoint="0.5,1"
+                     StartPoint="0.5,0">
+        <GradientStop Color="{DynamicResource ControlLightColor}"
+                Offset="0" />
+        <GradientStop Color="{DynamicResource ControlMediumColor}"
+                Offset="0.5" />
+        <GradientStop Color="{DynamicResource ControlLightColor}"
+                Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ProgressBarIndicatorAnimatedFill"
+                     StartPoint="0,0"
+                     EndPoint="1,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#000000FF"
+                    Offset="0" />
+                <GradientStop Color="#600000FF"
+                    Offset="0.4" />
+                <GradientStop Color="#600000FF"
+                    Offset="0.6" />
+                <GradientStop Color="#000000FF"
+                    Offset="1" />
+            </GradientStopCollection>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
     <!--#endregion-->
 
     <!--#region Basic -->
@@ -16,6 +87,7 @@
     <sys:Double x:Key="BasicControlHeight">30</sys:Double>
     <!--#endregion-->
 
+    <!--#region Window -->
     <Style TargetType="{x:Type Window}" x:Key="ContentWindow">
         <Setter Property="Topmost" Value="True" />
         <Setter Property="ResizeMode" Value="NoResize" />
@@ -24,10 +96,13 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="Margin" Value="0" />
     </Style>
+    <!--#endregion-->
 
+    <!--#region Grid -->
     <Style TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="{StaticResource SoftBlack}" />
     </Style>
+    <!--#endregion-->
     
     <!--#region Button -->
     <Style TargetType="{x:Type Button}">
@@ -309,16 +384,16 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="MenuItem">
-                    <Grid Height="30" Background="#333" Width="{TemplateBinding Width}">
+                    <Grid Background="#3D3D3D" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border x:Name="_border" Background="#333"/>
+                        <Border x:Name="_border" Background="#1F1F1F"/>
                         <TextBlock Foreground="#eee" Grid.Column="1" Margin="15,0" VerticalAlignment="Center" x:Name="_txt" Text="{Binding Header,RelativeSource={RelativeSource TemplatedParent}}" />
                         <Popup Placement="Bottom" x:Name="SubMenuPopup" AllowsTransparency="True"  Focusable="False" IsOpen="{TemplateBinding IsSubmenuOpen}" >
                             <ScrollViewer  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                 <Border Background="#888" Name="SubmenuBorder" BorderBrush="LightGray" BorderThickness="1" SnapsToDevicePixels="True"  >
-                                    <StackPanel  IsItemsHost="True"  KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                                 </Border>
                             </ScrollViewer>
                         </Popup>
@@ -341,12 +416,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="MenuItem">
-                    <Grid Height="30" Background="#333" Width="{TemplateBinding Width}">
+                    <Grid Background="#1F1F1F" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="30" />
                             <ColumnDefinition Width="*" MinWidth="80"/>
                         </Grid.ColumnDefinitions>
-                        <Border Background="#333"/>
+                        <Border Background="#1F1F1F"/>
                         <Border x:Name="_border"  Grid.ColumnSpan="2"/>
                         <Image x:Name="_imgicon" Width="12" Height="12" Stretch="Uniform"  Source="{Binding Icon.Source, RelativeSource={RelativeSource TemplatedParent}}" />
                         <TextBlock Foreground="#eee" Grid.Column="1" Margin="5 0 15 0" VerticalAlignment="Center" x:Name="_txt" Text="{Binding Header,RelativeSource={RelativeSource TemplatedParent}}" />
@@ -354,7 +429,7 @@
                         <Popup Placement="Right" x:Name="SubMenuPopup" AllowsTransparency="True"  Focusable="False" IsOpen="{TemplateBinding IsSubmenuOpen}" >
                             <ScrollViewer  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                 <Border Background="#888" Name="SubmenuBorder" BorderBrush="LightGray" BorderThickness="1" SnapsToDevicePixels="True"  >
-                                    <StackPanel  IsItemsHost="True"  KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                                 </Border>
                             </ScrollViewer>
                         </Popup>
@@ -578,6 +653,7 @@
     </Style>
     <!--#endregion-->
 
+    <!--#region GroupBox -->
     <Style TargetType="{x:Type GroupBox}">
         <Setter Property="Margin" Value="5" />
         <Setter Property="BorderThickness" Value="0" />
@@ -628,83 +704,12 @@
         </Setter>
     </Style>
 
-    <!--Control colors.-->
-    <Color x:Key="WindowColor">#FFE8EDF9</Color>
-    <Color x:Key="ContentAreaColorLight">#FFC5CBF9</Color>
-    <Color x:Key="ContentAreaColorDark">#FF7381F9</Color>
+    <!--#endregion-->
 
-    <Color x:Key="DisabledControlLightColor">#FFE8EDF9</Color>
-    <Color x:Key="DisabledControlDarkColor">#FFC5CBF9</Color>
-    <Color x:Key="DisabledForegroundColor">#FF888888</Color>
-
-    <Color x:Key="SelectedBackgroundColor">#FFC5CBF9</Color>
-    <Color x:Key="SelectedUnfocusedColor">#FFDDDDDD</Color>
-
-    <Color x:Key="ControlLightColor">White</Color>
-    <Color x:Key="ControlMediumColor">#FF7381F9</Color>
-    <Color x:Key="ControlDarkColor">#FF211AA9</Color>
-
-    <Color x:Key="ControlMouseOverColor">#FF3843C4</Color>
-    <Color x:Key="ControlPressedColor">#FF211AA9</Color>
-
-
-    <Color x:Key="GlyphColor">#FF444444</Color>
-    <Color x:Key="GlyphMouseOver">sc#1, 0.004391443, 0.002428215, 0.242281124</Color>
-
-    <!--Border colors-->
-    <Color x:Key="BorderLightColor">#FFCCCCCC</Color>
-    <Color x:Key="BorderMediumColor">#FF888888</Color>
-    <Color x:Key="BorderDarkColor">#FF444444</Color>
-
-    <Color x:Key="PressedBorderLightColor">#FF888888</Color>
-    <Color x:Key="PressedBorderDarkColor">#FF444444</Color>
-
-    <Color x:Key="DisabledBorderLightColor">#FFAAAAAA</Color>
-    <Color x:Key="DisabledBorderDarkColor">#FF888888</Color>
-
-    <Color x:Key="DefaultBorderBrushDarkColor">Black</Color>
-
-    <!--Control-specific resources.-->
-    <Color x:Key="HeaderTopColor">#FFC5CBF9</Color>
-    <Color x:Key="DatagridCurrentCellBorderColor">Black</Color>
-    <Color x:Key="SliderTrackDarkColor">#FFC5CBF9</Color>
-
-    <Color x:Key="NavButtonFrameColor">#FF3843C4</Color>
-
-    <LinearGradientBrush x:Key="MenuPopupBrush"
-                     EndPoint="0.5,1"
-                     StartPoint="0.5,0">
-        <GradientStop Color="{DynamicResource ControlLightColor}"
-                Offset="0" />
-        <GradientStop Color="{DynamicResource ControlMediumColor}"
-                Offset="0.5" />
-        <GradientStop Color="{DynamicResource ControlLightColor}"
-                Offset="1" />
-    </LinearGradientBrush>
-
-    <LinearGradientBrush x:Key="ProgressBarIndicatorAnimatedFill"
-                     StartPoint="0,0"
-                     EndPoint="1,0">
-        <LinearGradientBrush.GradientStops>
-            <GradientStopCollection>
-                <GradientStop Color="#000000FF"
-                    Offset="0" />
-                <GradientStop Color="#600000FF"
-                    Offset="0.4" />
-                <GradientStop Color="#600000FF"
-                    Offset="0.6" />
-                <GradientStop Color="#000000FF"
-                    Offset="1" />
-            </GradientStopCollection>
-        </LinearGradientBrush.GradientStops>
-    </LinearGradientBrush>
-    
-
-    <Style  TargetType="{x:Type TabControl}">
-        <Setter Property="OverridesDefaultStyle"
-          Value="True" />
-        <Setter Property="SnapsToDevicePixels"
-          Value="True" />
+    <!--#region TabControl -->
+    <Style TargetType="{x:Type TabControl}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabControl}">
@@ -717,45 +722,37 @@
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
-                                                Storyboard.TargetProperty="(Border.BorderBrush).
-                    (SolidColorBrush.Color)">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                         Value="#FFAAAAAA" />
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)">
+                                            <EasingColorKeyFrame KeyTime="0" Value="#FFAAAAAA" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <TabPanel x:Name="HeaderPanel"
-                    Grid.Row="0"
-                    Panel.ZIndex="1"
-                    Margin="0,0,4,-1"
-                    IsItemsHost="True"
-                    KeyboardNavigation.TabIndex="1"
-                    Background="Transparent" />
+                                  Grid.Row="0"
+                                  Panel.ZIndex="1"
+                                  Margin="0,0,4,-1"
+                                  IsItemsHost="True"
+                                  KeyboardNavigation.TabIndex="1"
+                                  Background="Transparent" />
                         <Border x:Name="Border"
-                  Grid.Row="1"
-                  BorderThickness="1"
-                  CornerRadius="2"
-                  KeyboardNavigation.TabNavigation="Local"
-                  KeyboardNavigation.DirectionalNavigation="Contained"
-                  KeyboardNavigation.TabIndex="2">
+                                Grid.Row="1"
+                                BorderThickness="1"
+                                CornerRadius="2"
+                                KeyboardNavigation.TabNavigation="Local"
+                                KeyboardNavigation.DirectionalNavigation="Contained"
+                                KeyboardNavigation.TabIndex="2">
                             <Border.Background>
-                                <LinearGradientBrush EndPoint="0.5,1"
-                                   StartPoint="0.5,0">
-                                    <GradientStop Color="{DynamicResource ContentAreaColorLight}"
-                              Offset="0" />
-                                    <GradientStop Color="{DynamicResource ContentAreaColorDark}"
-                              Offset="1" />
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="{DynamicResource ContentAreaColorLight}" Offset="0" />
+                                    <GradientStop Color="{DynamicResource ContentAreaColorDark}" Offset="1" />
                                 </LinearGradientBrush>
                             </Border.Background>
                             <Border.BorderBrush>
                                 <SolidColorBrush Color="{DynamicResource BorderMediumColor}"/>
                             </Border.BorderBrush>
-                            <ContentPresenter x:Name="PART_SelectedContentHost"
-                              Margin="4"
-                              ContentSource="SelectedContent" />
+                            <ContentPresenter x:Name="PART_SelectedContentHost" Margin="4" ContentSource="SelectedContent" />
                         </Border>
                     </Grid>
                 </ControlTemplate>
@@ -773,16 +770,11 @@
                                 <VisualState x:Name="Unselected" />
                                 <VisualState x:Name="Selected">
                                     <Storyboard>
-                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
-                                                Storyboard.TargetProperty="(Panel.Background).
-                    (GradientBrush.GradientStops)[1].(GradientStop.Color)">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                         Value="{StaticResource ControlPressedColor}" />
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)">
+                                            <EasingColorKeyFrame KeyTime="0" Value="{StaticResource ControlPressedColor}" />
                                         </ColorAnimationUsingKeyFrames>
-                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderThickness)"
-                                                    Storyboard.TargetName="Border">
-                                            <EasingThicknessKeyFrame KeyTime="0"
-                                             Value="1,1,1,0" />
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderThickness)" Storyboard.TargetName="Border">
+                                            <EasingThicknessKeyFrame KeyTime="0" Value="1,1,1,0" />
                                         </ThicknessAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -792,17 +784,11 @@
                                 <VisualState x:Name="MouseOver" />
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
-                                                Storyboard.TargetProperty="(Panel.Background).
-                    (GradientBrush.GradientStops)[1].(GradientStop.Color)">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                         Value="{StaticResource DisabledControlDarkColor}" />
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)">
+                                            <EasingColorKeyFrame KeyTime="0" Value="{StaticResource DisabledControlDarkColor}" />
                                         </ColorAnimationUsingKeyFrames>
-                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
-                                                Storyboard.TargetProperty="(Border.BorderBrush).
-                    (SolidColorBrush.Color)">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                         Value="{StaticResource DisabledBorderLightColor}"/>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)">
+                                            <EasingColorKeyFrame KeyTime="0" Value="{StaticResource DisabledBorderLightColor}"/>
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -817,14 +803,11 @@
                             </Border.BorderBrush>
                             <Border.Background>
 
-                                <LinearGradientBrush StartPoint="0,0"
-                                   EndPoint="0,1">
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                     <LinearGradientBrush.GradientStops>
                                         <GradientStopCollection>
-                                            <GradientStop Color="{DynamicResource ControlLightColor}"
-                                  Offset="0.0" />
-                                            <GradientStop Color="{DynamicResource ControlMediumColor}"
-                                  Offset="1.0" />
+                                            <GradientStop Color="{DynamicResource ControlLightColor}" Offset="0.0" />
+                                            <GradientStop Color="{DynamicResource ControlMediumColor}" Offset="1.0" />
                                         </GradientStopCollection>
                                     </LinearGradientBrush.GradientStops>
                                 </LinearGradientBrush>
@@ -839,16 +822,19 @@
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsSelected"
-                   Value="True">
-                            <Setter Property="Panel.ZIndex"
-                    Value="100" />
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Panel.ZIndex" Value="100" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+    <!--#endregion-->
 
+    <Style TargetType="{x:Type Path}" x:Key="IconPath">
+        <Setter Property="Stroke" Value="White" />
+        <Setter Property="StrokeThickness" Value="2" />
+    </Style>
 
 </ResourceDictionary>

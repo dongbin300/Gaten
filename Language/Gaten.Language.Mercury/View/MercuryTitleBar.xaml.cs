@@ -4,20 +4,21 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Gaten.Net.Wpf.Controls
+namespace Gaten.Language.Mercury.View
 {
     /// <summary>
-    /// TitleBar.xaml에 대한 상호 작용 논리
+    /// MercuryTitleBar.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class TitleBar : UserControl
+    public partial class MercuryTitleBar : UserControl
     {
+        #region Variable
         Window parentWindow => GetParentWindow() ?? Application.Current.MainWindow;
         bool moveMode = false;
         Geometry NormalButtonGeometry;
         Geometry MaximizeButtonGeometry;
 
         private static readonly DependencyProperty TitleProperty =
-            DependencyProperty.Register("Title", typeof(string), typeof(TitleBar), new PropertyMetadata(""));
+            DependencyProperty.Register("Title", typeof(string), typeof(MercuryTitleBar), new PropertyMetadata(""));
         public string Title
         {
             get => (string)GetValue(TitleProperty);
@@ -27,7 +28,7 @@ namespace Gaten.Net.Wpf.Controls
             }
         }
         private static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register("Icon", typeof(ImageSource), typeof(TitleBar), new PropertyMetadata(new BitmapImage()));
+            DependencyProperty.Register("Icon", typeof(ImageSource), typeof(MercuryTitleBar), new PropertyMetadata(new BitmapImage()));
         public ImageSource Icon
         {
             get => (ImageSource)GetValue(IconProperty);
@@ -36,8 +37,10 @@ namespace Gaten.Net.Wpf.Controls
                 SetValue(IconProperty, value);
             }
         }
+        #endregion
 
-        public TitleBar()
+        #region Constructor
+        public MercuryTitleBar()
         {
             InitializeComponent();
 
@@ -47,10 +50,11 @@ namespace Gaten.Net.Wpf.Controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            TitleText.Text = parentWindow.Title ?? Title;
+            //TitleText.Text = parentWindow.Title ?? Title;
             IconImage.Source = parentWindow.Icon ?? Icon;
             MaximizePath.Data = parentWindow.WindowState == WindowState.Maximized ? NormalButtonGeometry : MaximizeButtonGeometry;
         }
+        #endregion
 
         #region Method
         private Window? GetParentWindow()
@@ -70,7 +74,6 @@ namespace Gaten.Net.Wpf.Controls
             MaximizePath.Data = NormalButtonGeometry;
 
             NormalSizeMenuItem.IsEnabled = true;
-            //ChangeSizeMenuItem.IsEnabled = false;
             MoveMenuItem.IsEnabled = false;
             MinimizeMenuItem.IsEnabled = true;
             MaximizeMenuItem.IsEnabled = false;
@@ -83,7 +86,6 @@ namespace Gaten.Net.Wpf.Controls
             MaximizePath.Data = MaximizeButtonGeometry;
 
             NormalSizeMenuItem.IsEnabled = false;
-            //ChangeSizeMenuItem.IsEnabled = true;
             MoveMenuItem.IsEnabled = true;
             MinimizeMenuItem.IsEnabled = true;
             MaximizeMenuItem.IsEnabled = true;
