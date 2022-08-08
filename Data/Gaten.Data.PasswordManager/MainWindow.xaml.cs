@@ -1,5 +1,5 @@
-﻿using Gaten.Net.Data.Collections;
-using Gaten.Net.Data.IO;
+﻿using Gaten.Net.Collections;
+using Gaten.Net.IO;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace Gaten.Data.PasswordManager
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<Account> accounts = new List<Account>();
+        private readonly List<Account> accounts = new();
 
         public MainWindow()
         {
@@ -23,23 +23,23 @@ namespace Gaten.Data.PasswordManager
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             IdComboBox.Items.Clear();
-            IdComboBox.Items.Add("gaten");
-            IdComboBox.Items.Add("dongbin30");
-            IdComboBox.Items.Add("dongbin300");
-            IdComboBox.Items.Add("dongbin30@naver.com");
-            IdComboBox.Items.Add("dongbin30@hanmail.net");
-            IdComboBox.Items.Add("dongbin300@gmail.com");
+            _ = IdComboBox.Items.Add("gaten");
+            _ = IdComboBox.Items.Add("dongbin30");
+            _ = IdComboBox.Items.Add("dongbin300");
+            _ = IdComboBox.Items.Add("dongbin30@naver.com");
+            _ = IdComboBox.Items.Add("dongbin30@hanmail.net");
+            _ = IdComboBox.Items.Add("dongbin300@gmail.com");
 
             PasswordComboBox.Items.Clear();
-            PasswordComboBox.Items.Add("n.d.d0n'b|n");
-            PasswordComboBox.Items.Add("d0n'b|n1011");
-            PasswordComboBox.Items.Add("d0n'b|n101!");
-            PasswordComboBox.Items.Add("d0n'b|n10!!");
-            PasswordComboBox.Items.Add("D0n'b|n1011");
-            PasswordComboBox.Items.Add("D0n'b|n10!!");
-            PasswordComboBox.Items.Add("d0n'b|n1194619");
-            PasswordComboBox.Items.Add("||q|l|l");
-            PasswordComboBox.Items.Add("||q|l|ls.m-_k");
+            _ = PasswordComboBox.Items.Add("n.d.d0n'b|n");
+            _ = PasswordComboBox.Items.Add("d0n'b|n1011");
+            _ = PasswordComboBox.Items.Add("d0n'b|n101!");
+            _ = PasswordComboBox.Items.Add("d0n'b|n10!!");
+            _ = PasswordComboBox.Items.Add("D0n'b|n1011");
+            _ = PasswordComboBox.Items.Add("D0n'b|n10!!");
+            _ = PasswordComboBox.Items.Add("d0n'b|n1194619");
+            _ = PasswordComboBox.Items.Add("||q|l|l");
+            _ = PasswordComboBox.Items.Add("||q|l|ls.m-_k");
 
             Load();
         }
@@ -53,7 +53,7 @@ namespace Gaten.Data.PasswordManager
             string sp = SecondPasswordText.Text.Length < 1 ? " " : SecondPasswordText.Text;
             string dd = AdditionalDescriptionText.Text.Length < 1 ? " " : AdditionalDescriptionText.Text;
 
-            Account account = new Account(pf, ad, id, pw, sp, dd);
+            Account? account = new(pf, ad, id, pw, sp, dd);
 
             Save(account);
             Load();
@@ -66,22 +66,32 @@ namespace Gaten.Data.PasswordManager
             AdditionalDescriptionText.Clear();
             IdComboBox.SelectedIndex = -1;
             PasswordComboBox.SelectedIndex = -1;
-            PlatformText.Focus();
+            _ = PlatformText.Focus();
         }
 
         private void IdComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(e.AddedItems.Count > 0)
+            if (e.AddedItems.Count > 0)
             {
-                IdText.Text = (string)e.AddedItems[0];
+                if (e.AddedItems[0] is not string str)
+                {
+                    return;
+                }
+
+                IdText.Text = str;
             }
         }
 
         private void PasswordComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(e.AddedItems.Count > 0)
+            if (e.AddedItems.Count > 0)
             {
-                PasswordText.Text = (string)e.AddedItems[0];
+                if (e.AddedItems[0] is not string str)
+                {
+                    return;
+                }
+
+                PasswordText.Text = str;
             }
         }
 
@@ -89,10 +99,10 @@ namespace Gaten.Data.PasswordManager
         {
             string keyword = SearchText.Text.Length < 1 ? "" : SearchText.Text;
 
-            var filteredAccounts = accounts.Where(a => a.SerialData.ToLower().Contains(keyword.ToLower())).ToList();
+            List<Account>? filteredAccounts = accounts.Where(a => a.SerialData.ToLower().Contains(keyword.ToLower())).ToList();
 
-            DataSource source = new DataSource("Platform", "Description", "Id", "Password", "SecondPassword", "AdditionalDescription");
-            foreach (var account in filteredAccounts)
+            DataSource? source = new("Platform", "Description", "Id", "Password", "SecondPassword", "AdditionalDescription");
+            foreach (Account? account in filteredAccounts)
             {
                 source.AddRow(account.Platform, account.Description, account.ID, account.Password, account.SecondPassword, account.AdditionalDescription);
             }
@@ -100,12 +110,12 @@ namespace Gaten.Data.PasswordManager
             SearchDataGrid.ItemsSource = source.Data;
         }
 
-        void Save(Account account)
+        private void Save(Account account)
         {
             GResource.AppendText("pm-data.txt", "\n" + account.SerialData);
         }
 
-        void Load()
+        private void Load()
         {
             string[] data = GResource.GetTextLines("pm-data.txt");
 
@@ -113,7 +123,7 @@ namespace Gaten.Data.PasswordManager
             foreach (string d in data)
             {
                 string[] dd = d.Split('$');
-                Account account = new Account(dd[0], dd[1], dd[2], dd[3], dd[4], dd[5]);
+                Account? account = new(dd[0], dd[1], dd[2], dd[3], dd[4], dd[5]);
                 accounts.Add(account);
             }
         }

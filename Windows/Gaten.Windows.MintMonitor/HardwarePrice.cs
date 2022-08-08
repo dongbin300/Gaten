@@ -1,5 +1,4 @@
-﻿using Gaten.Net.Data.IO;
-using Gaten.Net.Network;
+﻿using Gaten.Net.IO;
 
 using System.Text;
 

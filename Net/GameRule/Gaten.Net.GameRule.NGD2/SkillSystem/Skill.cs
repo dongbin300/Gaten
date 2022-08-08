@@ -5,7 +5,7 @@
         /// <summary>
         /// 이름
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// 타입

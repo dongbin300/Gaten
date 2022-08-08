@@ -3,22 +3,17 @@ using Gaten.Net.Windows.Forms;
 
 using System.Runtime.InteropServices;
 
-using WindowsInput;
-
 namespace Gaten.Game.osu
 {
     public partial class MainForm : Form
     {
         public GameManager game;
-        public FrameTimer t = new FrameTimer();
-
-        long prevTick = 0;
-        int c = 0;
-
-        bool beatmapSet;
-        bool start;
-
-        int targetFps = 20;
+        public FrameTimer t = new();
+        private long prevTick = 0;
+        private int c = 0;
+        private bool beatmapSet;
+        private bool start;
+        private readonly int targetFps = 20;
 
         [StructLayout(LayoutKind.Sequential)]
         public struct NativeMessage
@@ -34,10 +29,9 @@ namespace Gaten.Game.osu
         [DllImport("user32.dll")]
         public static extern int PeekMessage(out NativeMessage message, IntPtr window, uint filterMin, uint filterMax, uint remove);
 
-        bool IsApplicationIdle()
+        private bool IsApplicationIdle()
         {
-            NativeMessage result;
-            return PeekMessage(out result, IntPtr.Zero, (uint)0, (uint)0, (uint)0) == 0;
+            return PeekMessage(out _, IntPtr.Zero, 0, 0, 0) == 0;
         }
 
         public MainForm()
@@ -54,14 +48,14 @@ namespace Gaten.Game.osu
             Opacity = 0.3;
         }
 
-        void HandleApplicationIdle(object sender, EventArgs e)
+        private void HandleApplicationIdle(object sender, EventArgs e)
         {
             while (IsApplicationIdle())
             {
                 int fps = CheckFps();
                 if (fps > targetFps)
                 {
-                    Thread.Sleep((int)(1000.0 / targetFps - 1000.0 / fps));
+                    Thread.Sleep((int)((1000.0 / targetFps) - (1000.0 / fps)));
                 }
                 else
                 {
@@ -73,7 +67,7 @@ namespace Gaten.Game.osu
             }
         }
 
-        void Update()
+        private new void Update()
         {
             if (start)
             {
@@ -89,7 +83,7 @@ namespace Gaten.Game.osu
             }
         }
 
-        void Render()
+        private void Render()
         {
             if (start)
             {
@@ -118,10 +112,12 @@ namespace Gaten.Game.osu
         private void mainPanel_Paint(object sender, PaintEventArgs e)
         {
             if (game != null)
+            {
                 game.Draw(e);
+            }
         }
 
-        int CheckFps()
+        private int CheckFps()
         {
             long tick = DateTime.Now.Ticks;
             int fps = (int)(10000000 / (tick - prevTick));
@@ -139,7 +135,7 @@ namespace Gaten.Game.osu
 
         private void mainTimer_Tick(object sender, EventArgs e)
         {
-            CheckFps();
+            _ = CheckFps();
 
             if (start)
             {
@@ -167,9 +163,11 @@ namespace Gaten.Game.osu
                 case Keys.Space:
                     if (!beatmapSet)
                     {
-                        OsuFileObject ofo = new OsuFileObject(@"test3.osu");
-                        game = new GameManager(ofo);
-                        game.TrackPosition = -4000;
+                        OsuFileObject ofo = new(@"test3.osu");
+                        game = new GameManager(ofo)
+                        {
+                            TrackPosition = -4000
+                        };
 
                         /*t.Interval = 52;
                         t.TimerEvent = delegate ()
@@ -198,18 +196,7 @@ namespace Gaten.Game.osu
                     }
                     else
                     {
-                        if (start)
-                        {
-                            start = false;
-                            //t.Stop();
-                            //mainTimer.Stop();
-                        }
-                        else
-                        {
-                            start = true;
-                            //t.Start();
-                            //mainTimer.Start();
-                        }
+                        start = !start;
                     }
                     break;
             }

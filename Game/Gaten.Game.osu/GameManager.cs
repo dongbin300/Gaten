@@ -9,10 +9,10 @@ namespace Gaten.Game.osu
 {
     public class GameManager : IDisposable
     {
-        bool disposed = false;
-        SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
+        private bool disposed = false;
+        private readonly SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
 
-        public List<Note> notes = new List<Note>();
+        public List<Note> notes = new();
         public int Current;
         public int TrackPosition;
         public int TrackSpeed;
@@ -37,7 +37,7 @@ namespace Gaten.Game.osu
             // 노트 낙하 속도 계산
             double ar = double.Parse(obj.Difficulty["ApproachRate"].ToString());
             int ms = ApproachRate.GetMilliseconds(ar);
-            TrackSpeed = (int)((1000.0 * height / ms) / fps);
+            TrackSpeed = (int)(1000.0 * height / ms / fps);
 
             // 노트 파싱
             notes = NoteParser.Parse(obj);
@@ -63,12 +63,12 @@ namespace Gaten.Game.osu
 
         public void MakeTestNotes()
         {
-            Random r = new Random();
+            Random r = new();
 
             for (int i = 0; i < 100; i++)
             {
                 int x = r.Next(1150) + 50;
-                int y = i * 200 + 200;
+                int y = (i * 200) + 200;
 
                 notes.Add(new Note(NoteType.Circle, x, y));
             }
@@ -78,7 +78,10 @@ namespace Gaten.Game.osu
         {
             for (int i = Current; i < notes.Count; i++)
             {
-                if (notes[i].Position.Y > TrackPosition + Height) break;
+                if (notes[i].Position.Y > TrackPosition + Height)
+                {
+                    break;
+                }
 
                 e.Graphics.FillEllipse(Brushes.White, new Rectangle(
                     notes[i].Position.X, Height - (notes[i].Position.Y - TrackPosition),
@@ -96,7 +99,9 @@ namespace Gaten.Game.osu
         protected virtual void Dispose(bool disposing)
         {
             if (disposed)
+            {
                 return;
+            }
 
             if (disposing)
             {

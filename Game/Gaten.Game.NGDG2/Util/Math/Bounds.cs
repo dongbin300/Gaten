@@ -1,4 +1,4 @@
-﻿namespace Gaten.Game.NGDG2
+﻿namespace Gaten.Game.NGDG2.Util.Math
 {
     public class Bounds
     {
@@ -25,7 +25,9 @@
         public Bounds(int min, int max)
         {
             if (min > max)
+            {
                 throw new Exception("Min value cannot be larger than Max value.");
+            }
 
             Min = min;
             Max = max;
@@ -39,7 +41,9 @@
         public Bounds(long min, long max)
         {
             if (min > max)
+            {
                 throw new Exception("Min value cannot be larger than Max value.");
+            }
 
             Min = min;
             Max = max;
@@ -51,11 +55,11 @@
         /// <returns></returns>
         public int Get()
         {
-            var r = new SmartRandom();
+            SmartRandom? r = new();
 
             return r.Next(Convert.ToInt32(Min), Convert.ToInt32(Max));
         }
-        
+
         /// <summary>
         /// long type(64bit) 구간 난수 추출
         /// </summary>
@@ -64,18 +68,22 @@
         public long Get(int section)
         {
             if (section < 1)
+            {
                 return Min;
+            }
 
-            if (section > (Max - Min))
+            if (section > Max - Min)
+            {
                 throw new Exception("Sections cannot be larger than the Max-Min value.");
+            }
 
-            var r = new SmartRandom();
+            SmartRandom? r = new();
 
             try
             {
                 long val = (Max - Min) / section;
 
-                return Min + val * r.Next(section + 1);
+                return Min + (val * r.Next(section + 1));
             }
             catch
             {

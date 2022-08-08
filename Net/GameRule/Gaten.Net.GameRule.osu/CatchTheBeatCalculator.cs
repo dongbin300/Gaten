@@ -24,15 +24,15 @@ namespace Gaten.Net.GameRule.osu
                     double sumTimeCoef = 1.0;
                     for (int i = 0; i < osuFileObject.HitObjects.Count - 1; i++)
                     {
-                        speeds.Add((double)Math.Abs(osuFileObject.HitObjects[i].X - osuFileObject.HitObjects[i + 1].X) / Math.Abs(osuFileObject.HitObjects[i].TimingPosition - osuFileObject.HitObjects[i + 1].TimingPosition));
+                        speeds.Add((double)System.Math.Abs(osuFileObject.HitObjects[i].X - osuFileObject.HitObjects[i + 1].X) / System.Math.Abs(osuFileObject.HitObjects[i].TimingPosition - osuFileObject.HitObjects[i + 1].TimingPosition));
                     }
-                    return speeds.Sum() / (Math.Abs(osuFileObject.HitObjects[0].TimingPosition - osuFileObject.HitObjects[osuFileObject.HitObjects.Count - 1].TimingPosition) / 1000) * sumTimeCoef;
+                    return speeds.Sum() / (System.Math.Abs(osuFileObject.HitObjects[0].TimingPosition - osuFileObject.HitObjects[osuFileObject.HitObjects.Count - 1].TimingPosition) / 1000) * sumTimeCoef;
                 // 모든 스피드를 더한 다음에 노트수로 나눔
                 case CalculateRule.SumNote:
                     double sumNoteCoef = 5.0;
                     for (int i = 0; i < osuFileObject.HitObjects.Count - 1; i++)
                     {
-                        speeds.Add((double)Math.Abs(osuFileObject.HitObjects[i].X - osuFileObject.HitObjects[i + 1].X) / Math.Abs(osuFileObject.HitObjects[i].TimingPosition - osuFileObject.HitObjects[i + 1].TimingPosition));
+                        speeds.Add((double)System.Math.Abs(osuFileObject.HitObjects[i].X - osuFileObject.HitObjects[i + 1].X) / System.Math.Abs(osuFileObject.HitObjects[i].TimingPosition - osuFileObject.HitObjects[i + 1].TimingPosition));
                     }
                     return speeds.Sum() / osuFileObject.HitObjects.Count * sumNoteCoef;
             }

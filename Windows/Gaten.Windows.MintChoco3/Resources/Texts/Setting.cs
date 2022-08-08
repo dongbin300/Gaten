@@ -1,8 +1,8 @@
-﻿using Gaten.Windows.MintChoco3.Model;
+﻿using Gaten.Net.IO;
+using Gaten.Windows.MintChoco3.Model;
 
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace Gaten.Windows.MintChoco3.Resources.Texts
@@ -44,7 +44,7 @@ namespace Gaten.Windows.MintChoco3.Resources.Texts
                 List<ModuleCollection> moduleCollections = new List<ModuleCollection>();
                 List<Module> modules = new List<Module>();
 
-                var items = Net.Data.IO.GFile.ReadToArray(PathCollection.MintChocoSettingPath);
+                var items = GFile.ReadToArray(PathCollection.MintChocoSettingPath);
 
                 foreach (string item in items)
                 {

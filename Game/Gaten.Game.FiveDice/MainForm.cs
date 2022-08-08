@@ -2,7 +2,7 @@ namespace Gaten.Game.FiveDice
 {
     public partial class MainForm : Form
     {
-        List<Dice> Dices = new List<Dice>();
+        private readonly List<Dice> Dices = new();
 
         public MainForm()
         {
@@ -27,7 +27,10 @@ namespace Gaten.Game.FiveDice
 
             for (int i = 0; i < 5; i++)
             {
-                if (Dices[i].Fixed) continue;
+                if (Dices[i].Fixed)
+                {
+                    continue;
+                }
 
                 Dices[i].Roll();
 
@@ -46,7 +49,7 @@ namespace Gaten.Game.FiveDice
             }
         }
 
-        void SetDiceStatus(Button button, int value = 0, bool _fixed = false)
+        private void SetDiceStatus(Button button, int value = 0, bool _fixed = false)
         {
             switch (value)
             {

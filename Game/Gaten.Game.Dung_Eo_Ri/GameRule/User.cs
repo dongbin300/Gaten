@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gaten.Game.Dung_Eo_Ri.GameRule
+﻿namespace Gaten.Game.Dung_Eo_Ri.GameRule
 {
     public class User : Organism
     {
-        public Dungeon CurrentDungeon { get; set; }
+        public Dungeon CurrentDungeon { get; set; } = default!;
         public int CurrentDungeonLevel { get; set; }
         public int CurrentCoordX { get; set; }
         public int CurrentCoordY { get; set; }
@@ -26,7 +20,7 @@ namespace Gaten.Game.Dung_Eo_Ri.GameRule
 
         public void UpdateStats()
         {
-            BaseHitPoints = (Level - 1) * 30 + 500;
+            BaseHitPoints = ((Level - 1) * 30) + 500;
             CurrentHitPoints = GetMaxHitPoints();
             BaseDamage = Level + 4;
         }

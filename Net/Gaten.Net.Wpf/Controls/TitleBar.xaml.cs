@@ -11,8 +11,8 @@ namespace Gaten.Net.Wpf.Controls
     /// </summary>
     public partial class TitleBar : UserControl
     {
+        public bool MoveMode { get; private set; }
         Window parentWindow => GetParentWindow() ?? Application.Current.MainWindow;
-        bool moveMode = false;
         Geometry NormalButtonGeometry;
         Geometry MaximizeButtonGeometry;
 
@@ -131,7 +131,7 @@ namespace Gaten.Net.Wpf.Controls
             {
                 parentWindow.DragMove();
             }
-            moveMode = false;
+            MoveMode = false;
             Cursor = Cursors.Arrow;
         }
 
@@ -158,7 +158,7 @@ namespace Gaten.Net.Wpf.Controls
         private void MoveMenuItem_Click(object sender, RoutedEventArgs e)
         {
             IconImageContextMenu.IsSubmenuOpen = false;
-            moveMode = true;
+            MoveMode = true;
             Cursor = Cursors.SizeAll;
         }
 

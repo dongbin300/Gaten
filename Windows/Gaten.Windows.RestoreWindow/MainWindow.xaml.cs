@@ -1,5 +1,5 @@
-﻿using Gaten.Net.Data.Collections;
-using Gaten.Net.Data.Diagnostics;
+﻿using Gaten.Net.Collections;
+using Gaten.Net.Diagnostics;
 using Gaten.Net.Windows;
 
 using System;

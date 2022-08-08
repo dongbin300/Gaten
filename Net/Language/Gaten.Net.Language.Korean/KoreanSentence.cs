@@ -8,7 +8,7 @@
 
     public class KoreanSentence
     {
-        public string KoreanString { get; set; }
+        public string KoreanString { get; set; } = string.Empty;
 
         public KoreanSentence()
         {

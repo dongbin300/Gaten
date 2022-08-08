@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace Gaten.Game.Combineit.Base
 {
     public class PossessionItem : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public Item Item { get; set; }
 
@@ -18,7 +15,7 @@ namespace Gaten.Game.Combineit.Base
             set
             {
                 count = value;
-                OnPropertyChanged("Count");
+                OnPropertyChanged(nameof(Count));
             }
         }
 
@@ -28,7 +25,7 @@ namespace Gaten.Game.Combineit.Base
             Count = count;
         }
 
-        void OnPropertyChanged(string propertyName)
+        private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

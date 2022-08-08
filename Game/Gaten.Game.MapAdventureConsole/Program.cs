@@ -1,12 +1,15 @@
-﻿namespace Gaten.Game.MapAdventureConsole
+﻿using System.Runtime.Versioning;
+
+namespace Gaten.Game.MapAdventureConsole
 {
-    class Program
+    [SupportedOSPlatform("windows")]
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Character.Initialize();
 
-            GameEngine engine = new GameEngine("engine", 10);
+            GameEngine? engine = new("engine", 10);
             engine.Start();
         }
     }

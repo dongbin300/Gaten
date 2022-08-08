@@ -2,13 +2,13 @@
 {
     class PlayerInfo
     {
-        public string Rank;
-        public string Nickname;
-        public string PlayCount;
-        public string RankScore;
-        public string SS;
-        public string S;
-        public string A;
+        public string Rank = string.Empty;
+        public string Nickname = string.Empty;
+        public string PlayCount = string.Empty;
+        public string RankScore = string.Empty;
+        public string SS = string.Empty;
+        public string S = string.Empty;
+        public string A = string.Empty;
 
         public override string ToString()
         {

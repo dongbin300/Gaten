@@ -8,13 +8,13 @@ namespace Gaten.GameTool.osu.ConvertRanking
 {
     public class MostPlayBeatmap
     {
-        public string BeatmapString { get; set; }
-        public string BeatmapArtist { get; set; }
-        public string BeatmapUrl { get; set; }
-        public string Difficulty { get; set; }
-        public string Mapper { get; set; }
-        public string MapperUrl { get; set; }
-        public string PlayCount { get; set; }
+        public string BeatmapString { get; set; } = string.Empty;
+        public string BeatmapArtist { get; set; } = string.Empty;
+        public string BeatmapUrl { get; set; } = string.Empty;
+        public string Difficulty { get; set; } = string.Empty;
+        public string Mapper { get; set; } = string.Empty;
+        public string MapperUrl { get; set; } = string.Empty;
+        public string PlayCount { get; set; } = string.Empty;
         public GameMode GameMode { get; set; }
 
         public MostPlayBeatmap Parse(IWebElement node, MyPage.BeatmapGameModeParseLevel beatmapGameModeParseLevel)

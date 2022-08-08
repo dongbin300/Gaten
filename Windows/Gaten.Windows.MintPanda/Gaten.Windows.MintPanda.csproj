@@ -27,10 +27,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Net\Gaten.Net.Network\Gaten.Net.Network.csproj" />
-		<ProjectReference Include="..\..\Net\Gaten.Net.Windows\Gaten.Net.Windows.csproj" />
 		<ProjectReference Include="..\..\Net\Gaten.Net.Wpf\Gaten.Net.Wpf.csproj" />
-		<ProjectReference Include="..\..\Net\Windows\Gaten.Net.Windows.Wpf\Gaten.Net.Windows.Wpf.csproj" />
+		<ProjectReference Include="..\..\Net\Gaten.Net\Gaten.Net.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

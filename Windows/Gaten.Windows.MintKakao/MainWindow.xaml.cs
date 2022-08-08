@@ -1,4 +1,4 @@
-﻿using Gaten.Net.Data.Math;
+﻿using Gaten.Net.Math;
 using Gaten.Net.Windows.KakaoTalk.Chat;
 using Gaten.Net.Wpf;
 using Gaten.Net.Wpf.Extensions;
@@ -17,8 +17,8 @@ namespace Gaten.Windows.MintKakao
     /// </summary>
     public partial class MainWindow : Window
     {
-        KakaoTalkChatWindow window;
-        List<KakaoTalkChatMessage> latestMessages;
+        KakaoTalkChatWindow window = new();
+        List<KakaoTalkChatMessage> latestMessages = new();
         System.Timers.Timer mainTimer = new(500);
 
         public MainWindow()
@@ -116,7 +116,10 @@ namespace Gaten.Windows.MintKakao
         {
             try
             {
-                var button = sender as Button;
+                if(sender is not Button button)
+                {
+                    return;
+                }
                 var tag = button.Tag.ToString();
 
                 if (KakaoTalkChatBot.IsRunning)

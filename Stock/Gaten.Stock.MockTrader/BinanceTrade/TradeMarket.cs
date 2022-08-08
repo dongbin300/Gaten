@@ -11,17 +11,16 @@ namespace Gaten.Stock.MockTrader.BinanceTrade
 {
     internal class TradeMarket
     {
-        public ITradeModel TradeModel { get; set; }
-        public Task<List<TradingResult>> TradingResults { get; set; }
-        public Assets Assets { get; set; }
-        public SymbolRange Symbol { get; set; }
-        public Period TradePeriod { get; set; }
-        public KlineInterval CandleInterval { get; set; }
-        public RunProgress Progress { get; set; }
+        public ITradeModel TradeModel { get; set; } = default!;
+        public Task<List<TradingResult>> TradingResults { get; set; } = default!;
+        public Assets Assets { get; set; } = default!;
+        public SymbolRange Symbol { get; set; } = default!;
+        public Period TradePeriod { get; set; } = default!;
+        public KlineInterval CandleInterval { get; set; } = default!;
+        public RunProgress Progress { get; set; } = default!;
 
         public static readonly double BuyFee = 0.0004;
         public static readonly double SellFee = 0.0002;
-        public static bool TradeLogger;
 
         public TradeMarket(int seed)
         {

@@ -1,4 +1,13 @@
-﻿namespace Gaten.Game.NGDG2.Screen
+﻿using Gaten.Game.NGDG2.GameRule.Character;
+using Gaten.Game.NGDG2.GameRule.Dungeon;
+using Gaten.Game.NGDG2.GameRule.Item;
+using Gaten.Game.NGDG2.GameRule.Monster;
+using Gaten.Game.NGDG2.GameRule.Skill;
+using Gaten.Game.NGDG2.Screen.Interface;
+using Gaten.Game.NGDG2.Util.Math;
+using Gaten.Game.NGDG2.Util.Screen;
+
+namespace Gaten.Game.NGDG2.Screen.Member
 {
     /// <summary>
     /// 던전 전투 화면
@@ -16,24 +25,23 @@
     public class DungeonBattle : IScreen
     {
         public int CurrentWave;
-
-        Dungeon d;
-        List<Monster> targets;
-        HighlightEffect characterHit, monsterHit;
+        private NgdgDungeon d = new();
+        private readonly List<NgdgMonster> targets = new();
+        private readonly HighlightEffect characterHit = default!, monsterHit = default!;
 
         public DungeonBattle()
         {
-            targets = new List<Monster>();
+            targets = new List<NgdgMonster>();
             characterHit = new HighlightEffect(ConsoleColor.White, ConsoleColor.Red, 2);
             monsterHit = new HighlightEffect(ConsoleColor.White, ConsoleColor.Red, 2);
         }
 
         public void Make(string name)
         {
-            d = DungeonDictionary.MakeDungeon(name);
+            d = NgdgDungeonDictionary.MakeDungeon(name);
             CurrentWave = 0;
 
-            Character.Reset();
+            NgdgCharacter.Reset();
         }
 
         /// <summary>
@@ -56,7 +64,7 @@
                 }
             }
 
-            foreach (Monster monster in d.Waves[CurrentWave].Monsters)
+            foreach (NgdgMonster monster in d.Waves[CurrentWave].Monsters)
             {
                 // 몬스터 연산
                 monster.Calculate();
@@ -102,7 +110,7 @@
 
             for (int i = 0; i < d.Waves[CurrentWave].Monsters.Count; i++)
             {
-                Monster monster = d.Waves[CurrentWave].Monsters[i];
+                NgdgMonster monster = d.Waves[CurrentWave].Monsters[i];
 
                 if (targets.Contains(monster))
                 {
@@ -116,21 +124,23 @@
             }
 
             // 캐릭터
-            CHelper.Write("공격", ScreenUtil.Left, 26, Character.AttackCool == Character.TotalAbility.CoolTick ? ConsoleColor.Green : ConsoleColor.White);
-            CHelper.DrawBar(ScreenUtil.Left + 6, 26, Character.AttackCool, Character.AttackCool == Character.TotalAbility.CoolTick ? ConsoleColor.Green : ConsoleColor.White);
-            CHelper.DrawBar(ScreenUtil.Left + 6 + Character.AttackCool, 26, Character.TotalAbility.CoolTick - Character.AttackCool, ConsoleColor.DarkGray);
+            CHelper.Write("공격", ScreenUtil.Left, 26, NgdgCharacter.AttackCool == NgdgCharacter.TotalAbility.CoolTick ? ConsoleColor.Green : ConsoleColor.White);
+            CHelper.DrawBar(ScreenUtil.Left + 6, 26, NgdgCharacter.AttackCool, NgdgCharacter.AttackCool == NgdgCharacter.TotalAbility.CoolTick ? ConsoleColor.Green : ConsoleColor.White);
+            CHelper.DrawBar(ScreenUtil.Left + 6 + NgdgCharacter.AttackCool, 26, NgdgCharacter.TotalAbility.CoolTick - NgdgCharacter.AttackCool, ConsoleColor.DarkGray);
             CHelper.WriteHighlight($"HP", ScreenUtil.Left, 27, characterHit);
-            CHelper.DrawStatusBar(Character.TotalAbility.HP, Character.TotalAbility.HPMax, ScreenUtil.Left + 6, 27, 30, ConsoleColor.Red, ConsoleColor.DarkGray);
+            CHelper.DrawStatusBar(NgdgCharacter.TotalAbility.HP, NgdgCharacter.TotalAbility.HPMax, ScreenUtil.Left + 6, 27, 30, ConsoleColor.Red, ConsoleColor.DarkGray);
 
             // 던전 보상 정보
             CHelper.Write($"EXP + {d.AccumulatedExp}", 65, 3, ConsoleColor.Green);
             CHelper.Write($"Gold + {d.AccumulatedGold}", 65, 4, ConsoleColor.Yellow);
 
             int h = 5;
-            foreach (Slot slot in d.AccumulatedItems.Slots)
+            foreach (NgdgSlot slot in d.AccumulatedItems.Slots)
             {
                 if (slot.Item == null)
+                {
                     continue;
+                }
 
                 CHelper.Write(string.Format("{0,-20}{1,-4}", slot.Item.Name, slot.ItemCount), 65, h++, slot.Item.Color);
             }
@@ -141,10 +151,10 @@
             switch (key)
             {
                 case ConsoleKey.Spacebar:
-                    if (Character.AttackCool == Character.TotalAbility.CoolTick)
+                    if (NgdgCharacter.AttackCool == NgdgCharacter.TotalAbility.CoolTick)
                     {
                         CharacterAttacksMonster();
-                        Character.AttackCool = 0;
+                        NgdgCharacter.AttackCool = 0;
 
                         monsterHit.Start();
                     }
@@ -164,13 +174,13 @@
         /// </summary>
         public void CharacterAttacksMonster()
         {
-            SmartRandom r = new SmartRandom();
+            SmartRandom r = new();
             targets.Clear();
 
             int index = r.Next(d.Waves[CurrentWave].Monsters.Count);
             targets.Add(d.Waves[CurrentWave].Monsters[index]);
 
-            long damage = Character.TotalAbility.Attack - targets[0].TotalAbility.Defense;
+            long damage = NgdgCharacter.TotalAbility.Attack - targets[0].TotalAbility.Defense;
 
             damage = damage <= 1 ? 1 : damage;
 
@@ -183,9 +193,8 @@
             }
         }
 
-        public void CharacterSkillsMonster(Skill skill)
+        public void CharacterSkillsMonster(NgdgSkill skill)
         {
-            SmartRandom r = new SmartRandom();
             targets.Clear();
 
             //TODO
@@ -197,18 +206,16 @@
         /// TODO: 명중률, 회피율 구현
         /// </summary>
         /// <param name="attacker">몬스터</param>
-        public void MonsterAttacksCharacter(Monster attacker)
+        public void MonsterAttacksCharacter(NgdgMonster attacker)
         {
-            SmartRandom r = new SmartRandom();
-
-            long damage = attacker.TotalAbility.Attack - Character.TotalAbility.Defense;
+            long damage = attacker.TotalAbility.Attack - NgdgCharacter.TotalAbility.Defense;
 
             damage = damage <= 1 ? 1 : damage;
 
-            Character.TotalAbility.HP -= damage;
+            NgdgCharacter.TotalAbility.HP -= damage;
 
             // 캐릭터 사망
-            if (Character.TotalAbility.HP <= 0)
+            if (NgdgCharacter.TotalAbility.HP <= 0)
             {
                 KillCharacter();
             }
@@ -218,17 +225,17 @@
         /// 몬스터가 죽음
         /// </summary>
         /// <param name="monster"></param>
-        public void KillMonster(Monster monster)
+        public void KillMonster(NgdgMonster monster)
         {
             // 몬스터 리스트에서 죽은 몬스터 제외
-            d.Waves[CurrentWave].Monsters.Remove(monster);
+            _ = d.Waves[CurrentWave].Monsters.Remove(monster);
 
             // 경험치, 골드 드랍
             d.AccumulatedExp += monster.Exp;
             d.AccumulatedGold += monster.Gold;
 
             // 아이템 드랍
-            foreach (Item item in monster.DropItems)
+            foreach (NgdgItem item in monster.DropItems)
             {
                 // 무조건 종류별로 1개씩만 드랍됨
                 d.AccumulatedItems.Add(item, 1);
@@ -249,16 +256,18 @@
         public void ClearDungeon()
         {
             // 보상 지급
-            Character.Exp += d.AccumulatedExp;
-            Character.Exp += (long)(d.AccumulatedExp * 0.2);
-            Character.Gold += d.AccumulatedGold;
-            Character.Gold += (long)(d.AccumulatedGold * 0.2);
-            foreach (Slot slot in d.AccumulatedItems.Slots)
+            NgdgCharacter.Exp += d.AccumulatedExp;
+            NgdgCharacter.Exp += (long)(d.AccumulatedExp * 0.2);
+            NgdgCharacter.Gold += d.AccumulatedGold;
+            NgdgCharacter.Gold += (long)(d.AccumulatedGold * 0.2);
+            foreach (NgdgSlot slot in d.AccumulatedItems.Slots)
             {
                 if (slot.Item == null)
+                {
                     continue;
+                }
 
-                Character.Inventory.Add(slot.Item, slot.ItemCount);
+                NgdgCharacter.Inventory.Add(slot.Item, slot.ItemCount);
             }
 
             // 던전 보상 화면 전환
@@ -272,14 +281,16 @@
         public void DropOutDungeon()
         {
             // 보상 지급
-            Character.Exp += d.AccumulatedExp;
-            Character.Gold += d.AccumulatedGold;
-            foreach (Slot slot in d.AccumulatedItems.Slots)
+            NgdgCharacter.Exp += d.AccumulatedExp;
+            NgdgCharacter.Gold += d.AccumulatedGold;
+            foreach (NgdgSlot slot in d.AccumulatedItems.Slots)
             {
                 if (slot.Item == null)
+                {
                     continue;
+                }
 
-                Character.Inventory.Add(slot.Item, slot.ItemCount);
+                NgdgCharacter.Inventory.Add(slot.Item, slot.ItemCount);
             }
 
             // 화면 전환

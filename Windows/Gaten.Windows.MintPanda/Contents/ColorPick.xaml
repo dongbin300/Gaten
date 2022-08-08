@@ -7,8 +7,8 @@
         xmlns:wpf="clr-namespace:Gaten.Net.Wpf.Controls;assembly=Gaten.Net.Wpf"
         mc:Ignorable="d"
         Title="ColorPick" Height="450" Width="800"
-        Style="{StaticResource ContentWindow}" WindowStartupLocation="CenterScreen" MouseDown="Window_MouseDown">
+        Style="{StaticResource ContentWindow}" WindowStartupLocation="CenterScreen">
     <Grid>
-        <wpf:ColorPicker />
+        <!--<wpf:ColorPicker />-->
     </Grid>
 </Window>

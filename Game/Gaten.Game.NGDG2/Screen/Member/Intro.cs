@@ -1,4 +1,8 @@
-﻿namespace Gaten.Game.NGDG2.Screen
+﻿using Gaten.Game.NGDG2.Screen.Interface;
+using Gaten.Game.NGDG2.Util.Environment;
+using Gaten.Game.NGDG2.Util.Screen;
+
+namespace Gaten.Game.NGDG2.Screen.Member
 {
     public class Intro : IScreen
     {

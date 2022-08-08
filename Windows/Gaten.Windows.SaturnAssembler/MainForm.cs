@@ -1,4 +1,4 @@
-using Gaten.Net.Extension;
+using Gaten.Net.Extensions;
 using Gaten.Net.Windows.PE.Assembly;
 using Gaten.Net.Windows.PE.Build;
 using Gaten.Net.Windows.PE.Build.Assemble;

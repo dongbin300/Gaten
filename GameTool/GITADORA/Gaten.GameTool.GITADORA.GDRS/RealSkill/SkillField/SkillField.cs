@@ -67,10 +67,10 @@
      */
     internal class SkillField
     {
-        public virtual string Name { get; set; }
-        public virtual string DisplayName { get; set; }
-        public virtual string Description { get; set; }
-        public virtual double Score { get; set; }
+        public virtual string Name { get; set; } = string.Empty;
+        public virtual string DisplayName { get; set; } = string.Empty;
+        public virtual string Description { get; set; } = string.Empty;
+        public virtual double Score { get; set; } = 0;
 
         public virtual void AddUp() { }
     }

@@ -1,6 +1,6 @@
-﻿using Gaten.Net.Windows.PE.Assembly;
-using Gaten.Net.Exception;
-using Gaten.Net.Extension;
+﻿using Gaten.Net.Exceptions;
+using Gaten.Net.Extensions;
+using Gaten.Net.Windows.PE.Assembly;
 
 namespace Saturn.Build.Assemble
 {

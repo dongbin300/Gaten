@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Net\Gaten.Net.Stock\Gaten.Net.Stock.csproj" />
-    <ProjectReference Include="..\..\Net\Gaten.Net.Windows\Gaten.Net.Windows.csproj" />
   </ItemGroup>
 
   <ItemGroup>

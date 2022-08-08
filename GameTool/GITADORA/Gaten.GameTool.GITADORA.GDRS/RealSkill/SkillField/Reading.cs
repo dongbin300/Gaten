@@ -10,6 +10,9 @@
         public double NoteDensity;
         public double NoteInterval;
 
-        public override void AddUp() => Score = TomDensity * 0.6 + NoteDensity * 0.4;
+        public override void AddUp()
+        {
+            Score = (TomDensity * 0.6) + (NoteDensity * 0.4);
+        }
     }
 }

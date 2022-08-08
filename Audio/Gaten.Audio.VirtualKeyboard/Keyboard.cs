@@ -28,18 +28,65 @@
 
             for (int i = 0; i < keyNumber; i++)
             {
-                if (Only(new int[] { i, i + 4, i + 7 })) return Tone[i];
-                if (Only(new int[] { i, i + 3, i + 7 })) return Tone[i] + Chord[1];
-                if (Only(new int[] { i, i + 3, i + 6 })) return Tone[i] + Chord[2];
-                if (Only(new int[] { i, i + 4, i + 8 })) return Tone[i] + Chord[3];
-                if (Only(new int[] { i, i + 4, i + 7, i + 11 })) return Tone[i] + Chord[4];
-                if (Only(new int[] { i, i + 4, i + 7, i + 10 })) return Tone[i] + Chord[5];
-                if (Only(new int[] { i, i + 3, i + 7, i + 10 })) return Tone[i] + Chord[6];
-                if (Only(new int[] { i, i + 3, i + 6, i + 10 })) return Tone[i] + Chord[7];
-                if (Only(new int[] { i, i + 3, i + 6, i + 9 })) return Tone[i] + Chord[8];
-                if (Only(new int[] { i, i + 5, i + 7, i + 10 })) return Tone[i] + Chord[9];
-                if (Only(new int[] { i, i + 4, i + 7, i + 9 })) return Tone[i] + Chord[10];
-                if (Only(new int[] { i, i + 3, i + 7, i + 9 })) return Tone[i] + Chord[11];
+                if (Only(new int[] { i, i + 4, i + 7 }))
+                {
+                    return Tone[i];
+                }
+
+                if (Only(new int[] { i, i + 3, i + 7 }))
+                {
+                    return Tone[i] + Chord[1];
+                }
+
+                if (Only(new int[] { i, i + 3, i + 6 }))
+                {
+                    return Tone[i] + Chord[2];
+                }
+
+                if (Only(new int[] { i, i + 4, i + 8 }))
+                {
+                    return Tone[i] + Chord[3];
+                }
+
+                if (Only(new int[] { i, i + 4, i + 7, i + 11 }))
+                {
+                    return Tone[i] + Chord[4];
+                }
+
+                if (Only(new int[] { i, i + 4, i + 7, i + 10 }))
+                {
+                    return Tone[i] + Chord[5];
+                }
+
+                if (Only(new int[] { i, i + 3, i + 7, i + 10 }))
+                {
+                    return Tone[i] + Chord[6];
+                }
+
+                if (Only(new int[] { i, i + 3, i + 6, i + 10 }))
+                {
+                    return Tone[i] + Chord[7];
+                }
+
+                if (Only(new int[] { i, i + 3, i + 6, i + 9 }))
+                {
+                    return Tone[i] + Chord[8];
+                }
+
+                if (Only(new int[] { i, i + 5, i + 7, i + 10 }))
+                {
+                    return Tone[i] + Chord[9];
+                }
+
+                if (Only(new int[] { i, i + 4, i + 7, i + 9 }))
+                {
+                    return Tone[i] + Chord[10];
+                }
+
+                if (Only(new int[] { i, i + 3, i + 7, i + 9 }))
+                {
+                    return Tone[i] + Chord[11];
+                }
             }
 
             return "";
@@ -50,7 +97,7 @@
         /// </summary>
         /// <param name="lists">대상 건반 번호들</param>
         /// <returns></returns>
-        bool Only(int[] lists)
+        private bool Only(int[] lists)
         {
             lists = lists.Select(l => l %= 12).ToArray();
             Array.Sort(lists);
@@ -69,7 +116,9 @@
         {
             int[] index = { 0, 2, 4, 5, 7, 9, 11 };
             foreach (int i in index)
-                PressKey((tonicIndex + i) % 12);
+            {
+                _ = PressKey((tonicIndex + i) % 12);
+            }
         }
 
         /// <summary>
@@ -80,18 +129,18 @@
         {
             switch (chordIndex)
             {
-                case 0: PressKey((0 + Key) % 12); PressKey((4 + Key) % 12); return PressKey((7 + Key) % 12);
-                case 1: PressKey((0 + Key) % 12); PressKey((3 + Key) % 12); return PressKey((7 + Key) % 12);
-                case 2: PressKey((0 + Key) % 12); PressKey((3 + Key) % 12); return PressKey((6 + Key) % 12);
-                case 3: PressKey((0 + Key) % 12); PressKey((4 + Key) % 12); return PressKey((8 + Key) % 12);
-                case 4: PressKey((0 + Key) % 12); PressKey((4 + Key) % 12); PressKey((7 + Key) % 12); return PressKey((11 + Key) % 12);
-                case 5: PressKey((0 + Key) % 12); PressKey((4 + Key) % 12); PressKey((7 + Key) % 12); return PressKey((10 + Key) % 12);
-                case 6: PressKey((0 + Key) % 12); PressKey((3 + Key) % 12); PressKey((7 + Key) % 12); return PressKey((10 + Key) % 12);
-                case 7: PressKey((0 + Key) % 12); PressKey((3 + Key) % 12); PressKey((6 + Key) % 12); return PressKey((10 + Key) % 12);
-                case 8: PressKey((0 + Key) % 12); PressKey((3 + Key) % 12); PressKey((6 + Key) % 12); return PressKey((9 + Key) % 12);
-                case 9: PressKey((0 + Key) % 12); PressKey((5 + Key) % 12); PressKey((7 + Key) % 12); return PressKey((10 + Key) % 12);
-                case 10: PressKey((0 + Key) % 12); PressKey((4 + Key) % 12); PressKey((7 + Key) % 12); return PressKey((9 + Key) % 12);
-                case 11: PressKey((0 + Key) % 12); PressKey((3 + Key) % 12); PressKey((7 + Key) % 12); return PressKey((9 + Key) % 12);
+                case 0: _ = PressKey((0 + Key) % 12); _ = PressKey((4 + Key) % 12); return PressKey((7 + Key) % 12);
+                case 1: _ = PressKey((0 + Key) % 12); _ = PressKey((3 + Key) % 12); return PressKey((7 + Key) % 12);
+                case 2: _ = PressKey((0 + Key) % 12); _ = PressKey((3 + Key) % 12); return PressKey((6 + Key) % 12);
+                case 3: _ = PressKey((0 + Key) % 12); _ = PressKey((4 + Key) % 12); return PressKey((8 + Key) % 12);
+                case 4: _ = PressKey((0 + Key) % 12); _ = PressKey((4 + Key) % 12); _ = PressKey((7 + Key) % 12); return PressKey((11 + Key) % 12);
+                case 5: _ = PressKey((0 + Key) % 12); _ = PressKey((4 + Key) % 12); _ = PressKey((7 + Key) % 12); return PressKey((10 + Key) % 12);
+                case 6: _ = PressKey((0 + Key) % 12); _ = PressKey((3 + Key) % 12); _ = PressKey((7 + Key) % 12); return PressKey((10 + Key) % 12);
+                case 7: _ = PressKey((0 + Key) % 12); _ = PressKey((3 + Key) % 12); _ = PressKey((6 + Key) % 12); return PressKey((10 + Key) % 12);
+                case 8: _ = PressKey((0 + Key) % 12); _ = PressKey((3 + Key) % 12); _ = PressKey((6 + Key) % 12); return PressKey((9 + Key) % 12);
+                case 9: _ = PressKey((0 + Key) % 12); _ = PressKey((5 + Key) % 12); _ = PressKey((7 + Key) % 12); return PressKey((10 + Key) % 12);
+                case 10: _ = PressKey((0 + Key) % 12); _ = PressKey((4 + Key) % 12); _ = PressKey((7 + Key) % 12); return PressKey((9 + Key) % 12);
+                case 11: _ = PressKey((0 + Key) % 12); _ = PressKey((3 + Key) % 12); _ = PressKey((7 + Key) % 12); return PressKey((9 + Key) % 12);
             }
             return "";
         }
@@ -121,7 +170,10 @@
         {
             bool temp = Press[11];
             for (int i = 11; i > 0; i--)
+            {
                 Press[i] = Press[i - 1];
+            }
+
             Press[0] = temp;
 
             Key = (Key + 1) % 12;
@@ -136,7 +188,10 @@
         {
             bool temp = Press[0];
             for (int i = 0; i < 11; i++)
+            {
                 Press[i] = Press[i + 1];
+            }
+
             Press[11] = temp;
 
             Key = Key == 0 ? 11 : Key - 1;

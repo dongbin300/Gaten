@@ -10,6 +10,9 @@
         public double SongLength;
         public double NoteCount;
 
-        public override void AddUp() => Score = PedalDensity * 0.7 + SongLength * 0.15 + NoteCount * 0.15;
+        public override void AddUp()
+        {
+            Score = (PedalDensity * 0.7) + (SongLength * 0.15) + (NoteCount * 0.15);
+        }
     }
 }

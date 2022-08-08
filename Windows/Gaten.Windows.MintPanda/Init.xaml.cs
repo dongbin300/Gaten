@@ -1,6 +1,6 @@
-﻿using Gaten.Net.Data.Diagnostics;
-using Gaten.Net.Data.IO;
-using Gaten.Net.Extension;
+﻿using Gaten.Net.Diagnostics;
+using Gaten.Net.IO;
+using Gaten.Net.Extensions;
 using Gaten.Windows.MintPanda.Contents;
 using Gaten.Windows.MintPanda.Utils;
 
@@ -63,7 +63,12 @@ namespace Gaten.Windows.MintPanda
 
         private void InstallButton_Click(object sender, RoutedEventArgs e)
         {
-            var tag = (sender as Button).Tag.ToString();
+            if(sender is not Button button)
+            {
+                return;
+            }
+
+            var tag = button.Tag.ToString();
 
             if (string.IsNullOrWhiteSpace(tag))
             {
@@ -76,7 +81,12 @@ namespace Gaten.Windows.MintPanda
 
         private void ExecuteButton_Click(object sender, RoutedEventArgs e)
         {
-            var tag = (sender as Button).Tag.ToString();
+            if (sender is not Button button)
+            {
+                return;
+            }
+
+            var tag = button.Tag.ToString();
 
             if (string.IsNullOrWhiteSpace(tag))
             {

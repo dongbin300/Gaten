@@ -1,5 +1,5 @@
-﻿using Gaten.Net.Exception;
-using Gaten.Net.Extension;
+﻿using Gaten.Net.Exceptions;
+using Gaten.Net.Extensions;
 using Gaten.Net.Windows.PE.Assembly;
 
 using static Gaten.Net.Windows.PE.Assembly.IAssembly;

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gaten.Game.Dung_Eo_Ri.GameRule
+﻿namespace Gaten.Game.Dung_Eo_Ri.GameRule
 {
     public class Mob : Organism, IEquatable<Mob>
     {
@@ -18,7 +12,7 @@ namespace Gaten.Game.Dung_Eo_Ri.GameRule
 
         public Mob(string name, Image picture, int level, List<Equip> equips) : base(name, picture, level, equips)
         {
-            BaseHitPoints = level * 5 + 5;
+            BaseHitPoints = (level * 5) + 5;
             CurrentHitPoints = GetMaxHitPoints();
             BaseDamage = level + 4;
             RewardExp = level * level;
@@ -26,8 +20,7 @@ namespace Gaten.Game.Dung_Eo_Ri.GameRule
 
         public bool Equals(Mob? other)
         {
-            if(other == null) return false;
-            return Name == other.Name && Level == other.Level;
+            return other != null && Name == other.Name && Level == other.Level;
         }
     }
 }

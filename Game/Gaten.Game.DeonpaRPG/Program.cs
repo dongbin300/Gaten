@@ -1,9 +1,6 @@
-﻿using System;
-using System.IO;
-
-namespace Gaten.Game.DeonpaRPG
+﻿namespace Gaten.Game.DeonpaRPG
 {
-    class Program
+    internal class Program
     {
         public enum Screens
         {
@@ -16,25 +13,25 @@ namespace Gaten.Game.DeonpaRPG
             MyStat,
             ModifyNickname
         };
-        static Screens screen;
-        static Deongeon selectedDeongeon;
-        static EquipObject.EquipObjectTypes equipObjectType;
-        static EquipObject selectedEquipObject;
-        static int selectedEquipObjectLevelMin, selectedEquipObjectLevelMax;
-        static Skill selectedSkill;
-        static int selectedSkillLevelMin, selectedSkillLevelMax;
 
-        static Character user;
-        static EODB eodb;
-        static DeongeonDB deongeondb;
-        static MagicNumber magicNumber;
-        static string menuOrder = "1234567890QWERTYUIOPASDFGHJKLZXCVBNM";
-        static ConsoleKey[] keyOrder = { ConsoleKey.D1, ConsoleKey.D2, ConsoleKey.D3, ConsoleKey.D4, ConsoleKey.D5, ConsoleKey.D6, ConsoleKey.D7, ConsoleKey.D8, ConsoleKey.D9, ConsoleKey.D0, ConsoleKey.Q, ConsoleKey.W, ConsoleKey.E, ConsoleKey.R, ConsoleKey.T, ConsoleKey.Y, ConsoleKey.U, ConsoleKey.I, ConsoleKey.O, ConsoleKey.P, ConsoleKey.A, ConsoleKey.S, ConsoleKey.D, ConsoleKey.F, ConsoleKey.G, ConsoleKey.H, ConsoleKey.J, ConsoleKey.K, ConsoleKey.L, ConsoleKey.Z, ConsoleKey.X, ConsoleKey.C, ConsoleKey.V, ConsoleKey.B, ConsoleKey.N, ConsoleKey.M };
-        static int mNum;
-        static bool magicNumberCheckMode;
-        static bool play;
+        private static Screens screen;
+        private static Deongeon selectedDeongeon;
+        private static EquipObject.EquipObjectTypes equipObjectType;
+        private static EquipObject selectedEquipObject;
+        private static int selectedEquipObjectLevelMin, selectedEquipObjectLevelMax;
+        private static Skill selectedSkill;
+        private static int selectedSkillLevelMin, selectedSkillLevelMax;
+        private static Character user;
+        private static EODB eodb;
+        private static DeongeonDB deongeondb;
+        private static MagicNumber magicNumber;
+        private static readonly string menuOrder = "1234567890QWERTYUIOPASDFGHJKLZXCVBNM";
+        private static readonly ConsoleKey[] keyOrder = { ConsoleKey.D1, ConsoleKey.D2, ConsoleKey.D3, ConsoleKey.D4, ConsoleKey.D5, ConsoleKey.D6, ConsoleKey.D7, ConsoleKey.D8, ConsoleKey.D9, ConsoleKey.D0, ConsoleKey.Q, ConsoleKey.W, ConsoleKey.E, ConsoleKey.R, ConsoleKey.T, ConsoleKey.Y, ConsoleKey.U, ConsoleKey.I, ConsoleKey.O, ConsoleKey.P, ConsoleKey.A, ConsoleKey.S, ConsoleKey.D, ConsoleKey.F, ConsoleKey.G, ConsoleKey.H, ConsoleKey.J, ConsoleKey.K, ConsoleKey.L, ConsoleKey.Z, ConsoleKey.X, ConsoleKey.C, ConsoleKey.V, ConsoleKey.B, ConsoleKey.N, ConsoleKey.M };
+        private static int mNum;
+        private static bool magicNumberCheckMode;
+        private static bool play;
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             /* 
              * *저장해야할 데이터
@@ -78,32 +75,35 @@ namespace Gaten.Game.DeonpaRPG
             magicNumber = new MagicNumber();
 
             /* 캐릭터 로드 */
-            FileStream fs = new FileStream("account.cha", FileMode.Open);
-            StreamReader sr = new StreamReader(fs);
-            sr.ReadLine();
-            mNum = int.Parse(sr.ReadLine());
-            user.nickname = sr.ReadLine();
-            user.profession = sr.ReadLine();
-            user.level = int.Parse(sr.ReadLine());
-            user.questProgress = int.Parse(sr.ReadLine());
-            user.exp = long.Parse(sr.ReadLine());
-            user.gold = long.Parse(sr.ReadLine());
-            int currentHp = int.Parse(sr.ReadLine());
-            int currentMp = int.Parse(sr.ReadLine());
-            user.gun = eodb.Equip(sr.ReadLine());
-            user.armor = eodb.Equip(sr.ReadLine());
-            user.necklace = eodb.Equip(sr.ReadLine());
-            user.avatar = eodb.Equip(sr.ReadLine());
-            user.pendant = eodb.Equip(sr.ReadLine());
-            user.others = eodb.Equip(sr.ReadLine());
-            user.abilityStone = eodb.Equip(sr.ReadLine());
-            user.sp = int.Parse(sr.ReadLine());
+            FileStream fs = new("account.cha", FileMode.Open);
+            StreamReader sr = new(fs);
+            _ = sr.ReadLine();
+            mNum = int.Parse(sr.ReadLine() ?? string.Empty);
+            user.nickname = sr.ReadLine() ?? string.Empty;
+            user.profession = sr.ReadLine() ?? string.Empty;
+            user.level = int.Parse(sr.ReadLine() ?? string.Empty);
+            user.questProgress = int.Parse(sr.ReadLine() ?? string.Empty);
+            user.exp = long.Parse(sr.ReadLine() ?? string.Empty);
+            user.gold = long.Parse(sr.ReadLine() ?? string.Empty);
+            int currentHp = int.Parse(sr.ReadLine() ?? string.Empty);
+            int currentMp = int.Parse(sr.ReadLine() ?? string.Empty);
+            user.gun = eodb.Equip(sr.ReadLine() ?? string.Empty);
+            user.armor = eodb.Equip(sr.ReadLine() ?? string.Empty);
+            user.necklace = eodb.Equip(sr.ReadLine() ?? string.Empty);
+            user.avatar = eodb.Equip(sr.ReadLine() ?? string.Empty);
+            user.pendant = eodb.Equip(sr.ReadLine() ?? string.Empty);
+            user.others = eodb.Equip(sr.ReadLine() ?? string.Empty);
+            user.abilityStone = eodb.Equip(sr.ReadLine() ?? string.Empty);
+            user.sp = int.Parse(sr.ReadLine() ?? string.Empty);
             for (int i = 0; i < user.skilldb.skillCount; i++)
-                user.skilldb.skills[i].learnedLevel = int.Parse(sr.ReadLine());
+            {
+                user.skilldb.skills[i].learnedLevel = int.Parse(sr.ReadLine() ?? string.Empty);
+            }
+
             sr.Close();
             fs.Close();
             Console.WriteLine(">계정 데이터를 불러왔습니다.");
-            
+
             /* 캐릭터 능력치 계산 */
             user.ability = new Ability();
             user.ability.CalculateCharacterAbility();
@@ -112,10 +112,12 @@ namespace Gaten.Game.DeonpaRPG
 
             /* 매직 넘버 체크(부정행위 확인) */
             magicNumberCheckMode = false;
-            if(magicNumberCheckMode)
+            if (magicNumberCheckMode)
             {
                 if (magicNumber.isRight(user, mNum))
+                {
                     Console.WriteLine(">보안 코드가 일치합니다.");
+                }
                 else
                 {
                     Console.WriteLine(">보안 코드가 일치하지 않습니다.");
@@ -174,7 +176,7 @@ namespace Gaten.Game.DeonpaRPG
             }
         }
 
-        static void MainMenu()
+        private static void MainMenu()
         {
             Console.WriteLine("===던파 RPG Beta1.0.3===");
             Console.WriteLine(">[1] 던전");
@@ -224,7 +226,7 @@ namespace Gaten.Game.DeonpaRPG
             }
         }
 
-        static void DeongeonMonsterBattleMenu(Deongeon deongeon, Monster monster)
+        private static void DeongeonMonsterBattleMenu(Deongeon deongeon, Monster monster)
         {
             bool aliveMonster = true;
             while (aliveMonster)
@@ -255,7 +257,7 @@ namespace Gaten.Game.DeonpaRPG
             }
         }
 
-        static void DeongeonMonsterMenu(Deongeon deongeon)
+        private static void DeongeonMonsterMenu(Deongeon deongeon)
         {
             Console.WriteLine($"==={deongeon.name}(Lv{deongeon.minLevel}~{deongeon.maxLevel})===");
             Console.WriteLine(">[ESC] 나가기");
@@ -281,7 +283,7 @@ namespace Gaten.Game.DeonpaRPG
             }
         }
 
-        static void DeongeonMenu()
+        private static void DeongeonMenu()
         {
             Console.Clear();
             Console.WriteLine("===던전===");
@@ -363,7 +365,7 @@ namespace Gaten.Game.DeonpaRPG
             }
         }
 
-        static void PatchListMenu()
+        private static void PatchListMenu()
         {
             Console.Clear();
             Console.WriteLine("===패치내역===");
@@ -391,7 +393,7 @@ namespace Gaten.Game.DeonpaRPG
             }
         }
 
-        static void ShopChildStatMenu(EquipObject eo)
+        private static void ShopChildStatMenu(EquipObject eo)
         {
             eo.ShowDescription();
             Console.WriteLine();
@@ -412,7 +414,7 @@ namespace Gaten.Game.DeonpaRPG
             }
         }
 
-        static void ShopChildMenu(EquipObject.EquipObjectTypes type, int min, int max)
+        private static void ShopChildMenu(EquipObject.EquipObjectTypes type, int min, int max)
         {
             Console.Clear();
             Console.WriteLine($"==={type} (Lv{min}~{max})===");
@@ -445,7 +447,7 @@ namespace Gaten.Game.DeonpaRPG
             }
         }
 
-        static void ShopMenu()
+        private static void ShopMenu()
         {
             Console.Clear();
             Console.WriteLine("===상점===");
@@ -524,7 +526,7 @@ namespace Gaten.Game.DeonpaRPG
             }
         }
 
-        static void SkillChildStatMenu(Skill skill)
+        private static void SkillChildStatMenu(Skill skill)
         {
             skill.ShowDescription();
             Console.WriteLine();
@@ -546,7 +548,7 @@ namespace Gaten.Game.DeonpaRPG
             }
         }
 
-        static void SkillChildMenu(int min, int max)
+        private static void SkillChildMenu(int min, int max)
         {
             Console.Clear();
             Console.WriteLine($"===Lv{min}~{max} 스킬===");
@@ -579,7 +581,7 @@ namespace Gaten.Game.DeonpaRPG
             }
         }
 
-        static void SkillMenu()
+        private static void SkillMenu()
         {
             Console.Clear();
             Console.WriteLine("===상점===");
@@ -625,11 +627,11 @@ namespace Gaten.Game.DeonpaRPG
             }
         }
 
-        static void SaveMenu()
+        private static void SaveMenu()
         {
             Console.Clear();
-            FileStream fsw = new FileStream("account.cha", FileMode.Open);
-            StreamWriter sw = new StreamWriter(fsw);
+            FileStream fsw = new("account.cha", FileMode.Open);
+            StreamWriter sw = new(fsw);
             sw.WriteLine("!이 파일을 임의로 조작하지 마십시오. 게임이 실행되지 않습니다.");
             sw.WriteLine(magicNumber.Create(user));
             sw.WriteLine(user.nickname);
@@ -649,7 +651,10 @@ namespace Gaten.Game.DeonpaRPG
             sw.WriteLine(user.abilityStone.name);
             sw.WriteLine(user.sp);
             for (int i = 0; i < user.skilldb.skillCount; i++)
+            {
                 sw.WriteLine(user.skilldb.skills[i].learnedLevel);
+            }
+
             sw.WriteLine("END ");
             sw.Flush();
             sw.Close();
@@ -658,14 +663,14 @@ namespace Gaten.Game.DeonpaRPG
             screen = Screens.Main;
         }
 
-        static void MyStatMenu()
+        private static void MyStatMenu()
         {
             Console.Clear();
             ShowUserCurrentStat();
             screen = Screens.Main;
         }
 
-        static void ModifyNickname()
+        private static void ModifyNickname()
         {
             Console.Clear();
             Console.WriteLine("현재 닉네임: " + user.nickname);
@@ -674,8 +679,8 @@ namespace Gaten.Game.DeonpaRPG
             Console.Clear();
             screen = Screens.Main;
         }
-        
-        static void ShowUserCurrentStat()
+
+        private static void ShowUserCurrentStat()
         {
             user.ability.CalculateCharacterAbility();
             Console.WriteLine(">닉네임: " + user.nickname);
@@ -702,7 +707,7 @@ namespace Gaten.Game.DeonpaRPG
             Console.WriteLine();
         }
 
-        static void ShowBattle(Monster monster)
+        private static void ShowBattle(Monster monster)
         {
             user.ability.CalculateCharacterAbility();
             Console.WriteLine(">닉네임: " + user.nickname);
@@ -730,7 +735,7 @@ namespace Gaten.Game.DeonpaRPG
             Console.WriteLine(">공격력: " + monster.attack);
         }
 
-        static void ShowDeongeonMonster()
+        private static void ShowDeongeonMonster()
         {
             Console.WriteLine(">몬스터 이름: " + deongeondb.human.monsters[0].name);
             Console.WriteLine(">레벨: " + deongeondb.human.monsters[0].level);
@@ -741,7 +746,7 @@ namespace Gaten.Game.DeonpaRPG
             Console.WriteLine(">SP: " + deongeondb.human.monsters[0].sp);
         }
 
-        static Skill ShowSkillList()
+        private static Skill ShowSkillList()
         {
             Console.WriteLine(">[ESC] 뒤로");
             Skill[] tempSkills = new Skill[40];

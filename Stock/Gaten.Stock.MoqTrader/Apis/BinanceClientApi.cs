@@ -4,7 +4,7 @@ using Binance.Net.Objects;
 
 using CryptoExchange.Net.Authentication;
 
-using Gaten.Net.Data.IO;
+using Gaten.Net.IO;
 using Gaten.Stock.MoqTrader.Charts;
 
 using System;
@@ -18,7 +18,7 @@ namespace Gaten.Stock.MoqTrader.Apis
 {
     internal class BinanceClientApi
     {
-        static BinanceClient binanceClient;
+        static BinanceClient binanceClient = new();
 
         public static void Init()
         {
@@ -64,7 +64,7 @@ namespace Gaten.Stock.MoqTrader.Apis
                 1500);
             result.Wait();
 
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
             foreach (var data in result.Result.Data)
             {
                 builder.AppendLine(string.Join(',', new string[] {
@@ -99,7 +99,7 @@ namespace Gaten.Stock.MoqTrader.Apis
             var result = binanceClient.UsdFuturesApi.ExchangeData.GetKlinesAsync(symbol, candleInterval, startTime, endTime, limit);
             result.Wait();
 
-            List<Candle> candles = new List<Candle>();
+            var candles = new List<Candle>();
 
             foreach (var data in result.Result.Data)
             {

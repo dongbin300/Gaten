@@ -1,21 +1,23 @@
-﻿using Gaten.Net.Data.Math;
-using Gaten.Net.Extension;
+﻿using Gaten.Net.Extensions;
 using Gaten.Net.Image;
+using Gaten.Net.Math;
 
 using System.Drawing;
+using System.Runtime.Versioning;
 using System.Text;
 
 namespace Gaten.Net.Windows.KakaoTalk.Chat
 {
+    [SupportedOSPlatform("windows")]
     public class KakaoTalkChatBot
     {
         public static bool IsRunning { get; private set; }
-        public static KakaoTalkChatWindow Window { get; set; }
-        public static List<KakaoTalkChatMessage> Messages { get; private set; }
-        static Thread worker;
+        public static KakaoTalkChatWindow Window { get; set; } = new();
+        public static List<KakaoTalkChatMessage> Messages { get; private set; } = new();
+        static Thread worker = default!;
         private static int pointerIndex = 0;
         private readonly static int InitMessasgeCount = 8;
-        private static SmartRandom r = new SmartRandom();
+        private static SmartRandom r = new();
 
         public static int CurrentProfileCount { get; set; }
         public static int CurrentChatCount { get; set; }
@@ -26,7 +28,7 @@ namespace Gaten.Net.Windows.KakaoTalk.Chat
         private readonly static int ChatHeight = 30;
         private static int ChatHeightMultiLine(int lineCount) => ChatHeight + (lineCount - 1) * 18;
 
-        public static Bitmap ChatRoomImage { get; set; }
+        public static Bitmap ChatRoomImage { get; set; } = default!;
 
         public KakaoTalkChatBot()
         {
@@ -35,7 +37,6 @@ namespace Gaten.Net.Windows.KakaoTalk.Chat
 
         public static void Init(KakaoTalkChatWindow window)
         {
-            Messages = new List<KakaoTalkChatMessage>();
             worker = new Thread(new ThreadStart(DoWork));
             Window = window;
         }

@@ -8,7 +8,7 @@
     {
         public int Index { get; set; } // 정렬용
         public int Id { get; set;  } // 구분용
-        public string Name { get; }
+        public string Name { get; private set; } = string.Empty;
         public int Width { get; }
         public int Height { get; }
         public int SlotNumber { get; set; }

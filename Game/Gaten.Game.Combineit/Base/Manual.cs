@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Gaten.Game.Combineit.Base
@@ -19,9 +17,9 @@ namespace Gaten.Game.Combineit.Base
 
         public static int GetCombineMax(int itemId)
         {
-            var materials = MaterialDictionary[itemId];
+            List<ItemSet>? materials = MaterialDictionary[itemId];
 
-            foreach(ItemSet material in materials)
+            foreach (ItemSet material in materials)
             {
                 if (Character.IsPossessItem(material.Item))
                 {

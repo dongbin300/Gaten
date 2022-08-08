@@ -1,6 +1,6 @@
-﻿namespace Gaten.Game.NGDG2.Screen
+﻿namespace Gaten.Game.NGDG2.Screen.Interface
 {
-    interface IScreen
+    internal interface IScreen
     {
         void Show();
 

@@ -1,15 +1,10 @@
 ﻿using Gaten.Game.Starcraft.Rule.Product;
 using Gaten.Game.Starcraft.Rule.Product.Terran.Building;
 using Gaten.Game.Starcraft.Rule.Product.Terran.Unit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gaten.Game.Starcraft
 {
-    class Player
+    internal class Player
     {
         public enum RaceType
         {
@@ -31,12 +26,14 @@ namespace Gaten.Game.Starcraft
             CurrentMineral = 50;
             CurrentGas = 0;
 
-            Products = new List<IProduct>();
-            Products.Add(new TerranCommandCenter());
-            Products.Add(new TerranSCV());
-            Products.Add(new TerranSCV());
-            Products.Add(new TerranSCV());
-            Products.Add(new TerranSCV());
+            Products = new List<IProduct>
+            {
+                new TerranCommandCenter(),
+                new TerranSCV(),
+                new TerranSCV(),
+                new TerranSCV(),
+                new TerranSCV()
+            };
 
             CalculateStatus();
         }
@@ -47,9 +44,9 @@ namespace Gaten.Game.Starcraft
         public void CalculateStatus()
         {
             CurrentPopulation = 0;
-            foreach(IProduct product in Products)
+            foreach (IProduct product in Products)
             {
-                if(product is IUnit unit)
+                if (product is IUnit unit)
                 {
                     CurrentPopulation += unit.Population;
                 }
@@ -79,7 +76,9 @@ namespace Gaten.Game.Starcraft
         public void MakeBuilding(IProduct product)
         {
             if (CurrentMineral < product.MineralCost || CurrentGas < product.GasCost)
+            {
                 return;
+            }
 
             CurrentMineral -= product.MineralCost;
             CurrentGas -= product.GasCost;

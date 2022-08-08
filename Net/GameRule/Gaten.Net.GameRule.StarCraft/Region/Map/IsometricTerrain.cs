@@ -1,15 +1,13 @@
-﻿using Gaten.Net.Extension;
+﻿using Gaten.Net.Extensions;
 
 namespace Gaten.Net.GameRule.StarCraft.Region.Map
 {
     public class IsometricTerrain
     {
-        public static ushort[] Tiles { get; set; }
+        public static ushort[] Tiles { get; set; } = new ushort[((int)Base.HorizontalDimension / 2 + 1) * ((int)Base.VerticalDimension + 1) * 4];
 
         public IsometricTerrain()
         {
-            Tiles = new ushort[((int)Base.HorizontalDimension / 2 + 1) * ((int)Base.VerticalDimension + 1) * 4];
-
             MakeDefault();
         }
 

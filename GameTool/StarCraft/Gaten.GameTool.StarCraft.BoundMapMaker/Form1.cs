@@ -3,14 +3,14 @@ namespace Gaten.GameTool.StarCraft.BoundMapMaker
     public partial class Form1 : Form
     {
         int tempX = 0, tempY = 0;
-        public BoundPanel BoundPanel;
+        public BoundPanel BoundPanel = default!;
         public enum TileEditMode
         {
             Size1,
             Size2
         }
         public TileEditMode _TileEditMode;
-        public int Size => _TileEditMode == TileEditMode.Size1 ? 1 : 2;
+        public new int Size => _TileEditMode == TileEditMode.Size1 ? 1 : 2;
 
         public Form1()
         {
@@ -29,7 +29,7 @@ namespace Gaten.GameTool.StarCraft.BoundMapMaker
         public void PanelInit()
         {
             BoundPanel = new BoundPanel();
-            TileEditSizeButton2_Click(null, null);
+            TileEditSizeButton2_Click(default!, new EventArgs());
 
             boundPanel.BackColor = Color.FromArgb(33, 33, 33);
         }

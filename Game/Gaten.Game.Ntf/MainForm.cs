@@ -4,14 +4,14 @@ namespace Gaten.Game.Ntf
 {
     public partial class MainForm : Form
     {
-        DateTime startTime;
-        double accumulatedTime;
-        double totalTime;
-        int exercise1;
-        int exercise2;
-        int exercise3;
-        int exercise4;
-        int exercise5;
+        private readonly DateTime startTime;
+        private double accumulatedTime;
+        private double totalTime;
+        private int exercise1;
+        private int exercise2;
+        private int exercise3;
+        private int exercise4;
+        private int exercise5;
 
         public MainForm()
         {
@@ -46,12 +46,12 @@ namespace Gaten.Game.Ntf
 
         private void Tick_Tick(object sender, EventArgs e)
         {
-            Random rnd = new Random();
-            double ex1 = 1.0 + exercise1 * 0.1;
-            double ex2 = exercise2 * (0.2 + 0.1 * rnd.Next(3));
-            double ex3 = exercise3 * (0.8 + 0.1 * rnd.Next(5));
-            double ex4 = exercise4 * 0.01 + 1;
-            int ex5 = 1000 - exercise5 * 30;
+            Random rnd = new();
+            double ex1 = 1.0 + (exercise1 * 0.1);
+            double ex2 = exercise2 * (0.2 + (0.1 * rnd.Next(3)));
+            double ex3 = exercise3 * (0.8 + (0.1 * rnd.Next(5)));
+            double ex4 = (exercise4 * 0.01) + 1;
+            int ex5 = 1000 - (exercise5 * 30);
             totalTime += ex1 * ex4;
             totalTime += ex2 * ex4;
             totalTime += ex3 * ex4;
@@ -68,10 +68,10 @@ namespace Gaten.Game.Ntf
             saveTimer.Stop();
         }
 
-        void Save()
+        private void Save()
         {
-            FileStream fs = new FileStream("data.bc", FileMode.Create);
-            StreamWriter sw = new StreamWriter(fs, Encoding.Unicode);
+            FileStream fs = new("data.bc", FileMode.Create);
+            StreamWriter sw = new(fs, Encoding.Unicode);
             sw.WriteLine(totalTime);
             sw.WriteLine(exercise1);
             sw.WriteLine(exercise2);
@@ -82,10 +82,10 @@ namespace Gaten.Game.Ntf
             fs.Close();
         }
 
-        void Load()
+        private void Load()
         {
-            FileStream fs = new FileStream("data.bc", FileMode.Open);
-            StreamReader sr = new StreamReader(fs, Encoding.Unicode);
+            FileStream fs = new("data.bc", FileMode.Open);
+            StreamReader sr = new(fs, Encoding.Unicode);
             accumulatedTime = double.Parse(sr.ReadLine());
             exercise1 = int.Parse(sr.ReadLine());
             exercise2 = int.Parse(sr.ReadLine());
@@ -124,7 +124,7 @@ namespace Gaten.Game.Ntf
             Application.Exit();
         }
 
-        bool effort(int ex, int needTime)
+        private bool effort(int ex, int needTime)
         {
             int needExercise = needTime * (ex + 1);
             if (totalTime >= needExercise)

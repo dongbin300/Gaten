@@ -24,9 +24,9 @@ namespace Gaten.Net.GameRule.NGD2
         public static int HitCount = 0; // 히트카운트
         public static int ShowTimePunchTimer = 0; // 쇼타임 펀치 타이머
 
-        public static Effect Effect { get; set; }
+        public static Effect Effect { get; set; } = new();
 
-        public static SkillBook SkillBook = new SkillBook();
+        public static SkillBook SkillBook = new();
 
         public static long RequireXp => Exp(Level);
         public static double XpPercent => (double)Xp / RequireXp * 100;
@@ -57,7 +57,7 @@ namespace Gaten.Net.GameRule.NGD2
 
         public static long Exp(int level)
         {
-            return (long)Math.Pow(level, 3.12 + (0.004 * level));
+            return (long)System.Math.Pow(level, 3.12 + (0.004 * level));
         }
 
         public static void Calculate()
@@ -89,7 +89,7 @@ namespace Gaten.Net.GameRule.NGD2
 
         public static void Attack()
         {
-            Random r = new Random();
+            var r = new Random();
 
             ///* 크리티컬 (추후수정) */
             //if (r.Next(100) < Effect.CriticalRate)
@@ -151,7 +151,7 @@ namespace Gaten.Net.GameRule.NGD2
             }
 
             /* 마나 리젠 */
-            Mp = Math.Min(Mp + Effect.MpRegen, Effect.MpMax);
+            Mp = System.Math.Min(Mp + Effect.MpRegen, Effect.MpMax);
 
             /* 근징 드롭 */
             Spirit.CheckDrop();

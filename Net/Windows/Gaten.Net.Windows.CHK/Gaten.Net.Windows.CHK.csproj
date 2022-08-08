@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\GameRule\Gaten.Net.GameRule.StarCraft\Gaten.Net.GameRule.StarCraft.csproj" />
-    <ProjectReference Include="..\..\Gaten.Net.Extension\Gaten.Net.Extension.csproj" />
   </ItemGroup>
 
 </Project>

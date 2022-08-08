@@ -11,7 +11,7 @@ namespace Gaten.Stock.MockTrader.Chart
         /// <summary>
         /// Coin symbol
         /// </summary>
-        public string Symbol { get; set; }
+        public string Symbol { get; set; } = string.Empty;
 
         /// <summary>
         /// Start date
@@ -21,37 +21,37 @@ namespace Gaten.Stock.MockTrader.Chart
         /// <summary>
         /// OHLCV data
         /// </summary>
-        public IList<Candle> Candles { get; set; }
+        public IList<Candle> Candles { get; set; } = default!;
 
         /// <summary>
         /// Moving average
         /// </summary>
-        public IList<SmaResult> MA { get; set; }
+        public IList<SmaResult> MA { get; set; } = default!;
 
         /// <summary>
         /// Exponential moving average
         /// </summary>
-        public IList<EmaResult> EMA { get; set; }
+        public IList<EmaResult> EMA { get; set; } = default!;
 
         /// <summary>
         /// Relative strength index
         /// </summary>
-        public IList<RsiResult> RSI { get; set; }
+        public IList<RsiResult> RSI { get; set; } = default!;
 
         /// <summary>
         /// Moving average convergence divergence
         /// </summary>
-        public IList<MacdResult> MACD { get; set; }
+        public IList<MacdResult> MACD { get; set; } = default!;
 
         /// <summary>
         /// First bollinger bands
         /// </summary>
-        public IList<BollingerBandsResult> BollingerBands { get; set; }
+        public IList<BollingerBandsResult> BollingerBands { get; set; } = default!;
 
         /// <summary>
         /// Second bollinger bands
         /// </summary>
-        public IList<BollingerBandsResult> BollingerBands2 { get; set; }
+        public IList<BollingerBandsResult> BollingerBands2 { get; set; } = default!;
 
         /// <summary>
         /// Count of candle

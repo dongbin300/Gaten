@@ -1,4 +1,4 @@
-﻿using Gaten.Net.Extension;
+﻿using Gaten.Net.Extensions;
 
 namespace Gaten.Net.Windows.Forms
 {
@@ -14,14 +14,14 @@ namespace Gaten.Net.Windows.Forms
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        public static Point GetCurrentPositionOnForm(this Form form, Point position)
+        public static System.Drawing.Point GetCurrentPositionOnForm(this Form form, System.Drawing.Point position)
         {
-            return new Point(position.X - form.Location.X - WindowLeft, position.Y - form.Location.Y - WindowTop);
+            return new System.Drawing.Point(position.X - form.Location.X - WindowLeft, position.Y - form.Location.Y - WindowTop);
         }
 
-        public static List<Control> GetControlsFromCurrentPosition(this Form form, Point position)
+        public static List<Control> GetControlsFromCurrentPosition(this Form form, System.Drawing.Point position)
         {
-            List<Control> controls = new List<Control>();
+            var controls = new List<Control>();
             foreach (Control control in form.Controls)
             {
                 if (position.IsRectangleRange(control.Top, control.Bottom, control.Left, control.Right))

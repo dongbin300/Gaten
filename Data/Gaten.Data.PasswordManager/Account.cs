@@ -1,6 +1,6 @@
 ﻿namespace Gaten.Data.PasswordManager
 {
-    class Account
+    internal class Account
     {
         public string Platform { get; set; }
         public string Description { get; set; }

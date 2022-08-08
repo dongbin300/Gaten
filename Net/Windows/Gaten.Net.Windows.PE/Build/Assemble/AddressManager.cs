@@ -1,6 +1,6 @@
 ﻿using Gaten.Net.Windows.PE.Assembly;
 using static Gaten.Net.Windows.PE.Assembly.IAssembly;
-using Gaten.Net.Extension;
+using Gaten.Net.Extensions;
 
 namespace Gaten.Net.Windows.PE.Build.Assemble
 {

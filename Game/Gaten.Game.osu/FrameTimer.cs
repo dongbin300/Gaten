@@ -1,29 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gaten.Game.osu
+﻿namespace Gaten.Game.osu
 {
     public class FrameTimer : IDisposable
     {
         public bool Status;
-        public System.Threading.Timer FTimer;
+        public System.Threading.Timer FTimer = default!;
         private int interval;
         public int Interval
         {
-            get
-            {
-                return interval;
-            }
+            get => interval;
             set
             {
                 interval = value;
-                if (Status) FTimer.Change(0, interval);
+                if (Status)
+                {
+                    _ = FTimer.Change(0, interval);
+                }
             }
         }
-        public Action TimerEvent { get; set; }
+        public Action TimerEvent { get; set; } = default!;
 
         public FrameTimer()
         {
@@ -32,22 +26,21 @@ namespace Gaten.Game.osu
 
         public void Start()
         {
-            FTimer.Change(0, Interval);
+            _ = FTimer.Change(0, Interval);
             Status = true;
         }
 
         public void Stop()
         {
-            if(FTimer != null)
+            if (FTimer != null)
             {
-                FTimer.Change(System.Threading.Timeout.Infinite, System.Threading.Timeout.Infinite);
+                _ = FTimer.Change(Timeout.Infinite, Timeout.Infinite);
                 Status = false;
             }
         }
 
-        public void TimerCallBack(object state)
+        public void TimerCallBack(object? state)
         {
-
             TimerEvent();
         }
 

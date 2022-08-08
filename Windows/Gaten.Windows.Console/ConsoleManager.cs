@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Collections.Generic;
 
 namespace Gaten.Windows.Console
 {
@@ -11,14 +12,13 @@ namespace Gaten.Windows.Console
     {
         private StackPanel mainPanel;
         private bool isBlock;
-        private TextBlock blocks;
-        private System.Collections.Generic.List<string> inputLogs;
+        private TextBlock blocks = default!;
+        private List<string> inputLogs = new();
         private int inputPointer;
 
         public ConsoleManager(StackPanel mainPanel)
         {
             this.mainPanel = mainPanel;
-            inputLogs = new System.Collections.Generic.List<string>();
         }
 
         public void AddInputLog(string input)

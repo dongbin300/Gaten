@@ -1,11 +1,11 @@
 ﻿namespace Gaten.Net.GameRule.osu
 {
-    public enum GameMode 
-    { 
+    public enum GameMode
+    {
         Osu,
-        Taiko, 
-        CatchTheBeat, 
-        Mania 
+        Taiko,
+        CatchTheBeat,
+        Mania
     }
 
     [Flags]
@@ -24,18 +24,18 @@
         FlashLight = 512
     }
 
-    public enum GradeRank 
+    public enum GradeRank
     {
-        SilverSS, 
+        SilverSS,
         GoldSS,
         SilverS,
         GoldS,
         A,
-        B, 
-        C, 
+        B,
+        C,
         D
     }
-    
+
     public class General
     {
         public static List<string> TaikoDifficultyStrings => new()

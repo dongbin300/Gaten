@@ -2,9 +2,9 @@ namespace Gaten.Game.InstanceGH
 {
     public partial class MainForm : Form
     {
-        int money, ghnum, bg;
-        int click_count = 0;
-        Random ran = new Random();
+        private int money, ghnum, bg;
+        private int click_count = 0;
+        private readonly Random ran = new();
 
         public MainForm()
         {
@@ -32,8 +32,8 @@ namespace Gaten.Game.InstanceGH
             moneylb.Text = "" + money;
             bglb.Text = "" + bg;
             ghnumlb.Text = "" + ghnum;
-            ghbt.Text = "[A]강화하기(" + (ghnum + 1) * 120 + ")";
-            sellbt.Text = "[S]판매하기(" + ghnum * ghnum * 150 + ")";
+            ghbt.Text = "[A]강화하기(" + ((ghnum + 1) * 120) + ")";
+            sellbt.Text = "[S]판매하기(" + (ghnum * ghnum * 150) + ")";
         }
 
         private void ghbt_Click(object sender, EventArgs e)
@@ -42,13 +42,13 @@ namespace Gaten.Game.InstanceGH
             if (money >= (ghnum + 1) * 120)
             {
                 money -= (ghnum + 1) * 120;
-                if (RanNum(100) >= ghnum * 3 - (bg / 100))
+                if (RanNum(100) >= (ghnum * 3) - (bg / 100))
                 {
                     ghnum++;
 
                     if (ghnum >= 10)
                     {
-                        bg += (ghnum / 5 - 1);
+                        bg += (ghnum / 5) - 1;
                     }
                 }
                 else
@@ -80,12 +80,15 @@ namespace Gaten.Game.InstanceGH
 
         public int RanNum(int num)
         {
-            int rand_num = 1;
+            int rand_num;
             while (true)
             {
                 //랜덤을 다양하게 하기 위해 현재시간과 클릭횟수등을 더하여서 랜덤을 만들었습니다.
                 rand_num = DateTime.Now.Second + click_count + ran.Next(num);
-                if (rand_num % num != 0) break;
+                if (rand_num % num != 0)
+                {
+                    break;
+                }
             }
             return rand_num % num;
         }

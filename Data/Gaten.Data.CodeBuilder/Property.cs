@@ -9,7 +9,7 @@ namespace Gaten.Data.CodeBuilder
         public string Name { get; set; }
         public bool GetAccessor { get; set; }
         public bool SetAccessor { get; set; }
-        public string CamelName => char.ToLowerInvariant(Name[0]) + Name.Substring(1);
+        public string CamelName => char.ToLowerInvariant(Name[0]) + Name[1..];
         public string AccessorString => GetAccessorString();
         public string ParameterString => GetParameterString();
         public string InitString => GetInitString();
@@ -23,36 +23,36 @@ namespace Gaten.Data.CodeBuilder
             SetAccessor = setAccessor;
         }
 
-        string GetAccessorString()
+        private string GetAccessorString()
         {
             if (!GetAccessor && !SetAccessor)
             {
                 return ";";
             }
 
-            StringBuilder builder = new StringBuilder("");
+            StringBuilder builder = new("");
             if (GetAccessor)
             {
-                builder.Append("{ get; ");
+                _ = builder.Append("{ get; ");
             }
             if (SetAccessor)
             {
-                builder.Append("set; ");
+                _ = builder.Append("set; ");
             }
 
             return builder.Append("}").ToString();
         }
 
-        string GetParameterString()
+        private string GetParameterString()
         {
-            StringBuilder builder = new StringBuilder(DataType);
+            StringBuilder builder = new(DataType);
 
             return builder.AppendFormat(" {0}", CamelName).ToString();
         }
 
-        string GetInitString()
+        private string GetInitString()
         {
-            StringBuilder builder = new StringBuilder(Name);
+            StringBuilder builder = new(Name);
 
             return builder.AppendFormat(" = {0};", CamelName).ToString();
         }

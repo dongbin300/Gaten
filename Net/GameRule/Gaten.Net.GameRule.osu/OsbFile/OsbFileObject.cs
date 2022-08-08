@@ -1,4 +1,5 @@
 ﻿using Gaten.Net.GameRule.osu.OsbFile.Headers;
+using Gaten.Net.IO;
 
 namespace Gaten.Net.GameRule.osu.OsbFile
 {
@@ -24,7 +25,7 @@ namespace Gaten.Net.GameRule.osu.OsbFile
             contents.Add("//Storyboard Layer 4 (Overlay)");
             contents.Add("//Storyboard Sound Samples");
 
-            Data.IO.GFile.WriteByArray(FileName, contents);
+            GFile.WriteByArray(FileName, contents);
         }
     }
 }

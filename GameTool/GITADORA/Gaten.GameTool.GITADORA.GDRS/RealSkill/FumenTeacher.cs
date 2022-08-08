@@ -36,17 +36,17 @@ namespace Gaten.GameTool.GITADORA.GDRS.RealSkill
             {
                 Fumen.Phrases.Add(new Phrase()
                 {
-                    Num = (int)((i - RealSkillRule.StartPhraseTiming) / RealSkillRule.PhraseLength + 1),
+                    Num = (int)(((i - RealSkillRule.StartPhraseTiming) / RealSkillRule.PhraseLength) + 1),
                     Duration = 240 / Fumen.Bpm,
                     Note = fumenFile.Paths.Where(p => p.type.Equals(Path.Type.Note) && p.timing >= i - RealSkillRule.NoteDelay && p.timing < i + RealSkillRule.PhraseLength - RealSkillRule.NoteDelay).ToList()
                 });
             }
 
-            List<double> densities = new List<double>();
-            List<double> pedalDensities = new List<double>();
-            List<double> tomDensities = new List<double>();
-            List<double> offBeatDensities = new List<double>();
-            List<double> noteIntervals = new List<double>();
+            List<double> densities = new();
+            List<double> pedalDensities = new();
+            List<double> tomDensities = new();
+            List<double> offBeatDensities = new();
+            List<double> noteIntervals = new();
             double durationSum = 0;
             foreach (Phrase phrase in Fumen.Phrases)
             {
@@ -141,45 +141,51 @@ namespace Gaten.GameTool.GITADORA.GDRS.RealSkill
         // TODO: 같은 노트의 간격 평균
 
         // 손으로 치는 노트의 간격 평균
-        double GetAverageHandInterval(List<Path> paths)
+        private double GetAverageHandInterval(List<Path> paths)
         {
             List<Path> handPaths = paths.Where(p => !p.noteNum.Equals(3) && !p.noteNum.Equals(6)).ToList();
 
-            if (handPaths.Count < 2) return RealSkillRule.PhraseLength;
+            if (handPaths.Count < 2)
+            {
+                return RealSkillRule.PhraseLength;
+            }
 
-            List<double> intervals = new List<double>();
+            List<double> intervals = new();
 
             for (int i = 0; i < handPaths.Count - 1; i++)
             {
                 intervals.Add(Math.Abs(handPaths[i + 1].timing - handPaths[i].timing));
             }
 
-            if (intervals.Count(i => i >= RealSkillRule.NoteIntervalMargin) < 1) return RealSkillRule.PhraseLength;
-
-            return intervals.Where(i => i >= RealSkillRule.NoteIntervalMargin).Average();
+            return intervals.Count(i => i >= RealSkillRule.NoteIntervalMargin) < 1
+                ? RealSkillRule.PhraseLength
+                : intervals.Where(i => i >= RealSkillRule.NoteIntervalMargin).Average();
         }
 
         // 페달 노트의 간격 평균
-        double GetAveragePedalInterval(List<Path> paths)
+        private double GetAveragePedalInterval(List<Path> paths)
         {
             List<Path> pedalPaths = paths.Where(p => p.noteNum.Equals(3) || p.noteNum.Equals(6)).ToList();
 
-            if (pedalPaths.Count < 2) return RealSkillRule.PhraseLength;
+            if (pedalPaths.Count < 2)
+            {
+                return RealSkillRule.PhraseLength;
+            }
 
-            List<double> intervals = new List<double>();
+            List<double> intervals = new();
 
             for (int i = 0; i < pedalPaths.Count - 1; i++)
             {
                 intervals.Add(Math.Abs(pedalPaths[i + 1].timing - pedalPaths[i].timing));
             }
 
-            if (intervals.Count(i => i >= RealSkillRule.NoteIntervalMargin) < 1) return RealSkillRule.PhraseLength;
-
-            return intervals.Where(i => i >= RealSkillRule.NoteIntervalMargin).Average();
+            return intervals.Count(i => i >= RealSkillRule.NoteIntervalMargin) < 1
+                ? RealSkillRule.PhraseLength
+                : intervals.Where(i => i >= RealSkillRule.NoteIntervalMargin).Average();
         }
 
         // 엇박인지 체크
-        bool IsOffBeat(double timing)
+        private bool IsOffBeat(double timing)
         {
             double[] beats = { 0, 175, 350, 525, 700, 87.5, 262.5, 437.5, 612.5 };
 

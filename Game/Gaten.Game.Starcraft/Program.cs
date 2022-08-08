@@ -1,8 +1,7 @@
 ﻿using Gaten.Game.Starcraft.Rule.Product;
-using System;
-using System.Collections.Generic;
+
 using System.Drawing;
-using System.Linq;
+
 using static Colorful.Console;
 
 namespace Gaten.Game.Starcraft
@@ -11,9 +10,9 @@ namespace Gaten.Game.Starcraft
     {
         public static int Turn;
         public static bool GameOver;
-        static string keyOrder = "1234567890ABCDEF";
-        static Player p;
-        static ProductDictionary pd;
+        private static readonly string keyOrder = "1234567890ABCDEF";
+        private static Player p;
+        private static ProductDictionary pd;
 
         private static void Main()
         {
@@ -46,13 +45,17 @@ namespace Gaten.Game.Starcraft
                 }
 
                 if (!GameOver)
+                {
                     ++Turn;
+                }
                 else
+                {
                     break;
+                }
             }
         }
 
-        static void DisplayStatus()
+        private static void DisplayStatus()
         {
             WriteLine("---------------------------------------------------", Color.FromArgb(255, 255, 255));
             WriteLine("------스타크래프트----------------제작자: Gaten---", Color.FromArgb(255, 245, 235));
@@ -61,10 +64,10 @@ namespace Gaten.Game.Starcraft
             WriteLine();
         }
 
-        static List<string> DisplayBuildingSimple()
+        private static List<string> DisplayBuildingSimple()
         {
-            List<string> buildingStrings = new List<string>();
-            var buildings = pd.Products.Where(p => p is IBuilding);
+            List<string> buildingStrings = new();
+            IEnumerable<IProduct>? buildings = pd.Products.Where(p => p is IBuilding);
 
             int c = 0;
             foreach (IBuilding b in buildings)
@@ -81,10 +84,9 @@ namespace Gaten.Game.Starcraft
         {
             Clear();
             DisplayStatus();
-            List<string> strs = DisplayBuildingSimple();
+            _ = DisplayBuildingSimple();
             WriteLine("[P] 취소");
-
-            var key = ReadKey(true).Key;
+            _ = ReadKey(true).Key;
         }
     }
 }

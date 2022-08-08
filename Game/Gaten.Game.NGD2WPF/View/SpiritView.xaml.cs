@@ -22,7 +22,7 @@ namespace Gaten.Game.NGD2WPF.View
             Refresh();
         }
 
-        void Refresh()
+        private void Refresh()
         {
             PowerTitle.Text = $"Lv {Spirit.Power.Level}";
             PowerText.Text = $"+{Spirit.Power.TotalValue}";

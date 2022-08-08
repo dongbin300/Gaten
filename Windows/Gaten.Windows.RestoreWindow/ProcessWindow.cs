@@ -4,8 +4,8 @@ namespace Gaten.Windows.RestoreWindow
 {
     internal class ProcessWindow
     {
-        public string ProcessName { get; set; }
-        public string FileName { get; set; }
+        public string ProcessName { get; set; } = string.Empty;
+        public string FileName { get; set; } = string.Empty;
         public int X { get; set; }
         public int Y { get; set; }
         public int Width { get; set; }

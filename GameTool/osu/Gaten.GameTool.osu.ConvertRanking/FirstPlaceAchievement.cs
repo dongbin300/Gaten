@@ -9,15 +9,15 @@ namespace Gaten.GameTool.osu.ConvertRanking
     public class FirstPlaceAchievement
     {
         public GradeRank GradeRank { get; set; }
-        public string BeatmapString { get; set; }
-        public string BeatmapArtist { get; set; }
-        public string BeatmapUrl { get; set; }
-        public string Difficulty { get; set; }
+        public string BeatmapString { get; set; } = string.Empty;
+        public string BeatmapArtist { get; set; } = string.Empty;
+        public string BeatmapUrl { get; set; } = string.Empty;
+        public string Difficulty { get; set; } = string.Empty;
         public GameMode GameMode { get; set; }
-        public string ElapsedTime { get; set; }
+        public string ElapsedTime { get; set; } = string.Empty;
         public Modes Mode { get; set; }
-        public string Accuracy { get; set; }
-        public string Pp { get; set; }
+        public string Accuracy { get; set; } = string.Empty;
+        public string Pp { get; set; } = string.Empty;
 
         public FirstPlaceAchievement Parse(IWebElement node, MyPage.BeatmapGameModeParseLevel beatmapGameModeParseLevel)
         {

@@ -1,3 +1,4 @@
+
 using Gaten.Net.Network;
 
 namespace Gaten.GameTool.SDVX.SDVXBingo

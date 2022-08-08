@@ -4,11 +4,11 @@ namespace Gaten.Game.BrandNewType
 {
     public partial class MainForm : Form
     {
-        UserActivityHook2 hook;
-        Thread keyInputThread;
-        Rail rail = new Rail();
-        Track track = new Track();
-        NoteObject no;
+        private readonly UserActivityHook2 hook;
+        private readonly Thread keyInputThread;
+        private readonly Rail rail = new();
+        private readonly Track track = new();
+        private NoteObject no = new();
 
         public int Score = 0;
         public int Combo = 0;
@@ -51,7 +51,7 @@ namespace Gaten.Game.BrandNewType
             hook.KeyDown += (sender, e) =>
             {
                 // ÀÚÆÇ ÀÔ·Â
-                if ((int)Keys.A <= (int)e.KeyCode && (int)e.KeyCode <= (int)Keys.Z)
+                if ((int)e.KeyCode is >= ((int)Keys.A) and <= ((int)Keys.Z))
                 {
                     int hitResult = no.Hit(e.KeyCode, rail, ShiftMode);
                     switch (hitResult)
@@ -67,7 +67,7 @@ namespace Gaten.Game.BrandNewType
                         case 1:
                             PerfectCount++;
                             Combo++;
-                            Score += Combo * 1000 + new Random().Next(3000);
+                            Score += (Combo * 1000) + new Random().Next(3000);
                             judgmentLabel.Text = "PERFECT!";
                             comboLabel.Text = Combo + " Combo";
                             scoreLabel.Text = Score + "";
@@ -111,11 +111,10 @@ namespace Gaten.Game.BrandNewType
 
         private void MainFrame_Paint(object sender, PaintEventArgs e)
         {
-            Pen gray1 = new Pen(Brushes.Gray, 1);
-            Pen lime2 = new Pen(Brushes.Lime, 2);
-            Pen black1 = new Pen(Brushes.Black, 1);
-            Pen black2 = new Pen(Brushes.Black, 2);
-            Font noteFont = new Font("¸¼Àº °íµñ", 30);
+            Pen gray1 = new(Brushes.Gray, 1);
+            Pen lime2 = new(Brushes.Lime, 2);
+            Pen black2 = new(Brushes.Black, 2);
+            Font noteFont = new("¸¼Àº °íµñ", 30);
 
             // Rail ±âº» ¼±
             e.Graphics.DrawLine(black2,
@@ -128,28 +127,32 @@ namespace Gaten.Game.BrandNewType
                 Rail.HitPosition, Rail.Margin,
                 Rail.HitPosition, mainFrame.Height - Rail.Margin);
             e.Graphics.DrawLine(lime2,
-                Rail.HitPosition - NoteObject.gap * 3 * rail.ServiceSpeed, Rail.Margin,
-                Rail.HitPosition - NoteObject.gap * 3 * rail.ServiceSpeed, mainFrame.Height - Rail.Margin);
+                Rail.HitPosition - (NoteObject.gap * 3 * rail.ServiceSpeed), Rail.Margin,
+                Rail.HitPosition - (NoteObject.gap * 3 * rail.ServiceSpeed), mainFrame.Height - Rail.Margin);
             e.Graphics.DrawLine(lime2,
-                Rail.HitPosition + NoteObject.gap * 5 * rail.ServiceSpeed, Rail.Margin,
-                Rail.HitPosition + NoteObject.gap * 5 * rail.ServiceSpeed, mainFrame.Height - Rail.Margin);
+                Rail.HitPosition + (NoteObject.gap * 5 * rail.ServiceSpeed), Rail.Margin,
+                Rail.HitPosition + (NoteObject.gap * 5 * rail.ServiceSpeed), mainFrame.Height - Rail.Margin);
 
             // Bar
             foreach (Bar bar in track.Bars)
             {
-                int barPosX = Rail.HitPosition + (rail.ServiceSpeed * bar.Position - rail.Position);
+                int barPosX = Rail.HitPosition + ((rail.ServiceSpeed * bar.Position) - rail.Position);
                 if (barPosX > 0 && barPosX < mainFrame.Width)
+                {
                     e.Graphics.DrawLine(gray1,
                     barPosX, 10,
                     barPosX, 190);
+                }
             }
 
             // Note
             foreach (Note note in no.Notes)
             {
-                int notePosX = Rail.HitPosition + (rail.ServiceSpeed * note.Position - rail.Position);
+                int notePosX = Rail.HitPosition + ((rail.ServiceSpeed * note.Position) - rail.Position);
                 if (notePosX > 0 && notePosX < mainFrame.Width)
+                {
                     e.Graphics.DrawString(note.Value, noteFont, Brushes.Black, notePosX, 70);
+                }
             }
         }
 

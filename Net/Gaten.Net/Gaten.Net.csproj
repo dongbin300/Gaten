@@ -7,19 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Costura.Fody" Version="5.7.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Gaten.Net.Data\Gaten.Net.Data.csproj" />
-    <ProjectReference Include="..\Gaten.Net.Exception\Gaten.Net.Exception.csproj" />
-    <ProjectReference Include="..\Gaten.Net.Extension\Gaten.Net.Extension.csproj" />
-    <ProjectReference Include="..\Gaten.Net.Image\Gaten.Net.Image.csproj" />
-    <ProjectReference Include="..\Gaten.Net.Network\Gaten.Net.Network.csproj" />
-    <ProjectReference Include="..\Gaten.Net.Windows\Gaten.Net.Windows.csproj" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.43" />
+    <PackageReference Include="InputSimulatorStandard" Version="1.0.0" />
+    <PackageReference Include="MySql.Data" Version="8.0.30" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.3.0" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 
 </Project>

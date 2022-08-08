@@ -4,10 +4,10 @@ namespace Gaten.Data.FileManager
 {
     public class Node
     {
-        public NodeType NodeType { get; set; }
-        public TreeViewItem Item { get; set; }
-        public string Name => Item.Header.ToString();
-        public string FullPath { get; set; }
+        public NodeType NodeType { get; set; } = NodeType.None;
+        public TreeViewItem Item { get; set; } = new TreeViewItem();
+        public string Name => Item.Header.ToString() ?? string.Empty;
+        public string FullPath { get; set; } = string.Empty;
 
         public Node()
         {
@@ -24,6 +24,7 @@ namespace Gaten.Data.FileManager
 
     public enum NodeType
     {
+        None,
         Directory,
         File
     }

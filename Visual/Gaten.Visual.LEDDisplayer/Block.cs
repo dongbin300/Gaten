@@ -2,10 +2,9 @@
 {
     public class Block : Pixel
     {
-        public List<Pixel> Pixels { get; set; }
+        public List<Pixel> Pixels { get; set; } = new();
         public Block()
         {
-            Pixels = new List<Pixel>();
             X = 0;
             Y = 0;
             Color = ConsoleColor.Black;

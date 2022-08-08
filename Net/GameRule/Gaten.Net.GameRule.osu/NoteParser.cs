@@ -1,7 +1,6 @@
 ﻿using Gaten.Net.GameRule.osu.OsbFile;
 using Gaten.Net.GameRule.osu.OsuFile;
-using Gaten.Net.GameRule.osu.OsuFile.Headers;
-using Gaten.Net.Extension;
+using Gaten.Net.Extensions;
 using Gaten.Net.GameRule.osu.OsbFile.Headers;
 using System.Drawing;
 

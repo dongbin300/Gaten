@@ -7,16 +7,16 @@
         /// </summary>
         public static int RequireLevel => 30;
 
-        public static SkillUpgradeContent Blow { get; set; }
-        public static SkillUpgradeContent EnergyRelease { get; set; }
-        public static SkillUpgradeContent ExtremeMpRegen { get; set; }
-        public static SkillUpgradeContent CriticalMind { get; set; }
-        public static SkillUpgradeContent PowerCritical { get; set; }
-        public static SkillUpgradeContent FastPush { get; set; }
-        public static SkillUpgradeContent BonusPunch { get; set; }
-        public static SkillUpgradeContent Showtime { get; set; }
-        public static SkillUpgradeContent Ungijosik { get; set; }
-        public static SkillUpgradeContent Psychokinesis { get; set; }
+        public static SkillUpgradeContent Blow { get; set; } = default!;
+        public static SkillUpgradeContent EnergyRelease { get; set; } = default!;
+        public static SkillUpgradeContent ExtremeMpRegen { get; set; } = default!;
+        public static SkillUpgradeContent CriticalMind { get; set; } = default!;
+        public static SkillUpgradeContent PowerCritical { get; set; } = default!;
+        public static SkillUpgradeContent FastPush { get; set; } = default!;
+        public static SkillUpgradeContent BonusPunch { get; set; } = default!;
+        public static SkillUpgradeContent Showtime { get; set; } = default!;
+        public static SkillUpgradeContent Ungijosik { get; set; } = default!;
+        public static SkillUpgradeContent Psychokinesis { get; set; } = default!;
 
         /// <summary>
         /// 소지 개수

@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Net\Gaten.Net.Extension\Gaten.Net.Extension.csproj" />
     <ProjectReference Include="..\..\Net\Windows\Gaten.Net.Windows.PE\Gaten.Net.Windows.PE.csproj" />
   </ItemGroup>
 

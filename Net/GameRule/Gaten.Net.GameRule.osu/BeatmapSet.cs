@@ -1,13 +1,15 @@
-﻿namespace Gaten.Net.GameRule.osu
+﻿using Gaten.Net.IO;
+
+namespace Gaten.Net.GameRule.osu
 {
     public class BeatmapSet
     {
-        public DirectoryInfo Directory { get; set; }
+        public DirectoryInfo Directory { get; set; } = default!;
         public string FullDirectory => Directory.FullName;
         public string LastDirectory => Directory.Name;
         public string Title => LastDirectory.Substring(LastDirectory.IndexOf(" - ") + 3);
 
-        public FileInfo[] BeatmapFiles { get; set; }
+        public FileInfo[] BeatmapFiles { get; set; } = default!;
         public List<int> FruitCounts { get; set; } = new();
 
         public BeatmapSet(DirectoryInfo directory)
@@ -36,7 +38,7 @@
             int fruitCount = 0;
             bool hoStart = false;
 
-            var data = Data.IO.GFile.ReadToArray(fileName);
+            var data = GFile.ReadToArray(fileName);
             foreach(var str in data)
             {
                 if (hoStart) // 과일 정보 문자열

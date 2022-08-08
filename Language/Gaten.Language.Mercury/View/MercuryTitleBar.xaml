@@ -8,7 +8,7 @@
              MouseDown="UserControl_MouseDown"
              MouseDoubleClick="UserControl_MouseDoubleClick"
              Loaded="UserControl_Loaded"
-             d:DesignHeight="40" d:DesignWidth="1920" Background="#222">
+             d:DesignHeight="40" d:DesignWidth="1920">
     <UserControl.Resources>
         <Style TargetType="{x:Type Canvas}" x:Key="ButtonCanvas">
             <Style.Triggers>
@@ -140,9 +140,10 @@
         <WrapPanel Orientation="Horizontal" Margin="5,0" Grid.Column="1">
             <Menu Background="#1F1F1F">
                 <MenuItem Header="파일" Style="{StaticResource MainMenuItem}" Height="40">
-                    <MenuItem x:Name="FileNewAnimationMenuItem" Style="{StaticResource SubMenuItem}" Header="새 우주(애니메이션)" Height="28" />
-                    <MenuItem x:Name="FileNewImageMenuItem" Style="{StaticResource SubMenuItem}" Header="새 우주(이미지)" Height="28" />
+                    <MenuItem x:Name="FileNewMenuItem" Style="{StaticResource SubMenuItem}" Header="새로 만들기" Height="28" />
                     <MenuItem x:Name="FileOpenMenuItem" Style="{StaticResource SubMenuItem}" Header="열기" Height="28" />
+                    <Separator Style="{StaticResource SubMenuSeparator}" />
+                    <MenuItem x:Name="FileCloseMenuItem" Style="{StaticResource SubMenuItem}" Header="닫기" Height="28" />
                     <Separator Style="{StaticResource SubMenuSeparator}" />
                     <MenuItem x:Name="FileSaveMenuItem" Style="{StaticResource SubMenuItem}" Header="저장" Height="28" />
                     <Separator Style="{StaticResource SubMenuSeparator}" />
@@ -153,19 +154,53 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="편집" Style="{StaticResource MainMenuItem}" Height="40">
-                    <MenuItem x:Name="MenuItem1" Style="{StaticResource SubMenuItem}" Header="새 우주(애니메이션)" Height="28" />
+                    <MenuItem x:Name="EditFindMenuItem" Style="{StaticResource SubMenuItem}" Header="찾기 및 바꾸기" Height="28" />
+                    <Separator Style="{StaticResource SubMenuSeparator}" />
+                    <MenuItem x:Name="EditUndoMenuItem" Style="{StaticResource SubMenuItem}" Header="실행 취소" Height="28" />
+                    <MenuItem x:Name="EditRedoMenuItem" Style="{StaticResource SubMenuItem}" Header="다시 실행" Height="28" />
+                    <Separator Style="{StaticResource SubMenuSeparator}" />
+                    <MenuItem x:Name="EditCutMenuItem" Style="{StaticResource SubMenuItem}" Header="잘라내기" Height="28" />
+                    <MenuItem x:Name="EditCopyMenuItem" Style="{StaticResource SubMenuItem}" Header="복사" Height="28" />
+                    <MenuItem x:Name="EditPasteMenuItem" Style="{StaticResource SubMenuItem}" Header="붙여넣기" Height="28" />
+                    <MenuItem x:Name="EditDuplicateMenuItem" Style="{StaticResource SubMenuItem}" Header="복제" Height="28" />
+                    <MenuItem x:Name="EditDeleteMenuItem" Style="{StaticResource SubMenuItem}" Header="삭제" Height="28" />
+                    <Separator Style="{StaticResource SubMenuSeparator}" />
+                    <MenuItem x:Name="EditAllSelectMenuItem" Style="{StaticResource SubMenuItem}" Header="모두 선택" Height="28" />
+                    <Separator Style="{StaticResource SubMenuSeparator}" />
+                    <MenuItem x:Name="EditCommentMenuItem" Style="{StaticResource SubMenuItem}" Header="주석 처리" Height="28" />
+                    <MenuItem x:Name="EditDecommentMenuItem" Style="{StaticResource SubMenuItem}" Header="주석 처리 제거" Height="28" />
                 </MenuItem>
                 <MenuItem Header="보기" Style="{StaticResource MainMenuItem}" Height="40">
-                    <MenuItem x:Name="MenuItem2" Style="{StaticResource SubMenuItem}" Header="새 우주(애니메이션)" Height="28" />
+                    <MenuItem x:Name="ViewWrapMenuItem" Style="{StaticResource SubMenuItem}" Header="자동 줄 바꿈" Height="28" />
+                    <MenuItem x:Name="ViewNumberMenuItem" Style="{StaticResource SubMenuItem}" Header="줄 번호" Height="28" />
+                    <Separator Style="{StaticResource SubMenuSeparator}" />
+                    <MenuItem x:Name="ViewModelExplorerMenuItem" Style="{StaticResource SubMenuItem}" Header="모델 탐색기" Height="28" />
+                    <MenuItem x:Name="ViewPropertyWindowMenuItem" Style="{StaticResource SubMenuItem}" Header="속성 창" Height="28" />
+                    <Separator Style="{StaticResource SubMenuSeparator}" />
+                    <MenuItem x:Name="ViewFullScreenMenuItem" Style="{StaticResource SubMenuItem}" Header="전체 화면" Height="28" />
                 </MenuItem>
                 <MenuItem Header="모델" Style="{StaticResource MainMenuItem}" Height="40">
-                    <MenuItem x:Name="MenuItem3" Style="{StaticResource SubMenuItem}" Header="새 우주(애니메이션)" Height="28" />
+                    <MenuItem x:Name="ModelInspectionMenuItem" Style="{StaticResource SubMenuItem}" Header="검사" Height="28" />
+                    <MenuItem x:Name="ModelInspectionRunMenuItem" Style="{StaticResource SubMenuItem}" Header="검사 후 시작" Height="28" />
+                    <Separator Style="{StaticResource SubMenuSeparator}" />
+                    <MenuItem x:Name="ModelAddTriggerSetMenuItem" Style="{StaticResource SubMenuItem}" Header="트리거셋 추가" Height="28" />
+                    <MenuItem x:Name="ModelAddTriggerMenuItem" Style="{StaticResource SubMenuItem}" Header="트리거 추가" Height="28" />
+                    <Separator Style="{StaticResource SubMenuSeparator}" />
+                    <MenuItem x:Name="ModelSettingsMenuItem" Style="{StaticResource SubMenuItem}" Header="모델 설정" Height="28" />
                 </MenuItem>
-                <MenuItem Header="도구" Style="{StaticResource MainMenuItem}" Height="40">
-                    <MenuItem x:Name="MenuItem4" Style="{StaticResource SubMenuItem}" Header="새 우주(애니메이션)" Height="28" />
+                <MenuItem Header="설정" Style="{StaticResource MainMenuItem}" Height="40">
+                    <MenuItem x:Name="SettingsThemeMenuItem" Style="{StaticResource SubMenuItem}" Header="테마" Height="28" />
+                    <MenuItem x:Name="SettingsFontMenuItem" Style="{StaticResource SubMenuItem}" Header="폰트" Height="28" />
                 </MenuItem>
                 <MenuItem Header="도움말" Style="{StaticResource MainMenuItem}" Height="40">
-                    <MenuItem x:Name="MenuItem5" Style="{StaticResource SubMenuItem}" Header="새 우주(애니메이션)" Height="28" />
+                    <MenuItem x:Name="HelpViewMenuItem" Style="{StaticResource SubMenuItem}" Header="도움말 보기" Height="28" />
+                    <Separator Style="{StaticResource SubMenuSeparator}" />
+                    <MenuItem x:Name="HelpFeedbackMenuItem" Style="{StaticResource SubMenuItem}" Header="피드백 보내기" Height="28" />
+                    <Separator Style="{StaticResource SubMenuSeparator}" />
+                    <MenuItem x:Name="HelpUpdateMenuItem" Style="{StaticResource SubMenuItem}" Header="업데이트 확인" Height="28" />
+                    <MenuItem x:Name="HelpInfoMenuItem" Style="{StaticResource SubMenuItem}" Header="Mercury Editor 정보" Height="28" />
+                    <Separator Style="{StaticResource SubMenuSeparator}" />
+                    <MenuItem x:Name="HelpDonateMenuItem" Style="{StaticResource SubMenuItem}" Header="후원" Height="28" />
                 </MenuItem>
             </Menu>
         </WrapPanel>

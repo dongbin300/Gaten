@@ -1,13 +1,18 @@
-﻿namespace Gaten.Game.NGDG2.Screen
+﻿using Gaten.Game.NGDG2.GameRule.Character;
+using Gaten.Game.NGDG2.Screen.Interface;
+using Gaten.Game.NGDG2.Util.Environment;
+using Gaten.Game.NGDG2.Util.Screen;
+
+namespace Gaten.Game.NGDG2.Screen.Member
 {
     public class GameMain : IScreen
     {
         public GameMain()
         {
             // 캐릭터 initialize
-            _ = new Character();
+            _ = new NgdgCharacter();
 
-            Character.LoadFromFile(PathUtil.AccountPath + "c1.txt");
+            NgdgCharacter.LoadFromFile(PathUtil.AccountPath + "c1.txt");
         }
 
         public void Show()
@@ -19,11 +24,11 @@
             ScreenUtil.DrawHotKeyNavigator(new HotKeyNavigator().AddHotKey("A", "저장").AddHotKey("S", "던전").AddHotKey("M", "내 캐릭터").AddHotKey("I", "인벤토리"));
 
             // 캐릭터 스탯
-            ScreenUtil.Stack(Character.Name);
-            ScreenUtil.Stack(Character.Class.Value, ConsoleColor.Gray);
-            ScreenUtil.Stack($"Lv {Character.Level}", ConsoleColor.Cyan);
-            ScreenUtil.Stack($"EXP {Character.Exp}/{Character.RExp}", ConsoleColor.Green);
-            ScreenUtil.Stack($"Gold {Character.Gold}", ConsoleColor.Yellow);
+            ScreenUtil.Stack(NgdgCharacter.Name);
+            ScreenUtil.Stack(NgdgCharacter.Class.Value, ConsoleColor.Gray);
+            ScreenUtil.Stack($"Lv {NgdgCharacter.Level}", ConsoleColor.Cyan);
+            ScreenUtil.Stack($"EXP {NgdgCharacter.Exp}/{NgdgCharacter.RExp}", ConsoleColor.Green);
+            ScreenUtil.Stack($"Gold {NgdgCharacter.Gold}", ConsoleColor.Yellow);
         }
 
         public string React(ConsoleKey key)
@@ -31,7 +36,7 @@
             switch (key)
             {
                 case ConsoleKey.A:
-                    Character.SaveToFile(PathUtil.AccountPath + "c1.txt");
+                    NgdgCharacter.SaveToFile(PathUtil.AccountPath + "c1.txt");
                     break;
                 case ConsoleKey.S:
                     ScreenManager.CurrentScreen = ScreenManager.Screen.DungeonSelection;

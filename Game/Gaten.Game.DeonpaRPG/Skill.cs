@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Gaten.Game.DeonpaRPG
+﻿namespace Gaten.Game.DeonpaRPG
 {
-    class Skill
+    internal class Skill
     {
         public enum SkillTypes { Active, Passive, SkillBonus };
         public SkillTypes type;
@@ -23,10 +20,10 @@ namespace Gaten.Game.DeonpaRPG
         public int learnedLevel; // SP로 배운 스킬 레벨
         public int bonusLevel; // 스킬, 아이템, 장비를 통한 보너스 스킬 레벨
 
-        public Dictionary<string, int> effectDict = new Dictionary<string, int>();
-        public Dictionary<string, int> preSkillDict = new Dictionary<string, int>();
-        public Dictionary<string, int> skillBonusDict = new Dictionary<string, int>();
-        public Ability passiveEffect = new Ability();
+        public Dictionary<string, int> effectDict = new();
+        public Dictionary<string, int> preSkillDict = new();
+        public Dictionary<string, int> skillBonusDict = new();
+        public Ability passiveEffect = new();
 
         public Skill()
         {
@@ -120,7 +117,9 @@ namespace Gaten.Game.DeonpaRPG
             foreach (KeyValuePair<string, int> temp in preSkillDict)
             {
                 if (skilldb.GetSkill(temp.Key).skillLevel < temp.Value)
+                {
                     return false;
+                }
             }
             return true;
         }
@@ -132,19 +131,33 @@ namespace Gaten.Game.DeonpaRPG
             Console.WriteLine($"==={name}===");
             Console.WriteLine($"-필요");
             Console.WriteLine($"캐릭터레벨 {level}");
-            preSkillCheck(skilldb, this);
+            _ = preSkillCheck(skilldb, this);
             if (preSkillDict.Count > 0)
+            {
                 foreach (KeyValuePair<string, int> temp in preSkillDict)
+                {
                     Console.WriteLine($"{skilldb.GetSkill(temp.Key).name} Lv{temp.Value}");
+                }
+            }
+
             Console.WriteLine($"스킬레벨 {skillLevel}({learnedLevel}+{bonusLevel}) / {masterLevel}");
             Console.WriteLine($"MP {mp}");
             Console.WriteLine();
             if (damage != 0)
-                Console.WriteLine($"공격력 {damage + damageUp * skillLevel} + {damageUp}");
+            {
+                Console.WriteLine($"공격력 {damage + (damageUp * skillLevel)} + {damageUp}");
+            }
+
             if (damageP != 0)
-                Console.WriteLine($"공격력 {damageP + damageUp * skillLevel}% + {damageUp}%");
+            {
+                Console.WriteLine($"공격력 {damageP + (damageUp * skillLevel)}% + {damageUp}%");
+            }
+
             if (attackCount != 0)
+            {
                 Console.WriteLine($"공격회수 {attackCount}");
+            }
+
             if (type == SkillTypes.Passive)
             {
                 foreach (KeyValuePair<string, int> temp in effectDict)
@@ -178,12 +191,12 @@ namespace Gaten.Game.DeonpaRPG
         }
     }
 
-    class SkillDB
+    internal class SkillDB
     {
         public Skill[] skills = new Skill[200];
         public int skillCount = 0;
 
-        private static SkillDB instance = new SkillDB();
+        private static readonly SkillDB instance = new();
 
         private SkillDB()
         {
@@ -221,7 +234,7 @@ namespace Gaten.Game.DeonpaRPG
             AddSkill("bb", "스틸 바베큐", 145, 100, 180, "s2452+407c10");
             AddSkill("bc", "순간중화기", 153, "ac1af1ag1ah1al1ao1ap1as1at1au1ba1bb1", "", 5000, 100);
 
-            AddSkill("bd", "레시피 갠틀 M-28", 158, 700, 160, "s8324+1338c10","ac100");
+            AddSkill("bd", "레시피 갠틀 M-28", 158, 700, 160, "s8324+1338c10", "ac100");
             AddSkill("be", "레일 L-1", 160, 500, 88, "s4575+765c1");
             AddSkill("bf", "레일 L-2", 178, 600, 98, "s12625+1825c1", "be10");
             AddSkill("bg", "레일 L-3", 188, 700, 128, "s22840+4200", "bf30");
@@ -237,7 +250,7 @@ namespace Gaten.Game.DeonpaRPG
             AddSkill("bp", "홀리심볼", 268, 2000, "e1g1s1l200");
             AddSkill("bq", "중화기 다루기4", 288, "bd7be10bf8bg7bh2bi5bk10bl1bm5bn5bo5bp3");
             AddSkill("br", "충전 레이저 라이플", 308, 1000, 480, "s22800+12000c1", "bm10");
-            AddSkill("bs", "새틀라이트 빔", 338, 2000, 850, "s200000+25000c5","bh5");
+            AddSkill("bs", "새틀라이트 빔", 338, 2000, 850, "s200000+25000c5", "bh5");
             AddSkill("bt", "중화기 서컴스탠스", 388, 5000, "a20000", "bs3");
             AddSkill("bu", "중화기 다루기5", 408, "bh3bli10bk20bl2bm10bn10bo10bp5br10bs5bt2");
             AddSkill("bv", "헌드레드", 425, 4000, "s5l50");
@@ -277,8 +290,13 @@ namespace Gaten.Game.DeonpaRPG
         public Skill GetSkill(string code)
         {
             for (int i = 0; i < skillCount; i++)
+            {
                 if (code == skills[i].code)
+                {
                     return skills[i];
+                }
+            }
+
             return null;
         }
     }

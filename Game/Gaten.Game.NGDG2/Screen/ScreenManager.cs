@@ -1,4 +1,7 @@
-﻿namespace Gaten.Game.NGDG2.Screen
+﻿using Gaten.Game.NGDG2.Screen.Member;
+using Gaten.Game.NGDG2.Util.Screen;
+
+namespace Gaten.Game.NGDG2.Screen
 {
     /// <summary>
     /// 스크린 매니저
@@ -28,10 +31,7 @@
         /// </summary>
         public static Screen CurrentScreen
         {
-            get
-            {
-                return currentScreen;
-            }
+            get => currentScreen;
             set
             {
                 currentScreen = value;
@@ -48,13 +48,13 @@
         /// <summary>
         /// 화면 객체들
         /// </summary>
-        public static Intro Intro;
-        public static GameMain Main;
-        public static DungeonSelection DungeonSelection;
-        public static DungeonBattle DungeonBattle;
-        public static DungeonResult DungeonResult;
-        public static CharacterInfo CharacterInfo;
-        public static Inventory Inventory;
+        public static Intro Intro = new();
+        public static GameMain Main = new();
+        public static DungeonSelection DungeonSelection = new();
+        public static DungeonBattle DungeonBattle = new();
+        public static DungeonResult DungeonResult = new();
+        public static CharacterInfo CharacterInfo = new();
+        public static Inventory Inventory = new();
 
         public ScreenManager()
         {
@@ -64,7 +64,7 @@
         /// <summary>
         /// 화면 객체를 생성한다.
         /// </summary>
-        void Initialize()
+        private void Initialize()
         {
             Intro = new Intro();
             Main = new GameMain();
@@ -121,26 +121,17 @@
         {
             ConsoleKey key = Console.ReadKey(true).Key;
 
-            switch (CurrentScreen)
+            return CurrentScreen switch
             {
-                case Screen.Intro:
-                    return Intro.React(key);
-                case Screen.Main:
-                    return Main.React(key);
-                case Screen.DungeonSelection:
-                    return DungeonSelection.React(key);
-                case Screen.DungeonBattle:
-                    return DungeonBattle.React(key);
-                case Screen.DungeonResult:
-                    return DungeonResult.React(key);
-                case Screen.CharacterInfo:
-                    return CharacterInfo.React(key);
-                case Screen.Inventory:
-                    return Inventory.React(key);
-
-                default:
-                    return string.Empty;
-            }
+                Screen.Intro => Intro.React(key),
+                Screen.Main => Main.React(key),
+                Screen.DungeonSelection => DungeonSelection.React(key),
+                Screen.DungeonBattle => DungeonBattle.React(key),
+                Screen.DungeonResult => DungeonResult.React(key),
+                Screen.CharacterInfo => CharacterInfo.React(key),
+                Screen.Inventory => Inventory.React(key),
+                _ => string.Empty,
+            };
         }
     }
 }

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gaten.Game.BrandNewType
+﻿namespace Gaten.Game.BrandNewType
 {
-    class Track
+    internal class Track
     {
-        public List<Bar> Bars = new List<Bar>();
+        public List<Bar> Bars = new();
         public Track()
         {
-            
+
         }
 
         public void SetupBar()

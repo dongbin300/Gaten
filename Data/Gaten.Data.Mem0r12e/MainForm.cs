@@ -2,13 +2,12 @@ namespace Gaten.Data.Mem0r12e
 {
     public partial class MainForm : Form
     {
-        List<int> sequences;
-        string[] problems = new string[1000];
-        string[] answers = new string[1000];
+        private List<int> sequences = new();
+        private readonly string[] problems = new string[1000];
+        private readonly string[] answers = new string[1000];
         private int problemCount;
-        int stage = 0;
-
-        string tempAnswer = string.Empty;
+        private int stage = 0;
+        private string tempAnswer = string.Empty;
 
         public MainForm()
         {
@@ -17,25 +16,29 @@ namespace Gaten.Data.Mem0r12e
 
         private void MainForm_DragDrop(object sender, DragEventArgs e)
         {
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (e.Data?.GetData(DataFormats.FileDrop) is not string[] files)
+            {
+                return;
+            }
+
             FileLabel.Text = "파일:" + files[0];
-
             problemCount = ParseProblemData(files[0]);
-
             sequences = Shuffle(problemCount);
-
             NewProblem();
         }
 
         private void MainForm_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+            if (e.Data?.GetDataPresent(DataFormats.FileDrop) ?? true)
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
         }
 
         private List<int> Shuffle(int n)
         {
-            Random r = new Random();
-            List<int> seq = new List<int>();
+            Random? r = new();
+            List<int>? seq = new();
             int rn;
 
             for (int i = 0; i < n; i++)
@@ -57,22 +60,24 @@ namespace Gaten.Data.Mem0r12e
 
         private int ParseProblemData(string fileName)
         {
-            FileStream fs = new FileStream(fileName, FileMode.Open);
-            StreamReader sr = new StreamReader(fs);
+            FileStream? fs = new(fileName, FileMode.Open);
+            StreamReader? sr = new(fs);
             string token = "->";
-            string temp = string.Empty;
+            string temp;
             int index = 0;
 
             while (sr.Peek() >= 0)
             {
-                temp = sr.ReadLine();
+                temp = sr.ReadLine() ?? string.Empty;
                 if (temp.Contains(token))
                 {
-                    problems[index] += temp.Substring(0, temp.IndexOf(token));
-                    answers[index++] = temp.Substring(temp.IndexOf(token) + token.Length);
+                    problems[index] += temp[..temp.IndexOf(token)];
+                    answers[index++] = temp[(temp.IndexOf(token) + token.Length)..];
                 }
                 else
+                {
                     problems[index] += temp + Environment.NewLine;
+                }
             }
 
             sr.Close();
@@ -95,7 +100,7 @@ namespace Gaten.Data.Mem0r12e
             {
                 AnswerLabel.Text = answers[sequences[stage++]];
             }
-                
+
             ProblemLabel.Text = problems[sequences[stage]];
 
             // 1바퀴 돌았으면 다시 섞기

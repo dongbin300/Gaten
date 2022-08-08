@@ -1,8 +1,13 @@
 ﻿using Binance.Net.Enums;
 
+using Gaten.Net.Diagnostics;
+using Gaten.Net.Wpf;
+using Gaten.Net.Wpf.Models;
 using Gaten.Stock.MoqTrader.Apis;
 using Gaten.Stock.MoqTrader.BinanceTrades;
+using Gaten.Stock.MoqTrader.BinanceTrades.TradeModels;
 using Gaten.Stock.MoqTrader.Charts;
+using Gaten.Stock.MoqTrader.Maths;
 using Gaten.Stock.MoqTrader.Utils;
 
 using System;
@@ -11,15 +16,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 
 using Path = System.IO.Path;
-using Gaten.Stock.MoqTrader.BinanceTrades.TradeModels;
-using System.ComponentModel;
-using Gaten.Net.Wpf;
-using Gaten.Net.Wpf.Models;
-using Gaten.Net.Data.Diagnostics;
 
 namespace Gaten.Stock.MoqTrader
 {
@@ -28,9 +27,9 @@ namespace Gaten.Stock.MoqTrader
     /// </summary>
     public partial class MainWindow : Window
     {
-        DateTime mockStartTime;
-        StringBuilder builder;
-        List<Worker> workers;
+        DateTime mockStartTime = new();
+        StringBuilder builder = new();
+        List<Worker> workers = new();
         int c = 0;
 
         public MainWindow()
@@ -42,8 +41,8 @@ namespace Gaten.Stock.MoqTrader
         {
             BinanceClientApi.Init();
             //Assets.Init();
+            FourierTransformTest.TestFFT();
 
-            workers = new List<Worker>();
             for (int up = 69; up < 70; up++)
             {
                 for (int down = 30; down > 29; down--)
@@ -297,7 +296,7 @@ namespace Gaten.Stock.MoqTrader
                 ProgressBar = SimulateProgressBar,
                 Action = InitBtcusdt,
             };
-            worker.Start();
+            worker.Start().Wait();
 
             //Trading();
         }
@@ -308,8 +307,9 @@ namespace Gaten.Stock.MoqTrader
             DispatcherService.Invoke(() =>
             {
                 interval = GetCandleInterval();
+                BtcusdtChartManager.Init(interval, worker);
+                StatusText.Text = "BTCUSDT 데이터 수집 완료";
             });
-            BtcusdtChartManager.Init(interval, worker);
         }
 
         private void AllSymbolCheckBox_CheckedChanged(object sender, RoutedEventArgs e)

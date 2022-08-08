@@ -1,6 +1,6 @@
 ﻿
-using Gaten.Net.Data.Serialization;
-using Gaten.Net.Extension;
+using Gaten.Net.Serialization;
+using Gaten.Net.Extensions;
 
 namespace Gaten.Net.Windows.PE.PEFileFormat
 {

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gaten.Game.Starcraft.Rule.Product.Terran.Building
+﻿namespace Gaten.Game.Starcraft.Rule.Product.Terran.Building
 {
-    class TerranSupplyDepot : IBuilding
+    internal class TerranSupplyDepot : IBuilding
     {
         public int Id { get; set; }
         public string Name { get; set; }

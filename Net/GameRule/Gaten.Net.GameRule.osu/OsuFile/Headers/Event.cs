@@ -4,23 +4,19 @@ namespace Gaten.Net.GameRule.osu.OsuFile.Headers
 {
     public class Event
     {
-        public Background Background;
-        public Video Video;
-        public List<string> F;
-        public string BreakPeriod;
-        public string StoryboardBackground;
-        public string StoryboardFail;
-        public string StoryboardPass;
-        public string StoryboardForeground;
-        public List<StoryboardSoundSample> StoryboardSoundSamples;
-        public List<BackgroundColourTransformation> BackgroundColourTransformations;
+        public Background Background = default!;
+        public Video Video = default!;
+        public List<string> F = new();
+        public string BreakPeriod = string.Empty;
+        public string StoryboardBackground = string.Empty;
+        public string StoryboardFail = string.Empty;
+        public string StoryboardPass = string.Empty;
+        public string StoryboardForeground = string.Empty;
+        public List<StoryboardSoundSample> StoryboardSoundSamples = new();
+        public List<BackgroundColourTransformation> BackgroundColourTransformations = new();
 
         public Event(string str)
         {
-            F = new List<string>();
-            StoryboardSoundSamples = new List<StoryboardSoundSample>();
-            BackgroundColourTransformations = new List<BackgroundColourTransformation>();
-
             Parse(str);
         }
 

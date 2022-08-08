@@ -74,11 +74,11 @@
             NonAlliedVictoryPlayers = 26
         }
 
-        public PlayerType[] StareditTypes { get; set; }
-        public PlayerType[] StarcraftTypes { get; set; }
-        public Species[] Races { get; set; }
-        public Color[] Colors { get; set; }
-        public byte[] ForceNumbers { get; set; }
+        public PlayerType[] StareditTypes { get; set; } = default!;
+        public PlayerType[] StarcraftTypes { get; set; } = default!;
+        public Species[] Races { get; set; } = default!;
+        public Color[] Colors { get; set; } = default!;
+        public byte[] ForceNumbers { get; set; } = default!;
 
         public Player()
         {

@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gaten.Game.CDRPG
+﻿namespace Gaten.Game.CDRPG
 {
     public class Ground
     {
-        int size = 10;
-        int turn;
-        int turnLimit;
-        int[][] isEnemy;
-
-        List<Enemy> enemy = new List<Enemy>();
-        List<Card> playerCards = new List<Card>();
+        private readonly int size = 10;
+        public int Turn = 0;
+        public int TurnLimit = 0;
+        private readonly int[][] isEnemy;
+        private readonly List<Enemy> enemy = new();
+        private readonly List<Card> playerCards = new();
 
         public Ground()
         {
@@ -27,9 +20,9 @@ namespace Gaten.Game.CDRPG
 
         public void NewLevel()
         {
-            turn = 0;
-            turnLimit = 10;
-            Random random = new Random();
+            Turn = 0;
+            TurnLimit = 10;
+            Random? random = new();
             for (int i = 0; i < 20; i++)
             {
                 int x = random.Next(size);
@@ -46,26 +39,26 @@ namespace Gaten.Game.CDRPG
 
         public void Attack()
         {
-            Random random = new Random();
+            Random random = new();
             Enemy targetEnemy = enemy[random.Next(enemy.Count)];
 
             for (int c = 0; c < playerCards.Count; c++)
             {
                 for (int i = 0; i < 25; i++)
                 {
-                    CardAttack(targetEnemy, playerCards[c], new Card().rangeString[i], i % 5 - 2, i / 5 - 2);
+                    _ = CardAttack(targetEnemy, playerCards[c], new Card().RangeString[i], (i % 5) - 2, (i / 5) - 2);
                 }
             }
         }
 
-        bool CardAttack(Enemy targetEnemy, Card playerCard, char rangeCode, int x, int y)
+        private bool CardAttack(Enemy targetEnemy, Card playerCard, char rangeCode, int x, int y)
         {
-            if(rangeCode == 'm')
+            if (rangeCode == 'm')
             {
                 Enemy addTargetEnemy = GetEnemy(new Enemy.Position(targetEnemy.position.X + x, targetEnemy.position.Y + y));
-                if (addTargetEnemy.Damage(playerCard.power))
+                if (addTargetEnemy.Damage(playerCard.Power))
                 {
-                    enemy.Remove(addTargetEnemy);
+                    _ = enemy.Remove(addTargetEnemy);
                 }
                 return true;
             }
@@ -73,13 +66,13 @@ namespace Gaten.Game.CDRPG
             if (targetEnemy.position.X + x >= 0 && targetEnemy.position.X + x <= size &&
                 targetEnemy.position.Y + y >= 0 && targetEnemy.position.Y + y <= size)
             {
-                if (playerCard.range.Contains(rangeCode) &&
+                if (playerCard.Range.Contains(rangeCode) &&
                     isEnemy[targetEnemy.position.Y + y][targetEnemy.position.X + x] != 0)
                 {
                     Enemy addTargetEnemy = GetEnemy(new Enemy.Position(targetEnemy.position.X + x, targetEnemy.position.Y + y));
-                    if (addTargetEnemy.Damage(playerCard.power))
+                    if (addTargetEnemy.Damage(playerCard.Power))
                     {
-                        enemy.Remove(addTargetEnemy);
+                        _ = enemy.Remove(addTargetEnemy);
                     }
                     return true;
                 }
@@ -93,7 +86,7 @@ namespace Gaten.Game.CDRPG
             int weaponCardCount = 0;
             foreach (Card c in playerCards)
             {
-                switch (c.type)
+                switch (c.Type)
                 {
                     case Card.Types.Character:
                         characterCardCount++;
@@ -103,10 +96,15 @@ namespace Gaten.Game.CDRPG
                         break;
                 }
             }
-            if (card.type == Card.Types.Character && characterCardCount >= 4)
+            if (card.Type == Card.Types.Character && characterCardCount >= 4)
+            {
                 return false;
-            if (card.type == Card.Types.Weapon && weaponCardCount >= 4)
+            }
+
+            if (card.Type == Card.Types.Weapon && weaponCardCount >= 4)
+            {
                 return false;
+            }
 
             playerCards.Add(card);
             return true;
@@ -121,7 +119,7 @@ namespace Gaten.Game.CDRPG
                     return enemy[i];
                 }
             }
-            return null;
+            return new Enemy();
         }
 
         public override string ToString()

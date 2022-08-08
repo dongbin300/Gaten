@@ -1,4 +1,4 @@
-﻿namespace Gaten.Game.NGDG2
+﻿namespace Gaten.Game.NGDG2.Util.Math
 {
     /// <summary>
     /// 산술 혹은 수학과 관련된 유틸리티
@@ -14,7 +14,7 @@
         /// <returns>증가된 수치</returns>
         public static long Percentage(long currentValue, double increaseValue)
         {
-            return (long)(currentValue * (1 + increaseValue / 100));
+            return (long)(currentValue * (1 + (increaseValue / 100)));
         }
     }
 }

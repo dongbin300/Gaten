@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Gaten.Game.DeonpaRPG
+﻿namespace Gaten.Game.DeonpaRPG
 {
-    class FormatString
+    internal class FormatString
     {
         public static Dictionary<string, int> ParseInt(string code)
         {
-            Dictionary<string, int> items = new Dictionary<string, int>();
+            Dictionary<string, int> items = new();
             const string Number = "0123456789-";
             string type = "name";
             string name = string.Empty;
@@ -21,7 +17,7 @@ namespace Gaten.Game.DeonpaRPG
                     case "name":
                         if (Number.Contains(code[i]))
                         {
-                            name = code.Substring(s, i - s);
+                            name = code[s..i];
                             type = "value";
                             s = i;
                         }
@@ -39,7 +35,7 @@ namespace Gaten.Game.DeonpaRPG
                         }
                         if (!Number.Contains(code[i]))
                         {
-                            value = int.Parse(code.Substring(s, i - s));
+                            value = int.Parse(code[s..i]);
                             items.Add(name, value);
                             type = "name";
                             s = i;
@@ -53,7 +49,7 @@ namespace Gaten.Game.DeonpaRPG
 
         public static Dictionary<string, double> ParseDouble(string code)
         {
-            Dictionary<string, double> items = new Dictionary<string, double>();
+            Dictionary<string, double> items = new();
             const string Number = ".0123456789";
             string type = "name";
             string name = string.Empty;
@@ -66,7 +62,7 @@ namespace Gaten.Game.DeonpaRPG
                     case "name":
                         if (Number.Contains(code[i]))
                         {
-                            name = code.Substring(s, i - s);
+                            name = code[s..i];
                             type = "value";
                             s = i;
                         }
@@ -84,7 +80,7 @@ namespace Gaten.Game.DeonpaRPG
                         }
                         if (!Number.Contains(code[i]))
                         {
-                            value = double.Parse(code.Substring(s, i - s));
+                            value = double.Parse(code[s..i]);
                             items.Add(name, value);
                             type = "name";
                             s = i;
@@ -99,13 +95,17 @@ namespace Gaten.Game.DeonpaRPG
         public static void Print(Dictionary<string, int> items)
         {
             foreach (KeyValuePair<string, int> temp in items)
+            {
                 Console.WriteLine(temp.Key + ":" + temp.Value);
+            }
         }
 
         public static void Print(Dictionary<string, double> items)
         {
             foreach (KeyValuePair<string, double> temp in items)
+            {
                 Console.WriteLine(temp.Key + ":" + temp.Value);
+            }
         }
     }
 }

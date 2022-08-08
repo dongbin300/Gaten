@@ -39,21 +39,21 @@ namespace Gaten.Image.PlutoEditor
         public enum Tools { None, Pixel, Line, Move }
         public Tools SelectedTool = Tools.None;
         public Color SelectedColor = Color.LimeGreen;
-        public PPanel mainPanel;
-        public List<PPanel> panels = new List<PPanel>();
-        public TransparentPanel gridPanel = new TransparentPanel();
-        public TimeMap timeMap = new TimeMap(10);
+        public PPanel mainPanel = new();
+        public List<PPanel> panels = new();
+        public TransparentPanel gridPanel = new();
+        public TimeMap timeMap = new(10);
         int currentFrameNumber = 1;
         int maxFrameCount = 3600;
 
-        UserActivityHook hook;
-        Thread inputWorker;
+        UserActivityHook hook = default!;
+        Thread inputWorker = default!;
         public bool paintMode;
 
-        PPanel moveButton = new PPanel();
-        PPanel pixelButton = new PPanel();
-        PPanel lineButton = new PPanel();
-        PPanel colorButton = new PPanel();
+        PPanel moveButton = new();
+        PPanel pixelButton = new();
+        PPanel lineButton = new();
+        PPanel colorButton = new();
 
         // scenePanel 고정 변수
         Point pencilPosition;
@@ -66,13 +66,13 @@ namespace Gaten.Image.PlutoEditor
             InitThread();
             InitEvent();
 
-            새우주ToolStripMenuItem_Click(null, null);
+            새우주ToolStripMenuItem_Click(default!, new EventArgs());
         }
 
         void InitToolBox()
         {
             pixelButton.Location = new Point(0, 0);
-            pixelButton.BackgroundImage = "resource/image/dot.png".Resize(30);
+            pixelButton.BackgroundImage = System.Drawing.Image.FromFile("resource/image/dot.png").Resize(30);
             pixelButton.Size = new Size(30, 30);
             pixelButton.Text = "";
             pixelButton.Click += PixelButton_Click;
@@ -319,7 +319,7 @@ namespace Gaten.Image.PlutoEditor
 
         void PanelTest()
         {
-            PPanel panel = new PPanel($"패널 1", 2, 2, 3, 3, 1);
+            var panel = new PPanel($"패널 1", 2, 2, 3, 3, 1);
             panel.SetCoordinate(0, 0, Color.Red);
             panel.SetCoordinate(1, 1, Color.Red);
             panels.Add(panel);
@@ -338,7 +338,7 @@ namespace Gaten.Image.PlutoEditor
         {
             using (Graphics g = e.Graphics)
             {
-                Pen pen = new Pen(Brushes.Black, 1);
+                var pen = new Pen(Brushes.Black, 1);
 
                 g.DrawLine(pen, new Point(0, 1), new Point(1280, 1));
                 g.DrawLine(pen, new Point(0, 20), new Point(1280, 20));
@@ -382,7 +382,7 @@ namespace Gaten.Image.PlutoEditor
             }
         }
 
-        private void MainPanel_MouseMove(object sender, MouseEventArgs e)
+        private void MainPanel_MouseMove(object? sender, MouseEventArgs e)
         {
             pencilPosition = e.Location;
         }
@@ -397,7 +397,7 @@ namespace Gaten.Image.PlutoEditor
             SelectedTool = Tools.Move;
         }
 
-        private void ColorButton_Click(object sender, EventArgs e)
+        private void ColorButton_Click(object? sender, EventArgs e)
         {
             penColorDialog.ShowDialog();
             SelectedColor = penColorDialog.Color;
@@ -409,14 +409,14 @@ namespace Gaten.Image.PlutoEditor
             SelectedTool = Tools.Line;
         }
 
-        private void PixelButton_Click(object sender, EventArgs e)
+        private void PixelButton_Click(object? sender, EventArgs e)
         {
             SelectedTool = Tools.Pixel;
         }
 
         private void AddPanelButton_Click(object sender, EventArgs e)
         {
-            PPanel panel = new PPanel($"패널 {panels.Count + 1}", 1, 1, 10, 10, panels.Count);
+            var panel = new PPanel($"패널 {panels.Count + 1}", 1, 1, 10, 10, panels.Count);
             panels.Add(panel);
 
             ScenePanelView(1.0f);
@@ -427,8 +427,8 @@ namespace Gaten.Image.PlutoEditor
         /// </summary>
         void ScenePanelView(float scale)
         {
-            Dictionary<int, int> iDict = new Dictionary<int, int>();
-            List<int> zIndexes = new List<int>();
+            var iDict = new Dictionary<int, int>();
+            var zIndexes = new List<int>();
             int i = 0;
 
             scenePanel.Controls.Clear();
@@ -524,13 +524,15 @@ namespace Gaten.Image.PlutoEditor
             panelBoxPanel.Refresh();
         }
 
-        private void MiniPanel_MouseClick(object sender, MouseEventArgs e)
+        private void MiniPanel_MouseClick(object? sender, MouseEventArgs e)
         {
-            string selectedName = (sender as PPanel).Name;
-            PPanel selectedPanel = panels.Find(p => p.Name.Equals(selectedName));
+            if(sender is not PPanel pPanel)
+            {
+                return;
+            }
 
-            if (selectedPanel == null)
-                selectedPanel = mainPanel;
+            string selectedName = pPanel.Name;
+            PPanel selectedPanel = panels.Find(p => p.Name.Equals(selectedName)) ?? mainPanel;
 
             UserSetting.SelectedPanel.RePaint(UserSetting.Grid);
             selectedPanel.RePaint(UserSetting.Grid, true);

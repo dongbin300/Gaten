@@ -1,17 +1,15 @@
-﻿using System.Net;
+﻿
+using System.Net;
 using System.Text;
 
-namespace GitadoraWikiHook
+namespace Gaten.GameTool.GITADORA.WikiHook
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            string id;
-            int ncchk = 0, dfstack = 0, dfchk = 0, dfstack2 = 0;
             FileStream fs;
             StreamWriter sw;
-            StreamReader sr;
 
             // =================== HTML Source Load =================== //
             fs = new FileStream("Source.txt", FileMode.Open);
@@ -20,7 +18,7 @@ namespace GitadoraWikiHook
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://remywiki.com/Raspberry");
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
-            StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.Default);
+            StreamReader reader = new(response.GetResponseStream(), Encoding.Default);
             string strHtml = reader.ReadToEnd();
 
             reader.Close();

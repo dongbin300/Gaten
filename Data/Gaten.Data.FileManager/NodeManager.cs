@@ -4,7 +4,7 @@ namespace Gaten.Data.FileManager
 {
     public class NodeManager
     {
-        public static List<Node> Nodes { get; set; }
-        public static Node SelectedNode { get; set; }
+        public static List<Node> Nodes { get; set; } = new List<Node>();
+        public static Node SelectedNode { get; set; } = new Node();
     }
 }

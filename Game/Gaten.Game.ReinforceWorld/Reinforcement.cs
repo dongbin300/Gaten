@@ -1,4 +1,4 @@
-﻿using Gaten.Net.Data.Math;
+﻿using Gaten.Net.Math;
 
 namespace Gaten.Game.ReinforceWorld
 {
@@ -43,11 +43,11 @@ namespace Gaten.Game.ReinforceWorld
         /// 강화 시도에 실패하면 오류 메시지, 성공하면 string.Empty를 반환
         /// </summary>
         /// <returns></returns>
-        public async static Task<string> Try()
+        public static async Task<string> Try()
         {
-            await Task.Factory.StartNew(() =>
+            _ = await Task.Factory.StartNew(() =>
             {
-                SmartRandom r = new SmartRandom();
+                SmartRandom r = new();
 
                 int num = Character.CurrentValue;
 
@@ -64,7 +64,7 @@ namespace Gaten.Game.ReinforceWorld
 
                 }
 
-                var ran = r.Next(100);
+                int ran = r.Next(100);
 
                 if (ran < SuccessProbability[num + 1]) // 강화 성공
                 {

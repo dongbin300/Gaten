@@ -1,5 +1,5 @@
-﻿using Gaten.Net.Data.Diagnostics;
-using Gaten.Net.Data.IO;
+﻿using Gaten.Net.Diagnostics;
+using Gaten.Net.IO;
 using Gaten.Net.Network;
 
 using System;
@@ -174,13 +174,13 @@ namespace Gaten.Windows.MintPanda.Contents
         }
 
         public Types Type { get; set; }
-        public string Name { get; set; }
-        public string Url { get; set; }
-        public string Price { get; set; }
-        public string PrevPrice { get; set; }
-        public string ChangePrice { get; set; }
-        public string CashPrice { get; set; }
-        public string PrevCashPrice { get; set; }
-        public string ChangeCash { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Url { get; set; } = string.Empty;
+        public string Price { get; set; } = string.Empty;
+        public string PrevPrice { get; set; } = string.Empty;
+        public string ChangePrice { get; set; } = string.Empty;
+        public string CashPrice { get; set; } = string.Empty;
+        public string PrevCashPrice { get; set; } = string.Empty;
+        public string ChangeCash { get; set; } = string.Empty;
     }
 }

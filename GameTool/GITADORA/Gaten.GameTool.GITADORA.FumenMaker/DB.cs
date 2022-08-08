@@ -2,28 +2,33 @@
 {
     internal class DB
     {
-        public int id;
-        public string Otitle;
-        public string Title;
-        public string Artist;
-        public string Composition;
-        public string Lyric;
-        public string BPM;
-        public string Length;
-        public string Basic_D;
-        public string Advanced_D;
-        public string Extreme_D;
-        public string Master_D;
-        public string Basic_G;
-        public string Advanced_G;
-        public string Extreme_G;
-        public string Master_G;
-        public string Basic_B;
-        public string Advanced_B;
-        public string Extreme_B;
-        public string Master_B;
-        public string Version;
-        public int Hit;
-        public string New;
+        public int id { get; set; } = 0;
+        public string Otitle { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
+        public string Artist { get; set; } = string.Empty;
+        public string Composition { get; set; } = string.Empty;
+        public string Lyric { get; set; } = string.Empty;
+        public string BPM { get; set; } = string.Empty;
+        public string Length { get; set; } = string.Empty;
+        public string Basic_D { get; set; } = string.Empty;
+        public string Advanced_D { get; set; } = string.Empty;
+        public string Extreme_D { get; set; } = string.Empty;
+        public string Master_D { get; set; } = string.Empty;
+        public string Basic_G { get; set; } = string.Empty;
+        public string Advanced_G { get; set; } = string.Empty;
+        public string Extreme_G { get; set; } = string.Empty;
+        public string Master_G { get; set; } = string.Empty;
+        public string Basic_B { get; set; } = string.Empty;
+        public string Advanced_B { get; set; } = string.Empty;
+        public string Extreme_B { get; set; } = string.Empty;
+        public string Master_B { get; set; } = string.Empty;
+        public string Version { get; set; } = string.Empty;
+        public int Hit { get; set; } = 0;
+        public string New { get; set; } = string.Empty;
+
+        public DB()
+        {
+
+        }
     }
 }

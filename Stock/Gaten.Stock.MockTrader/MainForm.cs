@@ -1,6 +1,6 @@
 using Binance.Net.Enums;
 
-using Gaten.Net.Data.Diagnostics;
+using Gaten.Net.Diagnostics;
 using Gaten.Stock.MockTrader.Api;
 using Gaten.Stock.MockTrader.BinanceTrade;
 using Gaten.Stock.MockTrader.BinanceTrade.TradeModels;
@@ -14,7 +14,7 @@ namespace Gaten.Stock.MockTrader
     public partial class MainForm : Form
     {
         DateTime mockStartTime;
-        StringBuilder builder;
+        StringBuilder builder = new();
         int c = 0;
 
         public MainForm()
@@ -46,8 +46,8 @@ namespace Gaten.Stock.MockTrader
         {
             if (AllPeriodCheckBox.Checked)
             {
-                var startTime = DateTime.Parse(Path.GetFileNameWithoutExtension(new DirectoryInfo(Path.Combine(PathUtil.BinanceFuturesDataBasePath, SymbolComboBox.SelectedItem.ToString())).GetFiles()[0].FullName).Split('_')[1]);
-                var endTime = DateTime.Parse(Path.GetFileNameWithoutExtension(new DirectoryInfo(Path.Combine(PathUtil.BinanceFuturesDataBasePath, SymbolComboBox.SelectedItem.ToString())).GetFiles()[^1].FullName).Split('_')[1]);
+                var startTime = DateTime.Parse(Path.GetFileNameWithoutExtension(new DirectoryInfo(Path.Combine(PathUtil.BinanceFuturesDataBasePath, SymbolComboBox.SelectedItem.ToString() ?? string.Empty)).GetFiles()[0].FullName).Split('_')[1]);
+                var endTime = DateTime.Parse(Path.GetFileNameWithoutExtension(new DirectoryInfo(Path.Combine(PathUtil.BinanceFuturesDataBasePath, SymbolComboBox.SelectedItem.ToString() ?? string.Empty)).GetFiles()[^1].FullName).Split('_')[1]);
 
                 return (
                     startTime,
@@ -80,7 +80,6 @@ namespace Gaten.Stock.MockTrader
 
         async void Trading()
         {
-            builder = new();
             var tradeMarkets = new List<TradeMarket>();
 
             (var startDate, var dayCount) = GetPeriod();

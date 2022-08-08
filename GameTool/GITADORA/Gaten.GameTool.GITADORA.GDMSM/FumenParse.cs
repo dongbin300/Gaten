@@ -1,12 +1,6 @@
-﻿using Gaten.Net.Extension;
+﻿using Gaten.Net.Extensions;
 using Gaten.Net.GameRule.GITADORA;
 using Gaten.Net.Image;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Path = Gaten.Net.GameRule.GITADORA.Path;
 
@@ -14,27 +8,27 @@ namespace Gaten.GameTool.GITADORA.GDMSM
 {
     public class FumenParse
     {
-        Bitmap bitmap;
-        List<Color> colors = new();
-        List<Path> paths = new();
-        List<Path> bpPaths = new();
-        List<Path> bpPathsTemp = new();
-        List<Path> spPaths = new();
-        List<Path> spPathsTemp = new();
-        List<Path> noPaths = new();
+        private readonly Bitmap bitmap;
+        private readonly List<Color> colors = new();
+        private readonly List<Path> paths = new();
+        private List<Path> bpPaths = new();
+        private readonly List<Path> bpPathsTemp = new();
+        private List<Path> spPaths = new();
+        private readonly List<Path> spPathsTemp = new();
+        private readonly List<Path> noPaths = new();
 
         // x1.0
-        int[] startXs = { 0, 22, 94, 143, 194, 251, 306, 369, 418, 472, 538 };
-        int[] noteWidths = { 0, 64, 46, 48, 54, 46, 60, 46, 46, 64 };
+        private readonly int[] startXs = { 0, 22, 94, 143, 194, 251, 306, 369, 418, 472, 538 };
+        private readonly int[] noteWidths = { 0, 64, 46, 48, 54, 46, 60, 46, 46, 64 };
 
         // x0.7
         //int[] startXs = { 0, 22, 94, 143, 194, 251, 306, 369, 418, 472, 538 };
         //int[] noteWidths = { 0, 64, 46, 48, 54, 46, 60, 46, 46, 64 };
 
-        int noteHeight = 10;
-        int inspectStartX = 10;
-        int noteInspectY = 4;
-        int PhraseInspectY = 2;
+        private readonly int noteHeight = 10;
+        private readonly int inspectStartX = 10;
+        private readonly int noteInspectY = 4;
+        private readonly int PhraseInspectY = 2;
         //int bigPhraseInspectY = 1;
         //int smallPhraseInspectY = 1;
 
@@ -45,9 +39,15 @@ namespace Gaten.GameTool.GITADORA.GDMSM
 
             double ratio = 1.0;
             for (int i = 0; i < startXs.Length; i++)
+            {
                 startXs[i] = (int)(startXs[i] * ratio);
+            }
+
             for (int i = 0; i < noteWidths.Length; i++)
+            {
                 noteWidths[i] = (int)(noteWidths[i] * ratio);
+            }
+
             noteHeight = (int)(noteHeight * ratio);
         }
 
@@ -86,7 +86,7 @@ namespace Gaten.GameTool.GITADORA.GDMSM
         public List<Path> Parse()
         {
             // RGB 정보 가져오기
-            LockBitmap lockBitmap = new LockBitmap(bitmap);
+            LockBitmap lockBitmap = new(bitmap);
             lockBitmap.LockBits();
 
             for (int i = 0; i < lockBitmap.Height; i++)
@@ -120,19 +120,16 @@ namespace Gaten.GameTool.GITADORA.GDMSM
             // 타이밍 평준화
             string result = NormalizeTiming();
 
-            switch (result)
+            return result switch
             {
-                case "negative":
-                    return null;
-                default:
-                    // 반환
-                    return paths;
-            }
+                "negative" => null,
+                _ => paths,// 반환
+            };
         }
 
         public void AssembleLines()
         {
-            List<Path> removePaths = new List<Path>();
+            List<Path> removePaths = new();
             bpPaths = bpPathsTemp.Distinct(new LinePathComparer()).ToList();
             bpPaths.Sort(new LinePathComparer());
             foreach (Path path in bpPaths)
@@ -144,7 +141,7 @@ namespace Gaten.GameTool.GITADORA.GDMSM
             }
             bpPaths = bpPaths.Except(removePaths).ToList();
 
-            List<Path> removePaths2 = new List<Path>();
+            List<Path> removePaths2 = new();
             spPaths = spPathsTemp.Distinct(new LinePathComparer()).ToList();
             spPaths.Sort(new LinePathComparer());
             foreach (Path path in spPaths)
@@ -192,10 +189,13 @@ namespace Gaten.GameTool.GITADORA.GDMSM
         {
             for (int i = 0; i < bitmap.Height; i++)
             {
-                Color pixelColor = colors[i * bitmap.Width + startXs[trackNum] + 5];
+                Color pixelColor = colors[(i * bitmap.Width) + startXs[trackNum] + 5];
 
                 // 검정색은 스킵
-                if (pixelColor.IsBlack(30)) continue;
+                if (pixelColor.IsBlack(30))
+                {
+                    continue;
+                }
 
                 if (CheckNote(trackNum, i, startXs[trackNum] + 5))
                 {
@@ -214,14 +214,14 @@ namespace Gaten.GameTool.GITADORA.GDMSM
         public bool CheckNote(int trackNum, int i, int j)
         {
             int life = 0;
-            List<Color> inspectColors = new List<Color>();
+            List<Color> inspectColors = new();
 
             // 검은색 픽셀이 5픽셀 이상 나오면 노트가 아님
             for (int t = i; t < i + noteInspectY; t++)
             {
                 for (int u = j + inspectStartX; u < j + inspectStartX + noteWidths[trackNum] - 20; u++)
                 {
-                    Color pixelColor = colors[t * bitmap.Width + u];
+                    Color pixelColor = colors[(t * bitmap.Width) + u];
 
                     if (pixelColor.IsBlack(20))
                     {
@@ -244,7 +244,7 @@ namespace Gaten.GameTool.GITADORA.GDMSM
                 noPaths.Add(new Path()
                 {
                     type = Path.Type.Note,
-                    timing = bitmap.Height - (i + noteHeight / 2) + 1,
+                    timing = bitmap.Height - (i + (noteHeight / 2)) + 1,
                     noteNum = trackNum
                 });
 
@@ -257,7 +257,7 @@ namespace Gaten.GameTool.GITADORA.GDMSM
         public bool CheckLine(int trackNum, int i, int j)
         {
             // 픽셀 RGB 평균값이 60 이상이고
-            if (colors[i * bitmap.Width + startXs[trackNum]].RGBAverage() < 60)
+            if (colors[(i * bitmap.Width) + startXs[trackNum]].RGBAverage() < 60)
             {
                 return false;
             }
@@ -265,7 +265,7 @@ namespace Gaten.GameTool.GITADORA.GDMSM
             List<Color> inspectColors = new();
             for (int t = 0; t < 10; t++)
             {
-                inspectColors.Add(colors[i * bitmap.Width + startXs[trackNum] + t]);
+                inspectColors.Add(colors[(i * bitmap.Width) + startXs[trackNum] + t]);
             }
 
             // 가로 10픽셀 연속 같은 색깔이면 라인으로 인식

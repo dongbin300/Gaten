@@ -1,11 +1,11 @@
 ﻿
-using Gaten.Net.Data.Math;
+using Gaten.Net.Math;
 
 namespace Gaten.Game.RuleGame
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             try
             {
@@ -21,9 +21,9 @@ namespace Gaten.Game.RuleGame
 
         }
 
-        static void Stage()
+        private static void Stage()
         {
-            SmartRandom r = new SmartRandom();
+            SmartRandom r = new();
 
             int ruleNumber = r.Next(3);
 
@@ -81,19 +81,15 @@ namespace Gaten.Game.RuleGame
             }
         }
 
-        static int Rule(int n1, int n2, int ruleNumber)
+        private static int Rule(int n1, int n2, int ruleNumber)
         {
-            switch (ruleNumber)
+            return ruleNumber switch
             {
-                case 0:
-                    return n1 * n1 + n2;
-                case 1:
-                    return n1 * 5 + n2;
-                case 2:
-                    return n1 * n2 + 3;
-                default:
-                    return 0;
-            }
+                0 => (n1 * n1) + n2,
+                1 => (n1 * 5) + n2,
+                2 => (n1 * n2) + 3,
+                _ => 0,
+            };
         }
     }
 }

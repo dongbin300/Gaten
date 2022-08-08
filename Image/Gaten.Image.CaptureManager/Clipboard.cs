@@ -10,7 +10,7 @@ namespace Gaten.Image.CaptureManager
     {
         public static bool HasDataToRestore = false;
         static uint Format;
-        static object Data;
+        static object Data = new();
         static IntPtr MemoryHandle = IntPtr.Zero;
 
         /// <summary>
@@ -29,11 +29,11 @@ namespace Gaten.Image.CaptureManager
             switch (Format)
             {
                 case WinApi.CF_TEXT:
-                    Data = Marshal.PtrToStringAnsi(pointer);
+                    Data = Marshal.PtrToStringAnsi(pointer) ?? default!;
                     MemoryHandle = Marshal.StringToHGlobalAnsi((string)Data);
                     break;
                 case WinApi.CF_UNICODETEXT:
-                    Data = Marshal.PtrToStringUni(pointer);
+                    Data = Marshal.PtrToStringUni(pointer) ?? default!;
                     MemoryHandle = Marshal.StringToHGlobalUni((string)Data);
                     break;
                 case WinApi.CF_BITMAP:
@@ -71,7 +71,11 @@ namespace Gaten.Image.CaptureManager
                 case WinApi.CF_DIB:
                     Format = WinApi.CF_BITMAP;
                     SetImage(MemoryHandle, clipboardOwner);
-                    (Data as Bitmap).Dispose();
+                    if (Data is not Bitmap bitmap)
+                    {
+                        return;
+                    }
+                    bitmap.Dispose();
                     break;
             }
             if (Format == WinApi.CF_TEXT || Format == WinApi.CF_UNICODETEXT) WinApi.CloseClipboard();
@@ -87,7 +91,7 @@ namespace Gaten.Image.CaptureManager
         /// </summary>
         public static string GetText(IntPtr clipboardOwner)
         {
-            string text = null;
+            string text = string.Empty;
 
             bool isClipboardOpen = WinApi.OpenClipboard(clipboardOwner);
             if (!isClipboardOpen) throw new CannotOpenException();
@@ -95,9 +99,9 @@ namespace Gaten.Image.CaptureManager
             if (pointer == IntPtr.Zero)
             {
                 pointer = WinApi.GetClipboardData(WinApi.CF_TEXT);
-                if (pointer != IntPtr.Zero) text = Marshal.PtrToStringAnsi(pointer);
+                if (pointer != IntPtr.Zero) text = Marshal.PtrToStringAnsi(pointer) ?? default!;
             }
-            else text = Marshal.PtrToStringUni(pointer);
+            else text = Marshal.PtrToStringUni(pointer) ?? default!;
             WinApi.CloseClipboard();
 
             return text;

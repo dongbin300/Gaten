@@ -1,4 +1,4 @@
-﻿namespace Gaten.Game.NGDG2
+﻿namespace Gaten.Game.NGDG2.Util.Expression
 {
     public class StringUtil
     {

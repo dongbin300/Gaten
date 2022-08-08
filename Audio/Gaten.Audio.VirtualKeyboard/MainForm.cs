@@ -2,8 +2,8 @@ namespace Gaten.Audio.VirtualKeyboard
 {
     public partial class MainForm : Form
     {
-        Keyboard keyboard = new Keyboard();
-        const int BlackHeight = 120;
+        private readonly Keyboard keyboard = new();
+        private const int BlackHeight = 120;
 
         public MainForm()
         {
@@ -15,7 +15,7 @@ namespace Gaten.Audio.VirtualKeyboard
         private void KeyboardBox_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            Pen pen = new Pen(Brushes.Black, 1);
+            Pen pen = new(Brushes.Black, 1);
             Brush brush = Brushes.Black;
             Brush pressKeyBrush = new SolidBrush(Color.FromArgb(181, 178, 255));
 
@@ -27,13 +27,40 @@ namespace Gaten.Audio.VirtualKeyboard
             g.DrawLine(pen, new Point(keyboardBox.Width / 7 * 4, 0), new Point(keyboardBox.Width / 7 * 4, keyboardBox.Height));
             g.DrawLine(pen, new Point(keyboardBox.Width / 7 * 5, 0), new Point(keyboardBox.Width / 7 * 5, keyboardBox.Height));
             g.DrawLine(pen, new Point(keyboardBox.Width / 7 * 6, 0), new Point(keyboardBox.Width / 7 * 6, keyboardBox.Height));
-            if (keyboard.Press[0]) g.FillRectangle(pressKeyBrush, new Rectangle(0, 0, keyboardBox.Width / 7 - 1, keyboardBox.Height - 1));
-            if (keyboard.Press[2]) g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 7, 0, keyboardBox.Width / 7 - 1, keyboardBox.Height - 1));
-            if (keyboard.Press[4]) g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 7 * 2, 0, keyboardBox.Width / 7 - 1, keyboardBox.Height - 1));
-            if (keyboard.Press[5]) g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 7 * 3, 0, keyboardBox.Width / 7 - 1, keyboardBox.Height - 1));
-            if (keyboard.Press[7]) g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 7 * 4, 0, keyboardBox.Width / 7 - 1, keyboardBox.Height - 1));
-            if (keyboard.Press[9]) g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 7 * 5, 0, keyboardBox.Width / 7 - 1, keyboardBox.Height - 1));
-            if (keyboard.Press[11]) g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 7 * 6, 0, keyboardBox.Width - 1, keyboardBox.Height - 1));
+            if (keyboard.Press[0])
+            {
+                g.FillRectangle(pressKeyBrush, new Rectangle(0, 0, (keyboardBox.Width / 7) - 1, keyboardBox.Height - 1));
+            }
+
+            if (keyboard.Press[2])
+            {
+                g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 7, 0, (keyboardBox.Width / 7) - 1, keyboardBox.Height - 1));
+            }
+
+            if (keyboard.Press[4])
+            {
+                g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 7 * 2, 0, (keyboardBox.Width / 7) - 1, keyboardBox.Height - 1));
+            }
+
+            if (keyboard.Press[5])
+            {
+                g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 7 * 3, 0, (keyboardBox.Width / 7) - 1, keyboardBox.Height - 1));
+            }
+
+            if (keyboard.Press[7])
+            {
+                g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 7 * 4, 0, (keyboardBox.Width / 7) - 1, keyboardBox.Height - 1));
+            }
+
+            if (keyboard.Press[9])
+            {
+                g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 7 * 5, 0, (keyboardBox.Width / 7) - 1, keyboardBox.Height - 1));
+            }
+
+            if (keyboard.Press[11])
+            {
+                g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 7 * 6, 0, keyboardBox.Width - 1, keyboardBox.Height - 1));
+            }
 
             // 검은 건반 그리기
             g.FillRectangle(brush, new Rectangle(keyboardBox.Width / 12 * 1, 0, keyboardBox.Width / 12, BlackHeight));
@@ -41,12 +68,30 @@ namespace Gaten.Audio.VirtualKeyboard
             g.FillRectangle(brush, new Rectangle(keyboardBox.Width / 12 * 6, 0, keyboardBox.Width / 12, BlackHeight));
             g.FillRectangle(brush, new Rectangle(keyboardBox.Width / 12 * 8, 0, keyboardBox.Width / 12, BlackHeight));
             g.FillRectangle(brush, new Rectangle(keyboardBox.Width / 12 * 10, 0, keyboardBox.Width / 12, BlackHeight));
-            if (keyboard.Press[1]) g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 12, 0, keyboardBox.Width / 12 - 1, BlackHeight - 1));
-            if (keyboard.Press[3]) g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 12 * 3, 0, keyboardBox.Width / 12 - 1, BlackHeight - 1));
-            if (keyboard.Press[6]) g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 12 * 6, 0, keyboardBox.Width / 12 - 1, BlackHeight - 1));
-            if (keyboard.Press[8]) g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 12 * 8, 0, keyboardBox.Width / 12 - 1, BlackHeight - 1));
-            if (keyboard.Press[10]) g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 12 * 10, 0, keyboardBox.Width / 12 - 1, BlackHeight - 1));
+            if (keyboard.Press[1])
+            {
+                g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 12, 0, (keyboardBox.Width / 12) - 1, BlackHeight - 1));
+            }
 
+            if (keyboard.Press[3])
+            {
+                g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 12 * 3, 0, (keyboardBox.Width / 12) - 1, BlackHeight - 1));
+            }
+
+            if (keyboard.Press[6])
+            {
+                g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 12 * 6, 0, (keyboardBox.Width / 12) - 1, BlackHeight - 1));
+            }
+
+            if (keyboard.Press[8])
+            {
+                g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 12 * 8, 0, (keyboardBox.Width / 12) - 1, BlackHeight - 1));
+            }
+
+            if (keyboard.Press[10])
+            {
+                g.FillRectangle(pressKeyBrush, new Rectangle(keyboardBox.Width / 12 * 10, 0, (keyboardBox.Width / 12) - 1, BlackHeight - 1));
+            }
         }
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
@@ -70,7 +115,7 @@ namespace Gaten.Audio.VirtualKeyboard
             }
         }
 
-        void PressKey(int index)
+        private void PressKey(int index)
         {
             ChordLabel.Text = keyboard.PressKey(index);
 
@@ -88,11 +133,9 @@ namespace Gaten.Audio.VirtualKeyboard
             int whiteIndex = (int)(e.X / whiteWidth); // 흰 건반 입장에서 클릭한 좌표의 인덱스
 
             // 검은 건반 클릭
-            if (e.Y < BlackHeight && blackPosition.Contains(blackIndex))
-                ChordLabel.Text = keyboard.PressKey(blackIndex);
-            // 흰 건반 클릭
-            else
-                ChordLabel.Text = keyboard.PressKey(whitePosition[whiteIndex]);
+            ChordLabel.Text = e.Y < BlackHeight && blackPosition.Contains(blackIndex)
+                ? keyboard.PressKey(blackIndex)
+                : keyboard.PressKey(whitePosition[whiteIndex]);
 
             keyboardBox.Refresh();
         }
@@ -102,11 +145,16 @@ namespace Gaten.Audio.VirtualKeyboard
             int[] sTonics = { 7, 2, 9, 4, 11, 6 };
             int[] pTonics = { 5, 10, 3, 8, 1, 6 };
 
-            ToolStripMenuItem clickedItem = sender as ToolStripMenuItem;
+            if (sender is not ToolStripMenuItem clickedItem)
+            {
+                return;
+            }
 
             Reset();
             if (clickedItem.Name == "into0")
+            {
                 keyboard.SetWithTonic(0);
+            }
             else
             {
                 switch (clickedItem.Name[4])
@@ -125,7 +173,10 @@ namespace Gaten.Audio.VirtualKeyboard
 
         private void Harm_Click(object sender, EventArgs e)
         {
-            ToolStripMenuItem clickedItem = sender as ToolStripMenuItem;
+            if (sender is not ToolStripMenuItem clickedItem)
+            {
+                return;
+            }
 
             Reset();
             ChordLabel.Text = keyboard.SetWithHarmony(int.Parse(clickedItem.Name.Replace("harm", "")) - 1);
@@ -135,14 +186,17 @@ namespace Gaten.Audio.VirtualKeyboard
 
         private void Key_Click(object sender, EventArgs e)
         {
-            ToolStripMenuItem clickedItem = sender as ToolStripMenuItem;
+            if (sender is not ToolStripMenuItem clickedItem)
+            {
+                return;
+            }
 
             keyLabel.Text = "Key: " + keyboard.SetKey(clickedItem.Name.Replace("key", "").Replace("S", "#"));
 
             keyboardBox.Refresh();
         }
 
-        void Reset()
+        private void Reset()
         {
             keyboard.Clear();
             ChordLabel.Text = "";

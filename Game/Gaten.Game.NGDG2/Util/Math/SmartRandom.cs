@@ -1,8 +1,8 @@
-﻿namespace Gaten.Game.NGDG2
+﻿namespace Gaten.Game.NGDG2.Util.Math
 {
     public class SmartRandom
     {
-        static long seed;
+        private static long seed;
 
         public SmartRandom()
         {
@@ -13,7 +13,7 @@
         {
             Thread.Sleep(1);
 
-            long abc = Math.Abs((GetCurrentMicroseconds() * seed % 1_000_000_000L) / 10);
+            long abc = System.Math.Abs(GetCurrentMicroseconds() * seed % 1_000_000_000L / 10);
             seed += 13;
 
             return Convert.ToInt32(abc);
@@ -21,7 +21,7 @@
 
         public int Next(int min, int max)
         {
-            return Next() % (max - min) + min;
+            return (Next() % (max - min)) + min;
         }
 
         public int Next(int max)
@@ -29,7 +29,7 @@
             return Next() % max;
         }
 
-        long GetCurrentMicroseconds()
+        private long GetCurrentMicroseconds()
         {
             return DateTime.Now.Ticks / 10L;
         }

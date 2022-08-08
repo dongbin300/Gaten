@@ -1,4 +1,4 @@
-﻿using Gaten.Net.Data.Diagnostics;
+﻿using Gaten.Net.Diagnostics;
 
 using System.Windows;
 using System.Windows.Controls;

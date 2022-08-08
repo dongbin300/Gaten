@@ -17,9 +17,15 @@
             {
                 int a = int.Parse(screenShotFiles[i].Name.Substring(screenShotFiles[i].Name.Length - 7, 3));
                 int b = int.Parse(screenShotFiles[i + 1].Name.Substring(screenShotFiles[i].Name.Length - 7, 3));
-                if (b - a < 0) b += 1000;
+                if (b - a < 0)
+                {
+                    b += 1000;
+                }
+
                 if (b - a >= standardInterval * threshold)
+                {
                     count++;
+                }
             }
 
             return (double)count / screenShotFiles.Length;

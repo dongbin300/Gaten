@@ -2,9 +2,9 @@
 {
     public class VerificationCode
     {
-        public static string Seed { get; set; }
+        public static string Seed { get; set; } = string.Empty;
 
-        public static string Hash { get; set; }
+        public static string Hash { get; set; } = string.Empty;
 
         public VerificationCode()
         {

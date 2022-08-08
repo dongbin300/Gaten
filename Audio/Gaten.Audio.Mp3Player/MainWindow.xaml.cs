@@ -1,12 +1,10 @@
-﻿using Gaten.Net.Data.IO;
+﻿using Gaten.Net.IO;
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Gaten.Audio.Mp3Player
@@ -16,13 +14,13 @@ namespace Gaten.Audio.Mp3Player
     /// </summary>
     public partial class MainWindow : Window
     {
-        BitmapImage pauseButtonImage;
-        BitmapImage resumeButtonImage;
-        BitmapImage seqButtonImage;
-        BitmapImage singleButtonImage;
-        BitmapImage randomButtonImage;
+        private BitmapImage pauseButtonImage = new();
+        private BitmapImage resumeButtonImage = new();
+        private BitmapImage seqButtonImage = new();
+        private BitmapImage singleButtonImage = new();
+        private BitmapImage randomButtonImage = new();
 
-        public List<MusicFile> musicList = new List<MusicFile>();
+        public List<MusicFile> musicList = new();
 
         public MainWindow()
         {
@@ -31,7 +29,7 @@ namespace Gaten.Audio.Mp3Player
             InitControl();
         }
 
-        void InitControl()
+        private void InitControl()
         {
             try
             {
@@ -46,9 +44,9 @@ namespace Gaten.Audio.Mp3Player
 
                 foreach (MusicFile mf in musicList)
                 {
-                    PlayListBox.Items.Add(mf.info.Name.Replace(mf.info.Extension, ""));
+                    _ = PlayListBox.Items.Add(mf.Info.Name.Replace(mf.Info.Extension, ""));
                 }
-                    
+
             }
             catch
             {
@@ -56,7 +54,7 @@ namespace Gaten.Audio.Mp3Player
             }
         }
 
-        void GetMusicFile()
+        private void GetMusicFile()
         {
             try
             {
@@ -64,7 +62,7 @@ namespace Gaten.Audio.Mp3Player
 
                 foreach (FileInfo fi in files)
                 {
-                    musicList.Add(new MusicFile() { info = fi });
+                    musicList.Add(new MusicFile() { Info = fi });
                 }
             }
             catch

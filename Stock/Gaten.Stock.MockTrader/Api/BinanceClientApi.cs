@@ -4,7 +4,7 @@ using Binance.Net.Objects;
 
 using CryptoExchange.Net.Authentication;
 
-using Gaten.Net.Data.IO;
+using Gaten.Net.IO;
 using Gaten.Stock.MockTrader.Chart;
 
 using System.Text;
@@ -13,7 +13,7 @@ namespace Gaten.Stock.MockTrader.Api
 {
     internal class BinanceClientApi
     {
-        static BinanceClient binanceClient;
+        static BinanceClient binanceClient = default!;
 
         public static void Init()
         {

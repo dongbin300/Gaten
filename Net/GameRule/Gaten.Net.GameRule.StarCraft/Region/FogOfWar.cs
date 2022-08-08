@@ -17,12 +17,10 @@ namespace Gaten.Net.GameRule.StarCraft.Region
             Player8 = 128
         }
 
-        public static Fogs[] _Fogs { get; set; }
+        public static Fogs[] _Fogs { get; set; } = new Fogs[(int)Base.HorizontalDimension * (int)Base.VerticalDimension];
 
         public FogOfWar()
         {
-            _Fogs = new Fogs[(int)Base.HorizontalDimension * (int)Base.VerticalDimension];
-
             MakeDefault();
         }
 

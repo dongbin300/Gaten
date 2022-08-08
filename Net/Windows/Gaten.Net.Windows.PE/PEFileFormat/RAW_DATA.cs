@@ -1,4 +1,4 @@
-﻿using Gaten.Net.Extension;
+﻿using Gaten.Net.Extensions;
 
 namespace Gaten.Net.Windows.PE.PEFileFormat
 {

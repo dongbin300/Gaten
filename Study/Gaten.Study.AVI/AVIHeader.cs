@@ -54,11 +54,11 @@ namespace Gaten.Study.AVI
         public byte[] groupId = new byte[4];
         public int groupSize;
         public byte[] riffType = new byte[4];
-        public HeaderList headerList;
-        public ListHeader listHeader;
-        public JunkHeader junkHeader;
-        public DataListHeader dataListHeader;
-        public IndexListHeader indexListHeader;
+        public HeaderList headerList = default!;
+        public ListHeader listHeader = default!;
+        public JunkHeader junkHeader = default!;
+        public DataListHeader dataListHeader = default!;
+        public IndexListHeader indexListHeader = default!;
     }
 
     public class HeaderList
@@ -66,15 +66,15 @@ namespace Gaten.Study.AVI
         byte[] groupId = new byte[4];
         int listSize;
         byte[] listType = new byte[4];
-        AVI avi;
-        VideoStreamList videoStreamList;
-        AudioStreamList audioStreamList;
-        __Junk junk;
+        AVI avi = default!;
+        VideoStreamList videoStreamList = default!;
+        AudioStreamList audioStreamList = default!;
+        __Junk junk = default!;
     }
 
     public class AVI
     {
-        Chunk chunk;
+        Chunk chunk = default!;
         int microSecPerFrame;
         int maxBytesPerSec;
         int paddingGranularity;
@@ -90,7 +90,7 @@ namespace Gaten.Study.AVI
 
     public class Stream
     {
-        Chunk chunk;
+        Chunk chunk = default!;
         byte[] fccType = new byte[4];
         byte[] fccHandler = new byte[4];
         int flags;
@@ -109,56 +109,56 @@ namespace Gaten.Study.AVI
 
     public class VideoStreamFormat
     {
-        Chunk chunk;
+        Chunk chunk = default!;
         BITMAPINFOHEADER bitmapInfoHeader;
     }
 
     public class AudioStreamFormat
     {
-        Chunk chunk;
+        Chunk chunk = default!;
         WaveFormatExtensible waveFormatEx;
-        short[] data;
+        short[] data = default!;
     }
 
     public class VideoStreamList
     {
-        List list;
-        Stream stream;
-        VideoStreamFormat videoStreamFormat;
-        Junk junk;
+        List list = default!;
+        Stream stream = default!;
+        VideoStreamFormat videoStreamFormat = default!;
+        Junk junk = default!;
     }
 
     public class AudioStreamList
     {
-        List list;
-        Stream stream;
-        AudioStreamFormat audioStreamFormat;
-        Junk junk;
+        List list = default!;
+        Stream stream = default!;
+        AudioStreamFormat audioStreamFormat = default!;
+        Junk junk = default!;
     }
 
     public class ListHeader
     {
-        List list;
-        short[] data;
+        List list = default!;
+        short[] data = default!;
     }
 
     public class JunkHeader
     {
-        Chunk chunk;
-        short[] data;
+        Chunk chunk = default!;
+        short[] data = default!;
     }
 
     // video, audio data, dc=video, wb=audio
     public class Data
     {
-        Chunk chunk;
-        short[] data;
+        Chunk chunk = default!;
+        short[] data = default!;
     }
 
     public class DataListHeader
     {
-        List list;
-        Data[] data;
+        List list = default!;
+        Data[] data = default!;
     }
 
     public class Index
@@ -171,8 +171,8 @@ namespace Gaten.Study.AVI
 
     public class IndexListHeader
     {
-        Chunk chunk;
-        Index[] data;
+        Chunk chunk = default!;
+        Index[] data = default!;
     }
 
     public class Chunk
@@ -190,18 +190,18 @@ namespace Gaten.Study.AVI
 
     public class Junk
     {
-        Chunk chunk;
+        Chunk chunk = default!;
         int[] none = new int[2];
         byte[] fourCc = new byte[4];
-        short[] data;
+        short[] data = default!;
     }
 
     public class __Junk
     {
-        Chunk chunk;
+        Chunk chunk = default!;
         int[] none = new int[2];
         int size;
-        short[] data;
+        short[] data = default!;
     }
 
 }

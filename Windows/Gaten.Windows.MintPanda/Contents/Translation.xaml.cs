@@ -39,7 +39,7 @@ namespace Gaten.Windows.MintPanda.Contents
 
             string url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto" + languageQuery + "&dt=t&dj=1&q=" + input;
             WebCrawler.SetUrl(url);
-            var result = JsonSerializer.Deserialize<Translation_JsonObject>(WebCrawler.Source);
+            var result = JsonSerializer.Deserialize<Translation_JsonObject>(WebCrawler.Source) ?? default!;
             var translatedText = string.Join(" ", result.sentences.Select(s => s.trans));
 
             return translatedText;

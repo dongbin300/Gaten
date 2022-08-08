@@ -11,7 +11,7 @@ namespace Gaten.Time.Scheduler.Data
 
         public static DateTime Today { get; set; }
         public static DateTime SelectedDate { get; set; }
-        public static List<Day> Days { get; set; }
+        public static List<Day> Days { get; set; } = new();
 
 
         public CalendarCreator()
@@ -43,8 +43,6 @@ namespace Gaten.Time.Scheduler.Data
 
         public static void Create()
         {
-            Days = new List<Day>();
-
             // 최초 생성은 1901년 1월 1일 (화)
             int year = 1901;
             int month = 1;

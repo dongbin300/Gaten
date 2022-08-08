@@ -25,7 +25,7 @@ namespace Gaten.Windows.MintChoco3
     public partial class MenuSetting : Window
     {
         Model.Menu menu;
-        IMenuItem currentModule;
+        IMenuItem currentModule = default!;
 
         public MenuSetting()
         {
@@ -49,7 +49,7 @@ namespace Gaten.Windows.MintChoco3
 
         ModuleCollection GetParent(Module module)
         {
-            return menu.ModuleCollections.Find(mc => mc.Modules.Any(m => m.Name.Equals(module.Name)));
+            return menu.ModuleCollections.Find(mc => mc.Modules.Any(m => m.Name.Equals(module.Name))) ?? default!;
         }
 
         void MoveModuleToAnotherCollection(Module module, ModuleCollection sourceCollection, ModuleCollection destinationCollection)
@@ -201,7 +201,7 @@ namespace Gaten.Windows.MintChoco3
             ModuleNameText.Text = "";
             ModuleHotKeyText.Text = "";
             ModulePathText.Text = "";
-            currentModule = null;
+            currentModule = default!;
 
             RefreshMenu();
         }
@@ -219,13 +219,13 @@ namespace Gaten.Windows.MintChoco3
                 {
                     var parent = GetParent(m);
 
-                    var swapModule = parent.Modules.Find(mo => mo.Index == m.Index - 1);
+                    var swapModule = parent.Modules.Find(mo => mo.Index == m.Index - 1) ?? new Module();
                     swapModule.Index++;
                     m.Index--;
                 }
                 else
                 {
-                    var swapModule = menu.Modules.Find(mo => mo.Index == m.Index - 1);
+                    var swapModule = menu.Modules.Find(mo => mo.Index == m.Index - 1) ?? new Module();
                     swapModule.Index++;
                     m.Index--;
                 }
@@ -237,7 +237,7 @@ namespace Gaten.Windows.MintChoco3
                     return;
                 }
 
-                var swapModuleCollection = menu.ModuleCollections.Find(moc => moc.Index == mc.Index - 1);
+                var swapModuleCollection = menu.ModuleCollections.Find(moc => moc.Index == mc.Index - 1) ?? new ModuleCollection();
                 swapModuleCollection.Index++;
                 mc.Index--;
             }
@@ -259,7 +259,7 @@ namespace Gaten.Windows.MintChoco3
                         return;
                     }
 
-                    var swapModule = parent?.Modules.Find(mo => mo.Index == m.Index + 1);
+                    var swapModule = parent?.Modules.Find(mo => mo.Index == m.Index + 1) ?? new Module();
                     swapModule.Index--;
                     m.Index++;
                 }
@@ -270,7 +270,7 @@ namespace Gaten.Windows.MintChoco3
                         return;
                     }
 
-                    var swapModule = menu.Modules.Find(mo => mo.Index == m.Index + 1);
+                    var swapModule = menu.Modules.Find(mo => mo.Index == m.Index + 1) ?? new Module();
                     swapModule.Index--;
                     m.Index++;
                 }
@@ -282,7 +282,7 @@ namespace Gaten.Windows.MintChoco3
                     return;
                 }
 
-                var swapModuleCollection = menu.ModuleCollections.Find(moc => moc.Index == mc.Index + 1);
+                var swapModuleCollection = menu.ModuleCollections.Find(moc => moc.Index == mc.Index + 1) ?? new ModuleCollection();
                 swapModuleCollection.Index--;
                 mc.Index++;
             }
@@ -304,7 +304,7 @@ namespace Gaten.Windows.MintChoco3
                         return;
                     }
 
-                    var destinationCollection = menu.ModuleCollections.Find(moc => moc.Index == parent.Index - 1);
+                    var destinationCollection = menu.ModuleCollections.Find(moc => moc.Index == parent.Index - 1) ?? default!;
                     MoveModuleToAnotherCollection(m, parent, destinationCollection);
                 }
                 else
@@ -331,7 +331,7 @@ namespace Gaten.Windows.MintChoco3
                     }
                     else
                     {
-                        var destinationCollection = menu.ModuleCollections.Find(moc => moc.Index == parent.Index + 1);
+                        var destinationCollection = menu.ModuleCollections.Find(moc => moc.Index == parent.Index + 1) ?? default!;
                         MoveModuleToAnotherCollection(m, parent, destinationCollection);
                     }
                 }
@@ -391,7 +391,10 @@ namespace Gaten.Windows.MintChoco3
                 return;
             }
 
-            currentModule = e.AddedItems[0] as IMenuItem;
+            if (e.AddedItems[0] is not IMenuItem currentModule)
+            {
+                return;
+            }
 
             if (currentModule is Module m)
             {
@@ -418,7 +421,7 @@ namespace Gaten.Windows.MintChoco3
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Multiselect = false;
             dialog.Filter = "exe files (*.exe)|*.exe";
-            if (dialog.ShowDialog().Value)
+            if (dialog.ShowDialog() ?? true)
             {
                 ModulePathText.Text = dialog.FileName;
             }

@@ -5,13 +5,11 @@ namespace Gaten.Windows.MintMonitor
 {
     internal class CheckListCollection
     {
-        public static List<CheckList> CheckLists { get; set; }
+        public static List<CheckList> CheckLists { get; set; } = new();
 
         public static void Init()
         {
-            CheckLists = new List<CheckList>();
             //CheckLists.Add(NaverMembershipDay());
-            
         }
 
         static CheckList NaverMembershipDay()

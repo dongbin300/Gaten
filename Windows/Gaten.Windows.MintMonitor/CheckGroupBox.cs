@@ -44,16 +44,16 @@ namespace Gaten.Windows.MintMonitor
 		/// </summary>
 		public CheckGroupBox()
 		{
-			this.InitializeComponent();
-			this.m_bDisableChildrenIfUnchecked = true;
-			this.m_checkBox.Parent = this;
-			this.m_checkBox.Location = new System.Drawing.Point(CHECKBOX_X_OFFSET, CHECKBOX_Y_OFFSET);
-			this.Checked = true;
+			InitializeComponent();
+			m_bDisableChildrenIfUnchecked = true;
+			m_checkBox.Parent = this;
+			m_checkBox.Location = new Point(CHECKBOX_X_OFFSET, CHECKBOX_Y_OFFSET);
+			Checked = true;
 
 			// Set the color of the CheckBox's text to the color of the label in a standard groupbox control.
 			VisualStyleRenderer vsr = new VisualStyleRenderer(VisualStyleElement.Button.GroupBox.Normal);
 			Color groupBoxTextColor = vsr.GetColor(ColorProperty.TextColor);
-			this.m_checkBox.ForeColor = groupBoxTextColor;
+			m_checkBox.ForeColor = groupBoxTextColor;
 		}
 
 		#region Properties
@@ -64,10 +64,10 @@ namespace Gaten.Windows.MintMonitor
 		{
 			get
 			{
-				if (this.Site != null && this.Site.DesignMode == true)
+				if (Site != null && Site.DesignMode == true)
 				{
 					// Design-time mode
-					return this.m_checkBox.Text;
+					return m_checkBox.Text;
 				}
 				else
 				{
@@ -78,7 +78,7 @@ namespace Gaten.Windows.MintMonitor
 			set
 			{
 				base.Text = " "; // Set the text of the GroupBox to a space, so the gap appears before the CheckBox.
-				this.m_checkBox.Text = value;
+				m_checkBox.Text = value;
 			}
 		}
 
@@ -92,13 +92,13 @@ namespace Gaten.Windows.MintMonitor
 		{
 			get
 			{
-				return this.m_checkBox.Checked;
+				return m_checkBox.Checked;
 			}
 			set
 			{
-				if (this.m_checkBox.Checked != value)
+				if (m_checkBox.Checked != value)
 				{
-					this.m_checkBox.Checked = value;
+					m_checkBox.Checked = value;
 				}
 			}
 		}
@@ -113,13 +113,13 @@ namespace Gaten.Windows.MintMonitor
 		{
 			get
 			{
-				return this.m_checkBox.CheckState;
+				return m_checkBox.CheckState;
 			}
 			set
 			{
-				if (this.m_checkBox.CheckState != value)
+				if (m_checkBox.CheckState != value)
 				{
-					this.m_checkBox.CheckState = value;
+					m_checkBox.CheckState = value;
 				}
 			}
 		}
@@ -134,13 +134,13 @@ namespace Gaten.Windows.MintMonitor
 		{
 			get
 			{
-				return this.m_bDisableChildrenIfUnchecked;
+				return m_bDisableChildrenIfUnchecked;
 			}
 			set
 			{
-				if (this.m_bDisableChildrenIfUnchecked != value)
+				if (m_bDisableChildrenIfUnchecked != value)
 				{
-					this.m_bDisableChildrenIfUnchecked = value;
+					m_bDisableChildrenIfUnchecked = value;
 				}
 			}
 		}
@@ -151,13 +151,13 @@ namespace Gaten.Windows.MintMonitor
 		/// Occurs whenever the Checked property of the CheckBox is changed.
 		/// </summary>
 		[Description("Occurs whenever the Checked property of the CheckBox is changed.")]
-		public event EventHandler CheckedChanged;
+		public event EventHandler? CheckedChanged;
 
 		/// <summary>
 		/// Occurs whenever the CheckState property of the CheckBox is changed.
 		/// </summary>
 		[Description("Occurs whenever the CheckState property of the CheckBox is changed.")]
-		public event EventHandler CheckStateChanged;
+		public event EventHandler? CheckStateChanged;
 
 		/// <summary>
 		/// Raises the System.Windows.Forms.CheckBox.checkBox_CheckedChanged event.
@@ -179,12 +179,12 @@ namespace Gaten.Windows.MintMonitor
 		#region Events
 		private void checkBox_CheckedChanged(object sender, EventArgs e)
 		{
-			if (this.m_bDisableChildrenIfUnchecked == true)
+			if (m_bDisableChildrenIfUnchecked)
 			{
-				bool bEnabled = this.m_checkBox.Checked;
-				foreach (Control control in this.Controls)
+				bool bEnabled = m_checkBox.Checked;
+				foreach (Control control in Controls)
 				{
-					if (control != this.m_checkBox)
+					if (control != m_checkBox)
 					{
 						control.Enabled = bEnabled;
 						control.Visible = bEnabled;
@@ -208,9 +208,9 @@ namespace Gaten.Windows.MintMonitor
 
 		private void CheckGroupBox_ControlAdded(object sender, ControlEventArgs e)
 		{
-			if (this.m_bDisableChildrenIfUnchecked == true)
+			if (m_bDisableChildrenIfUnchecked == true)
 			{
-				e.Control.Enabled = this.Checked;
+				e.Control.Enabled = Checked;
 			}
 		}
 		#endregion Events

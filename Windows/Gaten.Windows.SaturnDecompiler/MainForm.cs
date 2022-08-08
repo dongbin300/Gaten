@@ -1,5 +1,5 @@
 using Gaten.Net.Windows.PE.Disassembly;
-using Gaten.Net.Extension;
+using Gaten.Net.Extensions;
 
 namespace Gaten.Windows.SaturnDecompiler
 {

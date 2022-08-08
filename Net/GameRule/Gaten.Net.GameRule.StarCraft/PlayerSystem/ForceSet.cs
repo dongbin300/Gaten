@@ -2,12 +2,10 @@
 {
     public class ForceSet
     {
-        public static List<Force> Forces { get; set; }
+        public static List<Force> Forces { get; set; } = new();
 
         public ForceSet()
         {
-            Forces = new List<Force>();
-
             MakeDefault();
         }
 

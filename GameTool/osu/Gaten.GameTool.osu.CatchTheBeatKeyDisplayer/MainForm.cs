@@ -8,13 +8,12 @@ namespace Gaten.GameTool.osu.CatchTheBeatKeyDisplayer
         [DllImport("user32.dll")]
         private static extern short GetAsyncKeyState(Keys key);
 
-        Thread inputWorker1;
-        Thread inputWorker2;
-        Thread inputWorker3;
-
-        bool leftPressed, leftTemp;
-        bool rightPressed, rightTemp;
-        bool shiftPressed, shiftTemp;
+        private readonly Thread inputWorker1;
+        private readonly Thread inputWorker2;
+        private readonly Thread inputWorker3;
+        private bool leftPressed, leftTemp;
+        private bool rightPressed, rightTemp;
+        private bool shiftPressed, shiftTemp;
 
         public MainForm()
         {
@@ -29,7 +28,7 @@ namespace Gaten.GameTool.osu.CatchTheBeatKeyDisplayer
             Location = new Point(10, 10);
         }
 
-        void hook1()
+        private void hook1()
         {
             while (true)
             {
@@ -44,7 +43,7 @@ namespace Gaten.GameTool.osu.CatchTheBeatKeyDisplayer
             }
         }
 
-        void hook2()
+        private void hook2()
         {
             while (true)
             {
@@ -59,7 +58,7 @@ namespace Gaten.GameTool.osu.CatchTheBeatKeyDisplayer
             }
         }
 
-        void hook3()
+        private void hook3()
         {
             while (true)
             {
@@ -85,9 +84,14 @@ namespace Gaten.GameTool.osu.CatchTheBeatKeyDisplayer
         {
             Graphics v = e.Graphics;
             if (leftPressed)
+            {
                 DrawRoundRect(v, Pens.Black, Brushes.Gold, e.ClipRectangle.Left, e.ClipRectangle.Top, e.ClipRectangle.Width - 1, e.ClipRectangle.Height - 1, 10);
+            }
             else
+            {
                 DrawRoundRect(v, Pens.Black, Brushes.Black, e.ClipRectangle.Left, e.ClipRectangle.Top, e.ClipRectangle.Width - 1, e.ClipRectangle.Height - 1, 10);
+            }
+
             base.OnPaint(e);
         }
 
@@ -95,9 +99,14 @@ namespace Gaten.GameTool.osu.CatchTheBeatKeyDisplayer
         {
             Graphics v = e.Graphics;
             if (rightPressed)
+            {
                 DrawRoundRect(v, Pens.Black, Brushes.Gold, e.ClipRectangle.Left, e.ClipRectangle.Top, e.ClipRectangle.Width - 1, e.ClipRectangle.Height - 1, 10);
+            }
             else
+            {
                 DrawRoundRect(v, Pens.Black, Brushes.Black, e.ClipRectangle.Left, e.ClipRectangle.Top, e.ClipRectangle.Width - 1, e.ClipRectangle.Height - 1, 10);
+            }
+
             base.OnPaint(e);
         }
 
@@ -105,15 +114,20 @@ namespace Gaten.GameTool.osu.CatchTheBeatKeyDisplayer
         {
             Graphics v = e.Graphics;
             if (shiftPressed)
+            {
                 DrawRoundRect(v, Pens.Black, Brushes.DeepPink, e.ClipRectangle.Left, e.ClipRectangle.Top, e.ClipRectangle.Width - 1, e.ClipRectangle.Height - 1, 10);
+            }
             else
+            {
                 DrawRoundRect(v, Pens.Black, Brushes.Black, e.ClipRectangle.Left, e.ClipRectangle.Top, e.ClipRectangle.Width - 1, e.ClipRectangle.Height - 1, 10);
+            }
+
             base.OnPaint(e);
         }
 
         public void DrawRoundRect(Graphics g, Pen p, Brush brush, float X, float Y, float width, float height, float radius)
         {
-            GraphicsPath gp = new GraphicsPath();
+            GraphicsPath gp = new();
             gp.AddLine(X + radius, Y, X + width - (radius * 2), Y);
             gp.AddArc(X + width - (radius * 2), Y, radius * 2, radius * 2, 270, 90);
             gp.AddLine(X + width, Y + radius, X + width, Y + height - (radius * 2));

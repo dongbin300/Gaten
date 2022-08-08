@@ -10,8 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Net\GameRule\Gaten.Net.GameRule.GITADORA\Gaten.Net.GameRule.GITADORA.csproj" />
-    <ProjectReference Include="..\..\..\Net\Gaten.Net.Extension\Gaten.Net.Extension.csproj" />
-    <ProjectReference Include="..\..\..\Net\Gaten.Net.Image\Gaten.Net.Image.csproj" />
+    <ProjectReference Include="..\..\..\Net\Gaten.Net\Gaten.Net.csproj" />
     <ProjectReference Include="..\..\..\Net\Windows\Gaten.Net.Windows.Forms\Gaten.Net.Windows.Forms.csproj" />
   </ItemGroup>
 

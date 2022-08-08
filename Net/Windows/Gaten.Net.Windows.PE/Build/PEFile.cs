@@ -1,4 +1,4 @@
-﻿using Gaten.Net.Extension;
+﻿using Gaten.Net.Extensions;
 
 using System.Reflection.Metadata;
 using System.Reflection.Metadata.Ecma335;

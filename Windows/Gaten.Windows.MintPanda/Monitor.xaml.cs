@@ -1,6 +1,5 @@
-﻿using Gaten.Net.Data.Diagnostics;
-using Gaten.Net.Data.IO;
-using Gaten.Net.Extension;
+﻿using Gaten.Net.Diagnostics;
+using Gaten.Net.IO;
 using Gaten.Net.Network;
 using Gaten.Net.Wpf;
 using Gaten.Windows.MintPanda.Contents;

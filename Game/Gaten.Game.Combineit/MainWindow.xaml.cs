@@ -14,7 +14,7 @@ namespace Gaten.Game.Combineit
         //public static bool IntroEnd;
         //Thread timingWorker;
 
-        DispatcherTimer t;
+        private readonly DispatcherTimer t;
 
         public MainWindow()
         {
@@ -24,11 +24,13 @@ namespace Gaten.Game.Combineit
 
             // 1틱 = 50ms(40ms로 설정하면 대략 50ms로 실행됨), 1초 = 20틱
             // 제작/생산 시간은 0.05s 단위로 설정됨
-            t = new DispatcherTimer(new TimeSpan(0, 0, 0, 0, 40), DispatcherPriority.Background, t_Tick, Dispatcher.CurrentDispatcher);
-            t.IsEnabled = true;
+            t = new DispatcherTimer(new TimeSpan(0, 0, 0, 0, 40), DispatcherPriority.Background, t_Tick, Dispatcher.CurrentDispatcher)
+            {
+                IsEnabled = true
+            };
         }
 
-        void LoadResources()
+        private void LoadResources()
         {
             _ = new ItemDictionary();
             _ = new Character();

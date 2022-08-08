@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Gaten.GameTool.GITADORA.Macro
 {
     internal class OtitleDb
     {
-        int curp;
-        string source = string.Empty;
+        private int curp;
+        private readonly string source = string.Empty;
 
         public OtitleDb()
         {
@@ -21,7 +17,7 @@ namespace Gaten.GameTool.GITADORA.Macro
 
                 Console.Write("remywiki url: ");
                 string dir = Console.ReadLine();
-                using (WebClient wc = new WebClient())
+                using (WebClient wc = new())
                 {
                     wc.Encoding = Encoding.UTF8;
                     source = wc.DownloadString(dir);
@@ -46,7 +42,7 @@ namespace Gaten.GameTool.GITADORA.Macro
                 {
                     try
                     {
-                        using (WebClient wc = new WebClient())
+                        using (WebClient wc = new())
                         {
                             wc.Encoding = Encoding.UTF8;
                             source = wc.DownloadString(url[i]);
@@ -60,8 +56,8 @@ namespace Gaten.GameTool.GITADORA.Macro
                     }
                 }
 
-                FileStream fs = new FileStream("otitle.txt", FileMode.Append);
-                StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+                FileStream fs = new("otitle.txt", FileMode.Append);
+                StreamWriter sw = new(fs, Encoding.UTF8);
                 for (int i = 0; i < q; i++)
                 {
                     sw.WriteLine(otitle[i]);
@@ -71,13 +67,13 @@ namespace Gaten.GameTool.GITADORA.Macro
             }
         }
 
-        string DataSubstring(string o, string s, string e, int cur)
+        private string DataSubstring(string o, string s, string e, int cur)
         {
             int p = o.IndexOf(s, cur);
             p += s.Length;
             int ep = o.IndexOf(e, p);
             curp = ep;
-            return o.Substring(p, ep - p);
+            return o[p..ep];
         }
     }
 }

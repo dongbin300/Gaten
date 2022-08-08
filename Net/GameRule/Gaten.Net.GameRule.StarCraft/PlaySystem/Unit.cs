@@ -1,4 +1,4 @@
-﻿using Gaten.Net.Extension;
+﻿using Gaten.Net.Extensions;
 
 namespace Gaten.Net.GameRule.StarCraft.PlaySystem
 {
@@ -532,7 +532,7 @@ namespace Gaten.Net.GameRule.StarCraft.PlaySystem
         /// Enable(01): 해당 플레이어는 해당 유닛을 생산할 수 있음
         /// Disable(00): 해당 플레이어는 해당 유닛을 생산할 수 없음
         /// </summary>
-        public byte[] PlayerAvailables { get; set; }
+        public byte[] PlayerAvailables { get; set; } = new byte[12];
 
         /// <summary>
         /// 글로벌 생산 제한
@@ -550,7 +550,7 @@ namespace Gaten.Net.GameRule.StarCraft.PlaySystem
         /// Default(01): 글로벌 규칙을 따라간다.
         /// Override(00): 글로벌 규칙을 무시하고 플레이어별 규칙을 따라간다.
         /// </summary>
-        public byte[] UseDefaults { get; set; }
+        public byte[] UseDefaults { get; set; } = new byte[12];
 
         public Unit()
         {
@@ -560,9 +560,6 @@ namespace Gaten.Net.GameRule.StarCraft.PlaySystem
         public Unit(UnitID id)
         {
             ID = id;
-
-            PlayerAvailables = new byte[12];
-            UseDefaults = new byte[12];
 
             switch (id)
             {

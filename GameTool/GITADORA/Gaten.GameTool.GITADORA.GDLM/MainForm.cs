@@ -8,9 +8,9 @@ namespace Gaten.GameTool.GITADORA.GDLM
 {
     public partial class MainForm : Form
     {
-        private string[] files;
-        public List<Path> paths;
-        public Bitmap bitmap;
+        private string[] files = default!;
+        public List<Path> paths = new();
+        public Bitmap bitmap = default!;
         public int fumenWidth, fumenHeight;
         public double bitmapMultiplier = 0.5;
         public bool flip;
@@ -22,11 +22,24 @@ namespace Gaten.GameTool.GITADORA.GDLM
 
         private void MainForm_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+            if (e.Data == null)
+            {
+                return;
+            }
+
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
         }
 
         private void MainForm_DragDrop(object sender, DragEventArgs e)
         {
+            if (e.Data == null)
+            {
+                return;
+            }
+
             files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
             paths = LoadFumenTxtFile(files[0]);
@@ -36,66 +49,64 @@ namespace Gaten.GameTool.GITADORA.GDLM
 
         public List<Path> LoadFumenTxtFile(string fileName)
         {
-            List<Path> paths = new List<Path>();
+            List<Path> paths = new();
 
             bool drum = fileName.EndsWith("db.txt") || fileName.EndsWith("da.txt") || fileName.EndsWith("de.txt") || fileName.EndsWith("dm.txt");
 
-            using (FileStream stream = new FileStream(fileName, FileMode.Open))
+            using (FileStream stream = new(fileName, FileMode.Open))
             {
-                using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
-                {
-                    string cfg = reader.ReadLine();
-                    string[] cfgData = cfg.Split(',');
-                    fumenWidth = int.Parse(cfgData[1]);
-                    fumenHeight = int.Parse(cfgData[2]);
+                using StreamReader reader = new(stream, Encoding.UTF8);
+                string cfg = reader.ReadLine() ?? default!;
+                string[] cfgData = cfg.Split(',');
+                fumenWidth = int.Parse(cfgData[1]);
+                fumenHeight = int.Parse(cfgData[2]);
 
-                    try
+                try
+                {
+                    while (true)
                     {
-                        while (true)
+                        string obj = reader.ReadLine() ?? default!;
+                        string[] data = obj.Split(',');
+                        switch (data[0])
                         {
-                            string obj = reader.ReadLine();
-                            string[] data = obj.Split(',');
-                            switch (data[0])
-                            {
-                                case "BP":
-                                    if (!ignoreLineCheckBox.Checked)
-                                    {
-                                        paths.Add(new Path()
-                                        {
-                                            type = Path.Type.BigPhrase,
-                                            lineNum = int.Parse(data[1]),
-                                            timing = double.Parse(data[2])
-                                        });
-                                    }
-                                    break;
-                                case "SP":
-                                    if (!ignoreLineCheckBox.Checked)
-                                    {
-                                        paths.Add(new Path()
-                                        {
-                                            type = Path.Type.SmallPhrase,
-                                            lineNum = int.Parse(data[1]),
-                                            timing = double.Parse(data[2])
-                                        });
-                                    }
-                                    break;
-                                case "NO":
+                            case "BP":
+                                if (!ignoreLineCheckBox.Checked)
+                                {
                                     paths.Add(new Path()
                                     {
-                                        type = Path.Type.Note,
+                                        type = Path.Type.BigPhrase,
                                         lineNum = int.Parse(data[1]),
-                                        timing = double.Parse(data[2]),
-                                        noteNum = int.Parse(data[3]),
-                                        holdLength = !drum && int.Parse(data[3]) >= 6 && int.Parse(data[3]) <= 10 ? double.Parse(data[4]) : 0
+                                        timing = double.Parse(data[2])
                                     });
-                                    break;
-                            }
+                                }
+                                break;
+                            case "SP":
+                                if (!ignoreLineCheckBox.Checked)
+                                {
+                                    paths.Add(new Path()
+                                    {
+                                        type = Path.Type.SmallPhrase,
+                                        lineNum = int.Parse(data[1]),
+                                        timing = double.Parse(data[2])
+                                    });
+                                }
+                                break;
+                            case "NO":
+                                paths.Add(new Path()
+                                {
+                                    type = Path.Type.Note,
+                                    lineNum = int.Parse(data[1]),
+                                    timing = double.Parse(data[2]),
+                                    noteNum = int.Parse(data[3]),
+                                    holdLength = !drum && int.Parse(data[3]) >= 6 && int.Parse(data[3]) <= 10 ? double.Parse(data[4]) : 0
+                                });
+                                break;
                         }
                     }
-                    catch
-                    {
+                }
+                catch
+                {
 
-                    }
                 }
             }
 
@@ -125,11 +136,11 @@ namespace Gaten.GameTool.GITADORA.GDLM
             int bigPhraseHeight = 4;
             int smallPhraseHeight = 2;
 
-            Font font = new Font("¸¼Àº °íµñ", 40);
+            Font font = new("¸¼Àº °íµñ", 40);
             Brush fontb = Brushes.White;
             int phraseCount = 0;
 
-            using (var g = Graphics.FromImage(bitmap))
+            using (Graphics? g = Graphics.FromImage(bitmap))
             {
                 foreach (Path p in paths)
                 {
@@ -138,14 +149,14 @@ namespace Gaten.GameTool.GITADORA.GDLM
                     switch (p.type)
                     {
                         case Path.Type.BigPhrase:
-                            g.FillRectangle(bigPhraseb, new Rectangle(0, (int)(p.timing * bitmapMultiplier) - bigPhraseHeight / 2, 480, bigPhraseHeight));
+                            g.FillRectangle(bigPhraseb, new Rectangle(0, (int)(p.timing * bitmapMultiplier) - (bigPhraseHeight / 2), 480, bigPhraseHeight));
                             g.DrawString(phraseCount++.ToString(), font, fontb, 490, (int)(p.timing * bitmapMultiplier) - 35);
                             break;
                         case Path.Type.SmallPhrase:
-                            g.FillRectangle(smallPhraseb, new Rectangle(0, (int)(p.timing * bitmapMultiplier) - smallPhraseHeight / 2, 480, smallPhraseHeight));
+                            g.FillRectangle(smallPhraseb, new Rectangle(0, (int)(p.timing * bitmapMultiplier) - (smallPhraseHeight / 2), 480, smallPhraseHeight));
                             break;
                         case Path.Type.Note:
-                            g.FillRectangle(b[index], new Rectangle(xpos[index], (int)(p.timing * bitmapMultiplier) - noteHeight / 2, width[index], noteHeight));
+                            g.FillRectangle(b[index], new Rectangle(xpos[index], (int)(p.timing * bitmapMultiplier) - (noteHeight / 2), width[index], noteHeight));
                             break;
                     }
                 }
@@ -156,9 +167,11 @@ namespace Gaten.GameTool.GITADORA.GDLM
                 bitmap.RotateFlip(RotateFlipType.Rotate180FlipX);
             }
 
-            Panel mainPanel = new Panel();
-            mainPanel.Size = new Size(bitmap.Width, bitmap.Height);
-            mainPanel.BackgroundImage = bitmap;
+            Panel mainPanel = new()
+            {
+                Size = new Size(bitmap.Width, bitmap.Height),
+                BackgroundImage = bitmap
+            };
             fumenPanel.Controls.Add(mainPanel);
 
         }
@@ -185,7 +198,7 @@ namespace Gaten.GameTool.GITADORA.GDLM
                     {
                         type = Path.Type.SmallPhrase,
                         lineNum = 0,
-                        timing = i + 700.0 * j / phraseCount
+                        timing = i + (700.0 * j / phraseCount)
                     });
                 }
             }
@@ -203,8 +216,8 @@ namespace Gaten.GameTool.GITADORA.GDLM
 
         private void removePhraseButton_Click(object sender, EventArgs e)
         {
-            paths.RemoveAll(p => p.type.Equals(Path.Type.BigPhrase));
-            paths.RemoveAll(p => p.type.Equals(Path.Type.SmallPhrase));
+            _ = paths.RemoveAll(p => p.type.Equals(Path.Type.BigPhrase));
+            _ = paths.RemoveAll(p => p.type.Equals(Path.Type.SmallPhrase));
 
             ReDisplay();
         }
@@ -221,7 +234,7 @@ namespace Gaten.GameTool.GITADORA.GDLM
             int phraseNumber = int.Parse(phraseNumberTextBox.Text);
             int phraseCount = int.Parse(phraseDivisionTextBox.Text);
 
-            paths.RemoveAll(p => p.type.Equals(Path.Type.SmallPhrase) && p.timing > (96 + 700 * phraseNumber) && p.timing < (96 + 700 * (phraseNumber + 1)));
+            _ = paths.RemoveAll(p => p.type.Equals(Path.Type.SmallPhrase) && p.timing > (96 + (700 * phraseNumber)) && p.timing < (96 + (700 * (phraseNumber + 1))));
 
             for (int j = 1; j < phraseCount; j++)
             {
@@ -229,7 +242,7 @@ namespace Gaten.GameTool.GITADORA.GDLM
                 {
                     type = Path.Type.SmallPhrase,
                     lineNum = 0,
-                    timing = 96 + 700.0 * (phraseNumber + (double)j / phraseCount)
+                    timing = 96 + (700.0 * (phraseNumber + ((double)j / phraseCount)))
                 });
             }
 
@@ -252,7 +265,7 @@ namespace Gaten.GameTool.GITADORA.GDLM
             {
                 type = Path.Type.SmallPhrase,
                 lineNum = 0,
-                timing = 96 + 700.0 * phraseNumber + phrasePosition
+                timing = 96 + (700.0 * phraseNumber) + phrasePosition
             });
 
             Sort();
@@ -261,17 +274,17 @@ namespace Gaten.GameTool.GITADORA.GDLM
 
         private void Sort()
         {
-            List<Path> sortedPaths = new List<Path>();
+            List<Path>? sortedPaths = new();
 
-            var bpPaths = paths.Where(p => p.type.Equals(Path.Type.BigPhrase)).ToList();
+            List<Path>? bpPaths = paths.Where(p => p.type.Equals(Path.Type.BigPhrase)).ToList();
             bpPaths.Sort(new PathComparer());
             sortedPaths.AddRange(bpPaths);
 
-            var spPaths = paths.Where(p => p.type.Equals(Path.Type.SmallPhrase)).ToList();
+            List<Path>? spPaths = paths.Where(p => p.type.Equals(Path.Type.SmallPhrase)).ToList();
             spPaths.Sort(new PathComparer());
             sortedPaths.AddRange(spPaths);
 
-            var noPaths = paths.Where(p => p.type.Equals(Path.Type.Note)).ToList();
+            List<Path>? noPaths = paths.Where(p => p.type.Equals(Path.Type.Note)).ToList();
             noPaths.Sort(new PathComparer());
             sortedPaths.AddRange(noPaths);
 
@@ -280,17 +293,17 @@ namespace Gaten.GameTool.GITADORA.GDLM
 
         private void saveClipboardButton_Click(object sender, EventArgs e)
         {
-            StringBuilder str = new StringBuilder();
+            StringBuilder? str = new();
 
             foreach (Path path in paths)
             {
                 switch (path.type)
                 {
                     case Path.Type.BigPhrase:
-                        str.AppendLine($"BP,{path.lineNum},{path.timing}");
+                        _ = str.AppendLine($"BP,{path.lineNum},{path.timing}");
                         break;
                     case Path.Type.SmallPhrase:
-                        str.AppendLine($"SP,{path.lineNum},{path.timing}");
+                        _ = str.AppendLine($"SP,{path.lineNum},{path.timing}");
                         break;
                 }
             }
@@ -302,30 +315,26 @@ namespace Gaten.GameTool.GITADORA.GDLM
         {
             string fileName = files[0].Replace("db.txt", "line.txt").Replace("da.txt", "line.txt").Replace("de.txt", "line.txt").Replace("dm.txt", "line.txt");
 
-            using (FileStream stream = new FileStream(fileName, FileMode.Create))
+            using FileStream? stream = new(fileName, FileMode.Create);
+            using StreamWriter? writer = new(stream, Encoding.UTF8);
+            foreach (Path path in paths)
             {
-                using (StreamWriter writer = new StreamWriter(stream, Encoding.UTF8))
+                switch (path.type)
                 {
-                    foreach (Path path in paths)
-                    {
-                        switch (path.type)
-                        {
-                            case Path.Type.BigPhrase:
-                                writer.WriteLine($"BP,{path.lineNum},{path.timing}");
-                                break;
-                            case Path.Type.SmallPhrase:
-                                writer.WriteLine($"SP,{path.lineNum},{path.timing}");
-                                break;
-                        }
-                    }
-                    writer.Flush();
+                    case Path.Type.BigPhrase:
+                        writer.WriteLine($"BP,{path.lineNum},{path.timing}");
+                        break;
+                    case Path.Type.SmallPhrase:
+                        writer.WriteLine($"SP,{path.lineNum},{path.timing}");
+                        break;
                 }
             }
+            writer.Flush();
         }
 
         private void helpButton_Click(object sender, EventArgs e)
         {
-            new HelpForm().ShowDialog();
+            _ = new HelpForm().ShowDialog();
         }
     }
 }

@@ -8,6 +8,9 @@
 
         public double NoteInterval;
 
-        public override void AddUp() => Score = NoteInterval;
+        public override void AddUp()
+        {
+            Score = NoteInterval;
+        }
     }
 }

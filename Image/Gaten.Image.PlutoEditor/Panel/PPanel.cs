@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Gaten.Net.Extension;
+using Gaten.Net.Extensions;
 using Gaten.Net.Image;
 
 namespace Gaten.Image.PlutoEditor.Panel
@@ -15,10 +15,10 @@ namespace Gaten.Image.PlutoEditor.Panel
     public class PPanel : System.Windows.Forms.Panel
     {
         // 비트맵
-        public Bitmap bitmap;
+        public Bitmap bitmap = default!;
 
         // 좌표 RGB 테이블
-        public Color[] CoordinateColors;
+        public Color[] CoordinateColors = default!;
 
         // 좌표 변수
         public int CX;

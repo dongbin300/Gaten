@@ -10,6 +10,9 @@
         public double NoteInterval;
         public double OffBeatDensity;
 
-        public override void AddUp() => Score = SongLength * 0.4 + NoteInterval * 0.4 + OffBeatDensity * 0.2;
+        public override void AddUp()
+        {
+            Score = (SongLength * 0.4) + (NoteInterval * 0.4) + (OffBeatDensity * 0.2);
+        }
     }
 }

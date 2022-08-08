@@ -14,9 +14,9 @@ namespace Gaten.Game.NGD2WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private StatusView statusView;
-        private SpiritView spiritView;
-        private System.Timers.Timer timer;
+        private StatusView statusView = new();
+        private SpiritView spiritView = new();
+        private System.Timers.Timer timer = new();
         private long xpBeforeAttack = 0;
 
         public MainWindow()
@@ -48,7 +48,7 @@ namespace Gaten.Game.NGD2WPF
             Refresh();
         }
 
-        void Refresh()
+        private void Refresh()
         {
             Character.Calculate();
 
@@ -78,15 +78,21 @@ namespace Gaten.Game.NGD2WPF
                 {
                     Log? log = LogQueue.Get();
                     _ = LogBox.Items.Add($"[{log.Time:HH:mm:ss}] {log.Text}");
-                    LogBox.Items.MoveCurrentToLast();
+                    _ = LogBox.Items.MoveCurrentToLast();
                     LogBox.ScrollIntoView(LogBox.Items.CurrentItem);
                 }
             }));
         }
 
-        public static string Display(int value) => value.ToString("#,#;#,#;0");
+        public static string Display(int value)
+        {
+            return value.ToString("#,#;#,#;0");
+        }
 
-        public static string Display(long value) => value.ToString("#,#;#,#;0");
+        public static string Display(long value)
+        {
+            return value.ToString("#,#;#,#;0");
+        }
 
         private void Window_Closed(object sender, EventArgs e)
         {

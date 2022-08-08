@@ -9,8 +9,8 @@ namespace Gaten.Net.Wpf.Models
     public class Worker
     {
         BackgroundWorker worker;
-        public TextProgressBar ProgressBar { get; set; }
-        public Action<Worker, object?> Action { get; set; }
+        public TextProgressBar ProgressBar { get; set; } = default!;
+        public Action<Worker, object?> Action { get; set; } = default!;
         public bool IsRunning { get; set; }
         public bool IsWaiting { get; set; }
         public object? Arguments { get; set; }
@@ -80,7 +80,7 @@ namespace Gaten.Net.Wpf.Models
 
         public void For(int from, int to, int unit, Action<int> action)
         {
-            var jobCount = Math.Abs(to - from);
+            var jobCount = System.Math.Abs(to - from);
             SetProgressBar(from, to - 1);
             for(int i = from; i < to; i+= unit)
             {

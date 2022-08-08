@@ -7,11 +7,11 @@
         /// </summary>
         public static int RequireLevel => 10;
 
-        public static UpgradeContent Power { get; set; }
-        public static UpgradeContent MpMax { get; set; }
-        public static UpgradeContent MpRegen { get; set; }
-        public static UpgradeContent CriticalRate { get; set; }
-        public static UpgradeContent CriticalDamage { get; set; }
+        public static UpgradeContent Power { get; set; } = default!;
+        public static UpgradeContent MpMax { get; set; } = default!;
+        public static UpgradeContent MpRegen { get; set; } = default!;
+        public static UpgradeContent CriticalRate { get; set; } = default!;
+        public static UpgradeContent CriticalDamage { get; set; } = default!;
 
         /// <summary>
         /// 소지 개수

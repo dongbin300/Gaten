@@ -1,8 +1,10 @@
 ﻿using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 
 namespace Gaten.Image.Pluto
 {
+    [SupportedOSPlatform("windows")]
     class Program
     {
         [DllImport("kernel32.dll", SetLastError = true)]
@@ -20,7 +22,7 @@ namespace Gaten.Image.Pluto
 
         static void DrawScene(string fileName)
         {
-            Bitmap sceneBitmap = new Bitmap(fileName);
+            var sceneBitmap = new Bitmap(fileName);
             using (Graphics g = Graphics.FromHwnd(GetConsoleWindow()))
             {
                 g.DrawImage(sceneBitmap, new Point(0, 0));

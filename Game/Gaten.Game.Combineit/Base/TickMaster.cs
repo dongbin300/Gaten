@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Gaten.Game.Combineit.Base
@@ -19,7 +17,7 @@ namespace Gaten.Game.Combineit.Base
 
             for (int i = 0; i < ItemDictionary.Items.Count; i++)
             {
-                var item = ItemDictionary.Items[i];
+                Item? item = ItemDictionary.Items[i];
                 if (item.Status == Item.ItemStatus.Run)
                 {
                     item.Tick += tickMs;
@@ -36,10 +34,10 @@ namespace Gaten.Game.Combineit.Base
 
         public static void Module(int moduleId, int productId)
         {
-            var module = Character.PossessionItems.Where(i => i.Item.Id.Equals(moduleId));
+            IEnumerable<PossessionItem>? module = Character.PossessionItems.Where(i => i.Item.Id.Equals(moduleId));
             if (module.First().Count > 0)
             {
-                var item = ItemDictionary.GetItem(productId);
+                Item? item = ItemDictionary.GetItem(productId);
                 if (item.Status == Item.ItemStatus.Idle)
                 {
                     item.Status = Item.ItemStatus.Run;

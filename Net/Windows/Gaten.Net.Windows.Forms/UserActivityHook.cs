@@ -49,7 +49,7 @@ namespace Gaten.Net.Windows.Forms
             /// <summary>
             /// Specifies a POINT structure that contains the x- and y-coordinates of the cursor, in screen coordinates. 
             /// </summary>
-            public POINT pt;
+            public POINT pt = default!;
             /// <summary>
             /// Handle to the window that will receive the mouse message corresponding to the mouse event. 
             /// </summary>
@@ -73,7 +73,7 @@ namespace Gaten.Net.Windows.Forms
             /// <summary>
             /// Specifies a POINT structure that contains the x- and y-coordinates of the cursor, in screen coordinates. 
             /// </summary>
-            public POINT pt;
+            public POINT pt = default!;
             /// <summary>
             /// If the message is WM_MOUSEWHEEL, the high-order word of this member is the wheel delta. 
             /// The low-order word is reserved. A positive value indicates that the wheel was rotated forward, 
@@ -447,12 +447,12 @@ namespace Gaten.Net.Windows.Forms
         /// <summary>
         /// Declare MouseHookProcedure as HookProc type.
         /// </summary>
-        private HookProc _mouseHookProcedure;
+        private HookProc? _mouseHookProcedure;
 
         /// <summary>
         /// Declare KeyboardHookProcedure as HookProc type.
         /// </summary>
-        private HookProc _keyboardHookProcedure;
+        private HookProc? _keyboardHookProcedure;
 
         #endregion
 
@@ -497,42 +497,42 @@ namespace Gaten.Net.Windows.Forms
         /// <summary>
         /// Occurs when the user moves the mouse, presses any mouse button or scrolls the wheel
         /// </summary>
-        public event MouseEventHandler OnMouseActivity;
+        public event MouseEventHandler? OnMouseActivity;
 
         /// <summary>
         /// Occurs when the mouse is moved
         /// </summary>
-        public event MouseEventHandler MouseMove;
+        public event MouseEventHandler? MouseMove;
 
         /// <summary>
         /// Occurs when the mouse button is released
         /// </summary>
-        public event MouseEventHandler MouseUp;
+        public event MouseEventHandler? MouseUp;
 
         /// <summary>
         /// Occurs when the mouse button is pressed
         /// </summary>
-        public event MouseEventHandler MouseDown;
+        public event MouseEventHandler? MouseDown;
 
         /// <summary>
         /// Occurs when the mouse wheel is moved
         /// </summary>
-        public event MouseEventHandler MouseWheel;
+        public event MouseEventHandler? MouseWheel;
 
         /// <summary>
         /// Occurs when the user presses a key
         /// </summary>
-        public event KeyEventHandler KeyDown;
+        public event KeyEventHandler? KeyDown;
 
         /// <summary>
         /// Occurs when the user presses and releases 
         /// </summary>
-        public event KeyPressEventHandler KeyPress;
+        public event KeyPressEventHandler? KeyPress;
 
         /// <summary>
         /// Occurs when the user releases a key
         /// </summary>
-        public event KeyEventHandler KeyUp;
+        public event KeyEventHandler? KeyUp;
 
 
         /// <summary>
@@ -548,11 +548,11 @@ namespace Gaten.Net.Windows.Forms
         /// <summary>
         /// Declare MouseHookProcedure as HookProc type.
         /// </summary>
-        private static HookProc MouseHookProcedure;
+        private static HookProc? MouseHookProcedure;
         /// <summary>
         /// Declare KeyboardHookProcedure as HookProc type.
         /// </summary>
-        private static HookProc KeyboardHookProcedure;
+        private static HookProc? KeyboardHookProcedure;
 
         #endregion
 
@@ -727,7 +727,7 @@ namespace Gaten.Net.Windows.Forms
             if ((nCode >= 0) && (OnMouseActivity != null))
             {
                 //Marshall the data from callback.
-                MouseLLHookStruct mouseHookStruct = (MouseLLHookStruct)Marshal.PtrToStructure(lParam, typeof(MouseLLHookStruct));
+                MouseLLHookStruct mouseHookStruct = (MouseLLHookStruct)(Marshal.PtrToStructure(lParam, typeof(MouseLLHookStruct)) ?? default!);
 
                 //detect button clicked
                 MouseButtons button = MouseButtons.None;
@@ -818,7 +818,7 @@ namespace Gaten.Net.Windows.Forms
             if ((nCode >= 0) && (KeyDown != null || KeyUp != null || KeyPress != null))
             {
                 //read structure KeyboardHookStruct at lParam
-                KeyboardHookStruct MyKeyboardHookStruct = (KeyboardHookStruct)Marshal.PtrToStructure(lParam, typeof(KeyboardHookStruct));
+                KeyboardHookStruct MyKeyboardHookStruct = (KeyboardHookStruct)(Marshal.PtrToStructure(lParam, typeof(KeyboardHookStruct)) ?? default!);
                 
                 //raise KeyDown
                 if (KeyDown != null && (wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN))

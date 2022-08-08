@@ -26,12 +26,12 @@ namespace Gaten.Data.FileManager
         {
             if (node == null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(node));
             }
 
-            var result = Convert.ToString(node.Header);
+            string? result = Convert.ToString(node.Header) ?? string.Empty;
 
-            for (var i = GetParentItem(node); i != null; i = GetParentItem(i))
+            for (TreeViewItem? i = GetParentItem(node); i != null; i = GetParentItem(i))
             {
                 result = i.Header + "\\" + result;
             }
@@ -39,9 +39,9 @@ namespace Gaten.Data.FileManager
             return result;
         }
 
-        static TreeViewItem GetParentItem(TreeViewItem item)
+        private static TreeViewItem GetParentItem(TreeViewItem item)
         {
-            for (var i = VisualTreeHelper.GetParent(item); i != null; i = VisualTreeHelper.GetParent(i))
+            for (System.Windows.DependencyObject? i = VisualTreeHelper.GetParent(item); i != null; i = VisualTreeHelper.GetParent(i))
             {
                 if (i is TreeViewItem item1)
                 {
@@ -49,7 +49,7 @@ namespace Gaten.Data.FileManager
                 }
             }
 
-            return null;
+            return new TreeViewItem();
         }
     }
 }

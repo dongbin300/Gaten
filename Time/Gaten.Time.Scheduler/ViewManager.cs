@@ -4,12 +4,12 @@ namespace Gaten.Time.Scheduler
 {
     public class ViewManager
     {
-        public static MainWindow MainWindow { get; set; }
-        public static Calendar Calendar { get; set; }
-        public static MonthSelect MonthSelect { get; set; }
-        public static YearSelect YearSelect { get; set; }
-        public static DayInfo DayInfo { get; set; }
-        public static AddEvent AddEvent { get; set; }
+        public static MainWindow MainWindow { get; set; } = new();
+        public static Calendar Calendar { get; set; } = new();
+        public static MonthSelect MonthSelect { get; set; } = new();
+        public static YearSelect YearSelect { get; set; } = new();
+        public static DayInfo DayInfo { get; set; } = new();
+        public static AddEvent AddEvent { get; set; } = new();
 
         public static void Initialize()
         {

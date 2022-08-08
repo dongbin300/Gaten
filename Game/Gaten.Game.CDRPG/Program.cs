@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gaten.Game.CDRPG
+﻿namespace Gaten.Game.CDRPG
 {
-    class Program
+    internal class Program
     {
-        static Card c = new Card();
-        static Character crt = new Character();
-        static Ground g = new Ground();
+        private static readonly Card c = new();
+        private static readonly Character crt = new();
+        private static readonly Ground g = new();
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             // 카드 정보를 초기화
             c.AddCard();
@@ -27,11 +21,11 @@ namespace Gaten.Game.CDRPG
             Turn();
         }
 
-        static void Turn()
+        private static void Turn()
         {
             crt.Draw();
 
-            switch(Console.ReadKey(true).Key)
+            switch (Console.ReadKey(true).Key)
             {
                 case ConsoleKey.A:
                     crt.Attack();

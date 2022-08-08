@@ -8,6 +8,9 @@
 
         public double OffBeatDensity;
 
-        public override void AddUp() => Score = OffBeatDensity;
+        public override void AddUp()
+        {
+            Score = OffBeatDensity;
+        }
     }
 }

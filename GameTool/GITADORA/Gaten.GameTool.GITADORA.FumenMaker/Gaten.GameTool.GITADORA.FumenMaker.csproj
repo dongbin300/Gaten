@@ -8,13 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.39" />
-    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Net\GameRule\Gaten.Net.GameRule.GITADORA\Gaten.Net.GameRule.GITADORA.csproj" />
-    <ProjectReference Include="..\..\..\Net\Gaten.Net.Image\Gaten.Net.Image.csproj" />
+    <ProjectReference Include="..\..\..\Net\Gaten.Net\Gaten.Net.csproj" />
   </ItemGroup>
 
 </Project>

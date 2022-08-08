@@ -1,11 +1,13 @@
-﻿using Gaten.Net.Network.MySql;
+﻿
+
+using Gaten.Net.Network.MySql;
 
 namespace Gaten.Net.Stock
 {
     public class STUVStockManager
     {
-        public static List<STUVStockItem> StockItems { get; set; }
-        public static STUVStockItem SelectedStock { get; set; }
+        public static List<STUVStockItem> StockItems { get; set; } = new();
+        public static STUVStockItem SelectedStock { get; set; } = default!;
 
         public static void Init()
         {
@@ -14,8 +16,6 @@ namespace Gaten.Net.Stock
 
         static void GetStockInfo()
         {
-            StockItems = new List<STUVStockItem>();
-
             var manager = new MySqlManager("EXTERNAL");
             var data = manager.SelectByTableName("STUV");
 
@@ -28,7 +28,7 @@ namespace Gaten.Net.Stock
 
         public static STUVStockItem GetStockItem(string code)
         {
-            return StockItems.Find(s => s.Code.Equals(code, StringComparison.Ordinal));
+            return StockItems.Find(s => s.Code.Equals(code, StringComparison.Ordinal)) ?? default!;
         }
     }
 }

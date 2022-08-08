@@ -1,9 +1,11 @@
 ﻿using Gaten.Net.Windows;
 
 using System.Drawing;
+using System.Runtime.Versioning;
 
 namespace Gaten.Game.MapAdventureConsole
 {
+    [SupportedOSPlatform("windows")]
     public class GameEngine
     {
         /// <summary>
@@ -106,20 +108,16 @@ namespace Gaten.Game.MapAdventureConsole
         /// </summary>
         private void Render()
         {
-            using (Graphics g = Graphics.FromHwnd(WinApi.GetConsoleWindow()))
-            {
-                using (Image image = Image.FromFile("me.png"))
-                {
-                    g.DrawImage(image, new System.Drawing.Point(Character.X, Character.Y));
-                }
-            }
+            using Graphics g = Graphics.FromHwnd(WinApi.GetConsoleWindow());
+            using Image image = Image.FromFile("me.png");
+            g.DrawImage(image, new System.Drawing.Point(Character.X, Character.Y));
         }
 
         /// <summary>
         /// [비동기]키보드 입력값을 받아서 처리한다.
         /// 화면이 계속 키보드 입력값을 받으려고 대기할 수는 없으므로 비동기로 구현한다.
         /// </summary>
-        async void KeyboardInput()
+        private async void KeyboardInput()
         {
             await Task.Factory.StartNew(() =>
             {

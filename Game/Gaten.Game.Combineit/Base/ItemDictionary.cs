@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Gaten.Net.IO;
+
+using System;
 using System.Collections.ObjectModel;
-using System.Text;
-using System.IO;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 
 namespace Gaten.Game.Combineit.Base
 {
     public class ItemDictionary : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-        public static ObservableCollection<Item> Items { get; set; }
+        public static ObservableCollection<Item> Items { get; set; } = new();
 
         public ItemDictionary()
         {
-            Items = new ObservableCollection<Item>();
             Load();
         }
 
@@ -24,28 +23,10 @@ namespace Gaten.Game.Combineit.Base
         {
             string itemDictionaryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data\\item.cd");
 
-            using FileStream stream = new FileStream(itemDictionaryPath, FileMode.Open);
-            using StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-
-            reader.ReadLine();
-            reader.ReadLine();
-
-            try
+            string[]? data = GFile.ReadToArray(itemDictionaryPath);
+            foreach (string? item in data)
             {
-                while (true)
-                {
-                    string itemString = reader.ReadLine();
-                    if (itemString == null)
-                    {
-                        break;
-                    }
-
-                    AddItem(itemString);
-                }
-            }
-            catch
-            {
-
+                AddItem(item);
             }
         }
 
@@ -62,7 +43,7 @@ namespace Gaten.Game.Combineit.Base
 
             int id = int.Parse(data[0]);
             string name = data[1];
-            ObservableCollection<ItemSet> materials = new ObservableCollection<ItemSet>();
+            ObservableCollection<ItemSet>? materials = new();
 
             // 생산 아이템
             if (data.Length <= 5)
@@ -110,25 +91,19 @@ namespace Gaten.Game.Combineit.Base
 
         public static Item GetItem(int id)
         {
-            var item = Items.Where(i => i.Id.Equals(id));
+            System.Collections.Generic.IEnumerable<Item>? item = Items.Where(i => i.Id.Equals(id));
 
-            if (item == null)
-                throw new Exception("GetItem Error.");
-
-            return item.First();
+            return item == null ? throw new Exception("GetItem Error.") : item.First();
         }
 
         public static Item GetItem(string name)
         {
-            var item = Items.Where(i => i.Name.Equals(name));
+            System.Collections.Generic.IEnumerable<Item>? item = Items.Where(i => i.Name.Equals(name));
 
-            if (item == null)
-                throw new Exception("GetItem Error.");
-
-            return item.First();
+            return item == null ? throw new Exception("GetItem Error.") : item.First();
         }
 
-        void OnPropertyChanged(string propertyName)
+        private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

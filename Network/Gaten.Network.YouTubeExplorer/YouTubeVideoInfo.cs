@@ -2,13 +2,13 @@
 {
     internal class YouTubeVideoInfo
     {
-        public UrlInfo Video { get; set; }
-        public UrlInfo Channel { get; set; }
-        public string Length { get; set; }
-        public string View { get; set; }
-        public string Like { get; set; }
-        public string Upload { get; set; }
-        public string Reply { get; set; }
+        public UrlInfo Video { get; set; } = default!;
+        public UrlInfo Channel { get; set; } = default!;
+        public string Length { get; set; } = string.Empty;
+        public string View { get; set; } = string.Empty;
+        public string Like { get; set; } = string.Empty;
+        public string Upload { get; set; } = string.Empty;
+        public string Reply { get; set; } = string.Empty;
 
         public YouTubeVideoInfo()
         {

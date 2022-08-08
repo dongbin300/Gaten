@@ -2,17 +2,17 @@
 
 namespace Gaten.Game.RubiksCube
 {
-    class Program
+    internal class Program
     {
         public static RubiksCube333 cube = new();
 
-        static void Main()
+        private static void Main()
         {
             Refresh();
             Loop();
         }
 
-        static void Loop()
+        private static void Loop()
         {
             while (true)
             {
@@ -38,7 +38,7 @@ namespace Gaten.Game.RubiksCube
             }
         }
 
-        static void Refresh()
+        private static void Refresh()
         {
             cube.Draw();
         }

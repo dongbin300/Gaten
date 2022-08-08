@@ -1,4 +1,4 @@
-﻿namespace Gaten.Game.NGDG2
+﻿namespace Gaten.Game.NGDG2.Util.Screen
 {
     /// <summary>
     /// Console Helper
@@ -34,7 +34,7 @@
         /// <param name="x">좌표</param>
         /// <param name="y">좌표</param>
         /// <param name="highlightEffect">하이라이트</param>
-        public static void WriteHighlight(string text, int x = 0, int y = 0, HighlightEffect highlightEffect = null)
+        public static void WriteHighlight(string text, int x = 0, int y = 0, HighlightEffect highlightEffect = default!)
         {
             Console.ForegroundColor = highlightEffect.Tick();
 
@@ -78,10 +78,10 @@
         /// <param name="length">막대 길이</param>
         /// <param name="color">색상</param>
         /// <param name="backColor">배경 색상</param>
-        public static void DrawStatusBar(long current, long max, int x=0, int y=0, int length = 10, ConsoleColor color = ConsoleColor.White, ConsoleColor backColor = ConsoleColor.Gray)
+        public static void DrawStatusBar(long current, long max, int x = 0, int y = 0, int length = 10, ConsoleColor color = ConsoleColor.White, ConsoleColor backColor = ConsoleColor.Gray)
         {
             double ratio = current / (double)max;
-            int fill = (int)Math.Round(length * ratio);
+            int fill = (int)System.Math.Round(length * ratio);
             int blank = length - fill;
 
             DrawBar(x, y, fill, color);

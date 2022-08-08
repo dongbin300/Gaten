@@ -1,9 +1,8 @@
 ﻿using Gaten.Net.GameRule.osu.OsuFile.Headers;
 using Gaten.Net.GameRule.osu.OsuFile.Headers.Events;
+using Gaten.Net.IO;
 
 using System.Text;
-
-using GFile = Gaten.Net.Data.IO.GFile;
 
 namespace Gaten.Net.GameRule.osu.OsuFile
 {

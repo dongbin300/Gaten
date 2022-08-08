@@ -11,16 +11,16 @@ namespace Gaten.Windows.WindowsManager
         public static string ComputerName => Environment.MachineName;
         public static bool IsWindowsAuth => string.IsNullOrEmpty(SerialNumber);
 
-        public static string ProductName;
-        public static string ProductVersion;
-        public static string SerialNumber;
-        public static string CpuName;
-        public static string CpuCore;
-        public static string CpuThread;
-        public static string CpuSpeed;
-        public static string RamCapacity;
-        public static string GpuName;
-        public static string GpuRam;
+        public static string ProductName = string.Empty;
+        public static string ProductVersion = string.Empty;
+        public static string SerialNumber = string.Empty;
+        public static string CpuName = string.Empty;
+        public static string CpuCore = string.Empty;
+        public static string CpuThread = string.Empty;
+        public static string CpuSpeed = string.Empty;
+        public static string RamCapacity = string.Empty;
+        public static string GpuName = string.Empty;
+        public static string GpuRam = string.Empty;
 
         public static void GetInfo()
         {
@@ -40,12 +40,12 @@ namespace Gaten.Windows.WindowsManager
                 cpu.Dispose();
 
                 var ram = new ManagementObjectSearcher("SELECT * FROM Win32_OperatingSystem").Get().Cast<ManagementObject>().First();
-                RamCapacity = string.Format("{0}GB", Math.Round((double)(long.Parse(ram["TotalVisibleMemorySize"].ToString()) / (double)1024 / 1024)));
+                RamCapacity = string.Format("{0}GB", Math.Round((double)(long.Parse(ram["TotalVisibleMemorySize"].ToString() ?? string.Empty) / (double)1024 / 1024)));
                 ram.Dispose();
 
                 var gpu = new ManagementObjectSearcher("select * from Win32_VideoController").Get().Cast<ManagementObject>().First();
-                GpuName = gpu["Name"].ToString();
-                GpuRam = string.Format("{0}GB", Math.Round((double)(long.Parse(gpu["AdapterRAM"].ToString()) / (double)1024 / 1024 / 1024)));
+                GpuName = gpu["Name"].ToString() ?? string.Empty;
+                GpuRam = string.Format("{0}GB", Math.Round((double)(long.Parse(gpu["AdapterRAM"].ToString() ?? string.Empty) / (double)1024 / 1024 / 1024)));
                 gpu.Dispose();
             }
             catch

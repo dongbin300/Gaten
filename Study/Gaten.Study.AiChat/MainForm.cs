@@ -1,4 +1,4 @@
-using Gaten.Net.Data.IO;
+using Gaten.Net.IO;
 
 namespace Gaten.Study.AiChat
 {

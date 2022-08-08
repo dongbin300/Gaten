@@ -4,11 +4,11 @@ namespace Gaten.GameTool.SDVX.FumenQuiz
     {
         public enum Modes { Study, Exercise, Test, Hardcore };
         public Modes mode;
-        public List<int> selectedLevels = new List<int>();
-        public List<int> selectedSeries = new List<int>();
+        public List<int> selectedLevels = new();
+        public List<int> selectedSeries = new();
 
-        public string answer;
-        public string selectExample;
+        public string answer = string.Empty;
+        public string selectExample = string.Empty;
 
         public MainForm()
         {
@@ -19,10 +19,10 @@ namespace Gaten.GameTool.SDVX.FumenQuiz
 
         void Init()
         {
-            CheckBox[] levels = new CheckBox[20];
-            CheckBox allLevel = new CheckBox();
-            CheckBox[] seriess = new CheckBox[5];
-            CheckBox allSeries = new CheckBox();
+            var levels = new CheckBox[20];
+            var allLevel = new CheckBox();
+            var seriess = new CheckBox[5];
+            var allSeries = new CheckBox();
 
             for (int i = 0; i < levels.Length; i++)
             {
@@ -63,11 +63,19 @@ namespace Gaten.GameTool.SDVX.FumenQuiz
             // 1~16레벨 아직 미지원, 시리즈 미지원
             for (int i = 0; i < 16; i++)
             {
-                (levelPanel.Controls[$"LEVEL{i + 1}"] as CheckBox).Visible = false;
+                if (levelPanel.Controls[$"LEVEL{i + 1}"] is not CheckBox checkBox)
+                {
+                    return;
+                }
+                checkBox.Visible = false;
             }
             for (int i = 0; i < 5; i++)
             {
-                (seriesPanel.Controls[$"SERIES{i + 1}"] as CheckBox).Visible = false;
+                if (seriesPanel.Controls[$"SERIES{i + 1}"] is not CheckBox checkBox)
+                {
+                    return;
+                }
+                checkBox.Visible = false;
             }
             // 테스트모드, 하드코어모드 미지원
             testButton.Enabled = false;
@@ -76,24 +84,38 @@ namespace Gaten.GameTool.SDVX.FumenQuiz
             difficultyComboBox.SelectedIndex = 1;
         }
 
-        private void AllSeries_CheckedChanged(object sender, EventArgs e)
+        private void AllSeries_CheckedChanged(object? sender, EventArgs e)
         {
-            if ((sender as CheckBox).Checked)
-                for (int i = 0; i < 5; i++)
-                    (seriesPanel.Controls[$"SERIES{i + 1}"] as CheckBox).Checked = true;
-            else
-                for (int i = 0; i < 5; i++)
-                    (seriesPanel.Controls[$"SERIES{i + 1}"] as CheckBox).Checked = false;
+            if (sender is not CheckBox checkBox)
+            {
+                return;
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (seriesPanel.Controls[$"SERIES{i + 1}"] is not CheckBox checkBox2)
+                {
+                    return;
+                }
+                checkBox2.Checked = checkBox.Checked;
+            }
         }
 
-        private void AllLevel_CheckedChanged(object sender, EventArgs e)
+        private void AllLevel_CheckedChanged(object? sender, EventArgs e)
         {
-            if ((sender as CheckBox).Checked)
-                for (int i = 16; i < 20; i++)
-                    (levelPanel.Controls[$"LEVEL{i + 1}"] as CheckBox).Checked = true;
-            else
-                for (int i = 16; i < 20; i++)
-                    (levelPanel.Controls[$"LEVEL{i + 1}"] as CheckBox).Checked = false;
+            if (sender is not CheckBox checkBox)
+            {
+                return;
+            }
+
+            for (int i = 16; i < 20; i++)
+            {
+                if (levelPanel.Controls[$"LEVEL{i + 1}"] is not CheckBox checkBox2)
+                {
+                    return;
+                }
+                checkBox2.Checked = checkBox.Checked;
+            }
         }
 
         private void StudyButton_Click(object sender, EventArgs e)
@@ -113,14 +135,26 @@ namespace Gaten.GameTool.SDVX.FumenQuiz
             // 선택된 레벨 넣기
             for (int i = 0; i < 20; i++)
             {
-                if ((levelPanel.Controls[$"LEVEL{i + 1}"] as CheckBox).Checked)
+                if (levelPanel.Controls[$"LEVEL{i + 1}"] is not CheckBox checkBox)
+                {
+                    return;
+                }
+                if (checkBox.Checked)
+                {
                     selectedLevels.Add(i + 1);
+                }
             }
             // 선택된 시리즈 넣기
             for (int i = 0; i < 5; i++)
             {
-                if ((seriesPanel.Controls[$"SERIES{i + 1}"] as CheckBox).Checked)
+                if (seriesPanel.Controls[$"SERIES{i + 1}"] is not CheckBox checkBox)
+                {
+                    return;
+                }
+                if (checkBox.Checked)
+                {
                     selectedSeries.Add(i + 1);
+                }
             }
 
             mainTabControl.SelectedIndex = 2;
@@ -140,7 +174,7 @@ namespace Gaten.GameTool.SDVX.FumenQuiz
 
         int GetRandomLevel()
         {
-            List<int> counts = new List<int>();
+            var counts = new List<int>();
             foreach (int i in selectedLevels)
             {
                 counts.Add(new DirectoryInfo($"fumen\\{i}").GetFiles().Length);
@@ -159,7 +193,7 @@ namespace Gaten.GameTool.SDVX.FumenQuiz
 
         void Next(Modes mode)
         {
-            Random random = new Random();
+            var random = new Random();
             int level;
             List<FileInfo> files;
             FileInfo file;
@@ -214,16 +248,15 @@ namespace Gaten.GameTool.SDVX.FumenQuiz
 
         Bitmap CropImage(Image source, Rectangle section)
         {
-            Bitmap bmp = new Bitmap(section.Width, section.Height);
+            var bmp = new Bitmap(section.Width, section.Height);
             Graphics.FromImage(bmp).DrawImage(source, 0, 0, section, GraphicsUnit.Pixel);
             return bmp;
         }
 
         void ShowImage(string fileName)
         {
-            Random random = new Random();
-
-            Image image = Image.FromFile(fileName);
+            var random = new Random();
+            var image = Image.FromFile(fileName);
             int qWidth = 0;
             int qHeight = 0;
 
@@ -266,8 +299,8 @@ namespace Gaten.GameTool.SDVX.FumenQuiz
 
         void SetExample(List<FileInfo> files, string answer)
         {
-            Random random = new Random();
-            List<string> examples = new List<string>();
+            var random = new Random();
+            var examples = new List<string>();
             examples.Add(answer);
 
             // 정답 문자열
@@ -299,18 +332,26 @@ namespace Gaten.GameTool.SDVX.FumenQuiz
 
         private void ExampleListBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            ListBox listBox = sender as ListBox;
+            if (sender is not ListBox listBox)
+            {
+                return;
+            }
 
-            if (answer == listBox.SelectedItem.ToString())
+            if (listBox.SelectedItem.ToString() is not string str)
+            {
+                return;
+            }
+
+            if (answer == str)
             {
                 resultLabel.ForeColor = Color.Lime;
-                resultLabel.Text = $"[O] 정답:{answer}\r\n선택한 답:{listBox.SelectedItem.ToString()}";
+                resultLabel.Text = $"[O] 정답:{answer}\r\n선택한 답:{str}";
                 Next(mode);
             }
             else
             {
                 resultLabel.ForeColor = Color.Red;
-                resultLabel.Text = $"[X] 정답:{answer}\r\n선택한 답:{listBox.SelectedItem.ToString()}";
+                resultLabel.Text = $"[X] 정답:{answer}\r\n선택한 답:{str}";
                 Next(mode);
             }
         }

@@ -29,16 +29,16 @@ namespace Gaten.GameTool.GITADORA.Macro
             string[] hit = new string[1000];
             string[] newstr = new string[1000];
 
-            FileStream fs = new FileStream("music_info.json", FileMode.Open);
-            StreamReader sr = new StreamReader(fs, Encoding.UTF8);
-            string str = string.Empty;
-
+            FileStream fs = new("music_info.json", FileMode.Open);
+            StreamReader sr = new(fs, Encoding.UTF8);
             int p = 0;
             for (int i = 0; sr.Peek() >= 0; i++)
             {
-                str = sr.ReadLine();
+                string str = sr.ReadLine();
                 if (i <= 4)
+                {
                     continue;
+                }
 
                 str = str.Replace("{", "").Replace("}", "");
                 string[] contents = str.Split(',');
@@ -71,8 +71,8 @@ namespace Gaten.GameTool.GITADORA.Macro
             sr.Close();
             fs.Close();
 
-            FileStream fs2 = new FileStream("music_info.sql", FileMode.Create);
-            StreamWriter sw = new StreamWriter(fs2, Encoding.UTF8);
+            FileStream fs2 = new("music_info.sql", FileMode.Create);
+            StreamWriter sw = new(fs2, Encoding.UTF8);
 
             //(1, 'Cagayake!GIRLS', '桜高軽音部', 'Tom-H@ck', 'Shoko Oomori', '170', '1:31', '1.90', '3.90', '6.30', '7.60', '1.70', '3.60', '5.10', '7.55', '1.95', '3.80', '6.00', '7.40', 'mat', 452, ''),
             for (int i = 0; i < p; i++)

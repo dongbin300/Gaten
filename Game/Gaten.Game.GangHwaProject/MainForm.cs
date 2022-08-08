@@ -15,11 +15,11 @@ namespace Gaten.Game.GangHwaProject
         private void button1_Click(object sender, EventArgs e)
         {
             DateTime Clock = DateTime.Now;
-            Random rnd = new Random();
+            Random rnd = new();
             int num = rnd.Next(1, 100);
 
             temp = degree;
-            prob = 98 - degree * 4;
+            prob = 98 - (degree * 4);
             if (check == 0) // 처음 시작
             {
                 degree++;
@@ -46,7 +46,7 @@ namespace Gaten.Game.GangHwaProject
             }
             WeaponStatus.Text = degree.ToString();
 
-            prob = 98 - degree * 4;
+            prob = 98 - (degree * 4);
 
             if (check == -1)
             {
@@ -78,13 +78,13 @@ namespace Gaten.Game.GangHwaProject
 
         private void 도움말보기VToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            HelpForm helpForm = new HelpForm();
-            helpForm.ShowDialog();
+            HelpForm helpForm = new();
+            _ = helpForm.ShowDialog();
         }
 
         private void 개발자CToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("게임개발자: Gaten\r\n제작일: 2013년 3월 1일", "개발자", MessageBoxButtons.OK, MessageBoxIcon.None);
+            _ = MessageBox.Show("게임개발자: Gaten\r\n제작일: 2013년 3월 1일", "개발자", MessageBoxButtons.OK, MessageBoxIcon.None);
         }
     }
 }

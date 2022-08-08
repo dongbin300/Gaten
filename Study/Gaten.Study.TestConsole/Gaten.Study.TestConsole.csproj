@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -8,9 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Net\Gaten.Net.Data\Gaten.Net.Data.csproj" />
-    <ProjectReference Include="..\..\Net\Gaten.Net.Extension\Gaten.Net.Extension.csproj" />
-    <ProjectReference Include="..\..\Net\Gaten.Net.Image\Gaten.Net.Image.csproj" />
+    <ProjectReference Include="..\..\Net\Gaten.Net\Gaten.Net.csproj" />
+    <ProjectReference Include="..\Gaten.Study.TestDll\Gaten.Study.TestDll.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,3 +1,5 @@
+using Gaten.Game.NemoNemoLogic.Boards;
+
 namespace Gaten.Game.NemoNemoLogic
 {
     /* TODO
@@ -15,9 +17,9 @@ namespace Gaten.Game.NemoNemoLogic
         private int BOARD_HEIGHT;
 
 
-        public Board UserBoard, MiniBoard;
-        public NumberBoard AnswerBoard;
-        public Panel BoardPanel;
+        public Board UserBoard = default!, MiniBoard = default!;
+        public NumberBoard AnswerBoard = default!;
+        public Panel BoardPanel = default!;
 
         public MainForm()
         {
@@ -32,7 +34,7 @@ namespace Gaten.Game.NemoNemoLogic
                     state = isDragging ? markType : Math.Abs(1 - state);
                     break;
                 case MouseButtons.Right:
-                    state = isDragging ? markType : state / 2 * (-2) + 2;
+                    state = isDragging ? markType : (state / 2 * (-2)) + 2;
                     break;
             }
             markType = state;
@@ -45,7 +47,9 @@ namespace Gaten.Game.NemoNemoLogic
                 for (int j = 0; j < board.Width; j++)
                 {
                     if (board.State[i, j] == 2)
+                    {
                         board.State[i, j] = 0;
+                    }
                 }
             }
         }
@@ -61,7 +65,7 @@ namespace Gaten.Game.NemoNemoLogic
             AnswerBoard = new NumberBoard(Board.BoardTypes.Answer, BOARD_WIDTH, BOARD_HEIGHT);
             MiniBoard = new Board(Board.BoardTypes.Mini, BOARD_WIDTH, BOARD_HEIGHT);
 
-            BoardPanel = new Panel() { Width = BOARD_WIDTH * UserBoard.WidthPixel + MiniBoard.EndX, Height = BOARD_HEIGHT * UserBoard.HeightPixel + MiniBoard.EndY };
+            BoardPanel = new Panel() { Width = (BOARD_WIDTH * UserBoard.WidthPixel) + MiniBoard.EndX, Height = (BOARD_HEIGHT * UserBoard.HeightPixel) + MiniBoard.EndY };
             BoardPanel.Paint += BoardPanel_Paint;
             BoardPanel.MouseDown += BoardPanel_MouseDown;
             BoardPanel.MouseMove += BoardPanel_MouseMove;
@@ -73,7 +77,7 @@ namespace Gaten.Game.NemoNemoLogic
             AnswerBoard.CalculateProblemNumber();
         }
 
-        private void BoardPanel_MouseUp(object sender, MouseEventArgs e)
+        private void BoardPanel_MouseUp(object? sender, MouseEventArgs e)
         {
             try
             {
@@ -89,7 +93,7 @@ namespace Gaten.Game.NemoNemoLogic
             }
         }
 
-        private void BoardPanel_MouseMove(object sender, MouseEventArgs e)
+        private void BoardPanel_MouseMove(object? sender, MouseEventArgs e)
         {
             try
             {
@@ -112,7 +116,7 @@ namespace Gaten.Game.NemoNemoLogic
             }
         }
 
-        private void BoardPanel_MouseDown(object sender, MouseEventArgs e)
+        private void BoardPanel_MouseDown(object? sender, MouseEventArgs e)
         {
             try
             {
@@ -128,7 +132,7 @@ namespace Gaten.Game.NemoNemoLogic
             }
         }
 
-        private void BoardPanel_Paint(object sender, PaintEventArgs e)
+        private void BoardPanel_Paint(object? sender, PaintEventArgs e)
         {
             AnswerBoard.PaintLine(e);
             AnswerBoard.NumberInit(e);
@@ -139,7 +143,7 @@ namespace Gaten.Game.NemoNemoLogic
             if (!isClear && UserBoard.CheckCompletion(AnswerBoard))
             {
                 isClear = true;
-                MessageBox.Show("완성.");
+                _ = MessageBox.Show("완성.");
                 DisableMark(UserBoard);
                 //MiniBoard.state = MainBoard.state;
             }

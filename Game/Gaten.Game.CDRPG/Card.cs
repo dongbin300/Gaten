@@ -1,46 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gaten.Game.CDRPG
+﻿namespace Gaten.Game.CDRPG
 {
     public class Card
     {
-        public enum Types { Character, Weapon }
-        public enum Properties { None, Water, Fire, Light, Dark, Electricity }
-        public enum Species { Human, Machine, Reptile, Monster, Food }
-        public enum Tiers { Bronze, Silver, Gold, Rainbow }
+        public enum Types
+        {
+            None,
+            Character,
+            Weapon
+        }
+        public enum Properties
+        {
+            None,
+            Water,
+            Fire,
+            Light,
+            Dark,
+            Electricity
+        }
+        public enum Species
+        {
+            None,
+            Human,
+            Machine,
+            Reptile,
+            Monster,
+            Food
+        }
+        public enum Tiers
+        {
+            None,
+            Bronze,
+            Silver,
+            Gold,
+            Rainbow
+        }
 
-        int no;
-        string code;
-        string name;
-        int turn;
-        public int power;
-        public readonly string rangeString = "abcdefghijklmnopqrstuvwxy";
-        public string range;
-        public Types type;
-        Properties property;
-        Species species;
-        Tiers tier;
-        string effect;
+        private readonly int no;
+        private readonly string code;
+        private readonly string name;
+        private readonly int turn;
+        public int Power;
+        public readonly string RangeString = "abcdefghijklmnopqrstuvwxy";
+        public string Range;
+        public Types Type;
+        private readonly Properties property;
+        private readonly Species species;
+        private readonly Tiers tier;
+        private readonly string effect;
+        private readonly List<Card> cards = new();
 
-        List<Card> cards = new List<Card>();
-
-        public Card()
+        public Card() : this(0, string.Empty, string.Empty, 0, 0, string.Empty, Types.None, Properties.None, Species.None, Tiers.None, string.Empty)
         {
 
         }
+
         public Card(int no, string code, string name, int turn, int power, string range, Types type, Properties property, Species species, Tiers tier, string effect)
         {
             this.no = no;
             this.code = code;
             this.name = name;
             this.turn = turn;
-            this.power = power;
-            this.range = range;
-            this.type = type;
+            Power = power;
+            Range = range;
+            Type = type;
             this.property = property;
             this.species = species;
             this.tier = tier;
@@ -68,7 +90,7 @@ namespace Gaten.Game.CDRPG
 
         public override string ToString()
         {
-            return code + "\n" + name + "\n" + turn + "\n" + power + "\n" + type + "\n" + property + "\n" + species + "\n" + tier;
+            return code + "\n" + name + "\n" + turn + "\n" + Power + "\n" + Type + "\n" + property + "\n" + species + "\n" + tier;
         }
 
         public Card GetCard(int cardNo)

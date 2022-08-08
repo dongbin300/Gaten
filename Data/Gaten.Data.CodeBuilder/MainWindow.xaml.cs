@@ -13,7 +13,7 @@ namespace Gaten.Data.CodeBuilder
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<Property> properties = new List<Property>();
+        private readonly List<Property> properties = new();
 
         public MainWindow()
         {
@@ -26,46 +26,46 @@ namespace Gaten.Data.CodeBuilder
             SetCheckBox.IsChecked = true;
         }
 
-        void BuildCode()
+        private void BuildCode()
         {
             try
             {
                 string namespaceClassText = NamespaceClassText.Text.Length > 0 ? NamespaceClassText.Text : "";
                 int idx = namespaceClassText.LastIndexOf('.');
-                string namespaceText = idx == -1 ? (namespaceClassText.Length > 0 ? namespaceClassText : "") : namespaceClassText.Substring(0, idx);
-                string classText = idx == -1 ? "" : namespaceClassText.Substring(idx + 1);
+                string namespaceText = idx == -1 ? (namespaceClassText.Length > 0 ? namespaceClassText : "") : namespaceClassText[..idx];
+                string classText = idx == -1 ? "" : namespaceClassText[(idx + 1)..];
 
-                StringBuilder builder = new StringBuilder("");
+                StringBuilder? builder = new("");
 
-                if (UsingCheckBox.IsChecked.Value)
+                if (UsingCheckBox.IsChecked ?? true)
                 {
-                    builder.AppendLine("using System;");
-                    builder.AppendLine("using System.Collections.Generic;");
-                    builder.AppendLine("using System.Text;");
-                    builder.AppendLine();
+                    _ = builder.AppendLine("using System;");
+                    _ = builder.AppendLine("using System.Collections.Generic;");
+                    _ = builder.AppendLine("using System.Text;");
+                    _ = builder.AppendLine();
                 }
 
-                builder.AppendFormat("namespace {1}{0}{{{0}\tpublic class {2}{0}\t{{{0}", Environment.NewLine, namespaceText, classText);
+                _ = builder.AppendFormat("namespace {1}{0}{{{0}\tpublic class {2}{0}\t{{{0}", Environment.NewLine, namespaceText, classText);
 
                 foreach (Property p in properties)
                 {
-                    builder.AppendFormat("\t\t{1} {2} {3} {4}{0}", Environment.NewLine, p.AccessModifier, p.DataType, p.Name, p.AccessorString);
+                    _ = builder.AppendFormat("\t\t{1} {2} {3} {4}{0}", Environment.NewLine, p.AccessModifier, p.DataType, p.Name, p.AccessorString);
                 }
 
-                builder.AppendFormat("{0}\t\tpublic {1}({2}){0}\t\t{{{0}", Environment.NewLine, classText, string.Join(", ", properties.Select(p => p.ParameterString)));
+                _ = builder.AppendFormat("{0}\t\tpublic {1}({2}){0}\t\t{{{0}", Environment.NewLine, classText, string.Join(", ", properties.Select(p => p.ParameterString)));
 
                 foreach (Property p in properties)
                 {
-                    builder.AppendFormat("\t\t\t{1}{0}", Environment.NewLine, p.InitString);
+                    _ = builder.AppendFormat("\t\t\t{1}{0}", Environment.NewLine, p.InitString);
                 }
 
-                builder.AppendFormat("\t\t}}{0}\t}}{0}}}{0}", Environment.NewLine);
+                _ = builder.AppendFormat("\t\t}}{0}\t}}{0}}}{0}", Environment.NewLine);
 
                 OutText.Text = builder.ToString();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                _ = MessageBox.Show(ex.Message);
             }
         }
 
@@ -73,65 +73,65 @@ namespace Gaten.Data.CodeBuilder
         {
             if (PropertyNameText.Text.Length < 1)
             {
-                MessageBox.Show("속성 이름을 입력해 주세요.");
+                _ = MessageBox.Show("속성 이름을 입력해 주세요.");
                 return;
             }
 
-            if (PropertyNameText.Text.Contains(" "))
+            if (PropertyNameText.Text.Contains(' '))
             {
-                MessageBox.Show("속성 이름은 공백을 포함할 수 없습니다.");
+                _ = MessageBox.Show("속성 이름은 공백을 포함할 수 없습니다.");
                 return;
             }
 
-            string accessModifier = PublicCheckBox.IsChecked.Value ? "public" : "private";
+            string accessModifier = PublicCheckBox.IsChecked ?? true ? "public" : "private";
             string dataType = DataTypeText.Text.Length > 0 ? DataTypeText.Text : "object";
             string name = PropertyNameText.Text;
-            string upperName = name.Substring(0, 1).ToUpper() + name.Substring(1);
-            bool get = GetCheckBox.IsChecked.Value;
-            bool set = SetCheckBox.IsChecked.Value;
+            string upperName = string.Concat(name[..1].ToUpper(), name.AsSpan(1));
+            bool get = GetCheckBox.IsChecked ?? true;
+            bool set = SetCheckBox.IsChecked ?? true;
 
             properties.Add(new Property(accessModifier, dataType, upperName, get, set));
 
             BuildCode();
 
             PropertyNameText.Clear();
-            PropertyNameText.Focus();
+            _ = PropertyNameText.Focus();
         }
 
         private void StringButton_Click(object sender, RoutedEventArgs e)
         {
             DataTypeText.Text = "string";
-            PropertyNameText.Focus();
+            _ = PropertyNameText.Focus();
         }
 
         private void IntButton_Click(object sender, RoutedEventArgs e)
         {
             DataTypeText.Text = "int";
-            PropertyNameText.Focus();
+            _ = PropertyNameText.Focus();
         }
 
         private void BoolButton_Click(object sender, RoutedEventArgs e)
         {
             DataTypeText.Text = "bool";
-            PropertyNameText.Focus();
+            _ = PropertyNameText.Focus();
         }
 
         private void ListStringButton_Click(object sender, RoutedEventArgs e)
         {
             DataTypeText.Text = "List<string>";
-            PropertyNameText.Focus();
+            _ = PropertyNameText.Focus();
         }
 
         private void ListIntButton_Click(object sender, RoutedEventArgs e)
         {
             DataTypeText.Text = "List<int>";
-            PropertyNameText.Focus();
+            _ = PropertyNameText.Focus();
         }
 
         private void ListBoolButton_Click(object sender, RoutedEventArgs e)
         {
             DataTypeText.Text = "List<bool>";
-            PropertyNameText.Focus();
+            _ = PropertyNameText.Focus();
         }
 
         private void UsingCheckBox_Checked(object sender, RoutedEventArgs e)
@@ -163,14 +163,14 @@ namespace Gaten.Data.CodeBuilder
         {
             if (e.Key == Key.Enter)
             {
-                AddButton_Click(null, null);
+                AddButton_Click(sender, new RoutedEventArgs());
             }
         }
 
         private void ClipboardCopyButton_Click(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(OutText.Text);
-            MessageBox.Show("복사가 완료되었습니다.\r\n에디터에 붙여넣기 하세요.");
+            _ = MessageBox.Show("복사가 완료되었습니다.\r\n에디터에 붙여넣기 하세요.");
         }
     }
 }

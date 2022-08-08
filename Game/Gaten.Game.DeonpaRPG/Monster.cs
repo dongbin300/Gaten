@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Gaten.Game.DeonpaRPG
+﻿namespace Gaten.Game.DeonpaRPG
 {
-    class Monster : IDisposable
+    internal class Monster : IDisposable
     {
         public string name;
         public int level;
@@ -18,7 +16,7 @@ namespace Gaten.Game.DeonpaRPG
 
         }
 
-        public Monster(string name, int level, long hpMax, long gold, long exp, int sp) 
+        public Monster(string name, int level, long hpMax, long gold, long exp, int sp)
         {
             this.name = name;
             this.level = level;

@@ -7,8 +7,8 @@ namespace Gaten.Game.MapAdventureConsole
         public static int X;
         public static int Y;
         public static Size Size;
-        readonly static int temporaryMoveDistance = 12;
-        readonly static int jumpInterval = 100;
+        private static readonly int temporaryMoveDistance = 12;
+        private static readonly int jumpInterval = 100;
 
         public Character(int x = 100, int y = 200, int width = 20, int height = 20)
         {

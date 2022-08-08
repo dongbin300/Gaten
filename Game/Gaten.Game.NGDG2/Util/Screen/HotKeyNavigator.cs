@@ -1,6 +1,7 @@
-﻿using System.Text;
+﻿
+using System.Text;
 
-namespace Gaten.Game.NGDG2
+namespace Gaten.Game.NGDG2.Util.Screen
 {
     public class HotKeyNavigator
     {
@@ -20,11 +21,11 @@ namespace Gaten.Game.NGDG2
 
         public override string ToString()
         {
-            StringBuilder str = new StringBuilder("");
+            StringBuilder str = new("");
 
-            foreach(KeyValuePair<string, string> pair in HotKeys)
+            foreach (KeyValuePair<string, string> pair in HotKeys)
             {
-                str.Append($"[{pair.Key}] {pair.Value} ");
+                _ = str.Append($"[{pair.Key}] {pair.Value} ");
             }
 
             return str.ToString();

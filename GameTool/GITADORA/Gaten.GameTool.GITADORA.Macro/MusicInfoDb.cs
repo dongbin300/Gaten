@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Gaten.GameTool.GITADORA.Macro
 {
     internal class MusicInfoDb
     {
-        int id = 1061;
-        int curp;
-        string otitle = string.Empty;
-        string title = string.Empty;
-        string artist = string.Empty;
-        string composition = string.Empty;
-        string lyric = string.Empty;
-        string bpm = string.Empty;
-        string length = string.Empty;
-        string version = "exc";
+        private readonly int id = 1061;
+        private int curp;
+        private readonly string otitle = string.Empty;
+        private readonly string title = string.Empty;
+        private readonly string artist = string.Empty;
+        private readonly string composition = string.Empty;
+        private readonly string lyric = string.Empty;
+        private readonly string bpm = string.Empty;
+        private readonly string length = string.Empty;
+        private readonly string version = "exc";
 
         public MusicInfoDb()
         {
@@ -39,7 +35,7 @@ namespace Gaten.GameTool.GITADORA.Macro
                 string dir = Console.ReadLine();
                 string source = string.Empty;
 
-                using (WebClient wc = new WebClient())
+                using (WebClient wc = new())
                 {
                     wc.Encoding = Encoding.UTF8;
                     source = wc.DownloadString(dir);
@@ -78,9 +74,14 @@ namespace Gaten.GameTool.GITADORA.Macro
                         }
                     }
                     if (str.Contains("BPM"))
+                    {
                         bpm = str.Split(':')[1].Trim();
+                    }
+
                     if (str.Contains("Length"))
+                    {
                         length = str.Split(':')[1].Trim() + ":" + str.Split(':')[2].Trim();
+                    }
                 }
 
                 int s0 = source.IndexOf("Difficulty &amp; Notecounts");
@@ -100,8 +101,8 @@ namespace Gaten.GameTool.GITADORA.Macro
 
                 // (519, 'MODEL DD10', 'Mutsuhiko Izumi', 'Mutsuhiko Izumi', '', '150', '1:46', '5.20', '6.80', '8.70', '9.55', '4.50', '8.40', '9.25', '9.91', '5.40', '6.20', '8.00', '8.95', 'GITADORA', 0, ''),
 
-                FileStream fs = new FileStream("music_info.sql", FileMode.Append);
-                StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+                FileStream fs = new("music_info.sql", FileMode.Append);
+                StreamWriter sw = new(fs, Encoding.UTF8);
                 //sw.WriteLine(",");
                 //sw.Write("{" + $"\"id\":\"{id}\",\"Title\":\"{title}\",\"Artist\":\"{artist}\",\"Composition\":\"{composition}\",\"Lyric\":\"{lyric}\",\"BPM\":\"{bpm}\",\"Length\":\"{length}\",\"Basic-D\":\"{db}\",\"Advanced-D\":\"{da}\",\"Extreme-D\":\"{de}\",\"Master-D\":\"{dm}\",\"Basic-G\":\"{gb}\",\"Advanced-G\":\"{ga}\",\"Extreme-G\":\"{ge}\",\"Master-G\":\"{gm}\",\"Basic-B\":\"{bb}\",\"Advanced-B\":\"{ba}\",\"Extreme-B\":\"{be}\",\"Master-B\":\"{bm}\",\"Version\":\"{version}\",\"Hit\":\"0\",\"New\":\"\"" + "}");
 
@@ -117,7 +118,7 @@ namespace Gaten.GameTool.GITADORA.Macro
                 p += s.Length;
                 int ep = o.IndexOf(e, p);
                 curp = ep;
-                return o.Substring(p, ep - p);
+                return o[p..ep];
             }
         }
     }

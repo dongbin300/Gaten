@@ -1,14 +1,14 @@
+using Gaten.Net.GameRule.StarCraft.PlaySystem;
+
 using System.Data;
 using System.Text;
-
-using Gaten.Net.GameRule.StarCraft.PlaySystem;
 
 namespace Gaten.GameTool.StarCraft.ChunkReader
 {
     public partial class Form1 : Form
     {
-        public byte[] bytes;
-        public string str;
+        public byte[] bytes = default!;
+        public string str = string.Empty;
 
         public Form1()
         {
@@ -524,7 +524,7 @@ namespace Gaten.GameTool.StarCraft.ChunkReader
 
         public string GetHexString(byte[] bytes)
         {
-            StringBuilder bu = new StringBuilder("");
+            var bu = new StringBuilder("");
 
             foreach (byte b in bytes)
             {
@@ -568,7 +568,21 @@ namespace Gaten.GameTool.StarCraft.ChunkReader
 
         private void ChunkListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DataGrid.Rows[DataGrid.Rows.Cast<DataGridViewRow>().Where(r => r.Cells["Description"].Value.ToString().Equals(ChunkListBox.Items[ChunkListBox.SelectedIndex].ToString())).First().Index].Selected = true;
+            var rows = DataGrid.Rows.Cast<DataGridViewRow>();
+            foreach (var row in rows)
+            {
+                var descriptionValue = row.Cells["Description"].Value.ToString();
+                if (descriptionValue == null)
+                {
+                    continue;
+                }
+
+                if (descriptionValue.Equals(ChunkListBox.Items[ChunkListBox.SelectedIndex].ToString()))
+                {
+                    DataGrid.Rows[row.Index].Selected = true;
+                    break;
+                }
+            }
 
             DataGrid.FirstDisplayedCell = DataGrid.Rows[DataGrid.SelectedRows[0].Index].Cells[0];
         }

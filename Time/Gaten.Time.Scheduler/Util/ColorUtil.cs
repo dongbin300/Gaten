@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media;
 
-using ColorUtil2 = Gaten.Net.Windows.Wpf.ColorUtil;
+using ColorUtil2 = Gaten.Net.Wpf.ColorUtil;
 
 namespace Gaten.Time.Scheduler.Util
 {

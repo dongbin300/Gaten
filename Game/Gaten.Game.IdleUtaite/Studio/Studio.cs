@@ -2,9 +2,9 @@
 {
     public class Studio
     {
-        public List<Music> musics = new List<Music>();
+        public List<Music> musics = new();
         public Music recordedMusic;
-        public List<Effector> effectors = new List<Effector>();
+        public List<Effector> effectors = new();
 
         public Studio() { }
 

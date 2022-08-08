@@ -1,5 +1,5 @@
-﻿using Gaten.Net.Data.Serialization;
-using Gaten.Net.Extension;
+﻿using Gaten.Net.Serialization;
+using Gaten.Net.Extensions;
 using Gaten.Net.Windows.PE.Build;
 using Gaten.Net.Windows.PE.Build.Assemble;
 

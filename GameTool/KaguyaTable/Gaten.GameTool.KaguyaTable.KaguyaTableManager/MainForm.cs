@@ -17,7 +17,7 @@ namespace Gaten.GameTool.KaguyaTable.KaguyaTableManager
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            string ieKaguyaPath = Path.Combine(iePath1, saveDirectoryTextBox.Text, "www.walfas.org");
+            _ = Path.Combine(iePath1, saveDirectoryTextBox.Text, "www.walfas.org");
             string kaguyaPath = Path.Combine(path1 + saveDirectoryTextBox.Text + "www.walfas.org");
             try
             {
@@ -41,7 +41,9 @@ namespace Gaten.GameTool.KaguyaTable.KaguyaTableManager
 
                 ulong sum = 0;
                 for (int i = level; i <= level + require; i++)
+                {
                     sum += (ulong)((i + 1) * 250);
+                }
 
                 HXPlb.Text = string.Format("{0:0}", sum) + "(" + string.Format("{0:0}", sum / 100_000_000) + "¾ï)";
             }
@@ -96,7 +98,9 @@ namespace Gaten.GameTool.KaguyaTable.KaguyaTableManager
         private void autoSaveTimer_Tick(object sender, EventArgs e)
         {
             if (autoSaveCheckBox.Checked)
+            {
                 saveButton_Click(sender, e);
+            }
         }
 
         private void statusLabelTimer_Tick(object sender, EventArgs e)
@@ -108,15 +112,21 @@ namespace Gaten.GameTool.KaguyaTable.KaguyaTableManager
         private void autoSaveCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (autoSaveCheckBox.Checked)
+            {
                 autoSaveTimer.Start();
+            }
             else
+            {
                 autoSaveTimer.Stop();
+            }
         }
 
         private void toolStripStatusLabel1_TextChanged(object sender, EventArgs e)
         {
             if (toolStripStatusLabel1.Text.Length > 1)
+            {
                 statusLabelTimer.Start();
+            }
         }
     }
 }

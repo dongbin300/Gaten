@@ -1,4 +1,4 @@
-﻿using Gaten.Net.Data.Diagnostics;
+﻿using Gaten.Net.Diagnostics;
 using Gaten.Net.Network;
 
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace Gaten.Windows.MintPanda.Contents
     /// </summary>
     public partial class CheckList : Window
     {
-        public static List<Check> Checks { get; set; }
+        public static List<Check> Checks { get; set; } = new();
 
         public CheckList()
         {
@@ -29,7 +29,6 @@ namespace Gaten.Windows.MintPanda.Contents
 
         public static void Init()
         {
-            Checks = new List<Check>();
             //CheckLists.Add(NaverMembershipDay());
         }
 

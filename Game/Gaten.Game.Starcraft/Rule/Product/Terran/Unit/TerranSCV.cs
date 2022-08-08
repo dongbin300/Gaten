@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gaten.Game.Starcraft.Rule.Product.Terran.Unit
+﻿namespace Gaten.Game.Starcraft.Rule.Product.Terran.Unit
 {
-    class TerranSCV : IUnit
+    internal class TerranSCV : IUnit
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -4,6 +4,6 @@ namespace Gaten.Audio.Mp3Player
 {
     public class MusicFile
     {
-        public FileInfo info { get; set; }
+        public FileInfo Info { get; set; } = default!;
     }
 }

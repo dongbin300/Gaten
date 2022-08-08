@@ -1,5 +1,6 @@
 ﻿#pragma warning disable CS8602 // null 가능 참조에 대한 역참조입니다.
 
+using Gaten.Net.IO;
 using Gaten.Windows.MintChoco3.Model;
 using Gaten.Windows.MintChoco3.Resources.Texts;
 using Gaten.Windows.MintChoco3.Resources.Utils;
@@ -8,7 +9,6 @@ using MintChocoLibrary.Hooking;
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -52,7 +52,7 @@ namespace Gaten.Windows.MintChoco3
 
         void LoadModuleData()
         {
-            var data = Net.Data.IO.GFile.ReadToArray(PathCollection.MintChocoSettingPath);
+            var data = GFile.ReadToArray(PathCollection.MintChocoSettingPath);
 
             foreach (var d in data)
             {

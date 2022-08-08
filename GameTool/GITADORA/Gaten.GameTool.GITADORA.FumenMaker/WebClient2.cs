@@ -15,7 +15,8 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
         {
             WebRequest request = base.GetWebRequest(address);
 
-            ((HttpWebRequest)request).ServicePoint.BindIPEndPointDelegate += (servicePoint, remoteEndPoint, retryCount) => {
+            ((HttpWebRequest)request).ServicePoint.BindIPEndPointDelegate += (servicePoint, remoteEndPoint, retryCount) =>
+            {
                 return new IPEndPoint(_ipAddress, 0);
             };
 

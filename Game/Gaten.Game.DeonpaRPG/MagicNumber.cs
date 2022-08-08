@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gaten.Game.DeonpaRPG
+﻿namespace Gaten.Game.DeonpaRPG
 {
-    class MagicNumber
+    internal class MagicNumber
     {
         private int mNum;
         private const int divisionLevel = 10;
@@ -18,31 +12,28 @@ namespace Gaten.Game.DeonpaRPG
 
         public int Create(Character character)
         {
-            mNum = character.profession.GetHashCode() / divisionLevel
-                + character.level.GetHashCode() / divisionLevel
-                + character.questProgress.GetHashCode() / divisionLevel
-                + character.exp.GetHashCode() / divisionLevel
-                + character.gold.GetHashCode() / divisionLevel
-                + character.ability.hp.current.GetHashCode() / divisionLevel
-                + character.ability.mp.current.GetHashCode() / divisionLevel
-                + character.gun.GetHashCode() / divisionLevel
-                + character.armor.GetHashCode() / divisionLevel
-                + character.necklace.GetHashCode() / divisionLevel
-                + character.avatar.GetHashCode() / divisionLevel
-                + character.pendant.GetHashCode() / divisionLevel
-                + character.others.GetHashCode() / divisionLevel
-                + character.abilityStone.GetHashCode() / divisionLevel
-                + character.sp.GetHashCode() / divisionLevel;
+            mNum = (character.profession.GetHashCode() / divisionLevel)
+                + (character.level.GetHashCode() / divisionLevel)
+                + (character.questProgress.GetHashCode() / divisionLevel)
+                + (character.exp.GetHashCode() / divisionLevel)
+                + (character.gold.GetHashCode() / divisionLevel)
+                + (character.ability.hp.current.GetHashCode() / divisionLevel)
+                + (character.ability.mp.current.GetHashCode() / divisionLevel)
+                + (character.gun.GetHashCode() / divisionLevel)
+                + (character.armor.GetHashCode() / divisionLevel)
+                + (character.necklace.GetHashCode() / divisionLevel)
+                + (character.avatar.GetHashCode() / divisionLevel)
+                + (character.pendant.GetHashCode() / divisionLevel)
+                + (character.others.GetHashCode() / divisionLevel)
+                + (character.abilityStone.GetHashCode() / divisionLevel)
+                + (character.sp.GetHashCode() / divisionLevel);
 
             return mNum;
         }
 
         public bool isRight(Character character, int num)
         {
-            if (num == Create(character))
-                return true;
-            else
-                return false;
+            return num == Create(character);
         }
     }
 }

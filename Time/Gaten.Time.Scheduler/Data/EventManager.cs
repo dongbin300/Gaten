@@ -1,6 +1,4 @@
-﻿using Gaten.Net.Windows.MSQ;
-using Gaten.Time.Scheduler.Util;
-using Gaten.Net.Network.MySql;
+﻿using Gaten.Net.Network.MySql;
 
 using System;
 using System.Collections.Generic;
@@ -10,7 +8,7 @@ namespace Gaten.Time.Scheduler.Data
 {
     public class EventManager
     {
-        public static List<Event> Events { get; set; }
+        public static List<Event> Events { get; set; } = new();
 
         public EventManager()
         {
@@ -29,7 +27,7 @@ namespace Gaten.Time.Scheduler.Data
 
         static List<Event> LoadEventFromDatabase()
         {
-            List<Event> events = new List<Event>();
+            var events = new List<Event>();
 
             try
             {

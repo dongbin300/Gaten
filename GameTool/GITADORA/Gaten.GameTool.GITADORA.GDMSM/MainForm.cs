@@ -1,9 +1,10 @@
-using Gaten.Net.Extension;
+using Gaten.Net.Extensions;
 using Gaten.Net.Image;
 using Gaten.Net.Windows.Forms;
-using Path = Gaten.Net.GameRule.GITADORA.Path;
 
 using System.Text;
+
+using Path = Gaten.Net.GameRule.GITADORA.Path;
 
 namespace Gaten.GameTool.GITADORA.GDMSM
 {
@@ -89,7 +90,7 @@ namespace Gaten.GameTool.GITADORA.GDMSM
         private int endScreenShotIndex;
 
         // 생성해야할 보면 그룹화
-        private List<string> fileId = new List<string>();
+        private readonly List<string> fileId = new();
 
         /* * * * * * * *
              비트맵
@@ -130,7 +131,7 @@ namespace Gaten.GameTool.GITADORA.GDMSM
         private Thread makeWorker1;
 
         private Player current;
-        private Player[] player = new Player[5];
+        private readonly Player[] player = new Player[5];
 
         private string fumenDirectory;
         private string videoDirectory;
@@ -149,41 +150,43 @@ namespace Gaten.GameTool.GITADORA.GDMSM
             player[3] = new Player("SakamotoNeko(B)", Mode.Guitar, 8, 16, 20, new int[] { 2, 4, 6, 9, 11, 13, 15, 17, 19, 22, 24, 26, 28, 30, 32 }, new int[] { 856, 856, 856 }, new int[] { 235, 235, 235 }, 510, 20, 660 - 300, 300, 100, 20, 30, 660); // speed x6.0
             player[4] = new Player("DTX", Mode.Drum, 3, 48, 20, new int[] { 0, 3, 7, 10, 14, 17, 21, 23, 27, 30, 34, 37, 41, 44, 47 }, new int[] { 302, 304, 296 }, new int[] { 510, 512, 518 }, 800, 630, 0, 500, 300, 20, 20);
             foreach (Player p in player)
-                playerListBox.Items.Add(p.name);
+            {
+                _ = playerListBox.Items.Add(p.name);
+            }
 
             // 플레이어 deafult
             playerListBox.SelectedIndex = 4;
 
             // 디렉토리 로드
-            using (FileStream fs = new FileStream("dir.ini", FileMode.Open))
+            using (FileStream fs = new("dir.ini", FileMode.Open))
             {
-                using (StreamReader sr = new StreamReader(fs, Encoding.Unicode))
-                {
-                    screenShotDirectory = sr.ReadLine().Split('\"')[1];
-                    fumenDirectory = sr.ReadLine().Split('\"')[1];
-                    videoDirectory = sr.ReadLine().Split('\"')[1];
-                }
+                using StreamReader sr = new(fs, Encoding.Unicode);
+                screenShotDirectory = sr.ReadLine().Split('\"')[1];
+                fumenDirectory = sr.ReadLine().Split('\"')[1];
+                videoDirectory = sr.ReadLine().Split('\"')[1];
             }
 
             // 보면 제목 grouping
             files = new DirectoryInfo(screenShotDirectory).GetFiles("*.bmp");
             foreach (FileInfo fi in files)
             {
-                string fileIdStr = fi.Name.Substring(0, fi.Name.Length - 19);
+                string fileIdStr = fi.Name[..^19];
                 if (!fileId.Contains(fileIdStr))
+                {
                     fileId.Add(fileIdStr);
+                }
             }
 
             // CheckedListBox에 보면 리스트 추가
             int ip = 0;
-            selectFumenCheckedListBox.Items.Add("전체 선택");
+            _ = selectFumenCheckedListBox.Items.Add("전체 선택");
             selectFumenCheckedListBox.SetItemCheckState(ip++, CheckState.Checked);
 
             foreach (string str in fileId)
             {
                 files = new DirectoryInfo(screenShotDirectory).GetFiles($"{str}*.bmp");
 
-                selectFumenCheckedListBox.Items.Add($"{str.Replace("Gitadora ", "").Replace("GITADORA ", "").Replace(" drum", "").Replace(" guitar", "").Replace(" bass", "")} ({files.Length}) {string.Format("{0:0.00%}/{1:0.00%}", Util.DislocationRatio(files, 1.2, current.frame), Util.DislocationRatio(files, 1.5, current.frame))}");
+                _ = selectFumenCheckedListBox.Items.Add($"{str.Replace("Gitadora ", "").Replace("GITADORA ", "").Replace(" drum", "").Replace(" guitar", "").Replace(" bass", "")} ({files.Length}) {string.Format("{0:0.00%}/{1:0.00%}", Util.DislocationRatio(files, 1.2, current.frame), Util.DislocationRatio(files, 1.5, current.frame))}");
                 selectFumenCheckedListBox.SetItemCheckState(ip++, CheckState.Checked);
             }
         }
@@ -223,7 +226,7 @@ namespace Gaten.GameTool.GITADORA.GDMSM
 
             // bCount / cCount 재계산
             bCount = endScreenShotIndex - startScreenShotIndex;
-            cCount = bCount / current.oneColumnCount + 1;
+            cCount = (bCount / current.oneColumnCount) + 1;
             Delegater.ProgressBarSetMax(makeProgressBar, bCount);
         }
 
@@ -376,7 +379,7 @@ namespace Gaten.GameTool.GITADORA.GDMSM
             Delegater.EnableSet(makeButton, false);
             complete = false;
 
-            Thread viewWorker = new Thread(new ThreadStart(Proceed));
+            Thread viewWorker = new(new ThreadStart(Proceed));
             makeWorker1 = new Thread(new ThreadStart(MakeFumen1));
 
             // 현재 작업상황 출력
@@ -415,7 +418,7 @@ namespace Gaten.GameTool.GITADORA.GDMSM
                         Delegater.ProgressBarSetValue(makeProgressBar, bI + 1);
                         Delegater.TextSet(mergeFileCountLabel, $"{fI + 1} / {selectFumenCheckedListBox.CheckedItems.Count - allCheck}");
                         Delegater.TextSet(mergeLabel, string.Format("{0} / {1} ({2:0.0}%)", bI + 1, bCount, Math.Round((double)(bI + 1) / bCount * 100.0, 1)));
-                        Delegater.TextSet(fileNameLabel, files[startScreenShotIndex + bI].Name.Substring(files[startScreenShotIndex + bI].Name.Length - 14));
+                        Delegater.TextSet(fileNameLabel, files[startScreenShotIndex + bI].Name[^14..]);
                         Delegater.TextSet(proceedLabel, "합치는 중..");
                         break;
 
@@ -552,7 +555,11 @@ namespace Gaten.GameTool.GITADORA.GDMSM
 
             for (int i = 0; i < fileId.Count; i++)
             {
-                if (selectFumenCheckedListBox.GetItemCheckState(i + 1) == CheckState.Unchecked) continue;
+                if (selectFumenCheckedListBox.GetItemCheckState(i + 1) == CheckState.Unchecked)
+                {
+                    continue;
+                }
+
                 fI = fp++;
                 complete = false;
 
@@ -571,15 +578,19 @@ namespace Gaten.GameTool.GITADORA.GDMSM
                 // 스크린샷의 시작과 끝 정리
                 proceed1 = Proceedings.Trim;
                 if (current.mode == Mode.Drum)
+                {
                     TrimScreenShot(0);
+                }
                 else
+                {
                     TrimScreenShot(43);
+                }
 
                 // 보면 생성
                 proceed1 = Proceedings.Create;
                 Bitmap outputBitmap = fumenPrintType == 1 ?
-                new Bitmap(current.margin * 2 + gearWidth, height * current.frame * bCount) :
-                new Bitmap(current.margin + (gearWidth + current.margin) * cCount, height * current.frame * current.oneColumnCount);
+                new Bitmap((current.margin * 2) + gearWidth, height * current.frame * bCount) :
+                new Bitmap(current.margin + ((gearWidth + current.margin) * cCount), height * current.frame * current.oneColumnCount);
                 g = Graphics.FromImage(outputBitmap);
 
                 // 스크린샷 붙이기
@@ -596,14 +607,19 @@ namespace Gaten.GameTool.GITADORA.GDMSM
 
                         case Mode.Guitar:
                         case Mode.Bass:
-                            image = Image.FromFile(files[startScreenShotIndex + bI].FullName).CropImage(new Rectangle(gearStart, current.guitarEndY - height * current.frame, gearWidth, height * current.frame));
+                            image = Image.FromFile(files[startScreenShotIndex + bI].FullName).CropImage(new Rectangle(gearStart, current.guitarEndY - (height * current.frame), gearWidth, height * current.frame));
                             image.RotateFlip(RotateFlipType.Rotate180FlipX);
                             break;
                     }
                     if (fumenPrintType == 1)
+                    {
                         g.DrawImage(image, current.margin, height * current.frame * (bCount - bI - 1));
+                    }
                     else
-                        g.DrawImage(image, current.margin + (gearWidth + current.margin) * (int)(bI / current.oneColumnCount), height * current.frame * (current.oneColumnCount - bI % current.oneColumnCount - 1));
+                    {
+                        g.DrawImage(image, current.margin + ((gearWidth + current.margin) * (bI / current.oneColumnCount)), height * current.frame * (current.oneColumnCount - (bI % current.oneColumnCount) - 1));
+                    }
+
                     image.Dispose();
                 }
                 bI = bCount - 1; // bI가 bCount가 되는 동시에 크로스 스레딩 참조가 돼서 값 고정
@@ -616,23 +632,35 @@ namespace Gaten.GameTool.GITADORA.GDMSM
                     if (current.name == "SakamotoNeko(G)")
                     {
                         if (fumenPrintType == 1)
+                        {
                             outputBitmap.Save($@"{fumenDirectory}\{fileId[i]} GUITAR.png");
+                        }
                         else
+                        {
                             outputBitmap.Resize($@"{fumenDirectory}\{fileId[i]} GUITAR.png", 0.3f);
+                        }
                     }
                     else if (current.name == "SakamotoNeko(B)")
                     {
                         if (fumenPrintType == 1)
+                        {
                             outputBitmap.Save($@"{fumenDirectory}\{fileId[i]} BASS.png");
+                        }
                         else
+                        {
                             outputBitmap.Resize($@"{fumenDirectory}\{fileId[i]} BASS.png", 0.3f);
+                        }
                     }
                     else
                     {
                         if (fumenPrintType == 1)
+                        {
                             outputBitmap.Resize($@"{fumenDirectory}\{fileId[i]}.png", 0.7f);
+                        }
                         else
+                        {
                             outputBitmap.Resize($@"{fumenDirectory}\{fileId[i]}.png", 1.0f);
+                        }
                     }
                 }
                 else if (fumenReturnFileType == 2)
@@ -641,13 +669,13 @@ namespace Gaten.GameTool.GITADORA.GDMSM
                     proceed1 = Proceedings.Parse;
                     //Bitmap resizedBitmap = ImageHelper.ResizeBitmap(outputBitmap, 1.0f, InterpolationMode.HighQualityBicubic);
                     //FumenParse fumenParse = new FumenParse(resizedBitmap);
-                    FumenParse fumenParse = new FumenParse(outputBitmap);
+                    FumenParse fumenParse = new(outputBitmap);
                     List<Path> paths = fumenParse.Parse();
 
                     // Path에서 음수가 발견됨 => 비정상적인 경우
                     if (paths == null)
                     {
-                        MessageBox.Show("음수 발견!");
+                        _ = MessageBox.Show("음수 발견!");
                         return;
                     }
 
@@ -667,37 +695,40 @@ namespace Gaten.GameTool.GITADORA.GDMSM
 
             // "완료하고 종료하기" 체크되어 있으면 종료
             if (exitCheckBox.Checked)
+            {
                 Application.Exit();
+            }
         }
 
         public void WriteTextFile(List<Path> paths, string fileName)
         {
-            using (FileStream stream = new FileStream(fileName, FileMode.Create))
+            using FileStream stream = new(fileName, FileMode.Create);
+            using StreamWriter writer = new(stream, Encoding.UTF8);
+            writer.WriteLine($"CFG,{480},{(int)paths.Max(p => p.timing) + 100}");
+            foreach (Path path in paths)
             {
-                using (StreamWriter writer = new StreamWriter(stream, Encoding.UTF8))
+                switch (path.type)
                 {
-                    writer.WriteLine($"CFG,{480},{(int)paths.Max(p => p.timing) + 100}");
-                    foreach (Path path in paths)
-                    {
-                        switch (path.type)
+                    case Path.Type.BigPhrase:
+                        writer.WriteLine($"BP,{path.lineNum},{path.timing}");
+                        break;
+                    case Path.Type.SmallPhrase:
+                        writer.WriteLine($"SP,{path.lineNum},{path.timing}");
+                        break;
+                    case Path.Type.Note:
+                        if (path.holdLength != 0) // 홀드노트
                         {
-                            case Path.Type.BigPhrase:
-                                writer.WriteLine($"BP,{path.lineNum},{path.timing}");
-                                break;
-                            case Path.Type.SmallPhrase:
-                                writer.WriteLine($"SP,{path.lineNum},{path.timing}");
-                                break;
-                            case Path.Type.Note:
-                                if (path.holdLength != 0) // 홀드노트
-                                    writer.WriteLine($"NO,{path.lineNum},{path.timing},{path.noteNum},{path.holdLength}");
-                                else
-                                    writer.WriteLine($"NO,{path.lineNum},{path.timing},{path.noteNum}");
-                                break;
+                            writer.WriteLine($"NO,{path.lineNum},{path.timing},{path.noteNum},{path.holdLength}");
                         }
-                    }
-                    writer.Flush();
+                        else
+                        {
+                            writer.WriteLine($"NO,{path.lineNum},{path.timing},{path.noteNum}");
+                        }
+
+                        break;
                 }
             }
+            writer.Flush();
         }
 
         private void MainForm_MouseDown(object sender, MouseEventArgs e)
@@ -714,12 +745,12 @@ namespace Gaten.GameTool.GITADORA.GDMSM
 
         private void 정보iToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("GITADORA Music Score Maker(GDMSM)");
+            _ = MessageBox.Show("GITADORA Music Score Maker(GDMSM)");
         }
 
         private void 사이트SToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://기타도라넷");
+            _ = System.Diagnostics.Process.Start("https://기타도라넷");
         }
 
         private void SelectFumenCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -727,7 +758,9 @@ namespace Gaten.GameTool.GITADORA.GDMSM
             if (e.Index == 0)
             {
                 for (int i = 1; i < selectFumenCheckedListBox.Items.Count; i++)
+                {
                     selectFumenCheckedListBox.SetItemCheckState(i, e.CurrentValue == CheckState.Checked ? CheckState.Unchecked : CheckState.Checked);
+                }
             }
         }
 
@@ -758,9 +791,9 @@ namespace Gaten.GameTool.GITADORA.GDMSM
 
         private void WorkFolderButton_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(videoDirectory);
-            System.Diagnostics.Process.Start(fumenDirectory);
-            System.Diagnostics.Process.Start(screenShotDirectory);
+            _ = System.Diagnostics.Process.Start(videoDirectory);
+            _ = System.Diagnostics.Process.Start(fumenDirectory);
+            _ = System.Diagnostics.Process.Start(screenShotDirectory);
         }
 
         private void PlayerListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -770,7 +803,7 @@ namespace Gaten.GameTool.GITADORA.GDMSM
 
         private void SpeedButtonClick(object sender, EventArgs e)
         {
-            height = current.heights[int.Parse((sender as Button).Name.Substring((sender as Button).Name.Length - 2, 2)) / 5 - 1];
+            height = current.heights[(int.Parse((sender as Button).Name.Substring((sender as Button).Name.Length - 2, 2)) / 5) - 1];
             gearStartCheck = false;
         }
 
@@ -778,11 +811,15 @@ namespace Gaten.GameTool.GITADORA.GDMSM
         {
             FileInfo[] screenShotFiles = new DirectoryInfo(screenShotDirectory).GetFiles();
             foreach (FileInfo fi in screenShotFiles)
+            {
                 fi.Delete();
+            }
 
             // "완료하고 종료하기" 체크되어 있으면 종료
             if (exitCheckBox.Checked)
+            {
                 Application.Exit();
+            }
         }
 
         private void textRadioButton_CheckedChanged(object sender, EventArgs e)

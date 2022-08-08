@@ -1,8 +1,13 @@
-﻿namespace Gaten.Game.NGDG2.Screen
+﻿using Gaten.Game.NGDG2.GameRule.Dungeon;
+using Gaten.Game.NGDG2.GameRule.Item;
+using Gaten.Game.NGDG2.Screen.Interface;
+using Gaten.Game.NGDG2.Util.Screen;
+
+namespace Gaten.Game.NGDG2.Screen.Member
 {
     public class DungeonResult : IScreen
     {
-        public static Dungeon d;
+        public static NgdgDungeon d = new();
 
         public DungeonResult()
         {
@@ -23,10 +28,12 @@
             ScreenUtil.Stack("보상");
             ScreenUtil.Stack($"EXP + {d.AccumulatedExp + (long)(d.AccumulatedExp * 0.2)} ({d.AccumulatedExp} + {(long)(d.AccumulatedExp * 0.2)})", ConsoleColor.Green);
             ScreenUtil.Stack($"Gold + {d.AccumulatedGold + (long)(d.AccumulatedGold * 0.2)} ({d.AccumulatedGold} + {(long)(d.AccumulatedGold * 0.2)})", ConsoleColor.Yellow);
-            foreach (Slot slot in d.AccumulatedItems.Slots)
+            foreach (NgdgSlot slot in d.AccumulatedItems.Slots)
             {
                 if (slot.Item == null)
+                {
                     continue;
+                }
 
                 ScreenUtil.Stack(string.Format("{0,-20}{1,-4}", slot.Item.Name, slot.ItemCount), slot.Item.Color);
             }

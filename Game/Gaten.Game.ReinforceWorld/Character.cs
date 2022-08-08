@@ -94,70 +94,62 @@ namespace Gaten.Game.ReinforceWorld
         }
 
 
-        public static string ID;
-        public static string Name;
-        public static string WeaponName;
+        public static string ID = string.Empty;
+        public static string Name = string.Empty;
+        public static string WeaponName = string.Empty;
         public static long Money;
         public static int CurrentValue;
         public static Grade _Grade;
         public static Tier _Tier;
-        public static Log _Log;
-        public static Upgrade _Upgrade;
+        public static Log _Log = new();
+        public static Upgrade _Upgrade = new();
 
         public static void Load()
         {
-            using (FileStream stream = new FileStream("1.txt", FileMode.Open))
-            {
-                using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
-                {
-                    WeaponName = reader.ReadLine();
-                    Money = long.Parse(reader.ReadLine());
-                    CurrentValue = int.Parse(reader.ReadLine());
-                    _Grade = (Grade)Enum.Parse(typeof(Grade), reader.ReadLine());
-                    _Tier = (Tier)Enum.Parse(typeof(Tier), reader.ReadLine());
-                    //string[] temp = reader.ReadLine().Split(':');
-                    //foreach(string str in temp)
-                    //{
-                    //    Log.SuccessCount.Add(int.Parse(str));
-                    //}
-                    //temp = reader.ReadLine().Split(':');
-                    //foreach (string str in temp)
-                    //{
-                    //    Log.FailureCount.Add(int.Parse(str));
-                    //}
-                    //Log.MaxReinforcementValue = int.Parse(reader.ReadLine());
-                    //Log.MaxMoneyValue = long.Parse(reader.ReadLine());
-                    //Log.GainMoney = long.Parse(reader.ReadLine());
-                    //reader.ReadLine();
-                    Upgrade.IncreaseSuccessProbability = int.Parse(reader.ReadLine());
-                    Upgrade.DecreaseReinforcementTime = int.Parse(reader.ReadLine());
-                    Upgrade.DecreaseReinforcementCost = int.Parse(reader.ReadLine());
-                    Upgrade.IncreaseProfit = int.Parse(reader.ReadLine());
-                    Upgrade.IncreaseClearThreshold = int.Parse(reader.ReadLine());
-                    Upgrade.IncreaseClearValue = int.Parse(reader.ReadLine());
-                }
-            }
+            using FileStream? stream = new("1.txt", FileMode.Open);
+            using StreamReader? reader = new(stream, Encoding.UTF8);
+            WeaponName = reader.ReadLine() ?? string.Empty;
+            Money = long.Parse(reader.ReadLine() ?? string.Empty);
+            CurrentValue = int.Parse(reader.ReadLine() ?? string.Empty);
+            _Grade = (Grade)Enum.Parse(typeof(Grade), reader.ReadLine() ?? string.Empty);
+            _Tier = (Tier)Enum.Parse(typeof(Tier), reader.ReadLine() ?? string.Empty);
+            //string[] temp = reader.ReadLine().Split(':');
+            //foreach(string str in temp)
+            //{
+            //    Log.SuccessCount.Add(int.Parse(str));
+            //}
+            //temp = reader.ReadLine().Split(':');
+            //foreach (string str in temp)
+            //{
+            //    Log.FailureCount.Add(int.Parse(str));
+            //}
+            //Log.MaxReinforcementValue = int.Parse(reader.ReadLine());
+            //Log.MaxMoneyValue = long.Parse(reader.ReadLine());
+            //Log.GainMoney = long.Parse(reader.ReadLine());
+            //reader.ReadLine();
+            Upgrade.IncreaseSuccessProbability = int.Parse(reader.ReadLine() ?? string.Empty);
+            Upgrade.DecreaseReinforcementTime = int.Parse(reader.ReadLine() ?? string.Empty);
+            Upgrade.DecreaseReinforcementCost = int.Parse(reader.ReadLine() ?? string.Empty);
+            Upgrade.IncreaseProfit = int.Parse(reader.ReadLine() ?? string.Empty);
+            Upgrade.IncreaseClearThreshold = int.Parse(reader.ReadLine() ?? string.Empty);
+            Upgrade.IncreaseClearValue = int.Parse(reader.ReadLine() ?? string.Empty);
         }
 
         public static void Save()
         {
-            using (FileStream stream = new FileStream("1.txt", FileMode.OpenOrCreate))
-            {
-                using (StreamWriter writer = new StreamWriter(stream, Encoding.UTF8))
-                {
-                    writer.WriteLine(WeaponName);
-                    writer.WriteLine(Money);
-                    writer.WriteLine(CurrentValue);
-                    writer.WriteLine(_Grade);
-                    writer.WriteLine(_Tier);
-                    writer.WriteLine(Upgrade.IncreaseSuccessProbability);
-                    writer.WriteLine(Upgrade.DecreaseReinforcementTime);
-                    writer.WriteLine(Upgrade.DecreaseReinforcementCost);
-                    writer.WriteLine(Upgrade.IncreaseProfit);
-                    writer.WriteLine(Upgrade.IncreaseClearThreshold);
-                    writer.WriteLine(Upgrade.IncreaseClearValue);
-                }
-            }
+            using FileStream? stream = new("1.txt", FileMode.OpenOrCreate);
+            using StreamWriter? writer = new(stream, Encoding.UTF8);
+            writer.WriteLine(WeaponName);
+            writer.WriteLine(Money);
+            writer.WriteLine(CurrentValue);
+            writer.WriteLine(_Grade);
+            writer.WriteLine(_Tier);
+            writer.WriteLine(Upgrade.IncreaseSuccessProbability);
+            writer.WriteLine(Upgrade.DecreaseReinforcementTime);
+            writer.WriteLine(Upgrade.DecreaseReinforcementCost);
+            writer.WriteLine(Upgrade.IncreaseProfit);
+            writer.WriteLine(Upgrade.IncreaseClearThreshold);
+            writer.WriteLine(Upgrade.IncreaseClearValue);
         }
     }
 }

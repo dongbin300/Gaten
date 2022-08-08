@@ -18,9 +18,11 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <view:MercuryTitleBar Grid.Row="0"/>
-        <a:TextEditor Grid.Row="1" x:Name="textEditor" FontFamily="Consolas" FontSize="10pt" SyntaxHighlighting="C#"/>
+        <view:MercuryTaskBar Grid.Row="1"/>
+        <a:TextEditor Grid.Row="2" x:Name="textEditor" FontFamily="Consolas" FontSize="10pt" SyntaxHighlighting="C#"/>
     </Grid>
 </Window>

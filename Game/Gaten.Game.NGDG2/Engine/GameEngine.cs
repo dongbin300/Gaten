@@ -1,6 +1,10 @@
-﻿using Gaten.Game.NGDG2.Screen;
+﻿using Gaten.Game.NGDG2.GameRule.Character;
+using Gaten.Game.NGDG2.GameRule.Dungeon;
+using Gaten.Game.NGDG2.GameRule.Item;
+using Gaten.Game.NGDG2.GameRule.Monster;
+using Gaten.Game.NGDG2.Screen;
 
-namespace Gaten.Game.NGDG2
+namespace Gaten.Game.NGDG2.Engine
 {
     public class GameEngine
     {
@@ -62,15 +66,15 @@ namespace Gaten.Game.NGDG2
             try
             {
                 // 몬스터 리소스 로드
-                _ = new MonsterDictionary();
+                _ = new NgdgMonsterDictionary();
 
                 // 던전 리소스 로드
-                _ = new DungeonDictionary();
+                _ = new NgdgDungeonDictionary();
 
                 // 장비 리소스 로드
                 // 재료 리소스 로드
                 // 포션 리소스 로드
-                _ = new ItemDictionary();
+                _ = new NgdgItemDictionary();
 
                 // 화면 리소스 로드
                 _ = new ScreenManager();
@@ -128,7 +132,7 @@ namespace Gaten.Game.NGDG2
         public void Update()
         {
             // 캐릭터 정보 연산
-            Character.Calculate();
+            NgdgCharacter.Calculate();
 
             // 화면 업데이트
             ScreenManager.Redraw();
@@ -138,7 +142,7 @@ namespace Gaten.Game.NGDG2
         /// [비동기]키보드 입력값을 받아서 처리한다.
         /// 화면이 계속 키보드 입력값을 받으려고 대기할 수는 없으므로 비동기로 구현한다.
         /// </summary>
-        async void KeyboardInput()
+        private async void KeyboardInput()
         {
             await Task.Factory.StartNew(() =>
             {

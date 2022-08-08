@@ -4,6 +4,6 @@ namespace Gaten.Time.Scheduler.Data
 {
     internal class MySql
     {
-        public static MySqlManager Manager { get; set; }
+        public static MySqlManager Manager { get; set; } = new();
     }
 }

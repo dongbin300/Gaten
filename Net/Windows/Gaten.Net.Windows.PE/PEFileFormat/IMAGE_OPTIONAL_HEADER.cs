@@ -1,4 +1,4 @@
-﻿using Gaten.Net.Data.Serialization;
+﻿using Gaten.Net.Serialization;
 using Gaten.Net.Windows.PE.Build;
 
 namespace Gaten.Net.Windows.PE.PEFileFormat

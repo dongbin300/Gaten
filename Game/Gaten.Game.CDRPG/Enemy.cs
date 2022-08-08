@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gaten.Game.CDRPG
+﻿namespace Gaten.Game.CDRPG
 {
     public class Enemy
     {
@@ -20,12 +14,17 @@ namespace Gaten.Game.CDRPG
             }
         }
 
-        public Position position = new Position();
-        int hp;
-        int hpMax;
-        Card.Tiers tier;
-        Card.Properties property;
-        Card.Species species;
+        public Position position = new();
+        private int hp;
+        private readonly int hpMax;
+        private readonly Card.Tiers tier;
+        private readonly Card.Properties property;
+        private readonly Card.Species species;
+
+        public Enemy() : this(new Position(), 0, Card.Tiers.None, Card.Properties.None, Card.Species.None)
+        {
+
+        }
 
         public Enemy(Position position, int hpMax, Card.Tiers tier, Card.Properties property, Card.Species species)
         {
@@ -40,11 +39,7 @@ namespace Gaten.Game.CDRPG
         public bool Damage(int num)
         {
             hp -= num;
-            if(hp <= 0)
-            {
-                return true;
-            }
-            return false;
+            return hp <= 0;
         }
     }
 }

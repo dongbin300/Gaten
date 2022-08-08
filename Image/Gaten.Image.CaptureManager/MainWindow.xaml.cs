@@ -14,7 +14,7 @@ namespace Gaten.Image.CaptureManager
     /// </summary>
     public partial class MainWindow : Window
     {
-        System.Timers.Timer timer;
+        System.Timers.Timer timer = new();
         private const int DefaultScreenIndex = 0;
         private static readonly ImageFormat DefaultImageFormat = ImageFormat.Png;
 

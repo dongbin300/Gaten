@@ -1,6 +1,6 @@
 ﻿namespace Gaten.Game.Starcraft.Rule.Product
 {
-    interface IProduct
+    internal interface IProduct
     {
         public enum Direction
         {
@@ -38,5 +38,5 @@
         public int AirPowerBonus { get; set; }
         public Direction PlaceDirection { get; set; }
         public Direction AttackDirection { get; set; }
-	}
+    }
 }

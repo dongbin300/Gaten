@@ -1,23 +1,18 @@
-﻿using System;
+﻿using Gaten.Net.GameRule.osu;
+using Gaten.Net.IO;
+
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.IO;
+
 using Path = System.IO.Path;
-using System.Windows.Forms;
-using Gaten.Net.GameRule.osu;
-using System.Runtime.InteropServices;
-using Gaten.Net.Data.IO;
 
 namespace Gaten.GameTool.osu.osuFileExtractor
 {
@@ -27,13 +22,12 @@ namespace Gaten.GameTool.osu.osuFileExtractor
     public partial class MainWindow : Window
     {
         [DllImport("winmm.dll")]
-
         private static extern long mciSendString(string strCommand, StringBuilder strReturn, int iReturnLength, IntPtr hwndCallback);
 
         string inDir = string.Empty;
         string outDir = string.Empty;
 
-        List<BeatmapSet> beatmapSets;
+        List<BeatmapSet> beatmapSets = new();
 
         public MainWindow()
         {
@@ -48,7 +42,6 @@ namespace Gaten.GameTool.osu.osuFileExtractor
             LoadDirectoryPath();
 
             // 디렉토리에 있는 모든 비트맵 등록
-            beatmapSets = new List<BeatmapSet>();
             var di = new DirectoryInfo(inDir).GetDirectories();
             foreach (var d in di)
             {

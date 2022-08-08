@@ -1,16 +1,15 @@
-﻿using Gaten.Net.Network;
+﻿using Gaten.Net.IO;
+using Gaten.Net.Network;
+using Gaten.Net.Wpf;
 
 using OpenQA.Selenium;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
 using System.IO;
+using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using Gaten.Net.Wpf;
-using Gaten.Net.Data.IO;
+using System.Windows;
 
 namespace Gaten.Network.YouTubeExplorer
 {

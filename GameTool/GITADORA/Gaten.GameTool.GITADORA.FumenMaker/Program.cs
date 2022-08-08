@@ -4,13 +4,15 @@ using HtmlAgilityPack;
 
 using System.Drawing;
 using System.Net;
+using System.Runtime.Versioning;
 using System.Text;
 
 using Path = Gaten.Net.GameRule.GITADORA.Path;
 
 namespace Gaten.GameTool.GITADORA.FumenMaker
 {
-    class Program
+    [SupportedOSPlatform("windows")]
+    internal class Program
     {
         // svg일수도 있고 png일수도 있음
         public static string svgFileName = string.Empty;
@@ -20,10 +22,9 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
 
         public static int start = 15483;
         public static int end = start;
+        private static readonly string[] diffModes = { "bsc", "adv", "ext", "mst" };
+        private static readonly string[] modes = { "drum", "guitar", "bass" };
 
-
-        static string[] diffModes = { "bsc", "adv", "ext", "mst" };
-        static string[] modes = { "drum", "guitar", "bass" };
         /*
          * GetChartFile()
          * 채보 링크 넣고
@@ -33,7 +34,7 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
          * 다운 받은 파일을 웹으로 열어서 파싱
          * 
          */
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             svgFileName = "test";
             paths = GetNotesFromPng(Game.Mode.Drum);
@@ -134,7 +135,7 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
             return new IPEndPoint(IPAddress.Parse("23.227.142.218"), 5000);
         }
 
-        static string test()
+        private static string test()
         {
             try
             {
@@ -152,109 +153,124 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
             }
         }
 
-        static string GetChartFile(string _id, string diffMode, string mode)
+        private static string GetChartFile(string _id, string diffMode, string mode)
         {
-            using (WebClient client = new WebClient())
+            using WebClient? client = new();
+            client.Encoding = Encoding.UTF8;
+
+            HtmlDocument doc = null;
+            string mainUrl = "http://기타섬머";
+            string url = string.Empty;
+            string svgFileNameInChartViewer = string.Empty;
+            string oTitle = string.Empty;
+            string id = string.Empty;
+
+            // Chart Viewer 사이트 접속
+            try
             {
-                client.Encoding = Encoding.UTF8;
-
-                HtmlDocument doc = null;
-                string mainUrl = "http://기타섬머";
-                string url = string.Empty;
-                string svgFileNameInChartViewer = string.Empty;
-                string oTitle = string.Empty;
-                string id = string.Empty;
-
-                // Chart Viewer 사이트 접속
-                try
-                {
-                    url = $"{mainUrl}viewer.php?id={_id}&t=0&d={diffMode}&p={mode}&m=2";
-                    string source = client.DownloadString(url);
-                    doc = new HtmlDocument();
-                    doc.LoadHtml(source);
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("URL 에러");
-                    return "urlerror";
-                }
-
-                // svg파일이름, 혹은 png파일이름 얻기
-                try
-                {
-                    svgFileNameInChartViewer = doc.DocumentNode.SelectSingleNode("//div[@class='chart']/img").Attributes["src"].Value;
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("svg파일이름 get 에러");
-                }
-
-                // otitle 얻기
-                try
-                {
-                    oTitle = doc.DocumentNode.SelectSingleNode("//span[@class='info__title']").InnerText;
-                    if (oTitle.Contains("(CLASSIC)")) return "classic";
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("otitle get 에러");
-                }
-
-                // develop.기타도라넷 접속
-                using (WebClient client2 = new WebClient())
-                {
-                    client2.Encoding = Encoding.UTF8;
-                    string source2 = client2.DownloadString("http://develop.기타도라넷/id.php");
-                    doc.LoadHtml(source2);
-                }
-
-                // id, otitle 매칭
-                try
-                {
-                    id = doc.DocumentNode.SelectSingleNode($"//td[text()='{oTitle}']").Attributes["id"].Value;
-                    svgFileName = id;
-                }
-                catch
-                {
-                    svgFileName = FindId(_id);
-                }
-
-                // 추출 svg파일명 설정
-                if (url.Contains("p=drum"))
-                    svgFileName += "d";
-                else if (url.Contains("p=guitar"))
-                    svgFileName += "g";
-                else if (url.Contains("p=bass"))
-                    svgFileName += "b";
-
-                if (url.Contains("d=bsc"))
-                    svgFileName += "b";
-                else if (url.Contains("d=adv"))
-                    svgFileName += "a";
-                else if (url.Contains("d=ext"))
-                    svgFileName += "e";
-                else if (url.Contains("d=mst"))
-                    svgFileName += "m";
-
-                // svg파일, 혹은 png파일 다운로드
-                string[] data = svgFileNameInChartViewer.Split('.');
-                string extension = data[data.Length - 1];
-                client.DownloadFile($"{mainUrl}{svgFileNameInChartViewer}", $"result/{svgFileName}.{extension}");
-
-                Console.Write($"{_id},{mode},{diffMode} => {svgFileName}.{extension} 획득 완료.  ");
-
-                return $"good {extension}";
+                url = $"{mainUrl}viewer.php?id={_id}&t=0&d={diffMode}&p={mode}&m=2";
+                string source = client.DownloadString(url);
+                doc = new HtmlDocument();
+                doc.LoadHtml(source);
             }
+            catch (Exception)
+            {
+                Console.WriteLine("URL 에러");
+                return "urlerror";
+            }
+
+            // svg파일이름, 혹은 png파일이름 얻기
+            try
+            {
+                svgFileNameInChartViewer = doc.DocumentNode.SelectSingleNode("//div[@class='chart']/img").Attributes["src"].Value;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("svg파일이름 get 에러");
+            }
+
+            // otitle 얻기
+            try
+            {
+                oTitle = doc.DocumentNode.SelectSingleNode("//span[@class='info__title']").InnerText;
+                if (oTitle.Contains("(CLASSIC)"))
+                {
+                    return "classic";
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("otitle get 에러");
+            }
+
+            // develop.기타도라넷 접속
+            using (WebClient client2 = new())
+            {
+                client2.Encoding = Encoding.UTF8;
+                string source2 = client2.DownloadString("http://develop.기타도라넷/id.php");
+                doc.LoadHtml(source2);
+            }
+
+            // id, otitle 매칭
+            try
+            {
+                id = doc.DocumentNode.SelectSingleNode($"//td[text()='{oTitle}']").Attributes["id"].Value;
+                svgFileName = id;
+            }
+            catch
+            {
+                svgFileName = FindId(_id);
+            }
+
+            // 추출 svg파일명 설정
+            if (url.Contains("p=drum"))
+            {
+                svgFileName += "d";
+            }
+            else if (url.Contains("p=guitar"))
+            {
+                svgFileName += "g";
+            }
+            else if (url.Contains("p=bass"))
+            {
+                svgFileName += "b";
+            }
+
+            if (url.Contains("d=bsc"))
+            {
+                svgFileName += "b";
+            }
+            else if (url.Contains("d=adv"))
+            {
+                svgFileName += "a";
+            }
+            else if (url.Contains("d=ext"))
+            {
+                svgFileName += "e";
+            }
+            else if (url.Contains("d=mst"))
+            {
+                svgFileName += "m";
+            }
+
+            // svg파일, 혹은 png파일 다운로드
+            string[] data = svgFileNameInChartViewer.Split('.');
+            string extension = data[^1];
+            client.DownloadFile($"{mainUrl}{svgFileNameInChartViewer}", $"result/{svgFileName}.{extension}");
+
+            Console.Write($"{_id},{mode},{diffMode} => {svgFileName}.{extension} 획득 완료.  ");
+
+            return $"good {extension}";
         }
 
-        static List<Path> GetNotes(Game.Mode mode)
+        private static List<Path> GetNotes(Game.Mode mode)
         {
-            List<Path> paths = new List<Path>();
+            List<Path>? paths = new();
 
-            using (WebClient client = new WebClient())
+            using (WebClient? client = new())
             {
                 string source = client.DownloadString($@"C:\Users\kdb\source\repos\FumenMaker\bin\Debug\result\{svgFileName}.svg");
-                var doc = new HtmlDocument();
+                HtmlDocument? doc = new();
                 doc.LoadHtml(source);
 
                 foreach (HtmlNode node in doc.DocumentNode.SelectNodes("//path"))
@@ -266,16 +282,16 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
             return paths;
         }
 
-        static List<Path> GetNotesFromPng(Game.Mode mode)
+        private static List<Path> GetNotesFromPng(Game.Mode mode)
         {
-            List<Path> paths = new List<Path>();
+            List<Path>? paths = new();
 
-            Bitmap bitmap = (Bitmap)Image.FromFile($@"C:\Users\kdb\source\repos\FumenMaker\bin\Debug\result\{svgFileName}.png");
+            Bitmap? bitmap = (Bitmap)Image.FromFile($@"C:\Users\kdb\source\repos\FumenMaker\bin\Debug\result\{svgFileName}.png");
 
-            LockBitmap lockBitmap = new LockBitmap(bitmap);
+            LockBitmap? lockBitmap = new(bitmap);
             lockBitmap.LockBits();
 
-            List<Color> colors = new List<Color>();
+            List<Color> colors = new();
             for (int i = 0; i < lockBitmap.Height; i++)
             {
                 for (int j = 0; j < lockBitmap.Width; j++)
@@ -296,12 +312,12 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
             return paths;
         }
 
-        static List<Path> FindNotes(List<Color> colors, int width, int height)
+        private static List<Path> FindNotes(List<Color> colors, int width, int height)
         {
-            List<Path> paths = new List<Path>();
-            List<Path> bpPaths = new List<Path>();
-            List<Path> spPaths = new List<Path>();
-            List<Path> noPaths = new List<Path>();
+            List<Path>? paths = new();
+            List<Path>? bpPaths = new();
+            List<Path>? spPaths = new();
+            List<Path>? noPaths = new();
             bool FoundLine = false;
             bool Normalize = false;
             const int NoteWidth = 50;
@@ -309,9 +325,9 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
             const int LineHeight = 6;
 
             // 경계선 안쪽 노트가 위치할 수 있는 영역 정의
-            Point Start = new Point(131, 77);
+            Point Start = new(131, 77);
             //Point Start = new Point(131, 44100);
-            Point End = new Point(width - 131, height - 95);
+            Point End = new(width - 131, height - 95);
             //Point End = new Point(width - 131, height - 95);
 
             // 스캔 시작
@@ -320,7 +336,7 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
                 for (int j = Start.X; j < End.X; j++)
                 {
                     // 픽셀 RGB값
-                    Color pixel = colors[i * width + j];
+                    _ = colors[(i * width) + j];
 
                     //if (i == 44176 || i == 20478)
                     //{
@@ -328,7 +344,7 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
                     //}
 
                     // 선이나 노트 픽셀을 찾으면
-                    if (IsObject(colors[i * width + j], 5))
+                    if (IsObject(colors[(i * width) + j], 5))
                     {
                         // 선인지 노트인지 판별
                         // -1: 에러, 0: 노트, 1: 소절선, 2: 대절선
@@ -368,7 +384,7 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
 
                                             // 선을 찾음
                                             FoundLine = true;
-                                            Console.WriteLine($"[{(i - 77) / 700 + 1}] {i}");
+                                            Console.WriteLine($"[{((i - 77) / 700) + 1}] {i}");
 
                                             break;
                                         case 2: // 대절선
@@ -405,7 +421,7 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
 
                                 // 선을 찾음
                                 FoundLine = true;
-                                Console.WriteLine($"[{(i - 77) / 700 + 1}] {i}");
+                                Console.WriteLine($"[{((i - 77) / 700) + 1}] {i}");
 
                                 break;
 
@@ -458,7 +474,7 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
         /// <param name="color">픽셀 컬러</param>
         /// <param name="margin">오차범위, 10일 경우 (10,10,10)까지는 허용함</param>
         /// <returns></returns>
-        static bool IsObject(Color color, int margin = 10)
+        private static bool IsObject(Color color, int margin = 10)
         {
             return !IsBlack(color, margin);
         }
@@ -469,12 +485,12 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
         /// <param name="color">픽셀 컬러</param>
         /// <param name="margin">오차범위, 10일 경우 (10,10,10)까지는 허용함</param>
         /// <returns></returns>
-        static bool IsBlack(Color color, int margin = 10)
+        private static bool IsBlack(Color color, int margin = 10)
         {
             return color.R + color.G + color.B <= margin * 3;
         }
 
-        static int GetNoteNum(Color color)
+        private static int GetNoteNum(Color color)
         {
             Color[] noteColorValues = new Color[9];
             noteColorValues[0] = Color.FromArgb(255, 0, 102);
@@ -501,7 +517,7 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
             return nearestIndex + 1;
         }
 
-        static int GetNoteNumByPosition(int j)
+        private static int GetNoteNumByPosition(int j)
         {
             return (j - 80) / 50;
         }
@@ -513,7 +529,7 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
         /// <param name="min">최소값</param>
         /// <param name="max">최대값</param>
         /// <returns></returns>
-        static bool IsRange(int x, int min, int max)
+        private static bool IsRange(int x, int min, int max)
         {
             return x >= min && x <= max;
         }
@@ -525,7 +541,7 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
         /// <param name="color2">픽셀 컬러2</param>
         /// <param name="margin">오차 범위</param>
         /// <returns></returns>
-        static bool IsSameColor(Color color1, Color color2, int margin = 10)
+        private static bool IsSameColor(Color color1, Color color2, int margin = 10)
         {
             return IsRange(color1.R, color2.R - margin, color2.R + margin) &&
                 IsRange(color1.G, color2.G - margin, color2.G + margin) &&
@@ -538,7 +554,7 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
         /// <param name="color">픽셀 컬러</param>
         /// <param name="margin">오차범위</param>
         /// <returns></returns>
-        static bool IsGrayColor(Color color, int margin = 10)
+        private static bool IsGrayColor(Color color, int margin = 10)
         {
             return Math.Abs(color.R - color.G) <= margin && Math.Abs(color.R - color.B) <= margin && Math.Abs(color.G - color.B) <= margin;
         }
@@ -552,7 +568,7 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
         /// <param name="width"></param>
         /// <param name="inspectHeight"></param>
         /// <returns></returns>
-        static Color AverageOfInspectY(List<Color> colors, int i, int j, int width, int inspectHeight)
+        private static Color AverageOfInspectY(List<Color> colors, int i, int j, int width, int inspectHeight)
         {
             int R = 0;
             int G = 0;
@@ -560,9 +576,9 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
 
             for (int t = 0; t < inspectHeight; t++)
             {
-                R += colors[(i + t) * width + j].R;
-                G += colors[(i + t) * width + j].G;
-                B += colors[(i + t) * width + j].B;
+                R += colors[((i + t) * width) + j].R;
+                G += colors[((i + t) * width) + j].G;
+                B += colors[((i + t) * width) + j].B;
             }
 
             return Color.FromArgb(R / inspectHeight, G / inspectHeight, B / inspectHeight);
@@ -575,7 +591,7 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
         /// <param name="color1">후보1 컬러</param>
         /// <param name="color2">후보2 컬러</param>
         /// <returns></returns>
-        static Color GetNearestColor(Color color, Color color1, Color color2)
+        private static Color GetNearestColor(Color color, Color color1, Color color2)
         {
             return Math.Sqrt(Math.Pow(color.R - color1.R, 2) + Math.Pow(color.G - color1.G, 2) + Math.Pow(color.B - color1.B, 2)) < Math.Sqrt(Math.Pow(color.R - color2.R, 2) + Math.Pow(color.G - color2.G, 2) + Math.Pow(color.B - color2.B, 2)) ? color1 : color2;
         }
@@ -594,7 +610,7 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
         /// 1 : 소절선
         /// 2 : 대절선
         /// </returns>
-        static int DeterminateObject(List<Color> colors, int i, int j, int width, bool isFoundLine)
+        private static int DeterminateObject(List<Color> colors, int i, int j, int width, bool isFoundLine)
         {
             const int NoteInspectX = 16;
             //const int NoteInspectY = 6;
@@ -607,9 +623,9 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
             if (IsGrayColor(AverageOfInspectY(colors, i, j, width, LineInspectY), 3))
             {
                 // 이미 찾은 선이면 스킵(에러)
-                if (isFoundLine) return -1;
-
-                return GetNearestColor(colors[(i + 3) * width + j], smallPhraseColor, bigPhraseColor) == smallPhraseColor ? 1 : 2;
+                return isFoundLine
+                    ? -1
+                    : GetNearestColor(colors[((i + 3) * width) + j], smallPhraseColor, bigPhraseColor) == smallPhraseColor ? 1 : 2;
             }
             // 노트
             // 선이 아니면 노트로 인식
@@ -618,10 +634,16 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
                 int blackCount = 0;
                 for (int t = 0; t < NoteInspectX; t++)
                 {
-                    if (IsBlack(colors[i * width + j + t])) blackCount++;
+                    if (IsBlack(colors[(i * width) + j + t]))
+                    {
+                        blackCount++;
+                    }
 
                     // 검은색이 2픽셀 이상이면 노트가 아님(에러)
-                    if (blackCount >= 2) return -1;
+                    if (blackCount >= 2)
+                    {
+                        return -1;
+                    }
                 }
 
                 // 노트
@@ -641,33 +663,28 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
         /// 1 : 소절선
         /// 2 : 대절선
         /// </returns>
-        static int BackTrack(List<Color> colors, int i, int j, int width)
+        private static int BackTrack(List<Color> colors, int i, int j, int width)
         {
             Color smallPhraseColor = Color.FromArgb(74, 74, 74);
             Color bigPhraseColor = Color.FromArgb(151, 151, 151);
 
-            if (IsSameColor(colors[(i + 3) * width + j - 50], smallPhraseColor) &&
-                IsSameColor(colors[(i + 3) * width + j - 100], smallPhraseColor) &&
-                IsSameColor(colors[(i + 3) * width + j - 150], smallPhraseColor) &&
-                IsSameColor(colors[(i + 3) * width + j - 200], smallPhraseColor))
-            {
-                return 1;
-            }
-            else if (IsSameColor(colors[(i + 3) * width + j - 50], bigPhraseColor) &&
-                IsSameColor(colors[(i + 3) * width + j - 100], bigPhraseColor) &&
-                IsSameColor(colors[(i + 3) * width + j - 150], bigPhraseColor) &&
-                IsSameColor(colors[(i + 3) * width + j - 200], bigPhraseColor))
-            {
-                return 2;
-            }
-            else
-                return 0;
+            return IsSameColor(colors[((i + 3) * width) + j - 50], smallPhraseColor) &&
+                IsSameColor(colors[((i + 3) * width) + j - 100], smallPhraseColor) &&
+                IsSameColor(colors[((i + 3) * width) + j - 150], smallPhraseColor) &&
+                IsSameColor(colors[((i + 3) * width) + j - 200], smallPhraseColor)
+                ? 1
+                : IsSameColor(colors[((i + 3) * width) + j - 50], bigPhraseColor) &&
+                                IsSameColor(colors[((i + 3) * width) + j - 100], bigPhraseColor) &&
+                                IsSameColor(colors[((i + 3) * width) + j - 150], bigPhraseColor) &&
+                                IsSameColor(colors[((i + 3) * width) + j - 200], bigPhraseColor)
+                    ? 2
+                    : 0;
         }
 
-        static Path ParsePath(HtmlNode node, Game.Mode mode)
+        private static Path ParsePath(HtmlNode node, Game.Mode mode)
         {
             string[] d = node.Attributes["d"].Value.Split(new char[] { ',', ' ' });
-            Path path = new Path();
+            Path path = new();
 
             switch (mode)
             {
@@ -727,7 +744,7 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
                             break;
                     }
                     // 홀드노트 길이 설정
-                    if (path.noteNum >= 6 && path.noteNum <= 10)
+                    if (path.noteNum is >= 6 and <= 10)
                     {
                         path.holdLength = double.Parse(node.Attributes["stroke-width"].Value);
                     }
@@ -738,43 +755,44 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
             return path;
         }
 
-        static void GetConfig(Game.Mode mode)
+        private static void GetConfig(Game.Mode mode)
         {
             config.width = mode == Game.Mode.Drum ? 480 : 220;
             config.height = (int)paths.Max(p => p.timing);
         }
 
-        static void WriteTextFile(List<Path> paths)
+        private static void WriteTextFile(List<Path> paths)
         {
-            using (FileStream stream = new FileStream($"result/{svgFileName}.txt", FileMode.Create))
+            using FileStream stream = new($"result/{svgFileName}.txt", FileMode.Create);
+            using StreamWriter writer = new(stream, Encoding.UTF8);
+            writer.WriteLine($"CFG,{config.width},{config.height}");
+            foreach (Path path in paths)
             {
-                using (StreamWriter writer = new StreamWriter(stream, Encoding.UTF8))
+                switch (path.type)
                 {
-                    writer.WriteLine($"CFG,{config.width},{config.height}");
-                    foreach (Path path in paths)
-                    {
-                        switch (path.type)
+                    case Path.Type.BigPhrase:
+                        writer.WriteLine($"BP,{path.lineNum},{path.timing}");
+                        break;
+                    case Path.Type.SmallPhrase:
+                        writer.WriteLine($"SP,{path.lineNum},{path.timing}");
+                        break;
+                    case Path.Type.Note:
+                        if (path.holdLength != 0) // 홀드노트
                         {
-                            case Path.Type.BigPhrase:
-                                writer.WriteLine($"BP,{path.lineNum},{path.timing}");
-                                break;
-                            case Path.Type.SmallPhrase:
-                                writer.WriteLine($"SP,{path.lineNum},{path.timing}");
-                                break;
-                            case Path.Type.Note:
-                                if (path.holdLength != 0) // 홀드노트
-                                    writer.WriteLine($"NO,{path.lineNum},{path.timing},{path.noteNum},{path.holdLength}");
-                                else
-                                    writer.WriteLine($"NO,{path.lineNum},{path.timing},{path.noteNum}");
-                                break;
+                            writer.WriteLine($"NO,{path.lineNum},{path.timing},{path.noteNum},{path.holdLength}");
                         }
-                    }
-                    writer.Flush();
+                        else
+                        {
+                            writer.WriteLine($"NO,{path.lineNum},{path.timing},{path.noteNum}");
+                        }
+
+                        break;
                 }
             }
+            writer.Flush();
         }
 
-        static string FindId(string id)
+        private static string FindId(string id)
         {
             string[] data =
             {

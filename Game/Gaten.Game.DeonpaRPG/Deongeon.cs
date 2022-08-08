@@ -1,6 +1,6 @@
 ﻿namespace Gaten.Game.DeonpaRPG
 {
-    class Deongeon
+    internal class Deongeon
     {
         public string name;
         public int startLevel;
@@ -24,7 +24,7 @@
 
         public Monster CreateMonster(string name)
         {
-            Monster monster = new Monster();
+            Monster monster = new();
             for (int i = 0; i < monsterCount; i++)
             {
                 if (monsters[i].name == name)
@@ -44,21 +44,21 @@
         }
     }
 
-    class DeongeonDB
+    internal class DeongeonDB
     {
-        public Deongeon human = new Deongeon("휴먼", 0, 1, 100);
-        public Deongeon goblinWorld = new Deongeon("고블린나라", 0, 1, 170);
-        public Deongeon templeSuburb = new Deongeon("신전외곽", 80, 90, 130);
-        public Deongeon templeInside = new Deongeon("신전내부", 100, 120, 180);
-        public Deongeon thiefHideout = new Deongeon("도둑아지트", 150, 200, 501);
-        public Deongeon fairytaleWorld = new Deongeon("동화나라", 60, 88, 288);
-        public Deongeon hiddenMap1 = new Deongeon("히든맵1", 400, 450, 501);
-        public Deongeon hiddenMap2 = new Deongeon("히든맵2", 410, 460, 501);
-        public Deongeon thunderGentlemanLodging = new Deongeon("썬더젠틀맨의숙소", 501, 501, 501);
-        public Deongeon headSpinLodging = new Deongeon("헤드스핀의숙소", 501, 501, 501);
-        public Deongeon deongeonCorner = new Deongeon("던전길목", 501, 501, 501);
+        public Deongeon human = new("휴먼", 0, 1, 100);
+        public Deongeon goblinWorld = new("고블린나라", 0, 1, 170);
+        public Deongeon templeSuburb = new("신전외곽", 80, 90, 130);
+        public Deongeon templeInside = new("신전내부", 100, 120, 180);
+        public Deongeon thiefHideout = new("도둑아지트", 150, 200, 501);
+        public Deongeon fairytaleWorld = new("동화나라", 60, 88, 288);
+        public Deongeon hiddenMap1 = new("히든맵1", 400, 450, 501);
+        public Deongeon hiddenMap2 = new("히든맵2", 410, 460, 501);
+        public Deongeon thunderGentlemanLodging = new("썬더젠틀맨의숙소", 501, 501, 501);
+        public Deongeon headSpinLodging = new("헤드스핀의숙소", 501, 501, 501);
+        public Deongeon deongeonCorner = new("던전길목", 501, 501, 501);
 
-        private static DeongeonDB instance = new DeongeonDB();
+        private static readonly DeongeonDB instance = new();
 
         private DeongeonDB()
         {

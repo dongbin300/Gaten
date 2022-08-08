@@ -1,4 +1,4 @@
-﻿using Gaten.Net.Data.Diagnostics;
+﻿using Gaten.Net.Diagnostics;
 
 namespace Gaten.Windows.MintMonitor
 {

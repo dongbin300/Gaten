@@ -9,6 +9,6 @@ namespace Gaten.Stock.MolleHoga
         /// </summary>
         public int Index { get; set; }
 
-        public StockItem Item { get; set; }
+        public StockItem Item { get; set; } = new();
     }
 }

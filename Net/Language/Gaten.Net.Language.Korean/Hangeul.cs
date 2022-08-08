@@ -6,11 +6,11 @@
         public readonly static string StringArea1 = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ";
         public readonly static string StringArea2 = "ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ";
         public readonly static string StringArea3 = " ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ";
-        public string Area1 { get; set; }
-        public string Area2 { get; set; }
-        public string Area3 { get; set; }
-        public string AdditionalArea2 { get; set; }
-        public string AdditionalArea3 { get; set; }
+        public string Area1 { get; set; } = string.Empty;
+        public string Area2 { get; set; } = string.Empty;
+        public string Area3 { get; set; } = string.Empty;
+        public string AdditionalArea2 { get; set; } = string.Empty;
+        public string AdditionalArea3 { get; set; } = string.Empty;
 
         public Hangeul()
         { 
@@ -32,7 +32,7 @@
                     Area3 = AdditionalArea3 == string.Empty ? Area3 : Area3 + AdditionalArea3;
                     return Area1 + Area2 + Area3;
             }
-            return null;
+            return string.Empty;
         }
 
         public int GetAreaCount()

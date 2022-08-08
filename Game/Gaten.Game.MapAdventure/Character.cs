@@ -5,8 +5,8 @@
         public int X;
         public int Y;
         public Size Size;
-        readonly int temporaryMoveDistance = 12;
-        readonly int jumpInterval = 100;
+        private readonly int temporaryMoveDistance = 12;
+        private readonly int jumpInterval = 100;
 
         public Character(int x = 100, int y = 200, int width = 20, int height = 20)
         {

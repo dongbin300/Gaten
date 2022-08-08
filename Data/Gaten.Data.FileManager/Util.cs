@@ -52,28 +52,39 @@ namespace Gaten.Data.FileManager
 
         public static Encoding GetEncoding(string filename)
         {
-            var bom = new byte[4];
-            using (var file = new FileStream(filename, FileMode.Open, FileAccess.Read))
+            byte[]? bom = new byte[4];
+            using (FileStream? file = new(filename, FileMode.Open, FileAccess.Read))
             {
-                file.Read(bom, 0, 4);
+                _ = file.Read(bom, 0, 4);
             }
 
-            if (bom[0] == 0xef && bom[1] == 0xbb && bom[2] == 0xbf) return Encoding.UTF8;
-            if (bom[0] == 0xff && bom[1] == 0xfe) return Encoding.Unicode; //UTF-16LE
-            if (bom[0] == 0xfe && bom[1] == 0xff) return Encoding.BigEndianUnicode; //UTF-16BE
-            if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff) return Encoding.UTF32;
-            return Encoding.Default;
+            if (bom[0] == 0xef && bom[1] == 0xbb && bom[2] == 0xbf)
+            {
+                return Encoding.UTF8;
+            }
+
+            if (bom[0] == 0xff && bom[1] == 0xfe)
+            {
+                return Encoding.Unicode; //UTF-16LE
+            }
+
+            if (bom[0] == 0xfe && bom[1] == 0xff)
+            {
+                return Encoding.BigEndianUnicode; //UTF-16BE
+            }
+
+            return bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff ? Encoding.UTF32 : Encoding.Default;
         }
 
         public static Encoding GetEncoding2(string filename)
         {
-            using (var reader = new StreamReader(filename, Encoding.Default, true))
+            using StreamReader? reader = new(filename, Encoding.Default, true);
+            if (reader.Peek() >= 0)
             {
-                if (reader.Peek() >= 0)
-                    reader.Read();
-
-                return reader.CurrentEncoding;
+                _ = reader.Read();
             }
+
+            return reader.CurrentEncoding;
         }
     }
 }

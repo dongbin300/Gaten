@@ -1,5 +1,5 @@
-﻿using Gaten.Net.Data.IO;
-using Gaten.Net.Windows.Wpf;
+﻿using Gaten.Net.IO;
+using Gaten.Net.Wpf;
 
 using System.Collections.Generic;
 using System.Windows.Media;
@@ -12,17 +12,17 @@ namespace Gaten.Windows.SmartOpen
         public static int Size { get; set; }
         public static int Padding { get; set; }
         public static int Margin { get; set; }
-        public static SolidColorBrush MouseOverColor { get; set; }
-        public static SolidColorBrush MainBackgroundColor { get; set; }
-        public static SolidColorBrush MainForegroundColor { get; set; }
+        public static SolidColorBrush MouseOverColor { get; set; } = default!;
+        public static SolidColorBrush MainBackgroundColor { get; set; } = default!;
+        public static SolidColorBrush MainForegroundColor { get; set; } = default!;
 
-        public static List<Navigator> Navigators { get; set; }
+        public static List<Navigator> Navigators { get; set; } = new();
         public static int SelectedNavigatorsIndex { get; set; }
         public static Navigator SelectedNavigator => GetNavigator(SelectedNavigatorsIndex);
 
         public static void SaveSettingsData()
         {
-            List<string> contents = new List<string>();
+            var contents = new List<string>();
             contents.Add(Count.ToString());
             contents.Add(Size.ToString());
             contents.Add(Padding.ToString());
@@ -55,7 +55,7 @@ namespace Gaten.Windows.SmartOpen
 
         public static void SaveDirectoryData()
         {
-            List<string> contents = new List<string>();
+            var contents = new List<string>();
             foreach (var nav in Navigators)
             {
                 contents.Add(nav.Index.ToString());

@@ -9,7 +9,7 @@
 
         private void HelpForm_Load(object sender, EventArgs e)
         {
-            Focus();
+            _ = Focus();
         }
     }
 }

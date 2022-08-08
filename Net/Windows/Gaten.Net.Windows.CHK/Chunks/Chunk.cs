@@ -1,19 +1,18 @@
-﻿using Gaten.Net.Extension;
+﻿using Gaten.Net.Extensions;
 
 namespace Gaten.Net.Windows.CHK.Chunks
 {
     public class Chunk
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public int Size { get; set; }
 
         public List<byte> NameBytes => Name.AsciiToBytes().ToList();
         public List<byte> SizeBytes => Size.ToBytes().ToList();
-        public List<byte> Data { get; set; }
+        public List<byte> Data { get; set; } = new();
 
         public Chunk()
         {
-            Data = new List<byte>();
         }
 
         public Chunk(string name, int size, string data)

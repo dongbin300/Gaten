@@ -144,7 +144,7 @@
 
         public static string DecimalNumber(double d, int dc = 2)
         {
-            return string.Format("{0:R}", Math.Round(d, dc));
+            return string.Format("{0:R}", System.Math.Round(d, dc));
         }
     }
 }

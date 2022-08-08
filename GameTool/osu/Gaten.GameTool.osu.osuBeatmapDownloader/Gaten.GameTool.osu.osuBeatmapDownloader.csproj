@@ -9,9 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Net\Gaten.Net.Data\Gaten.Net.Data.csproj" />
-    <ProjectReference Include="..\..\..\Net\Gaten.Net.Network\Gaten.Net.Network.csproj" />
-    <ProjectReference Include="..\..\..\Net\Gaten.Net.Windows\Gaten.Net.Windows.csproj" />
     <ProjectReference Include="..\..\..\Net\Windows\Gaten.Net.Windows.Forms\Gaten.Net.Windows.Forms.csproj" />
   </ItemGroup>
 

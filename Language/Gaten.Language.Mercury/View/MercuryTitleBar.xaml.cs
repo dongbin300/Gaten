@@ -50,6 +50,11 @@ namespace Gaten.Language.Mercury.View
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            if(parentWindow == null)
+            {
+                return;
+            }
+
             //TitleText.Text = parentWindow.Title ?? Title;
             IconImage.Source = parentWindow.Icon ?? Icon;
             MaximizePath.Data = parentWindow.WindowState == WindowState.Maximized ? NormalButtonGeometry : MaximizeButtonGeometry;

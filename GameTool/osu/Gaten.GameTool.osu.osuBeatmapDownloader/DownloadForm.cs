@@ -1,11 +1,10 @@
+using Gaten.Net.IO;
 using Gaten.Net.Windows;
-using Gaten.Net.Network;
+using Gaten.Net.Windows.Forms;
+
 using Microsoft.Win32;
 
-using System;
 using System.Diagnostics;
-using System.Net;
-using Gaten.Net.Windows.Forms;
 
 namespace Gaten.GameTool.osu.osuBeatmapDownloader
 {
@@ -177,7 +176,7 @@ namespace Gaten.GameTool.osu.osuBeatmapDownloader
         {
             try
             {
-                Net.Data.IO.GFile.AppendLine(General.DownloadedListPath, beatmapNumber);
+                GFile.AppendLine(General.DownloadedListPath, beatmapNumber);
             }
             catch (Exception ex)
             {
@@ -200,7 +199,7 @@ namespace Gaten.GameTool.osu.osuBeatmapDownloader
                 }
 
                 downloadedLists.Clear();
-                var lists = Net.Data.IO.GFile.ReadToArray(General.DownloadedListPath);
+                var lists = GFile.ReadToArray(General.DownloadedListPath);
                 foreach (string str in lists)
                 {
                     downloadedLists.Add(str);

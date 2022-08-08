@@ -1,6 +1,6 @@
 using CoinMarketCap;
 
-using Gaten.Net.Data.IO;
+using Gaten.Net.IO;
 
 namespace Gaten.Stock.CMCMonitor
 {

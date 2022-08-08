@@ -1,15 +1,13 @@
-﻿using Gaten.Net.Extension;
+﻿using Gaten.Net.Extensions;
 
 namespace Gaten.Net.GameRule.StarCraft.Script
 {
     public class Wav
     {
-        public static uint[] MPQPath { get; set; }
+        public static uint[] MPQPath { get; set; } = new uint[512];
 
         public Wav()
         {
-            MPQPath = new uint[512];
-
             MakeDefault();
         }
 

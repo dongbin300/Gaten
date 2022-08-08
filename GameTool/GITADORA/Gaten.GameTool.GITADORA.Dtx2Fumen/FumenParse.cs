@@ -10,18 +10,15 @@ namespace Gaten.GameTool.GITADORA.Dtx2Fumen
         public List<DtxObject> PhraseTable = new();
         public List<DtxObject> BpmTable = new();
         public List<DtxObject> NoteTable = new();
-
-        List<Path> paths = new();
-        List<Path> bpPaths = new();
-        List<Path> spPaths = new();
-        List<Path> noPaths = new();
-
-        bool parseStart;
-        bool phraseComplete;
-        bool bpmComplete;
-
-        const double StartBigPhraseTiming = 96.0;
-        const double BigPhraseGap = 700.0;
+        private readonly List<Path> paths = new();
+        private readonly List<Path> bpPaths = new();
+        private readonly List<Path> spPaths = new();
+        private readonly List<Path> noPaths = new();
+        private bool parseStart;
+        private bool phraseComplete;
+        private bool bpmComplete;
+        private const double StartBigPhraseTiming = 96.0;
+        private const double BigPhraseGap = 700.0;
 
         public FumenParse()
         {
@@ -116,14 +113,14 @@ namespace Gaten.GameTool.GITADORA.Dtx2Fumen
                 }
             }
 
-            List<string> nums = new List<string>();
+            List<string> nums = new();
 
             foreach (DtxObject obj in NoteTable)
             {
                 nums.Add(obj.Num.Substring(3, 2));
             }
 
-            nums = nums.Distinct().ToList();
+            _ = nums.Distinct().ToList();
         }
 
         public void ParseToDTXObject2()
@@ -137,7 +134,10 @@ namespace Gaten.GameTool.GITADORA.Dtx2Fumen
 
                 if (parseStart)
                 {
-                    if (Data[i].Length < 2) break;
+                    if (Data[i].Length < 2)
+                    {
+                        break;
+                    }
 
                     string[] n = Data[i].Split(':');
 
@@ -172,7 +172,7 @@ namespace Gaten.GameTool.GITADORA.Dtx2Fumen
 
         public void MakePhrase()
         {
-            int bigPhraseCount = int.Parse(NoteTable[NoteTable.Count - 1].Num.Substring(0, 3));
+            int bigPhraseCount = int.Parse(NoteTable[^1].Num[..3]);
             int smallPhraseCount = 4; // 기본 4박 (소절선 그을때는 3개만 긋는다)
 
             for (int i = 0; i < bigPhraseCount; i++)
@@ -195,7 +195,7 @@ namespace Gaten.GameTool.GITADORA.Dtx2Fumen
                     spPaths.Add(new Path()
                     {
                         type = Path.Type.SmallPhrase,
-                        timing = GetBigPhraseTiming(i + 1) + j * BigPhraseGap / smallPhraseCount
+                        timing = GetBigPhraseTiming(i + 1) + (j * BigPhraseGap / smallPhraseCount)
                     });
                 }
             }
@@ -209,7 +209,7 @@ namespace Gaten.GameTool.GITADORA.Dtx2Fumen
 
         public void MakeNote()
         {
-            Dictionary<string, int> noteCodes = new Dictionary<string, int>()
+            Dictionary<string, int> noteCodes = new()
             {
                 { "1A", 1 },
                 { "11", 2 },
@@ -224,16 +224,21 @@ namespace Gaten.GameTool.GITADORA.Dtx2Fumen
 
             foreach (DtxObject obj in NoteTable)
             {
-                int phraseNumber = int.Parse(obj.Num.Substring(0, 3));
+                int phraseNumber = int.Parse(obj.Num[..3]);
 
                 // 0번 마디는 노트가 아님
-                if (phraseNumber == 0) continue;
+                if (phraseNumber == 0)
+                {
+                    continue;
+                }
 
-                List<string> noteSymbols = new List<string>();
+                List<string> noteSymbols = new();
 
                 // 두 글자씩 쪼개기
                 for (int j = 0; j < obj.Value.Length; j += 2)
+                {
                     noteSymbols.Add(obj.Value.Substring(j, 2));
+                }
 
                 double symbolGap = BigPhraseGap / noteSymbols.Count;
 
@@ -243,15 +248,14 @@ namespace Gaten.GameTool.GITADORA.Dtx2Fumen
                     // "00"이 아니면 노트임
                     if (noteSymbols[j] != "00")
                     {
-                        int value;
-                        int noteNum = noteCodes.TryGetValue(obj.Num.Substring(3, 2), out value) ? value : 0;
+                        int noteNum = noteCodes.TryGetValue(obj.Num.Substring(3, 2), out int value) ? value : 0;
 
                         if (noteNum != 0)
                         {
                             noPaths.Add(new Path()
                             {
                                 type = Path.Type.Note,
-                                timing = GetBigPhraseTiming(phraseNumber) + j * symbolGap,
+                                timing = GetBigPhraseTiming(phraseNumber) + (j * symbolGap),
                                 noteNum = noteNum
                             });
                         }
@@ -286,7 +290,7 @@ namespace Gaten.GameTool.GITADORA.Dtx2Fumen
         /// <returns></returns>
         public double GetBigPhraseTiming(int phraseNumber)
         {
-            return StartBigPhraseTiming + (phraseNumber - 1) * BigPhraseGap;
+            return StartBigPhraseTiming + ((phraseNumber - 1) * BigPhraseGap);
         }
     }
 }

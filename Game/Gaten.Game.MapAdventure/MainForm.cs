@@ -18,10 +18,9 @@ namespace Gaten.Game.MapAdventure
         /// 업데이트 간격 (틱, 단위: ms)
         /// </summary>
         public int UpdateInterval = 20;
-
-        Thread mainThread;
-        Thread keyThread;
-        UserActivityHook hook;
+        private readonly Thread mainThread;
+        private readonly Thread keyThread;
+        private readonly UserActivityHook hook;
 
         public MainForm()
         {
@@ -100,7 +99,7 @@ namespace Gaten.Game.MapAdventure
             }
         }
 
-        private void Update()
+        private new void Update()
         {
         }
 
@@ -113,10 +112,8 @@ namespace Gaten.Game.MapAdventure
         {
             Brush b = Brushes.White;
 
-            using (Graphics g = e.Graphics)
-            {
-                g.FillRectangle(b, c.X, c.Y, c.Size.Width, c.Size.Height);
-            }
+            using Graphics g = e.Graphics;
+            g.FillRectangle(b, c.X, c.Y, c.Size.Width, c.Size.Height);
         }
 
         public async void KeyDownEvent(object sender, KeyEventArgs e)
@@ -132,12 +129,12 @@ namespace Gaten.Game.MapAdventure
 
             if (mainThread.ThreadState == ThreadState.Running)
             {
-                mainThread.Abort();
+                mainThread.Join();
             }
 
             if (keyThread.ThreadState == ThreadState.Running)
             {
-                keyThread.Abort();
+                keyThread.Join();
             }
 
             hook.Stop();

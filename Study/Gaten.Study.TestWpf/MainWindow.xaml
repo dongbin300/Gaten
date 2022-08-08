@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:Gaten.Study.TestWpf"
         xmlns:wpf="clr-namespace:Gaten.Net.Wpf.Controls;assembly=Gaten.Net.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="600">
+        Title="MainWindow" Height="100" Width="600">
 
     <StackPanel>
-        <wpf:TextProgressBar x:Name="progressBar" Height="30" Foreground="Black" Background="#25A0DA"/>
+        <Button x:Name="GetButton" Content="GET" Click="GetButton_Click"/>
     </StackPanel>
 </Window>

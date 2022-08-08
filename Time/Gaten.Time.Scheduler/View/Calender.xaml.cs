@@ -1,4 +1,4 @@
-﻿using ColorUtil2 = Gaten.Net.Windows.Wpf.ColorUtil;
+﻿using ColorUtil2 = Gaten.Net.Wpf.ColorUtil;
 using Gaten.Time.Scheduler.Data;
 
 using System;

@@ -5,12 +5,12 @@
         /// <summary>
         /// 종목코드
         /// </summary>
-        public string Code { get; set; }
+        public string Code { get; set; } = string.Empty;
 
         /// <summary>
         /// 종목명
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         public string ListLabel => Code + " | " + Name;
 

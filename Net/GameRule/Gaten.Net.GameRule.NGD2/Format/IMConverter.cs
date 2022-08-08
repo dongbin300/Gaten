@@ -11,13 +11,13 @@ namespace Gaten.Net.GameRule.NGD2.Format
     /// </summary>
     public class IMConverter
     {
-        public static double GetCriticalRate(long value) => Math.Round(GetPercent(value, 0.5), 2);
-        public static double GetSpiritDropRate(long value) => Math.Round(GetPercent(value, 0.33), 2);
-        public static double GetSkillCardDropRate(long value) => Math.Round(GetPercent(value, 0.2), 2);
-        public static double GetKeyPieceDropRate(long value) => Math.Round(GetPercent(value, 0.25), 2);
-        public static double GetPsychokinesisDropRate(long value) => Math.Round(GetPercent(value, 0.25), 2);
+        public static double GetCriticalRate(long value) => System.Math.Round(GetPercent(value, 0.5), 2);
+        public static double GetSpiritDropRate(long value) => System.Math.Round(GetPercent(value, 0.33), 2);
+        public static double GetSkillCardDropRate(long value) => System.Math.Round(GetPercent(value, 0.2), 2);
+        public static double GetKeyPieceDropRate(long value) => System.Math.Round(GetPercent(value, 0.25), 2);
+        public static double GetPsychokinesisDropRate(long value) => System.Math.Round(GetPercent(value, 0.25), 2);
 
-        public static int GetAttackSpeed(long value) => GetReverseValueByPercent(Math.Round(GetPercent(value, 0.5), 2), 200, 1000);
+        public static int GetAttackSpeed(long value) => GetReverseValueByPercent(System.Math.Round(GetPercent(value, 0.5), 2), 200, 1000);
 
         /// <summary>
         /// 절대 수치에 해당하는 배율(%)
@@ -27,7 +27,7 @@ namespace Gaten.Net.GameRule.NGD2.Format
         /// <returns>100</returns>
         public static double GetPercent(long value, double th)
         {
-            return Math.Pow(value, th);
+            return System.Math.Pow(value, th);
         }
 
         /// <summary>

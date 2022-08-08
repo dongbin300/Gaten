@@ -16,12 +16,12 @@ namespace Gaten.GameTool.osu.ConvertRanking
     {
         public RecentActivityType RecentActivityType { get; set; }
         public GradeRank GradeRank { get; set; }
-        public string UserName { get; set; }
-        public string BeatmapString { get; set; }
-        public string BeatmapUrl { get; set; }
+        public string UserName { get; set; } = string.Empty;
+        public string BeatmapString { get; set; } = string.Empty;
+        public string BeatmapUrl { get; set; } = string.Empty;
         public GameMode GameMode { get; set; }
-        public string Rank { get; set; }
-        public string ElapsedTime { get; set; }
+        public string Rank { get; set; } = string.Empty;
+        public string ElapsedTime { get; set; } = string.Empty;
 
         public RecentActivity Parse(IWebElement node)
         {

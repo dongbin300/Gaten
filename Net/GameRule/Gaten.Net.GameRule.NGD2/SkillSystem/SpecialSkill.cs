@@ -62,7 +62,7 @@ namespace Gaten.Net.GameRule.NGD2.SkillSystem
                     break;
 
                 case 9: // 악계
-                    if (Character.Xp < (long)(Math.Pow(Level, 4.0) * 10000))
+                    if (Character.Xp < (long)(System.Math.Pow(Level, 4.0) * 10000))
                     {
                         return "XP가 부족함";
                     }
@@ -72,7 +72,7 @@ namespace Gaten.Net.GameRule.NGD2.SkillSystem
                         return "염력이 부족함";
                     }
 
-                    Character.Xp -= (long)(Math.Pow(Level, 4.0) * 10000);
+                    Character.Xp -= (long)(System.Math.Pow(Level, 4.0) * 10000);
                     Psychokinesis.Value -= Level;
 
                     Timer = Level * 150;
@@ -119,7 +119,7 @@ namespace Gaten.Net.GameRule.NGD2.SkillSystem
                     EasyConsole.SetColorAndWrite(12, "(액티브스킬MP소모 MAX: 30％)", true);
                     break;
                 case 9:
-                    EasyConsole.SetColorAndWrite(11, $"악마와의계약(qe)Lv145 / {Level} / 지속시간{Level * 15}초 / Exp감소량{Math.Pow(Level, 4.0) * 10000} / Exp획득량+{Level * 80}% / 시전시염력감소{Level}");
+                    EasyConsole.SetColorAndWrite(11, $"악마와의계약(qe)Lv145 / {Level} / 지속시간{Level * 15}초 / Exp감소량{System.Math.Pow(Level, 4.0) * 10000} / Exp획득량+{Level * 80}% / 시전시염력감소{Level}");
                     break;
             }
         }

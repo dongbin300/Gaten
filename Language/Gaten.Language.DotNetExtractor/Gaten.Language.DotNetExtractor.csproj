@@ -8,8 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Net\Gaten.Net.Data\Gaten.Net.Data.csproj" />
-    <ProjectReference Include="..\..\Net\Gaten.Net.Windows\Gaten.Net.Windows.csproj" />
+    <ProjectReference Include="..\..\Net\Gaten.Net\Gaten.Net.csproj" />
   </ItemGroup>
 
 </Project>

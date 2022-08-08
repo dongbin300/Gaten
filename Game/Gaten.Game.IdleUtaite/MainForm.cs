@@ -2,8 +2,8 @@ namespace Gaten.Game.IdleUtaite
 {
     public partial class MainForm : Form
     {
-        Me me = new Me();
-        Studio.Studio studio = new Studio.Studio();
+        private readonly Me me = new();
+        private readonly Studio.Studio studio = new();
 
         public MainForm()
         {
@@ -17,7 +17,9 @@ namespace Gaten.Game.IdleUtaite
         {
             studio.AddMusic();
             foreach (Music music in studio.musics)
-                musicListBox.Items.Add(music.title);
+            {
+                _ = musicListBox.Items.Add(music.title);
+            }
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -52,7 +54,7 @@ namespace Gaten.Game.IdleUtaite
         private void RecordButton_Click(object sender, EventArgs e)
         {
             studio.recordedMusic = studio.musics.Find(m => m.title == musicListBox.SelectedItem.ToString());
-            MessageBox.Show("³ìÀ½ ¿Ï·á.");
+            _ = MessageBox.Show("³ìÀ½ ¿Ï·á.");
         }
 
         private void StudioTab_SelectedIndexChanged(object sender, EventArgs e)

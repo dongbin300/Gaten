@@ -35,7 +35,7 @@ namespace Gaten.GameTool.NGD.NFDManager
             listBox.Items.Clear();
             foreach (Dungeon d in dungeons)
             {
-                listBox.Items.Add(d.Name);
+                _ = listBox.Items.Add(d.Name);
             }
 
             _Type = Type.Dungeon;
@@ -49,7 +49,7 @@ namespace Gaten.GameTool.NGD.NFDManager
             listBox.Items.Clear();
             foreach (Monster m in monsters)
             {
-                listBox.Items.Add(m.Name);
+                _ = listBox.Items.Add(m.Name);
             }
 
             _Type = Type.Monster;
@@ -63,7 +63,7 @@ namespace Gaten.GameTool.NGD.NFDManager
             listBox.Items.Clear();
             foreach (Item i in materials)
             {
-                listBox.Items.Add(i.Name);
+                _ = listBox.Items.Add(i.Name);
             }
 
             _Type = Type.Material;
@@ -77,7 +77,7 @@ namespace Gaten.GameTool.NGD.NFDManager
             listBox.Items.Clear();
             foreach (Item i in equipments)
             {
-                listBox.Items.Add(i.Name);
+                _ = listBox.Items.Add(i.Name);
             }
 
             _Type = Type.Equipment;
@@ -91,7 +91,7 @@ namespace Gaten.GameTool.NGD.NFDManager
             listBox.Items.Clear();
             foreach (Item i in potions)
             {
-                listBox.Items.Add(i.Name);
+                _ = listBox.Items.Add(i.Name);
             }
 
             _Type = Type.Potion;
@@ -101,12 +101,14 @@ namespace Gaten.GameTool.NGD.NFDManager
         private void listBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBox.SelectedItem == null)
+            {
                 return;
+            }
 
             switch (_Type)
             {
                 case Type.Dungeon:
-                    var selectedDungeon = dungeons.Find(d => d.Name.Equals(listBox.SelectedItem.ToString()));
+                    Dungeon? selectedDungeon = dungeons.Find(d => d.Name.Equals(listBox.SelectedItem.ToString()));
                     string[] dInfo = selectedDungeon.FormattedDungeonInfo.Split('/');
                     dungeonNameTextBox.Text = selectedDungeon.Name;
                     waveCountTextBox.Text = dInfo[0];
@@ -117,7 +119,7 @@ namespace Gaten.GameTool.NGD.NFDManager
                     break;
 
                 case Type.Monster:
-                    var selectedMonster = monsters.Find(d => d.Name.Equals(listBox.SelectedItem.ToString()));
+                    Monster? selectedMonster = monsters.Find(d => d.Name.Equals(listBox.SelectedItem.ToString()));
                     monsterNameTextBox.Text = selectedMonster.Name;
                     monsterExpTextBox.Text = selectedMonster.Exp;
                     monsterGoldTextBox.Text = selectedMonster.Gold;
@@ -131,7 +133,7 @@ namespace Gaten.GameTool.NGD.NFDManager
                     break;
 
                 case Type.Material:
-                    var selectedMaterial = materials.Find(d => d.Name.Equals(listBox.SelectedItem.ToString()));
+                    Item? selectedMaterial = materials.Find(d => d.Name.Equals(listBox.SelectedItem.ToString()));
                     materialNameTextBox.Text = selectedMaterial.Name;
                     materialRankTextBox.Text = selectedMaterial.Rank;
                     materialValueTextBox.Text = selectedMaterial.Value;
@@ -140,7 +142,7 @@ namespace Gaten.GameTool.NGD.NFDManager
                     break;
 
                 case Type.Equipment:
-                    var selectedEquipment = equipments.Find(d => d.Name.Equals(listBox.SelectedItem.ToString()));
+                    Item? selectedEquipment = equipments.Find(d => d.Name.Equals(listBox.SelectedItem.ToString()));
                     equipmentNameTextBox.Text = selectedEquipment.Name;
                     equipmentRankTextBox.Text = selectedEquipment.Rank;
                     equipmentLevelTextBox.Text = selectedEquipment.Level;
@@ -214,57 +216,57 @@ namespace Gaten.GameTool.NGD.NFDManager
             }
         }
 
-        void RegistMonster(Monster monster)
+        private void RegistMonster(Monster monster)
         {
-            var _monster = monsters.Find(d => d.Name.Equals(monster.Name));
+            Monster? _monster = monsters.Find(d => d.Name.Equals(monster.Name));
 
             if (_monster != null)
             {
-                monsters.Remove(monsters.Find(d => d.Name.Equals(_monster.Name)));
+                _ = monsters.Remove(monsters.Find(d => d.Name.Equals(_monster.Name)));
             }
             monsters.Add(monster);
         }
 
-        void RegistDungeon(Dungeon dungeon)
+        private void RegistDungeon(Dungeon dungeon)
         {
-            var _dungeon = dungeons.Find(d => d.Name.Equals(dungeon.Name));
+            Dungeon? _dungeon = dungeons.Find(d => d.Name.Equals(dungeon.Name));
 
             if (_dungeon != null)
             {
-                dungeons.Remove(dungeons.Find(d => d.Name.Equals(_dungeon.Name)));
+                _ = dungeons.Remove(dungeons.Find(d => d.Name.Equals(_dungeon.Name)));
             }
             dungeons.Add(dungeon);
         }
 
-        void RegistMaterial(Item material)
+        private void RegistMaterial(Item material)
         {
-            var _material = materials.Find(d => d.Name.Equals(material.Name));
+            Item? _material = materials.Find(d => d.Name.Equals(material.Name));
 
             if (_material != null)
             {
-                materials.Remove(materials.Find(d => d.Name.Equals(_material.Name)));
+                _ = materials.Remove(materials.Find(d => d.Name.Equals(_material.Name)));
             }
             materials.Add(material);
         }
 
-        void RegistEquipment(Item equipment)
+        private void RegistEquipment(Item equipment)
         {
-            var _equipment = equipments.Find(d => d.Name.Equals(equipment.Name));
+            Item? _equipment = equipments.Find(d => d.Name.Equals(equipment.Name));
 
             if (_equipment != null)
             {
-                equipments.Remove(equipments.Find(d => d.Name.Equals(_equipment.Name)));
+                _ = equipments.Remove(equipments.Find(d => d.Name.Equals(_equipment.Name)));
             }
             equipments.Add(equipment);
         }
 
-        void RegistPotion(Item potion)
+        private void RegistPotion(Item potion)
         {
-            var _potion = potions.Find(d => d.Name.Equals(potion.Name));
+            Item? _potion = potions.Find(d => d.Name.Equals(potion.Name));
 
             if (_potion != null)
             {
-                potions.Remove(potions.Find(d => d.Name.Equals(_potion.Name)));
+                _ = potions.Remove(potions.Find(d => d.Name.Equals(_potion.Name)));
             }
             potions.Add(potion);
         }

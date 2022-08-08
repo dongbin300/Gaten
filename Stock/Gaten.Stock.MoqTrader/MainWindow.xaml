@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:Gaten.Stock.MoqTrader"
         xmlns:wpf="clr-namespace:Gaten.Net.Wpf.Controls;assembly=Gaten.Net.Wpf"
         mc:Ignorable="d"
-        Icon="/Gaten.Stock.MoqTrader;component/Resources/Images/moq.ico"
-        Title="MoqTrader" Height="800" Width="480"
+        Icon="/MoqTrader;component/Resources/Images/moq.ico"
+        Title="MoqTrader" Height="800" Width="500"
         Loaded="Window_Loaded">
     <Grid>
         <StackPanel Orientation="Vertical">
@@ -40,79 +40,89 @@
                         <TextBlock Text="기간"/>
                         <CheckBox x:Name="AllPeriodCheckBox" Content="모든 기간" Checked="AllPeriodCheckBox_CheckedChanged" Unchecked="AllPeriodCheckBox_CheckedChanged"/>
                     </StackPanel>
-                       
+
                     <StackPanel Orientation="Horizontal">
                         <ComboBox x:Name="StartYearComboBox" Width="70" SelectedIndex="3">
-                            <ComboBoxItem>2019</ComboBoxItem>
-                            <ComboBoxItem>2020</ComboBoxItem>
-                            <ComboBoxItem>2021</ComboBoxItem>
-                            <ComboBoxItem>2022</ComboBoxItem>
+                            <ComboBox.Items>
+                                <ComboBoxItem>2019</ComboBoxItem>
+                                <ComboBoxItem>2020</ComboBoxItem>
+                                <ComboBoxItem>2021</ComboBoxItem>
+                                <ComboBoxItem>2022</ComboBoxItem>
+                            </ComboBox.Items>
                         </ComboBox>
                         <TextBlock Text="년"/>
                         <ComboBox x:Name="StartMonthComboBox" Width="50" SelectedIndex="2">
-                            <ComboBoxItem>1</ComboBoxItem>
-                            <ComboBoxItem>2</ComboBoxItem>
-                            <ComboBoxItem>3</ComboBoxItem>
-                            <ComboBoxItem>4</ComboBoxItem>
-                            <ComboBoxItem>5</ComboBoxItem>
-                            <ComboBoxItem>6</ComboBoxItem>
-                            <ComboBoxItem>7</ComboBoxItem>
-                            <ComboBoxItem>8</ComboBoxItem>
-                            <ComboBoxItem>9</ComboBoxItem>
-                            <ComboBoxItem>10</ComboBoxItem>
-                            <ComboBoxItem>11</ComboBoxItem>
-                            <ComboBoxItem>12</ComboBoxItem>
+                            <ComboBox.Items>
+                                <ComboBoxItem>1</ComboBoxItem>
+                                <ComboBoxItem>2</ComboBoxItem>
+                                <ComboBoxItem>3</ComboBoxItem>
+                                <ComboBoxItem>4</ComboBoxItem>
+                                <ComboBoxItem>5</ComboBoxItem>
+                                <ComboBoxItem>6</ComboBoxItem>
+                                <ComboBoxItem>7</ComboBoxItem>
+                                <ComboBoxItem>8</ComboBoxItem>
+                                <ComboBoxItem>9</ComboBoxItem>
+                                <ComboBoxItem>10</ComboBoxItem>
+                                <ComboBoxItem>11</ComboBoxItem>
+                                <ComboBoxItem>12</ComboBoxItem>
+                            </ComboBox.Items>
                         </ComboBox>
                         <TextBlock Text="월"/>
                         <ComboBox x:Name="StartDayComboBox" Width="50" SelectedIndex="0">
-                            <ComboBoxItem>1</ComboBoxItem>
-                            <ComboBoxItem>2</ComboBoxItem>
-                            <ComboBoxItem>3</ComboBoxItem>
-                            <ComboBoxItem>4</ComboBoxItem>
-                            <ComboBoxItem>5</ComboBoxItem>
-                            <ComboBoxItem>6</ComboBoxItem>
-                            <ComboBoxItem>7</ComboBoxItem>
-                            <ComboBoxItem>8</ComboBoxItem>
-                            <ComboBoxItem>9</ComboBoxItem>
-                            <ComboBoxItem>10</ComboBoxItem>
-                            <ComboBoxItem>11</ComboBoxItem>
-                            <ComboBoxItem>12</ComboBoxItem>
-                            <ComboBoxItem>13</ComboBoxItem>
-                            <ComboBoxItem>14</ComboBoxItem>
-                            <ComboBoxItem>15</ComboBoxItem>
-                            <ComboBoxItem>16</ComboBoxItem>
-                            <ComboBoxItem>17</ComboBoxItem>
-                            <ComboBoxItem>18</ComboBoxItem>
-                            <ComboBoxItem>19</ComboBoxItem>
-                            <ComboBoxItem>20</ComboBoxItem>
-                            <ComboBoxItem>21</ComboBoxItem>
-                            <ComboBoxItem>22</ComboBoxItem>
-                            <ComboBoxItem>23</ComboBoxItem>
-                            <ComboBoxItem>24</ComboBoxItem>
-                            <ComboBoxItem>25</ComboBoxItem>
-                            <ComboBoxItem>26</ComboBoxItem>
-                            <ComboBoxItem>27</ComboBoxItem>
-                            <ComboBoxItem>28</ComboBoxItem>
-                            <ComboBoxItem>29</ComboBoxItem>
-                            <ComboBoxItem>30</ComboBoxItem>
-                            <ComboBoxItem>31</ComboBoxItem>
+                            <ComboBox.Items>
+                                <ComboBoxItem>1</ComboBoxItem>
+                                <ComboBoxItem>2</ComboBoxItem>
+                                <ComboBoxItem>3</ComboBoxItem>
+                                <ComboBoxItem>4</ComboBoxItem>
+                                <ComboBoxItem>5</ComboBoxItem>
+                                <ComboBoxItem>6</ComboBoxItem>
+                                <ComboBoxItem>7</ComboBoxItem>
+                                <ComboBoxItem>8</ComboBoxItem>
+                                <ComboBoxItem>9</ComboBoxItem>
+                                <ComboBoxItem>10</ComboBoxItem>
+                                <ComboBoxItem>11</ComboBoxItem>
+                                <ComboBoxItem>12</ComboBoxItem>
+                                <ComboBoxItem>13</ComboBoxItem>
+                                <ComboBoxItem>14</ComboBoxItem>
+                                <ComboBoxItem>15</ComboBoxItem>
+                                <ComboBoxItem>16</ComboBoxItem>
+                                <ComboBoxItem>17</ComboBoxItem>
+                                <ComboBoxItem>18</ComboBoxItem>
+                                <ComboBoxItem>19</ComboBoxItem>
+                                <ComboBoxItem>20</ComboBoxItem>
+                                <ComboBoxItem>21</ComboBoxItem>
+                                <ComboBoxItem>22</ComboBoxItem>
+                                <ComboBoxItem>23</ComboBoxItem>
+                                <ComboBoxItem>24</ComboBoxItem>
+                                <ComboBoxItem>25</ComboBoxItem>
+                                <ComboBoxItem>26</ComboBoxItem>
+                                <ComboBoxItem>27</ComboBoxItem>
+                                <ComboBoxItem>28</ComboBoxItem>
+                                <ComboBoxItem>29</ComboBoxItem>
+                                <ComboBoxItem>30</ComboBoxItem>
+                                <ComboBoxItem>31</ComboBoxItem>
+                            </ComboBox.Items>
                         </ComboBox>
                         <TextBlock Text="일"/>
-                        <TextBox x:Name="BackTestPeriodTextBox" Width="50" Text="7"/>
+                        <Border Width="40">
+                            <TextBox x:Name="BackTestPeriodTextBox" Text="7" IsReadOnly="False"/>
+                        </Border>
                         <TextBlock Text="일간"/>
                         <ComboBox x:Name="CandleIntervalComboBox" Width="70" SelectedIndex="0">
-                            <ComboBoxItem>1</ComboBoxItem>
-                            <ComboBoxItem>3</ComboBoxItem>
-                            <ComboBoxItem>5</ComboBoxItem>
-                            <ComboBoxItem>15</ComboBoxItem>
-                            <ComboBoxItem>30</ComboBoxItem>
-                            <ComboBoxItem>60</ComboBoxItem>
-                            <ComboBoxItem>120</ComboBoxItem>
-                            <ComboBoxItem>240</ComboBoxItem>
-                            <ComboBoxItem>360</ComboBoxItem>
-                            <ComboBoxItem>480</ComboBoxItem>
-                            <ComboBoxItem>720</ComboBoxItem>
-                            <ComboBoxItem>1440</ComboBoxItem>
+                            <ComboBox.Items>
+                                <ComboBoxItem>1</ComboBoxItem>
+                                <ComboBoxItem>3</ComboBoxItem>
+                                <ComboBoxItem>5</ComboBoxItem>
+                                <ComboBoxItem>15</ComboBoxItem>
+                                <ComboBoxItem>30</ComboBoxItem>
+                                <ComboBoxItem>60</ComboBoxItem>
+                                <ComboBoxItem>120</ComboBoxItem>
+                                <ComboBoxItem>240</ComboBoxItem>
+                                <ComboBoxItem>360</ComboBoxItem>
+                                <ComboBoxItem>480</ComboBoxItem>
+                                <ComboBoxItem>720</ComboBoxItem>
+                                <ComboBoxItem>1440</ComboBoxItem>
+                            </ComboBox.Items>
                         </ComboBox>
                         <TextBlock Text="분봉"/>
                     </StackPanel>

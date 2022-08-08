@@ -7,12 +7,12 @@ namespace Gaten.Net.Stock
         /// <summary>
         /// 종목코드
         /// </summary>
-        public string Code { get; set; }
+        public string Code { get; set; } = string.Empty;
 
         /// <summary>
         /// 종목명
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// 현재가
@@ -37,7 +37,7 @@ namespace Gaten.Net.Stock
         /// <summary>
         /// 거래내역(Big Data)
         /// </summary>
-        public List<TransactionInfo> TransactionData { get; set; }
+        public List<TransactionInfo> TransactionData { get; set; } = new();
 
         public TransactionInfo LatestTransaction => GetLatestTransactionDataFromDb();
 

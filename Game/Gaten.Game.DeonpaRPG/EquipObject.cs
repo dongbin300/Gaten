@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Gaten.Game.DeonpaRPG
+﻿namespace Gaten.Game.DeonpaRPG
 {
-    class EquipObject
+    internal class EquipObject
     {
         public enum EquipObjectTypes { Gun, Armor, Necklace, Avatar, Pendant, Others, AbilityStone, Potion };
         public EquipObjectTypes type;
@@ -37,56 +34,101 @@ namespace Gaten.Game.DeonpaRPG
             Console.WriteLine($"{weight}kg");
 
             if (effect.attack != 0)
+            {
                 Console.WriteLine($"공격력 +{effect.attack}");
+            }
+
             if (effect.attackSpeed != 0)
+            {
                 Console.WriteLine($"공격속도 +{effect.attackSpeed}");
+            }
+
             if (effect.defense != 0)
+            {
                 Console.WriteLine($"방어력 +{effect.defense}");
+            }
+
             if (effect.specialDefense != 0)
+            {
                 Console.WriteLine($"특수방어력 +{effect.specialDefense}");
+            }
+
             if (effect.hp.max != 0)
+            {
                 Console.WriteLine($"HP +{effect.hp.max}");
+            }
+
             if (effect.mp.max != 0)
+            {
                 Console.WriteLine($"MP +{effect.mp.max}");
+            }
+
             if (effect.hpRecovery != 0)
+            {
                 Console.WriteLine($"HP회복 +{effect.hpRecovery}");
+            }
+
             if (effect.mpRecovery != 0)
+            {
                 Console.WriteLine($"MP회복 +{effect.mpRecovery}");
+            }
+
             if (effect.inventoryWeight.max != 0)
+            {
                 Console.WriteLine($"인무 +{effect.inventoryWeight.max}kg");
+            }
+
             if (effect.expBonus != 0)
+            {
                 Console.WriteLine($"Exp +{effect.expBonus}%");
+            }
+
             if (effect.goldBonus != 0)
+            {
                 Console.WriteLine($"골드 +{effect.goldBonus}%");
+            }
+
             if (effect.spBonus != 0)
+            {
                 Console.WriteLine($"Sp획득 +{effect.spBonus}%");
+            }
+
             if (effect.hpInstantRecovery != 0)
+            {
                 Console.WriteLine($"HP {effect.hpInstantRecovery} 회복 (현재HP {character.ability.hp.current}/{character.ability.hp.max})");
+            }
+
             if (effect.mpInstantRecovery != 0)
+            {
                 Console.WriteLine($"MP {effect.mpInstantRecovery} 회복 (현재MP {character.ability.mp.current}/{character.ability.mp.max})");
+            }
 
             try
             {
                 foreach (KeyValuePair<string, int> temp in effect.effectDict)
+                {
                     if (temp.Key.Length == 2)
+                    {
                         Console.WriteLine($"{character.skilldb.GetSkill(temp.Key).name} Lv +{temp.Value}");
+                    }
+                }
             }
             catch
             {
 
             }
-            
+
 
             Console.WriteLine($"{price}골드 (현재골드 {character.gold})");
         }
     }
 
-    class EODB
+    internal class EODB
     {
         public EquipObject[] equipObjects = new EquipObject[1000];
         public int equipObjectCount = 0;
 
-        private static EODB instance = new EODB();
+        private static readonly EODB instance = new();
 
         private EODB()
         {
@@ -281,8 +323,13 @@ namespace Gaten.Game.DeonpaRPG
         public EquipObject GetEquipObject(string name)
         {
             for (int i = 0; i < equipObjectCount; i++)
+            {
                 if (name == equipObjects[i].name)
+                {
                     return equipObjects[i];
+                }
+            }
+
             return null;
         }
     }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0-windows</TargetFramework>
@@ -7,9 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Gaten.Net.Data\Gaten.Net.Data.csproj" />
-    <ProjectReference Include="..\..\Gaten.Net.Exception\Gaten.Net.Exception.csproj" />
-    <ProjectReference Include="..\..\Gaten.Net.Extension\Gaten.Net.Extension.csproj" />
+    <ProjectReference Include="..\..\Gaten.Net\Gaten.Net.csproj" />
   </ItemGroup>
 
 </Project>

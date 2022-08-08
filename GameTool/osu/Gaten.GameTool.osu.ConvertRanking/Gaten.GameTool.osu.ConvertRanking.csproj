@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Net\GameRule\Gaten.Net.GameRule.osu\Gaten.Net.GameRule.osu.csproj" />
-    <ProjectReference Include="..\..\..\Net\Gaten.Net.Network\Gaten.Net.Network.csproj" />
   </ItemGroup>
 
 </Project>

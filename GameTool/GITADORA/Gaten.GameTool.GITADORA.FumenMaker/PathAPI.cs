@@ -17,7 +17,7 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
 
         public static List<Path> ConvertPath(List<Path> paths, Config config, FumenViewMode mode)
         {
-            List<Path> newPaths = new List<Path>();
+            List<Path> newPaths = new();
 
             switch (mode)
             {
@@ -98,10 +98,12 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
 
 
         // 대절선 bpCount개마다 한 개의 라인
-        static List<double> GetThresholdTimings(List<Path> bpPaths, int bpCount)
+        private static List<double> GetThresholdTimings(List<Path> bpPaths, int bpCount)
         {
-            List<double> thresholds = new List<double>();
-            thresholds.Add(0.0);
+            List<double> thresholds = new()
+            {
+                0.0
+            };
 
             int index = bpCount;
 
@@ -110,20 +112,20 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
                 thresholds.Add(bpPaths[index].timing);
                 index += bpCount;
             }
-            thresholds.Add(bpPaths[bpPaths.Count - 1].timing);
+            thresholds.Add(bpPaths[^1].timing);
 
             return thresholds;
         }
 
-        static void CalculateConfig(Config config, List<Path> paths)
+        private static void CalculateConfig(Config config, List<Path> paths)
         {
-            config.width = 100 + (paths.Max(p => p.lineNum) + 1) * 700;
+            config.width = 100 + ((paths.Max(p => p.lineNum) + 1) * 700);
             config.height = 300 + (int)paths.Max(p => p.timing);
         }
 
         public static List<Path> ReversePath(List<Path> paths, Config config)
         {
-            List<Path> newPaths = new List<Path>();
+            List<Path> newPaths = new();
 
             foreach (Path path in paths)
             {
@@ -142,7 +144,7 @@ namespace Gaten.GameTool.GITADORA.FumenMaker
 
         public static List<Path> ScalePath(List<Path> paths, Config config, double scale)
         {
-            List<Path> newPaths = new List<Path>();
+            List<Path> newPaths = new();
 
             config.height = (int)(config.height * scale);
 

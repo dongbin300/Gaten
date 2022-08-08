@@ -9,8 +9,8 @@ namespace Gaten.Data.FileManager
     {
         public static Node MakeWindowTree(string rootPath)
         {
-            TreeViewItem rootItem = new TreeViewItem() { Header = rootPath };
-            Node root = new Node(
+            TreeViewItem? rootItem = new() { Header = rootPath };
+            Node? root = new(
                 NodeType.Directory,
                 rootItem,
                 rootPath
@@ -35,7 +35,7 @@ namespace Gaten.Data.FileManager
 
         public static Node AddFileNodes(Node node, string path)
         {
-            List<FileInfo> fileInfos = new List<FileInfo>();
+            List<FileInfo>? fileInfos = new();
             try
             {
                 fileInfos = new DirectoryInfo(path).GetFiles().ToList();
@@ -47,22 +47,22 @@ namespace Gaten.Data.FileManager
 
             if (fileInfos == null)
             {
-                return null;
+                return new Node();
             }
 
             foreach (FileInfo info in fileInfos)
             {
                 if (Util.SupportsExtension(info.Name))
                 {
-                    TreeViewItem childrenItem = new TreeViewItem() { Header = info.Name };
+                    TreeViewItem? childrenItem = new() { Header = info.Name };
 
-                    Node childrenNode = new Node(
+                    Node? childrenNode = new(
                          NodeType.File,
                          childrenItem,
                          Path.Combine(path, info.Name)
                         );
 
-                    node.Item.Items.Add(childrenItem);
+                    _ = node.Item.Items.Add(childrenItem);
                     NodeManager.Nodes.Add(childrenNode);
                 }
             }
@@ -72,7 +72,7 @@ namespace Gaten.Data.FileManager
 
         public static Node AddDirectoryNodes(Node node, string path)
         {
-            List<DirectoryInfo> directoryInfos = new List<DirectoryInfo>();
+            List<DirectoryInfo>? directoryInfos = new();
             try
             {
                 directoryInfos = new DirectoryInfo(path).GetDirectories().ToList();
@@ -82,13 +82,16 @@ namespace Gaten.Data.FileManager
 
             }
 
-            if (directoryInfos == null) return null;
+            if (directoryInfos == null)
+            {
+                return new Node();
+            }
 
             foreach (DirectoryInfo info in directoryInfos)
             {
-                TreeViewItem childrenItem = new TreeViewItem() { Header = info.Name };
+                TreeViewItem? childrenItem = new() { Header = info.Name };
 
-                Node childrenNode = new Node(
+                Node? childrenNode = new(
                          NodeType.Directory,
                          childrenItem,
                          Path.Combine(path, info.Name)
@@ -96,9 +99,12 @@ namespace Gaten.Data.FileManager
 
                 childrenNode = AddChildrenNodes(childrenNode, path);
 
-                if (childrenNode == null) continue;
+                if (childrenNode == null)
+                {
+                    continue;
+                }
 
-                node.Item.Items.Add(childrenItem);
+                _ = node.Item.Items.Add(childrenItem);
 
                 NodeManager.Nodes.Add(childrenNode);
             }

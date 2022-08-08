@@ -2,14 +2,12 @@
 {
     public class TriggerSet
     {
-        public List<Trigger> Triggers { get; set; }
+        public List<Trigger> Triggers { get; set; } = new();
 
-        public string MasterCode { get; set; }
+        public string MasterCode { get; set; } = string.Empty;
 
         public TriggerSet()
         {
-            Triggers = new List<Trigger>();
-
             MakeDefault();
         }
 

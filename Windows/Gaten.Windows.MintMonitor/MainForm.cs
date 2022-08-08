@@ -1,4 +1,4 @@
-﻿using Gaten.Net.Data.Diagnostics;
+﻿using Gaten.Net.Diagnostics;
 using Gaten.Net.Network;
 using Gaten.Net.Windows;
 

@@ -31,7 +31,7 @@
             this.title = title;
             this.highestNote = highestNote;
             this.rhythmDifficulty = rhythmDifficulty;
-            hitBoost = (int)(Math.Pow(highestNote, 2.1) * (0.5 + 0.1 * rhythmDifficulty));
+            hitBoost = (int)(Math.Pow(highestNote, 2.1) * (0.5 + (0.1 * rhythmDifficulty)));
         }
     }
 }

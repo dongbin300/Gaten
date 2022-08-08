@@ -45,19 +45,19 @@ namespace Gaten.Net.GameRule.NGD2.SkillSystem
             var s = GetSkill("기본기") as PassiveSkill;
             effect.Power += s.Level;
             s = GetSkill("잠재력") as PassiveSkill;
-            effect.PowerMultiple += Math.Min(s.Level, 100);
+            effect.PowerMultiple += System.Math.Min(s.Level, 100);
             s = GetSkill("극MP회복") as PassiveSkill;
             effect.AttackMpRegen += s.PerDamage + s.Level * s.IncPerDamage;
             s = GetSkill("콤보어택") as PassiveSkill;
-            effect.PowerMultiple += Math.Min(s.PerDamage + s.Level * s.IncPerDamage, 25) * OnSkillCount;
+            effect.PowerMultiple += System.Math.Min(s.PerDamage + s.Level * s.IncPerDamage, 25) * OnSkillCount;
             s = GetSkill("운기조식") as PassiveSkill;
             effect.SpiritDropMultiple += s.Level * 30;
             effect.MpRegen += s.Level * 15;
             s = GetSkill("슈퍼MP회복") as PassiveSkill;
             effect.AttackMpRegen += s.PerDamage + s.Level * s.IncPerDamage;
             s = GetSkill("기력방출") as PassiveSkill;
-            effect.PowerMultiple += Math.Min(s.Level * 2, 100);
-            effect.MpReductionMultiple += Math.Min(s.Level, 30);
+            effect.PowerMultiple += System.Math.Min(s.Level * 2, 100);
+            effect.MpReductionMultiple += System.Math.Min(s.Level, 30);
             s = GetSkill("파워크리티컬") as PassiveSkill;
             effect.PowerCriticalDamageMultiple += s.PerDamage + s.Level * s.IncPerDamage;
             s = GetSkill("크리티컬마인드") as PassiveSkill;
@@ -99,7 +99,7 @@ namespace Gaten.Net.GameRule.NGD2.SkillSystem
             {
                 effect.Power += ss.Level * 5;
                 effect.MpRegen += ss.Level * 3;
-                effect.MpReductionMultiple += Math.Min(ss.Level, 30);
+                effect.MpReductionMultiple += System.Math.Min(ss.Level, 30);
             }
             ss = GetSkill("악마와의계약") as SpecialSkill;
             if (ss.On)

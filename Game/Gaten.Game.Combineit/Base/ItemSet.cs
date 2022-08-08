@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gaten.Game.Combineit.Base
+﻿namespace Gaten.Game.Combineit.Base
 {
     public class ItemSet
     {

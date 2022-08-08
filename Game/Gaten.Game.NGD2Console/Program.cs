@@ -1,32 +1,30 @@
 ﻿using Gaten.Net.GameRule.NGD2;
 using Gaten.Net.GameRule.NGD2.AbilitySystem;
 
-namespace NGD2Console
+namespace Gaten.Game.NGD2Console
 {
-    class Program
+    internal class Program
     {
-        enum Screens { Main, Skill, SpiritShop, PsychokinesisShop, KeyBox, Help, Option, Update, GameInfo, DetailStatus }
-        static Screens screen = Screens.Main;
+        private enum Screens { Main, Skill, SpiritShop, PsychokinesisShop, KeyBox, Help, Option, Update, GameInfo, DetailStatus }
 
-        static int[] NT = new int[15]; // Notice Text
-        static int[] NTT = new int[15]; // Notice Text Timer
-        static string[] NTTT = new string[15]; // Notice Text Timer Text
-        static int[] NTTTC = new int[15]; // Notice Text Timer Text Color 
+        private static Screens screen = Screens.Main;
+        private static readonly int[] NT = new int[15]; // Notice Text
+        private static readonly int[] NTT = new int[15]; // Notice Text Timer
+        private static readonly string[] NTTT = new string[15]; // Notice Text Timer Text
+        private static readonly int[] NTTTC = new int[15]; // Notice Text Timer Text Color 
 
-        static int characterIndex = 0;
-        static bool restingReward = false;
-
-        static string currentVersion;
-        static int hotTimeBonus = 1;
-        static int boxBorderColor = 15;
-
-        static Thread keyInputThread;
+        private static int characterIndex = 0;
+        private static bool restingReward = false;
+        private static string currentVersion;
+        private static int hotTimeBonus = 1;
+        private static int boxBorderColor = 15;
+        private static Thread keyInputThread;
 
         // 키 상자
-        static int keyBoxNum = 0;
-        static int keyX = 0, keyY = 0;
+        private static int keyBoxNum = 0;
+        private static int keyX = 0, keyY = 0;
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             // 옵션 로드
             Option.Init();
@@ -39,7 +37,7 @@ namespace NGD2Console
             currentVersion = Update.Version[Update.Max - 1];
 
             // 계정별 레벨 가져오기
-            var tempLevel = Character.TempLoad();
+            List<int>? tempLevel = Character.TempLoad();
 
             EasyConsole.SetCursorAndColorAndWrite(16, 8, 219, "┌────────┐");
             EasyConsole.SetCursorAndColorAndWrite(16, 9, 219, $"│1. SLOT 1 Lv {string.Format("{0,3}", tempLevel[0])}│");
@@ -106,7 +104,7 @@ namespace NGD2Console
             }
         }
 
-        static void MainScreen()
+        private static void MainScreen()
         {
             /* 알림 메시지 타이머 */
             for (int i = 0; i < 15; i++)
@@ -129,14 +127,14 @@ namespace NGD2Console
 
 
             /* 화면 새로 고침 */
-            if (Gaten.Net.GameRule.NGD2.Timer.ClearScreen > 30)
+            if (Net.GameRule.NGD2.Timer.ClearScreen > 30)
             {
                 if (Option.AutoSave > 0)
                 {
                     Character.Save(characterIndex);
                     RegistText(10, "저장 완료");
                 }
-                Gaten.Net.GameRule.NGD2.Timer.ClearScreen = 0;
+                Net.GameRule.NGD2.Timer.ClearScreen = 0;
                 EasyConsole.Clear();
             }
 
@@ -150,7 +148,7 @@ namespace NGD2Console
             }
 
             EasyConsole.SetCursorAndColorAndWrite(2, 1, 11, $"Version {currentVersion}");
-            EasyConsole.SetCursorAndColorAndWrite(18, 1, 15, $"현재시간 :: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}");
+            EasyConsole.SetCursorAndColorAndWrite(18, 1, 15, $"현재시간 :: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
             EasyConsole.SetCursorAndColorAndWrite(52, 1, 10, $"Lv {string.Format("{0,6}", Character.Level)}");
             EasyConsole.SetCursorAndColorAndWrite(52, 6, 15, "a 저장");
             EasyConsole.SetCursorAndColorAndWrite(52, 7, 15, "c 스킬");
@@ -165,11 +163,15 @@ namespace NGD2Console
 
             hotTimeBonus = 1;
             if (DateTime.Now.Minute == 30) // 핫타임
+            {
                 hotTimeBonus *= 2;
+            }
 
             boxBorderColor = 15;
             if (hotTimeBonus != 1) // 핫타임
+            {
                 boxBorderColor = 10;
+            }
 
             EasyConsole.DrawBox(0, 0, 7, 1, boxBorderColor);
             EasyConsole.DrawBox(16, 0, 16, 1, boxBorderColor);
@@ -191,7 +193,9 @@ namespace NGD2Console
                 EasyConsole.SetColorAndWrite(169, $"{string.Format("{0:R}%", Math.Round(xpStates, Option.PerDisplay))}  ");
                 EasyConsole.SetColor(0);
                 for (int i = 0; i < 51 - xpBar; i++)
+                {
                     EasyConsole.Write(" ");
+                }
 
                 EasyConsole.SetCursorAndColorAndWrite(2, 4, 11, "MP  ");
                 double mpStates = (double)Character.Mp / Character.Effect.MpMax * 100;
@@ -200,7 +204,9 @@ namespace NGD2Console
                 EasyConsole.SetColorAndWrite(185, $"{string.Format("{0:R}%", Math.Round(mpStates, Option.PerDisplay))}  ");
                 EasyConsole.SetColor(0);
                 for (int i = 0; i < 51 - manaBar; i++)
+                {
                     EasyConsole.Write(" ");
+                }
             }
             /* 숫자로 표시 */
             else
@@ -211,9 +217,15 @@ namespace NGD2Console
             }
 
             if (Character.Level >= 10)
+            {
                 EasyConsole.SetCursorAndColorAndWrite(2, 6, 14, $"근성의 징표 {string.Format("{0,16}", Spirit.Value)}");
+            }
+
             if (Character.Level >= 30)
+            {
                 EasyConsole.SetCursorAndColorAndWrite(2, 7, 14, $"키 {string.Format("{0,25}", Key.Value)}");
+            }
+
             if (Character.Level >= 50)
             {
                 EasyConsole.SetColor(Boost.Color);
@@ -253,7 +265,7 @@ namespace NGD2Console
 
             //t.ClearScreen++;
 
-            foreach (Gaten.Net.GameRule.NGD2.SkillSystem.Skill skill in Character.SkillBook.Skills)
+            foreach (Net.GameRule.NGD2.SkillSystem.Skill skill in Character.SkillBook.Skills)
             {
                 skill.Timer = skill.Timer > 0 ? skill.Timer - 1 : skill.Timer;
                 skill.On = skill.Timer > 0;
@@ -263,14 +275,26 @@ namespace NGD2Console
             Character.Xp += Psychokinesis.Effect.Power;
 
             /* MP 리젠 */
-            Character.Effect.MpMax = 400 * Character.Level + Psychokinesis.Effect.MpMax + Key.Effect.MpMax + 600 * Spirit.Effect.MpMax;
+            Character.Effect.MpMax = (400 * Character.Level) + Psychokinesis.Effect.MpMax + Key.Effect.MpMax + (600 * Spirit.Effect.MpMax);
             if (Character.Mp < Character.Effect.MpMax)
             {
                 Character.Effect.MpRegen = 0;
-                if (Key.Value >= 100) Character.Effect.MpRegen += 25;
-                if (Key.Value >= 200) Character.Effect.MpRegen += 75;
-                if (Character.SkillBook.GetSkill("쇼타임").On) Character.Effect.MpRegen += 2 * Character.SkillBook.GetSkill("쇼타임").Level;
-                Character.Effect.MpRegen += 3 + Character.Level / 5;
+                if (Key.Value >= 100)
+                {
+                    Character.Effect.MpRegen += 25;
+                }
+
+                if (Key.Value >= 200)
+                {
+                    Character.Effect.MpRegen += 75;
+                }
+
+                if (Character.SkillBook.GetSkill("쇼타임").On)
+                {
+                    Character.Effect.MpRegen += 2 * Character.SkillBook.GetSkill("쇼타임").Level;
+                }
+
+                Character.Effect.MpRegen += 3 + (Character.Level / 5);
                 Character.Effect.MpRegen += Psychokinesis.Effect.MpRegen;
                 Character.Effect.MpRegen += Mugong.Effect.MpRegen;
                 Character.Effect.MpRegen += Spirit.Effect.MpRegen;
@@ -279,7 +303,9 @@ namespace NGD2Console
                 Character.Mp += Character.Effect.MpRegen;
             }
             else
+            {
                 Character.Mp = Character.Effect.MpMax;
+            }
 
             /* 레벨 업 */
             if (Character.Xp >= Exp(Character.Level))
@@ -289,28 +315,38 @@ namespace NGD2Console
                 Character.Mp = Character.Effect.MpMax;
                 RegistText(11, $"레벨 업({Character.Level - 1} -> {Character.Level})");
                 if (Character.Level == 10)
+                {
                     RegistText(11, "이제 근성의징표를 사용할 수 있습니다");
+                }
                 else if (Character.Level == 30)
+                {
                     RegistText(11, "이제 키를 사용할 수 있습니다");
+                }
                 else if (Character.Level == 50)
+                {
                     RegistText(11, "이제 부스트를 사용할 수 있습니다");
+                }
                 else if (Character.Level == 70)
+                {
                     RegistText(11, "이제 무공을 사용할 수 있습니다");
+                }
                 else if (Character.Level == 100)
+                {
                     RegistText(11, "이제 염력을 사용할 수 있습니다");
+                }
             }
 
             /* 무공 레벨 업 */
             if (Mugong.Value >= Math.Pow(Mugong.Level, 1.6))
             {
                 Mugong.Level++;
-                RegistText(11, $"무공 레벨 업({Mugong.Level - 1 } -> {Mugong.Level})");
+                RegistText(11, $"무공 레벨 업({Mugong.Level - 1} -> {Mugong.Level})");
             }
         }
 
-        static void keyInputWork()
+        private static void keyInputWork()
         {
-            Random r = new Random();
+            Random r = new();
             ConsoleKey key = Console.ReadKey(true).Key;
 
             switch (screen)
@@ -371,37 +407,37 @@ namespace NGD2Console
                         case ConsoleKey.D1:
                             if (Character.Level >= Character.SkillBook.GetSkill("일격").MinLevel)
                             {
-                                Character.SkillBook.Activate("일격");
+                                _ = Character.SkillBook.Activate("일격");
                             }
                             break;
                         case ConsoleKey.D2:
                             if (Character.Level >= Character.SkillBook.GetSkill("무쌍").MinLevel)
                             {
-                                Character.SkillBook.Activate("무쌍");
+                                _ = Character.SkillBook.Activate("무쌍");
                             }
                             break;
                         case ConsoleKey.D3:
                             if (Character.Level >= Character.SkillBook.GetSkill("진검").MinLevel)
                             {
-                                Character.SkillBook.Activate("진검");
+                                _ = Character.SkillBook.Activate("진검");
                             }
                             break;
                         case ConsoleKey.D4:
                             if (Character.Level >= Character.SkillBook.GetSkill("패스트푸쉬업").MinLevel)
                             {
-                                Character.SkillBook.Activate("패스트푸쉬업");
+                                _ = Character.SkillBook.Activate("패스트푸쉬업");
                             }
                             break;
                         case ConsoleKey.D5:
                             if (Character.Level >= Character.SkillBook.GetSkill("파이어").MinLevel)
                             {
-                                Character.SkillBook.Activate("파이어");
+                                _ = Character.SkillBook.Activate("파이어");
                             }
                             break;
                         case ConsoleKey.D6:
                             if (Character.Level >= Character.SkillBook.GetSkill("썬더").MinLevel)
                             {
-                                Character.SkillBook.Activate("썬더");
+                                _ = Character.SkillBook.Activate("썬더");
                             }
                             break;
                         case ConsoleKey.Q:
@@ -410,49 +446,49 @@ namespace NGD2Console
                                 case ConsoleKey.D1:
                                     if (Character.Level >= Character.SkillBook.GetSkill("더블클러치").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("더블클러치");
+                                        _ = Character.SkillBook.Activate("더블클러치");
                                     }
                                     break;
                                 case ConsoleKey.D2:
                                     if (Character.Level >= Character.SkillBook.GetSkill("삼단베기").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("삼단베기");
+                                        _ = Character.SkillBook.Activate("삼단베기");
                                     }
                                     break;
                                 case ConsoleKey.D3:
                                     if (Character.Level >= Character.SkillBook.GetSkill("파열진").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("파열진");
+                                        _ = Character.SkillBook.Activate("파열진");
                                     }
                                     break;
                                 case ConsoleKey.D4:
                                     if (Character.Level >= Character.SkillBook.GetSkill("패스트푸쉬스트레이트").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("패스트푸쉬스트레이트");
+                                        _ = Character.SkillBook.Activate("패스트푸쉬스트레이트");
                                     }
                                     break;
                                 case ConsoleKey.D5:
                                     if (Character.Level >= Character.SkillBook.GetSkill("파이어로그").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("파이어로그");
+                                        _ = Character.SkillBook.Activate("파이어로그");
                                     }
                                     break;
                                 case ConsoleKey.D6:
                                     if (Character.Level >= Character.SkillBook.GetSkill("천지일격").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("천지일격");
+                                        _ = Character.SkillBook.Activate("천지일격");
                                     }
                                     break;
                                 case ConsoleKey.W:
                                     if (Character.Level >= Character.SkillBook.GetSkill("쇼타임").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("쇼타임");
+                                        _ = Character.SkillBook.Activate("쇼타임");
                                     }
                                     break;
                                 case ConsoleKey.E:
                                     if (Character.Level >= Character.SkillBook.GetSkill("악마와의계약").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("악마와의계약");
+                                        _ = Character.SkillBook.Activate("악마와의계약");
                                     }
                                     break;
                                 default:
@@ -465,37 +501,37 @@ namespace NGD2Console
                                 case ConsoleKey.D1:
                                     if (Character.Level >= Character.SkillBook.GetSkill("파워풀클러치").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("파워풀클러치");
+                                        _ = Character.SkillBook.Activate("파워풀클러치");
                                     }
                                     break;
                                 case ConsoleKey.D2:
                                     if (Character.Level >= Character.SkillBook.GetSkill("스타배쉬").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("스타배쉬");
+                                        _ = Character.SkillBook.Activate("스타배쉬");
                                     }
                                     break;
                                 case ConsoleKey.D3:
                                     if (Character.Level >= Character.SkillBook.GetSkill("데스브링어").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("데스브링어");
+                                        _ = Character.SkillBook.Activate("데스브링어");
                                     }
                                     break;
                                 case ConsoleKey.D4:
                                     if (Character.Level >= Character.SkillBook.GetSkill("패스트푸쉬라이트").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("패스트푸쉬라이트");
+                                        _ = Character.SkillBook.Activate("패스트푸쉬라이트");
                                     }
                                     break;
                                 case ConsoleKey.D5:
                                     if (Character.Level >= Character.SkillBook.GetSkill("플레임머신").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("플레임머신");
+                                        _ = Character.SkillBook.Activate("플레임머신");
                                     }
                                     break;
                                 case ConsoleKey.D6:
                                     if (Character.Level >= Character.SkillBook.GetSkill("천지강격").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("천지강격");
+                                        _ = Character.SkillBook.Activate("천지강격");
                                     }
                                     break;
                                 default:
@@ -508,37 +544,37 @@ namespace NGD2Console
                                 case ConsoleKey.D1:
                                     if (Character.Level >= Character.SkillBook.GetSkill("무의극-주작").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("무의극-주작");
+                                        _ = Character.SkillBook.Activate("무의극-주작");
                                     }
                                     break;
                                 case ConsoleKey.D2:
                                     if (Character.Level >= Character.SkillBook.GetSkill("무의극-현무").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("무의극-현무");
+                                        _ = Character.SkillBook.Activate("무의극-현무");
                                     }
                                     break;
                                 case ConsoleKey.D3:
                                     if (Character.Level >= Character.SkillBook.GetSkill("무의극-백호").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("무의극-백호");
+                                        _ = Character.SkillBook.Activate("무의극-백호");
                                     }
                                     break;
                                 case ConsoleKey.D4:
                                     if (Character.Level >= Character.SkillBook.GetSkill("패스트푸쉬레프트").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("패스트푸쉬레프트");
+                                        _ = Character.SkillBook.Activate("패스트푸쉬레프트");
                                     }
                                     break;
                                 case ConsoleKey.D5:
                                     if (Character.Level >= Character.SkillBook.GetSkill("무의극-청룡").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("무의극-청룡");
+                                        _ = Character.SkillBook.Activate("무의극-청룡");
                                     }
                                     break;
                                 case ConsoleKey.D6:
                                     if (Character.Level >= Character.SkillBook.GetSkill("무의극-화신").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("무의극-화신");
+                                        _ = Character.SkillBook.Activate("무의극-화신");
                                     }
                                     break;
                                 default:
@@ -551,37 +587,37 @@ namespace NGD2Console
                                 case ConsoleKey.D1:
                                     if (Character.Level >= Character.SkillBook.GetSkill("순격").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("순격");
+                                        _ = Character.SkillBook.Activate("순격");
                                     }
                                     break;
                                 case ConsoleKey.D2:
                                     if (Character.Level >= Character.SkillBook.GetSkill("패러렐쓰러스트").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("패러렐쓰러스트");
+                                        _ = Character.SkillBook.Activate("패러렐쓰러스트");
                                     }
                                     break;
                                 case ConsoleKey.D3:
                                     if (Character.Level >= Character.SkillBook.GetSkill("행복열차").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("행복열차");
+                                        _ = Character.SkillBook.Activate("행복열차");
                                     }
                                     break;
                                 case ConsoleKey.D4:
                                     if (Character.Level >= Character.SkillBook.GetSkill("패스트푸쉬크로스").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("패스트푸쉬크로스");
+                                        _ = Character.SkillBook.Activate("패스트푸쉬크로스");
                                     }
                                     break;
                                 case ConsoleKey.D5:
                                     if (Character.Level >= Character.SkillBook.GetSkill("오토마타볼케이노").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("오토마타볼케이노");
+                                        _ = Character.SkillBook.Activate("오토마타볼케이노");
                                     }
                                     break;
                                 case ConsoleKey.D6:
                                     if (Character.Level >= Character.SkillBook.GetSkill("네버썬더").MinLevel)
                                     {
-                                        Character.SkillBook.Activate("네버썬더");
+                                        _ = Character.SkillBook.Activate("네버썬더");
                                     }
                                     break;
                                 default:
@@ -605,12 +641,18 @@ namespace NGD2Console
                         case ConsoleKey.LeftArrow:
                             EasyConsole.Clear();
                             if (Update.Index > 0)
+                            {
                                 Update.Index--;
+                            }
+
                             break;
                         case ConsoleKey.RightArrow:
                             EasyConsole.Clear();
                             if (Update.Index < Update.Max - 1)
+                            {
                                 Update.Index++;
+                            }
+
                             break;
                         case ConsoleKey.Escape:
                             EasyConsole.Clear();
@@ -624,13 +666,19 @@ namespace NGD2Console
                         case ConsoleKey.LeftArrow:
                             EasyConsole.Clear();
                             if (Help.Index > 0)
+                            {
                                 Help.Index--;
+                            }
+
                             break;
 
                         case ConsoleKey.RightArrow:
                             EasyConsole.Clear();
                             if (Help.Index < Help.Max - 1)
+                            {
                                 Help.Index++;
+                            }
+
                             break;
 
                         case ConsoleKey.Escape:
@@ -667,9 +715,9 @@ namespace NGD2Console
                             }
                             break;
                         case ConsoleKey.D7:
-                            if (Spirit.Value >= 80000 - Spirit.CriticalRate.Level * 1000 && Spirit.CriticalRate.Level < 50)
+                            if (Spirit.Value >= 80000 - (Spirit.CriticalRate.Level * 1000) && Spirit.CriticalRate.Level < 50)
                             {
-                                Spirit.Value -= 80000 - Spirit.CriticalRate.Level++ * 1000;
+                                Spirit.Value -= 80000 - (Spirit.CriticalRate.Level++ * 1000);
                             }
                             break;
                         case ConsoleKey.Escape:
@@ -686,7 +734,10 @@ namespace NGD2Console
                             {
                                 Psychokinesis.Value -= Psychokinesis.Level + 1;
                                 if (r.Next(100) < 35)
+                                {
                                     Psychokinesis.Level++;
+                                }
+
                                 Character.Save(characterIndex);
                             }
                             break;
@@ -695,7 +746,10 @@ namespace NGD2Console
                             {
                                 Psychokinesis.Value -= (Psychokinesis.Level + 1) * 2;
                                 if (r.Next(100) < 65)
+                                {
                                     Psychokinesis.Level++;
+                                }
+
                                 Character.Save(characterIndex);
                             }
                             break;
@@ -704,7 +758,10 @@ namespace NGD2Console
                             {
                                 Psychokinesis.Value -= (Psychokinesis.Level + 1) * 3;
                                 if (r.Next(100) < 95)
+                                {
                                     Psychokinesis.Level++;
+                                }
+
                                 Character.Save(characterIndex);
                             }
                             break;
@@ -719,19 +776,31 @@ namespace NGD2Console
                     {
                         case ConsoleKey.UpArrow:
                             if (keyY != 0)
+                            {
                                 keyY--;
+                            }
+
                             break;
                         case ConsoleKey.DownArrow:
                             if (keyY != 9)
+                            {
                                 keyY++;
+                            }
+
                             break;
                         case ConsoleKey.LeftArrow:
                             if (keyX != 0)
+                            {
                                 keyX--;
+                            }
+
                             break;
                         case ConsoleKey.RightArrow:
                             if (keyX != 9)
+                            {
                                 keyX++;
+                            }
+
                             break;
                         case ConsoleKey.Spacebar:
                             EasyConsole.Clear();
@@ -745,7 +814,9 @@ namespace NGD2Console
                                     {
                                         case 0:
                                             if (Key.Normal[keyIndex] > 0)
+                                            {
                                                 EasyConsole.Write($"노멀 키 #{keyIndex + 1} 획득!");
+                                            }
                                             else
                                             {
                                                 EasyConsole.Write($"NEW! 노멀 키 #{keyIndex + 1} 획득!");
@@ -754,7 +825,9 @@ namespace NGD2Console
                                             break;
                                         case 1:
                                             if (Key.Rare[keyIndex] > 0)
+                                            {
                                                 EasyConsole.Write($"레어 키 #{keyIndex + 1} 획득!");
+                                            }
                                             else
                                             {
                                                 EasyConsole.Write($"NEW! 레어 키 #{keyIndex + 1} 획득!");
@@ -763,7 +836,9 @@ namespace NGD2Console
                                             break;
                                         case 2:
                                             if (Key.Unique[keyIndex] > 0)
+                                            {
                                                 EasyConsole.Write($"유니크 키 #{keyIndex + 1} 획득!");
+                                            }
                                             else
                                             {
                                                 EasyConsole.Write($"NEW! 유니크 키 #{keyIndex + 1} 획득!");
@@ -828,7 +903,10 @@ namespace NGD2Console
                         case ConsoleKey.D3:
                             EasyConsole.Clear();
                             if (++Option.PerDisplay > 10)
+                            {
                                 Option.PerDisplay = 0;
+                            }
+
                             break;
                         case ConsoleKey.Escape:
                             EasyConsole.Clear();
@@ -849,7 +927,7 @@ namespace NGD2Console
             }
         }
 
-        static void SkillDisplay()
+        private static void SkillDisplay()
         {
             EasyConsole.SetCursorAndColorAndWrite(0, 0, 12, "나가기 :: ESC");
             EasyConsole.SetCursorAndColorAndWrite(25, 0, 14, "액티브");
@@ -860,45 +938,59 @@ namespace NGD2Console
             Character.SkillBook.AllDisplay();
         }
 
-        static void SpiritShop()
+        private static void SpiritShop()
         {
             //Spirit.DisplayShop();
         }
 
-        static void PsychokinesisShop()
+        private static void PsychokinesisShop()
         {
             Psychokinesis.DisplayShop();
         }
 
-        static void KeyBox()
+        private static void KeyBox()
         {
             Key.DisplayShop(keyBoxNum, keyX, keyY);
         }
 
-        static void OptionScreen()
+        private static void OptionScreen()
         {
             EasyConsole.SetCursorAndColorAndWrite(0, 0, 12, "나가기 :: ESC");
             EasyConsole.SetCursorAndColorAndWrite(0, 2, 15, "1. 자동저장  ");
-            if (Option.AutoSave > 0) EasyConsole.SetColorAndWrite(10, "ON");
-            else EasyConsole.SetColorAndWrite(8, "OFF");
+            if (Option.AutoSave > 0)
+            {
+                EasyConsole.SetColorAndWrite(10, "ON");
+            }
+            else
+            {
+                EasyConsole.SetColorAndWrite(8, "OFF");
+            }
+
             EasyConsole.SetCursorAndColorAndWrite(0, 3, 15, "2. 막대기 표시  ");
-            if (Option.BarDisplay > 0) EasyConsole.SetColorAndWrite(10, "ON");
-            else EasyConsole.SetColorAndWrite(8, "OFF");
+            if (Option.BarDisplay > 0)
+            {
+                EasyConsole.SetColorAndWrite(10, "ON");
+            }
+            else
+            {
+                EasyConsole.SetColorAndWrite(8, "OFF");
+            }
+
             EasyConsole.SetCursorAndColorAndWrite(0, 4, 15, "3. 소수자리 표시  ");
             EasyConsole.SetColorAndWrite(10, $"{Option.PerDisplay}");
         }
 
-        static void HelpScreen()
+        private static void HelpScreen()
         {
             Help.Show(Help.Index);
         }
 
-        static void UpdateScreen()
+        private static void UpdateScreen()
         {
             Update.Show(Update.Index);
         }
 
-        static void GameInfo()
+        private static void GameInfo()
         {
             EasyConsole.SetCursorAndColorAndWrite(0, 0, 12, "나가기 :: ESC");
             EasyConsole.SetCursorAndColorAndWrite(0, 1, 15, $"Version {currentVersion}");
@@ -908,7 +1000,7 @@ namespace NGD2Console
             EasyConsole.SetCursorAndColorAndWrite(0, 6, 10, "이벤트1 :: 매일 정확히 30분에만 경험치 2배");
         }
 
-        static void DetailStatus()
+        private static void DetailStatus()
         {
             double temp;
 
@@ -921,14 +1013,16 @@ namespace NGD2Console
             EasyConsole.SetCursorAndColorAndWrite(0, 6, 15, $"부스트 {Boost.Value / 100}");
             EasyConsole.SetCursorAndColorAndWrite(0, 7, 15, $"무공 {Mugong.Effect.Power}");
             EasyConsole.SetCursorAndColorAndWrite(0, 8, 15, $"염력 {Psychokinesis.Effect.Power}");
-            if (Character.SkillBook.GetSkill("잠재력").Level >= 100) temp = 2.0;
-            else temp = 1 + 0.01 * Character.SkillBook.GetSkill("잠재력").Level;
+            temp = Character.SkillBook.GetSkill("잠재력").Level >= 100 ? 2.0 : 1 + (0.01 * Character.SkillBook.GetSkill("잠재력").Level);
             EasyConsole.SetCursorAndColorAndWrite(0, 9, 14, $"잠재력 x{EasyConsole.DecimalNumber(temp)}");
-            if (Character.SkillBook.GetSkill("기력방출").Level >= 50) temp = 2.0;
-            else temp = 1 + 0.02 * Character.SkillBook.GetSkill("기력방출").Level;
+            temp = Character.SkillBook.GetSkill("기력방출").Level >= 50 ? 2.0 : 1 + (0.02 * Character.SkillBook.GetSkill("기력방출").Level);
             EasyConsole.SetCursorAndColorAndWrite(0, 10, 14, $"기력방출 x{EasyConsole.DecimalNumber(temp)}");
             temp = 1;
-            if (Character.SkillBook.GetSkill("악마와의계약").On) temp = 1 + 0.8 * Character.SkillBook.GetSkill("악마와의계약").Level;
+            if (Character.SkillBook.GetSkill("악마와의계약").On)
+            {
+                temp = 1 + (0.8 * Character.SkillBook.GetSkill("악마와의계약").Level);
+            }
+
             EasyConsole.SetCursorAndColorAndWrite(0, 12, 14, $"악마와의계약 x{EasyConsole.DecimalNumber(temp)}");
             EasyConsole.SetCursorAndColorAndWrite(0, 13, 14, $"핫타임 x{EasyConsole.DecimalNumber(hotTimeBonus)}");
 
@@ -943,19 +1037,35 @@ namespace NGD2Console
             EasyConsole.SetCursorAndColorAndWrite(0, 23, 15, $"크리티컬마인드 {Character.SkillBook.GetSkill("크리티컬마인드").Level * Character.SkillBook.GetSkill("크리티컬마인드").IncLevel}%"); // IncLevel -> IncPerDamage
 
             EasyConsole.SetCursorAndColorAndWrite(0, 25, 11, $"MP회복 {Character.Effect.MpRegen}");
-            EasyConsole.SetCursorAndColorAndWrite(0, 26, 15, $"기본 {3 + Character.Level / 5}");
+            EasyConsole.SetCursorAndColorAndWrite(0, 26, 15, $"기본 {3 + (Character.Level / 5)}");
             EasyConsole.SetCursorAndColorAndWrite(0, 27, 15, $"근징 {Spirit.Effect.MpRegen}");
             temp = Key.Effect.MpRegen;
-            if (Key.Value >= 100) temp += 25;
-            if (Key.Value >= 200) temp += 75;
+            if (Key.Value >= 100)
+            {
+                temp += 25;
+            }
+
+            if (Key.Value >= 200)
+            {
+                temp += 75;
+            }
+
             EasyConsole.SetCursorAndColorAndWrite(0, 28, 15, $"키 {temp}");
-            if (Boost.Value >= 200) temp = 5 * (Boost.Value / 5000);
+            if (Boost.Value >= 200)
+            {
+                temp = 5 * (Boost.Value / 5000);
+            }
+
             EasyConsole.SetCursorAndColorAndWrite(0, 29, 15, $"부스트 {temp}");
             EasyConsole.SetCursorAndColorAndWrite(0, 30, 15, $"무공 {Mugong.Effect.MpRegen}");
             EasyConsole.SetCursorAndColorAndWrite(0, 31, 15, $"염력 {Psychokinesis.Effect.MpRegen}");
             EasyConsole.SetCursorAndColorAndWrite(0, 32, 15, $"운기조식 {Character.SkillBook.GetSkill("운기조식").Level * 15}");
             temp = 0;
-            if (Character.SkillBook.GetSkill("쇼타임").On) temp = 2 * Character.SkillBook.GetSkill("쇼타임").Level;
+            if (Character.SkillBook.GetSkill("쇼타임").On)
+            {
+                temp = 2 * Character.SkillBook.GetSkill("쇼타임").Level;
+            }
+
             EasyConsole.SetCursorAndColorAndWrite(0, 33, 15, $"쇼타임 {temp}");
 
             EasyConsole.SetCursorAndColorAndWrite(20, 1, 11, $"MP MAX {Character.Effect.MpMax}");
@@ -974,9 +1084,9 @@ namespace NGD2Console
             EasyConsole.SetCursorAndColorAndWrite(20, 14, 15, $"근징 {Spirit.Effect.BoostMax}");
 
             EasyConsole.SetCursorAndColorAndWrite(20, 16, 11, $"근징드롭량 {Spirit.Effect.SpiritDropSum}");
-            EasyConsole.SetCursorAndColorAndWrite(20, 17, 15, $"기본 {1 + Character.Level / 25}");
+            EasyConsole.SetCursorAndColorAndWrite(20, 17, 15, $"기본 {1 + (Character.Level / 25)}");
             EasyConsole.SetCursorAndColorAndWrite(20, 18, 15, $"염력 {Psychokinesis.Effect.SpiritDrop}");
-            EasyConsole.SetCursorAndColorAndWrite(20, 19, 14, $"운기조식 x{EasyConsole.DecimalNumber(1 + Character.SkillBook.GetSkill("운기조식").Level * 0.3)}");
+            EasyConsole.SetCursorAndColorAndWrite(20, 19, 14, $"운기조식 x{EasyConsole.DecimalNumber(1 + (Character.SkillBook.GetSkill("운기조식").Level * 0.3))}");
 
             EasyConsole.SetCursorAndColorAndWrite(20, 21, 11, $"근징드롭율 {Spirit.DropRate}%");
             EasyConsole.SetCursorAndColorAndWrite(20, 22, 15, $"기본 20%");
@@ -994,14 +1104,12 @@ namespace NGD2Console
             EasyConsole.SetCursorAndColorAndWrite(40, 2, 15, $"염력 {Psychokinesis.Level * Psychokinesis.Value}");
 
             EasyConsole.SetCursorAndColorAndWrite(40, 4, 11, $"스킬MP소모 감소 {Character.MpCostReduction}%");
-            if (Character.SkillBook.GetSkill("기력방출").Level >= 30) temp = 30;
-            else temp = Character.SkillBook.GetSkill("기력방출").Level;
+            temp = Character.SkillBook.GetSkill("기력방출").Level >= 30 ? 30 : Character.SkillBook.GetSkill("기력방출").Level;
             EasyConsole.SetCursorAndColorAndWrite(40, 5, 15, $"기력방출 {temp}%");
             temp = 0;
             if (Character.SkillBook.GetSkill("쇼타임").On)
             {
-                if (Character.SkillBook.GetSkill("쇼타임").Level >= 30) temp = 30;
-                else temp = Character.SkillBook.GetSkill("쇼타임").Level;
+                temp = Character.SkillBook.GetSkill("쇼타임").Level >= 30 ? 30 : Character.SkillBook.GetSkill("쇼타임").Level;
             }
             EasyConsole.SetCursorAndColorAndWrite(40, 6, 15, $"쇼타임 {temp}%");
         }
@@ -1030,9 +1138,19 @@ namespace NGD2Console
 
             for (int i = 0; i < 15; i++)
             {
-                if (i < 5) EasyConsole.SetCursor(noticeX, noticeY + i);
-                else if (i < 10) EasyConsole.SetCursor(noticeX2, noticeY + i - 5);
-                else EasyConsole.SetCursor(noticeX3, noticeY + i - 10);
+                if (i < 5)
+                {
+                    EasyConsole.SetCursor(noticeX, noticeY + i);
+                }
+                else if (i < 10)
+                {
+                    EasyConsole.SetCursor(noticeX2, noticeY + i - 5);
+                }
+                else
+                {
+                    EasyConsole.SetCursor(noticeX3, noticeY + i - 10);
+                }
+
                 EasyConsole.SetColor(NTTTC[i]);
                 Console.WriteLine(NTTT[i]);
             }
@@ -1040,7 +1158,7 @@ namespace NGD2Console
 
         public static long Exp(int level)
         {
-            return (long)Math.Pow(level, (3.12 + 0.004 * level));
+            return (long)Math.Pow(level, 3.12 + (0.004 * level));
         }
     }
 }

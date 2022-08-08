@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gaten.Game.BrandNewType
+﻿namespace Gaten.Game.BrandNewType
 {
-    class Rail
+    internal class Rail
     {
         public int Position;
         public int ServiceSpeed;

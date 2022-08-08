@@ -1,5 +1,5 @@
-﻿using Gaten.Net.Data.Diagnostics;
-using Gaten.Net.Data.IO;
+﻿using Gaten.Net.Diagnostics;
+using Gaten.Net.IO;
 
 using System;
 using System.Collections.Generic;
@@ -21,8 +21,8 @@ namespace Gaten.Data.FileManager
             RootPathText.Text = GetLocalPath();
             //RootPathText.Text = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\ftest";
             SearchTypeComboBox.Items.Clear();
-            SearchTypeComboBox.Items.Add("파일");
-            SearchTypeComboBox.Items.Add("문자열");
+            _ = SearchTypeComboBox.Items.Add("파일");
+            _ = SearchTypeComboBox.Items.Add("문자열");
             SearchTypeComboBox.SelectedIndex = 1;
 
             NodeManager.Nodes = new List<Node>();
@@ -30,26 +30,35 @@ namespace Gaten.Data.FileManager
 
         private void StorageTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            var selectedItem = (sender as TreeView).SelectedItem as TreeViewItem;
-
-            if (selectedItem == null)
+            if (sender is not TreeView treeView)
+            {
                 return;
+            }
+
+            if (treeView.SelectedItem is not TreeViewItem selectedItem)
+            {
+                return;
+            }
 
             string fullPath = TreeNodeUtil.GetFullPath(selectedItem);
-
-            NodeManager.SelectedNode = NodeManager.Nodes.Find(n => n.FullPath.Equals(fullPath));
+            NodeManager.SelectedNode = NodeManager.Nodes.Find(n => n.FullPath.Equals(fullPath)) ?? new Node();
             PathText.Text = fullPath;
         }
 
         private void StorageTreeView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var selectedItem = (sender as TreeView).SelectedItem as TreeViewItem;
-
-            if (selectedItem == null)
+            if (sender is not TreeView treeView)
+            {
                 return;
+            }
+
+            if (treeView.SelectedItem is not TreeViewItem selectedItem)
+            {
+                return;
+            }
 
             string fullPath = TreeNodeUtil.GetFullPath(selectedItem);
-            GProcess.Start(fullPath);
+            _ = GProcess.Start(fullPath);
         }
 
         private void searchButton_Click(object sender, EventArgs e)
@@ -66,18 +75,20 @@ namespace Gaten.Data.FileManager
             }
 
             FilteredListBox.Items.Clear();
-            foreach (var filePath in filteredFilePaths)
-                FilteredListBox.Items.Add($"{filePath.Name} ({filePath.FullPath})");
+            foreach (Node? filePath in filteredFilePaths)
+            {
+                _ = FilteredListBox.Items.Add($"{filePath.Name} ({filePath.FullPath})");
+            }
         }
 
         private void FilteredListBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             string path = ((string)FilteredListBox.SelectedItem).Split('(')[1].Replace(")", "");
 
-            System.Diagnostics.Process.Start(path);
+            _ = System.Diagnostics.Process.Start(path);
         }
 
-        string GetLocalPath()
+        private string GetLocalPath()
         {
             return GResource.GetText("fm-dir.ini");
         }
@@ -86,13 +97,15 @@ namespace Gaten.Data.FileManager
         {
             StorageTreeView.Items.Clear();
             Node node = TreeHelper.MakeWindowTree(RootPathText.Text);
-            StorageTreeView.Items.Add(node.Item);
+            _ = StorageTreeView.Items.Add(node.Item);
         }
 
         private void RootSelectButton_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog();
-            dialog.RootFolder = Environment.SpecialFolder.Desktop;
+            System.Windows.Forms.FolderBrowserDialog dialog = new()
+            {
+                RootFolder = Environment.SpecialFolder.Desktop
+            };
 
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -102,17 +115,18 @@ namespace Gaten.Data.FileManager
 
         private void FilteredListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var selectedItem = (sender as ListBox).SelectedItem;
-
-            if(selectedItem == null)
+            if (sender is not ListBox listBox)
             {
                 return;
             }
 
-            var selectedString = selectedItem.ToString();
-            var fullPath = selectedString.Substring(selectedString.IndexOf('(') + 1, selectedString.Length - selectedString.IndexOf('(') -2);
+            if (listBox.SelectedItem.ToString() is not string selectedString)
+            {
+                return;
+            }
 
-            GProcess.Start(fullPath);
+            string? fullPath = selectedString.Substring(selectedString.IndexOf('(') + 1, selectedString.Length - selectedString.IndexOf('(') - 2);
+            _ = GProcess.Start(fullPath);
         }
     }
 }

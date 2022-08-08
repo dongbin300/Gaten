@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Gaten.Game.DeonpaRPG
+﻿namespace Gaten.Game.DeonpaRPG
 {
     /* Character
              * -닉네임
@@ -20,7 +18,7 @@ namespace Gaten.Game.DeonpaRPG
              * -추가HP+/MP+/공+/방+/공속+
              */
 
-    class State
+    internal class State
     {
         public int current;
         public int max;
@@ -32,33 +30,33 @@ namespace Gaten.Game.DeonpaRPG
         }
     }
 
-    class Character
+    internal class Character
     {
-        public string nickname;
-        public string profession;
+        public string nickname = string.Empty;
+        public string profession = string.Empty;
         public int professionLevel;
         public int level;
-        public Ability ability;
-        public Ability additionalAbility;
+        public Ability ability = new();
+        public Ability additionalAbility = new();
         public int questProgress;
         public long requireEXP;
         public long exp;
         public long gold;
         public int sp;
-        public SkillDB skilldb;
-        public EquipObject gun;
-        public EquipObject armor;
-        public EquipObject necklace;
-        public EquipObject avatar;
-        public EquipObject pendant;
-        public EquipObject others;
-        public EquipObject abilityStone;
-        public Skill remainSkill;
+        public SkillDB skilldb = default!;
+        public EquipObject gun = new();
+        public EquipObject armor = new();
+        public EquipObject necklace = new();
+        public EquipObject avatar = new();
+        public EquipObject pendant = new();
+        public EquipObject others = new();
+        public EquipObject abilityStone = new();
+        public Skill remainSkill = new();
         public int remainAttackCount;
 
-        private int BONUS = 0;
+        private readonly int BONUS = 0;
 
-        private static Character instance = new Character();
+        private static readonly Character instance = new();
 
         private Character()
         {
@@ -106,9 +104,17 @@ namespace Gaten.Game.DeonpaRPG
                         break;
                     case EquipObject.EquipObjectTypes.Potion:
                         ability.hp.current += eo.effect.hpInstantRecovery;
-                        if (ability.hp.current > ability.hp.max) ability.hp.current = ability.hp.max;
+                        if (ability.hp.current > ability.hp.max)
+                        {
+                            ability.hp.current = ability.hp.max;
+                        }
+
                         ability.mp.current += eo.effect.mpInstantRecovery;
-                        if (ability.mp.current > ability.mp.max) ability.mp.current = ability.mp.max;
+                        if (ability.mp.current > ability.mp.max)
+                        {
+                            ability.mp.current = ability.mp.max;
+                        }
+
                         Console.WriteLine(">" + eo.name + "을 먹었습니다.");
                         break;
                 }
@@ -189,9 +195,9 @@ namespace Gaten.Game.DeonpaRPG
                 ability.goldBonus += BONUS;
                 ability.expBonus += BONUS;
                 ability.spBonus += BONUS;
-                int getGold = (int)(monster.gold * (1 + (float)ability.goldBonus / 100));
-                int getExp = (int)(monster.exp * (1 + (float)ability.expBonus / 100));
-                int getSp = (int)(monster.sp * (1 + (float)ability.spBonus / 100));
+                int getGold = (int)(monster.gold * (1 + ((float)ability.goldBonus / 100)));
+                int getExp = (int)(monster.exp * (1 + ((float)ability.expBonus / 100)));
+                int getSp = (int)(monster.sp * (1 + ((float)ability.spBonus / 100)));
                 gold += getGold;
                 exp += getExp;
                 sp += getSp;
@@ -202,9 +208,9 @@ namespace Gaten.Game.DeonpaRPG
             }
             else
             {
-                Random random = new Random();
+                Random random = new();
                 int specialDefenseOn = random.Next(2);
-                int monsterDamage = monster.attack - ability.defense / 10 - ability.specialDefense / 10 * specialDefenseOn;
+                int monsterDamage = monster.attack - (ability.defense / 10) - (ability.specialDefense / 10 * specialDefenseOn);
                 /* 몬스터의 공격력이 캐릭터의 방어력보다 낮음 */
                 if (monsterDamage < 0)
                 {
@@ -255,9 +261,9 @@ namespace Gaten.Game.DeonpaRPG
                 ability.goldBonus += BONUS;
                 ability.expBonus += BONUS;
                 ability.spBonus += BONUS;
-                int getGold = (int)(monster.gold * (1 + (float)ability.goldBonus / 100));
-                int getExp = (int)(monster.exp * (1 + (float)ability.expBonus / 100));
-                int getSp = (int)(monster.sp * (1 + (float)ability.spBonus / 100));
+                int getGold = (int)(monster.gold * (1 + ((float)ability.goldBonus / 100)));
+                int getExp = (int)(monster.exp * (1 + ((float)ability.expBonus / 100)));
+                int getSp = (int)(monster.sp * (1 + ((float)ability.spBonus / 100)));
                 gold += getGold;
                 exp += getExp;
                 sp += getSp;
@@ -268,9 +274,9 @@ namespace Gaten.Game.DeonpaRPG
             }
             else
             {
-                Random random = new Random();
+                Random random = new();
                 int specialDefenseOn = random.Next(2);
-                int monsterDamage = monster.attack - ability.defense / 10 - ability.specialDefense / 10 * specialDefenseOn;
+                int monsterDamage = monster.attack - (ability.defense / 10) - (ability.specialDefense / 10 * specialDefenseOn);
                 /* 몬스터의 공격력이 캐릭터의 방어력보다 낮음 */
                 if (monsterDamage < 0)
                 {

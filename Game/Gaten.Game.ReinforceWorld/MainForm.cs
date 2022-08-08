@@ -23,7 +23,7 @@ namespace Gaten.Game.ReinforceWorld
             string result = Reinforcement.Try().Result;
             if (result != string.Empty)
             {
-                MessageBox.Show(result);
+                _ = MessageBox.Show(result);
             }
         }
 

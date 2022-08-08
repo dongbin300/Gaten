@@ -10,54 +10,54 @@ namespace Gaten.Net.Windows.CHK.Chunks
 {
     public class ChkChunk
     {
-        public Player Player { get; set; }
-        public Force Force { get; set; }
-        public List<PlacedUnit> PlacedUnits { get; set; }
-        public UnitSet UnitSet { get; set; }
-        public WeaponSet WeaponSet { get; set; }
-        public UpgradeSet UpgradeSet { get; set; }
-        public List<Doodad> Doodads { get; set; }
-        public List<Sprite> Sprites { get; set; }
-        public LocationSet LocationSet { get; set; }
-        public GameRule.StarCraft.Script.String String { get; set; }
-        public TechSet TechSet { get; set; }
-        public TriggerSet TriggerSet { get; set; }
-        public CUWPSet CUWPSet { get; set; }
-        public SwitchSet SwitchSet { get; set; }
+        public Player Player { get; set; } = default!;
+        public Force Force { get; set; } = default!;
+        public List<PlacedUnit> PlacedUnits { get; set; } = default!;
+        public UnitSet UnitSet { get; set; } = default!;
+        public WeaponSet WeaponSet { get; set; } = default!;
+        public UpgradeSet UpgradeSet { get; set; } = default!;
+        public List<Doodad> Doodads { get; set; } = default!;
+        public List<Sprite> Sprites { get; set; } = default!;
+        public LocationSet LocationSet { get; set; } = default!;
+        public GameRule.StarCraft.Script.String String { get; set; } = default!;
+        public TechSet TechSet { get; set; } = default!;
+        public TriggerSet TriggerSet { get; set; } = default!;
+        public CUWPSet CUWPSet { get; set; } = default!;
+        public SwitchSet SwitchSet { get; set; } = default!;
 
-        public VERChunk VERChunk { get; set; }
-        public TYPEChunk TYPEChunk { get; set; }
-        public IVE2Chunk IVE2Chunk { get; set; }
-        public VCODChunk VCODChunk { get; set; }
-        public IOWNChunk IOWNChunk { get; set; }
-        public OWNRChunk OWNRChunk { get; set; }
-        public SIDEChunk SIDEChunk { get; set; }
-        public COLRChunk COLRChunk { get; set; }
-        public ERAChunk ERAChunk { get; set; }
-        public DIMChunk DIMChunk { get; set; }
-        public MTXMChunk MTXMChunk { get; set; }
-        public TILEChunk TILEChunk { get; set; }
-        public ISOMChunk ISOMChunk { get; set; }
-        public UNITChunk UNITChunk { get; set; }
-        public PUNIChunk PUNIChunk { get; set; }
-        public UNIXChunk UNIXChunk { get; set; }
-        public PUPXChunk PUPXChunk { get; set; }
-        public UPGXChunk UPGXChunk { get; set; }
-        public DD2Chunk DD2Chunk { get; set; }
-        public THG2Chunk THG2Chunk { get; set; }
-        public MASKChunk MASKChunk { get; set; }
-        public MRGNChunk MRGNChunk { get; set; }
-        public STRXChunk STRXChunk { get; set; }
-        public SPRPChunk SPRPChunk { get; set; }
-        public FORCChunk FORCChunk { get; set; }
-        public WAVChunk WAVChunk { get; set; }
-        public PTEXChunk PTEXChunk { get; set; }
-        public TECXChunk TECXChunk { get; set; }
-        public MBRFChunk MBRFChunk { get; set; }
-        public TRIGChunk TRIGChunk { get; set; }
-        public UPRPChunk UPRPChunk { get; set; }
-        public UPUSChunk UPUSChunk { get; set; }
-        public SWNMChunk SWNMChunk { get; set; }
+        public VERChunk VERChunk { get; set; } = default!;
+        public TYPEChunk TYPEChunk { get; set; } = default!;
+        public IVE2Chunk IVE2Chunk { get; set; } = default!;
+        public VCODChunk VCODChunk { get; set; } = default!;
+        public IOWNChunk IOWNChunk { get; set; } = default!;
+        public OWNRChunk OWNRChunk { get; set; } = default!;
+        public SIDEChunk SIDEChunk { get; set; } = default!;
+        public COLRChunk COLRChunk { get; set; } = default!;
+        public ERAChunk ERAChunk { get; set; } = default!;
+        public DIMChunk DIMChunk { get; set; } = default!;
+        public MTXMChunk MTXMChunk { get; set; } = default!;
+        public TILEChunk TILEChunk { get; set; } = default!;
+        public ISOMChunk ISOMChunk { get; set; } = default!;
+        public UNITChunk UNITChunk { get; set; } = default!;
+        public PUNIChunk PUNIChunk { get; set; } = default!;
+        public UNIXChunk UNIXChunk { get; set; } = default!;
+        public PUPXChunk PUPXChunk { get; set; } = default!;
+        public UPGXChunk UPGXChunk { get; set; } = default!;
+        public DD2Chunk DD2Chunk { get; set; } = default!;
+        public THG2Chunk THG2Chunk { get; set; } = default!;
+        public MASKChunk MASKChunk { get; set; } = default!;
+        public MRGNChunk MRGNChunk { get; set; } = default!;
+        public STRXChunk STRXChunk { get; set; } = default!;
+        public SPRPChunk SPRPChunk { get; set; } = default!;
+        public FORCChunk FORCChunk { get; set; } = default!;
+        public WAVChunk WAVChunk { get; set; } = default!;
+        public PTEXChunk PTEXChunk { get; set; } = default!;
+        public TECXChunk TECXChunk { get; set; } = default!;
+        public MBRFChunk MBRFChunk { get; set; } = default!;
+        public TRIGChunk TRIGChunk { get; set; } = default!;
+        public UPRPChunk UPRPChunk { get; set; } = default!;
+        public UPUSChunk UPUSChunk { get; set; } = default!;
+        public SWNMChunk SWNMChunk { get; set; } = default!;
 
         public ChkChunk()
         {

@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gaten.GameTool.GITADORA.Macro.Data
+﻿namespace Gaten.GameTool.GITADORA.Macro.Data
 {
     internal class Mode
     {
-        public Diff Basic;
-        public Diff Advanced;
-        public Diff Extreme;
-        public Diff Master;
+        public Diff Basic = default!;
+        public Diff Advanced = default!;
+        public Diff Extreme = default!;
+        public Diff Master = default!;
     }
 }

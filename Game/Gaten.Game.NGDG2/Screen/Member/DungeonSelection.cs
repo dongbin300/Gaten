@@ -1,4 +1,7 @@
-﻿namespace Gaten.Game.NGDG2.Screen
+﻿using Gaten.Game.NGDG2.Screen.Interface;
+using Gaten.Game.NGDG2.Util.Screen;
+
+namespace Gaten.Game.NGDG2.Screen.Member
 {
     /// <summary>
     /// 던전 선택 화면
@@ -6,7 +9,7 @@
     public class DungeonSelection : IScreen
     {
         public int ScreenID;
-        string[] dungeonNames = { "고블린 방", "고블린 소굴", "고블린 기지", "고블린 아지트", "고블린 성", "고블린 왕국" };
+        private readonly string[] dungeonNames = { "고블린 방", "고블린 소굴", "고블린 기지", "고블린 아지트", "고블린 성", "고블린 왕국" };
 
         public DungeonSelection()
         {

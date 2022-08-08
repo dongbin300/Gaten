@@ -1,4 +1,4 @@
-﻿using Gaten.Net.Data.Collections;
+﻿using Gaten.Net.Collections;
 using Gaten.Net.Network;
 
 using System;

@@ -5,11 +5,11 @@ namespace Gaten.Game.Dung_Eo_Ri
 {
     public partial class MainForm : Form
     {
-        UserActivityHook hook;
-        Thread thread;
-        GameRule.Game game = new GameRule.Game();
-        Random r = new Random();
-        int runAwayTryCount;
+        private UserActivityHook hook;
+        private Thread thread;
+        private readonly GameRule.Game game = new();
+        private readonly Random r = new();
+        private int runAwayTryCount;
 
         public MainForm()
         {
@@ -25,13 +25,13 @@ namespace Gaten.Game.Dung_Eo_Ri
             ChangeSceneTo(GameRule.Game.Scene.Main);
         }
 
-        bool IsActive(IntPtr handle)
+        private bool IsActive(IntPtr handle)
         {
             IntPtr activeHandle = WinApi.GetForegroundWindow();
             return activeHandle == handle;
         }
 
-        void Key()
+        private void Key()
         {
             hook.KeyUp += (sender, e) =>
             {
@@ -70,7 +70,11 @@ namespace Gaten.Game.Dung_Eo_Ri
 
         private void DungeonListBox_DoubleClick(object sender, EventArgs e)
         {
-            if (DungeonListBox.SelectedItem == null) return;
+            if (DungeonListBox.SelectedItem == null)
+            {
+                return;
+            }
+
             ChangeSceneTo(GameRule.Game.Scene.InDungeon);
         }
 
@@ -87,31 +91,31 @@ namespace Gaten.Game.Dung_Eo_Ri
                     runAwayTryCount = 0;
 
                     PlayerImage.Image = game.Player.Picture;
-                    PlayerStats.Items.Add("[" + game.Player.Name + "]");
-                    PlayerStats.Items.Add("레벨: " + game.Player.Level);
-                    PlayerStats.Items.Add("HP: " + game.Player.CurrentHitPoints);
-                    PlayerStats.Items.Add("데미지: " + game.Player.BaseDamage);
+                    _ = PlayerStats.Items.Add("[" + game.Player.Name + "]");
+                    _ = PlayerStats.Items.Add("레벨: " + game.Player.Level);
+                    _ = PlayerStats.Items.Add("HP: " + game.Player.CurrentHitPoints);
+                    _ = PlayerStats.Items.Add("데미지: " + game.Player.BaseDamage);
 
                     int dungeonLevel = game.Player.CurrentDungeonLevel;
                     GameRule.Mob newMob;
                     if (IsBossFloor())
                     {
                         newMob = game.Player.CurrentDungeon.BossMob;
-                        MessageBox.Show($"보스몹 {newMob.Name}를 만났습니다!");
+                        _ = MessageBox.Show($"보스몹 {newMob.Name}를 만났습니다!");
                     }
                     else
                     {
                         int newMobLevel = game.Player.CurrentDungeon.GetNewMobLevel(dungeonLevel);
-                        var newMobProto = game.Mobs[newMobLevel][r.Next(0, game.Mobs[newMobLevel].Count)];
+                        GameRule.Mob? newMobProto = game.Mobs[newMobLevel][r.Next(0, game.Mobs[newMobLevel].Count)];
                         newMob = new GameRule.Mob(newMobProto.Name, newMobProto.Picture, newMobProto.Level, newMobProto.BaseHitPoints, newMobProto.BaseDamage, newMobProto.Equips);
                     }
-                    
+
                     MobImage.Image = newMob.Picture;
-                    MobStats.Items.Add("[" + newMob.Name + "]");
-                    MobStats.Items.Add("레벨: " + newMob.Level);
-                    MobStats.Items.Add("HP: " + newMob.CurrentHitPoints);
-                    MobStats.Items.Add("데미지: " + newMob.BaseDamage);
-                    MobStats.Items.Add("경험치: " + newMob.RewardExp);
+                    _ = MobStats.Items.Add("[" + newMob.Name + "]");
+                    _ = MobStats.Items.Add("레벨: " + newMob.Level);
+                    _ = MobStats.Items.Add("HP: " + newMob.CurrentHitPoints);
+                    _ = MobStats.Items.Add("데미지: " + newMob.BaseDamage);
+                    _ = MobStats.Items.Add("경험치: " + newMob.RewardExp);
 
                     game.Player.CurrentDungeon.CurrentMob = newMob;
                     break;
@@ -121,9 +125,9 @@ namespace Gaten.Game.Dung_Eo_Ri
 
                 case GameRule.Game.Scene.DungeonSelection:
                     DungeonListBox.Items.Clear();
-                    foreach (var dungeon in game.Dungeons)
+                    foreach (KeyValuePair<string, GameRule.Dungeon> dungeon in game.Dungeons)
                     {
-                        DungeonListBox.Items.Add(dungeon.Key);
+                        _ = DungeonListBox.Items.Add(dungeon.Key);
                     }
 
                     game.Player.RestoreAllHitPoints();
@@ -136,7 +140,11 @@ namespace Gaten.Game.Dung_Eo_Ri
                     break;
 
                 case GameRule.Game.Scene.InDungeon:
-                    if (DungeonListBox.SelectedItem == null) break;
+                    if (DungeonListBox.SelectedItem == null)
+                    {
+                        break;
+                    }
+
                     string dungeonName = DungeonListBox.SelectedItem.ToString();
 
                     if (game.Player.CurrentDungeon == null)
@@ -154,7 +162,7 @@ namespace Gaten.Game.Dung_Eo_Ri
             ChangeSceneTo(GameRule.Game.Scene.DungeonSelection);
         }
 
-        void CheckAvailableDirections()
+        private void CheckAvailableDirections()
         {
             UpButton.Enabled = game.Player.CanGoUp();
             DownButton.Enabled = game.Player.CanGoDown();
@@ -162,7 +170,7 @@ namespace Gaten.Game.Dung_Eo_Ri
             RightButton.Enabled = game.Player.CanGoRight();
         }
 
-        void RefreshDungeonStatus()
+        private void RefreshDungeonStatus()
         {
             CheckAvailableDirections();
 
@@ -182,12 +190,12 @@ namespace Gaten.Game.Dung_Eo_Ri
 #endif
 
             DescendButton.Visible =
-                game.Player.CurrentDungeon.DungeonLevels[game.Player.CurrentDungeonLevel-1].StairX == game.Player.CurrentCoordX &&
-                game.Player.CurrentDungeon.DungeonLevels[game.Player.CurrentDungeonLevel-1].StairY == game.Player.CurrentCoordY;
+                game.Player.CurrentDungeon.DungeonLevels[game.Player.CurrentDungeonLevel - 1].StairX == game.Player.CurrentCoordX &&
+                game.Player.CurrentDungeon.DungeonLevels[game.Player.CurrentDungeonLevel - 1].StairY == game.Player.CurrentCoordY;
 
         }
 
-        void RefreshBattleStatus()
+        private void RefreshBattleStatus()
         {
             LogListBox.TopIndex = LogListBox.Items.Count - 1;
         }
@@ -247,10 +255,16 @@ namespace Gaten.Game.Dung_Eo_Ri
         private void AttackButton_Click(object sender, EventArgs e)
         {
             bool isMobDefeated = AttackMob();
-            if (isMobDefeated) return;
+            if (isMobDefeated)
+            {
+                return;
+            }
 
             bool isUserDefeated = AttackUser();
-            if (isUserDefeated) return;
+            if (isUserDefeated)
+            {
+                return;
+            }
 
             RefreshBattleStatus();
         }
@@ -259,13 +273,13 @@ namespace Gaten.Game.Dung_Eo_Ri
         {
             if (userHitPoints == 0)
             {
-                MessageBox.Show("전투에서 패배하였다! 던전 공략 실패... 덩어리 ㅠㅠ", "전투 패배");
+                _ = MessageBox.Show("전투에서 패배하였다! 던전 공략 실패... 덩어리 ㅠㅠ", "전투 패배");
                 game.Player.ApplyEndGameDefeatStatus();
                 ChangeSceneTo(GameRule.Game.Scene.DungeonSelection);
             }
             else if (mobHitPoints == 0)
             {
-                MessageBox.Show("전투에서 승리하였다!", "전투 승리");
+                _ = MessageBox.Show("전투에서 승리하였다!", "전투 승리");
                 game.Player.CurrentExp += game.Player.CurrentDungeon.CurrentMob.RewardExp;
                 game.Player.CurrentDungeon.AccumulatedRewardExp += game.Player.CurrentDungeon.CurrentMob.RewardExp;
 
@@ -275,7 +289,7 @@ namespace Gaten.Game.Dung_Eo_Ri
                     int previousLevel = game.Player.Level;
                     game.Player.ApplyEndGameVictoryStatus();
                     int currentLevel = game.Player.Level;
-                    MessageBox.Show($"보스를 잡았습니다!\n{game.Player.CurrentDungeon.Name} 클리어!\n총 획득 경험치: {accumulatedRewardExp}\n레벨 {previousLevel} -> {currentLevel}");
+                    _ = MessageBox.Show($"보스를 잡았습니다!\n{game.Player.CurrentDungeon.Name} 클리어!\n총 획득 경험치: {accumulatedRewardExp}\n레벨 {previousLevel} -> {currentLevel}");
                     ChangeSceneTo(GameRule.Game.Scene.DungeonSelection);
                     return true;
                 }
@@ -291,15 +305,14 @@ namespace Gaten.Game.Dung_Eo_Ri
         {
             if (IsBossBattle())
             {
-                MessageBox.Show("보스전에서는 도멍허기 불가 ㅠㅠ");
+                _ = MessageBox.Show("보스전에서는 도멍허기 불가 ㅠㅠ");
                 return;
             }
 
             int maxRate = 80;
             int rate;
-            int baseValue = (game.Player.CurrentDungeon.CurrentMob.Level - game.Player.Level) + 2;
-            if (baseValue <= 0) rate = 0;
-            else rate = Math.Min(baseValue * 5, maxRate);
+            int baseValue = game.Player.CurrentDungeon.CurrentMob.Level - game.Player.Level + 2;
+            rate = baseValue <= 0 ? 0 : Math.Min(baseValue * 5, maxRate);
 
             if (r.Next(0, 100) < rate)
             {
@@ -307,10 +320,13 @@ namespace Gaten.Game.Dung_Eo_Ri
             }
             else
             {
-                LogListBox.Items.Add("도멍허기에 실패했다! (시도 횟수: " + ++runAwayTryCount + ")");
+                _ = LogListBox.Items.Add("도멍허기에 실패했다! (시도 횟수: " + ++runAwayTryCount + ")");
 
                 bool isUserDefeated = AttackUser();
-                if (isUserDefeated) return;
+                if (isUserDefeated)
+                {
+                    return;
+                }
 
                 RefreshBattleStatus();
             }
@@ -329,7 +345,7 @@ namespace Gaten.Game.Dung_Eo_Ri
             int mobHitPoints = attackResult["finalTargetHitPoints"];
             int userHitPoints = attackResult["myHitPoints"];
 
-            LogListBox.Items.Add(mobName + "을(를) " + userFinalDamage + "만큼 덩어리화 (내 HP: " + userHitPoints + ", 몹 HP: " + mobHitPoints + ")");
+            _ = LogListBox.Items.Add(mobName + "을(를) " + userFinalDamage + "만큼 덩어리화 (내 HP: " + userHitPoints + ", 몹 HP: " + mobHitPoints + ")");
 
             return CheckAndProcessGameFinish(userHitPoints, mobHitPoints);
         }
@@ -342,7 +358,7 @@ namespace Gaten.Game.Dung_Eo_Ri
             int userHitPoints = getHitResult["finalTargetHitPoints"];
             int mobHitPoints = getHitResult["myHitPoints"];
 
-            LogListBox.Items.Add(mobName + "에게 " + mobFinalDamage + "만큼 덩어리화 (내 HP: " + userHitPoints + ", 몹 HP: " + mobHitPoints + ")");
+            _ = LogListBox.Items.Add(mobName + "에게 " + mobFinalDamage + "만큼 덩어리화 (내 HP: " + userHitPoints + ", 몹 HP: " + mobHitPoints + ")");
 
             return CheckAndProcessGameFinish(userHitPoints, mobHitPoints);
         }
@@ -355,12 +371,9 @@ namespace Gaten.Game.Dung_Eo_Ri
 
         private GameRule.Game.Scene GetCurrentScene()
         {
-            if (SceneControl.SelectedIndex == -1)
-            {
-                throw new ArgumentException("이런 일은 발생하지 않아야 하는맨");
-            }
-
-            return (GameRule.Game.Scene)SceneControl.SelectedIndex;
+            return SceneControl.SelectedIndex == -1
+                ? throw new ArgumentException("이런 일은 발생하지 않아야 하는맨")
+                : (GameRule.Game.Scene)SceneControl.SelectedIndex;
         }
 
         private void ChangeSceneTo(GameRule.Game.Scene targetScene)

@@ -9,7 +9,7 @@ namespace Gaten.Game.BattleMaker
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Random rnd = new Random();
+            Random rnd = new();
             string[] skill = new string[6];
             skill[0] = "Fire";
             skill[1] = "Ice";
@@ -48,7 +48,7 @@ namespace Gaten.Game.BattleMaker
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                Random rnd = new Random();
+                Random rnd = new();
                 DateTime nowtime = DateTime.Now;
                 int i;
                 string cod1, cod2;
@@ -95,8 +95,8 @@ namespace Gaten.Game.BattleMaker
 
                 #endregion
 
-                FileStream fs = new FileStream(filename, FileMode.Create);
-                StreamWriter sw = new StreamWriter(fs);
+                FileStream fs = new(filename, FileMode.Create);
+                StreamWriter sw = new(fs);
 
                 sw.WriteLine("Battle Maker v1.0 - 제작자 Gaten");
                 sw.WriteLine("다음 전투는 " + nowtime + "에 생성된 전투입니다.");
@@ -105,7 +105,7 @@ namespace Gaten.Game.BattleMaker
                     string.Format("{0:0000}", nowtime.Year) +
                     string.Format("{0:00}", nowtime.Month) +
                     string.Format("{0:00}", nowtime.Day) +
-                    string.Format("{0:00000}", (123 * nowtime.Hour + 456 * nowtime.Minute + 789 * nowtime.Second))
+                    string.Format("{0:00000}", (123 * nowtime.Hour) + (456 * nowtime.Minute) + (789 * nowtime.Second))
                     );
                 sw.WriteLine();
                 sw.WriteLine("  " + cod1 + " vs " + cod2);
@@ -164,10 +164,10 @@ namespace Gaten.Game.BattleMaker
                         break;
                     }
 
-                    damage1 = (int)((float)power1 + (float)power1 * ((float)(rnd.Next(0, 100) - 50) / 1000f));
-                    damage2 = (int)((float)power2 + (float)power2 * ((float)(rnd.Next(0, 100) - 50) / 1000f));
-                    skilldamage1 = (int)(((float)power1 * skillpower1) + ((float)power1 * skillpower1) * ((float)(rnd.Next(0, 200) - 100) / 1000f));
-                    skilldamage2 = (int)(((float)power2 * skillpower2) + ((float)power2 * skillpower2) * ((float)(rnd.Next(0, 200) - 100) / 1000f));
+                    damage1 = (int)(power1 + (power1 * ((rnd.Next(0, 100) - 50) / 1000f)));
+                    damage2 = (int)(power2 + (power2 * ((rnd.Next(0, 100) - 50) / 1000f)));
+                    skilldamage1 = (int)((power1 * skillpower1) + (power1 * skillpower1 * ((rnd.Next(0, 200) - 100) / 1000f)));
+                    skilldamage2 = (int)((power2 * skillpower2) + (power2 * skillpower2 * ((rnd.Next(0, 200) - 100) / 1000f)));
 
                     sw.WriteLine("==============================================");
                     sw.WriteLine(i + "번째 턴\r\n");
@@ -175,26 +175,26 @@ namespace Gaten.Game.BattleMaker
                     {
                         MP1 -= skillmp1;
                         cool1 = 0;
-                        if (rnd.Next(1, 100) <= (int)((float)lucky2 / (float)luck1 * 100f)) // 스킬회피
+                        if (rnd.Next(1, 100) <= (int)(lucky2 / (float)luck1 * 100f)) // 스킬회피
                         {
-                            sw.WriteLine(cod2 + "님이 스킬공격을 회피했습니다.(" + (int)((float)lucky2 / (float)luck1 * 100f) + "%)");
+                            sw.WriteLine(cod2 + "님이 스킬공격을 회피했습니다.(" + (int)(lucky2 / (float)luck1 * 100f) + "%)");
                         }
                         else
                         {
                             sw.WriteLine(cod1 + "님의 @" + skillname1 + "@로 " + cod2 + "님을 공격했습니다. 데미지 " + (skilldamage1 - armor2) + "(" + skilldamage1 + "-" + armor2 + ")");
-                            HP2 -= (skilldamage1 - armor2);
+                            HP2 -= skilldamage1 - armor2;
                         }
                     }
                     else // 평타
                     {
-                        if (rnd.Next(1, 100) <= (int)((float)lucky2 / (float)luck1 * 100f)) // 회피
+                        if (rnd.Next(1, 100) <= (int)(lucky2 / (float)luck1 * 100f)) // 회피
                         {
-                            sw.WriteLine(cod2 + "님이 공격을 회피했습니다.(" + (int)((float)lucky2 / (float)luck1 * 100f) + "%)");
+                            sw.WriteLine(cod2 + "님이 공격을 회피했습니다.(" + (int)(lucky2 / (float)luck1 * 100f) + "%)");
                         }
                         else
                         {
                             sw.WriteLine(cod1 + "님이 " + cod2 + "님을 공격했습니다. 데미지 " + (damage1 - armor2) + "(" + damage1 + "-" + armor2 + ")");
-                            HP2 -= (damage1 - armor2);
+                            HP2 -= damage1 - armor2;
                         }
                     }
 
@@ -202,37 +202,37 @@ namespace Gaten.Game.BattleMaker
                     {
                         MP2 -= skillmp2;
                         cool2 = 0;
-                        if (rnd.Next(1, 100) <= (int)((float)lucky1 / (float)luck2 * 100f)) // 스킬회피
+                        if (rnd.Next(1, 100) <= (int)(lucky1 / (float)luck2 * 100f)) // 스킬회피
                         {
-                            sw.WriteLine(cod1 + "님이 스킬공격을 회피했습니다.(" + (int)((float)lucky1 / (float)luck2 * 100f) + "%)");
+                            sw.WriteLine(cod1 + "님이 스킬공격을 회피했습니다.(" + (int)(lucky1 / (float)luck2 * 100f) + "%)");
                         }
                         else
                         {
                             sw.WriteLine(cod2 + "님의 @" + skillname2 + "@로 " + cod1 + "님을 공격했습니다. 데미지 " + (skilldamage2 - armor1) + "(" + skilldamage2 + "-" + armor1 + ")");
-                            HP1 -= (skilldamage2 - armor1);
+                            HP1 -= skilldamage2 - armor1;
                         }
                     }
                     else // 평타
                     {
-                        if (rnd.Next(1, 100) <= (int)((float)lucky1 / (float)luck2 * 100f)) // 회피
+                        if (rnd.Next(1, 100) <= (int)(lucky1 / (float)luck2 * 100f)) // 회피
                         {
-                            sw.WriteLine(cod1 + "님이 공격을 회피했습니다.(" + (int)((float)lucky1 / (float)luck2 * 100f) + "%)");
+                            sw.WriteLine(cod1 + "님이 공격을 회피했습니다.(" + (int)(lucky1 / (float)luck2 * 100f) + "%)");
                         }
                         else
                         {
                             sw.WriteLine(cod2 + "님이 " + cod1 + "님을 공격했습니다. 데미지 " + (damage2 - armor1) + "(" + damage2 + "-" + armor1 + ")");
-                            HP1 -= (damage2 - armor1);
+                            HP1 -= damage2 - armor1;
                         }
                     }
                     sw.WriteLine(cod1 +
                         " HP: " + HP1 +
                         " MP: " + MP1 +
-                        "(" + (int)((float)MP1 / (float)skillmp1) + ")"
+                        "(" + (int)(MP1 / (float)skillmp1) + ")"
                         );
                     sw.WriteLine(cod2 +
                         " HP: " + HP2 +
                         " MP: " + MP2 +
-                        "(" + (int)((float)MP2 / (float)skillmp2) + ")"
+                        "(" + (int)(MP2 / (float)skillmp2) + ")"
                         );
                     sw.WriteLine();
                 }
@@ -247,7 +247,7 @@ namespace Gaten.Game.BattleMaker
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                Random rnd = new Random();
+                Random rnd = new();
                 DateTime nowtime = DateTime.Now;
                 int i;
                 string cod1, cod2;
@@ -294,8 +294,8 @@ namespace Gaten.Game.BattleMaker
 
                 #endregion
 
-                FileStream fs = new FileStream(filename, FileMode.Create);
-                StreamWriter sw = new StreamWriter(fs);
+                FileStream fs = new(filename, FileMode.Create);
+                StreamWriter sw = new(fs);
 
                 sw.WriteLine("Battle Maker v1.0 - 제작자 Gaten");
                 sw.WriteLine("다음 전투는 " + nowtime + "에 생성된 전투입니다.");
@@ -304,7 +304,7 @@ namespace Gaten.Game.BattleMaker
                     string.Format("{0:0000}", nowtime.Year) +
                     string.Format("{0:00}", nowtime.Month) +
                     string.Format("{0:00}", nowtime.Day) +
-                    string.Format("{0:00000}", (123 * nowtime.Hour + 456 * nowtime.Minute + 789 * nowtime.Second))
+                    string.Format("{0:00000}", (123 * nowtime.Hour) + (456 * nowtime.Minute) + (789 * nowtime.Second))
                     );
                 sw.WriteLine();
                 sw.WriteLine("  " + cod1 + " vs " + cod2);
@@ -363,10 +363,10 @@ namespace Gaten.Game.BattleMaker
                         break;
                     }
 
-                    damage1 = (int)((float)power1 + (float)power1 * ((float)(rnd.Next(0, 100) - 50) / 1000f));
-                    damage2 = (int)((float)power2 + (float)power2 * ((float)(rnd.Next(0, 100) - 50) / 1000f));
-                    skilldamage1 = (int)(((float)power1 * skillpower1) + ((float)power1 * skillpower1) * ((float)(rnd.Next(0, 200) - 100) / 1000f));
-                    skilldamage2 = (int)(((float)power2 * skillpower2) + ((float)power2 * skillpower2) * ((float)(rnd.Next(0, 200) - 100) / 1000f));
+                    damage1 = (int)(power1 + (power1 * ((rnd.Next(0, 100) - 50) / 1000f)));
+                    damage2 = (int)(power2 + (power2 * ((rnd.Next(0, 100) - 50) / 1000f)));
+                    skilldamage1 = (int)((power1 * skillpower1) + (power1 * skillpower1 * ((rnd.Next(0, 200) - 100) / 1000f)));
+                    skilldamage2 = (int)((power2 * skillpower2) + (power2 * skillpower2 * ((rnd.Next(0, 200) - 100) / 1000f)));
 
                     sw.WriteLine("==============================================");
                     sw.WriteLine(i + "번째 턴\r\n");
@@ -374,26 +374,26 @@ namespace Gaten.Game.BattleMaker
                     {
                         MP1 -= skillmp1;
                         cool1 = 0;
-                        if (rnd.Next(1, 100) <= (int)((float)lucky2 / (float)luck1 * 100f)) // 스킬회피
+                        if (rnd.Next(1, 100) <= (int)(lucky2 / (float)luck1 * 100f)) // 스킬회피
                         {
-                            sw.WriteLine(cod2 + "님이 스킬공격을 회피했습니다.(" + (int)((float)lucky2 / (float)luck1 * 100f) + "%)");
+                            sw.WriteLine(cod2 + "님이 스킬공격을 회피했습니다.(" + (int)(lucky2 / (float)luck1 * 100f) + "%)");
                         }
                         else
                         {
                             sw.WriteLine(cod1 + "님의 @" + skillname1 + "@로 " + cod2 + "님을 공격했습니다. 데미지 " + (skilldamage1 - armor2) + "(" + skilldamage1 + "-" + armor2 + ")");
-                            HP2 -= (skilldamage1 - armor2);
+                            HP2 -= skilldamage1 - armor2;
                         }
                     }
                     else // 평타
                     {
-                        if (rnd.Next(1, 100) <= (int)((float)lucky2 / (float)luck1 * 100f)) // 회피
+                        if (rnd.Next(1, 100) <= (int)(lucky2 / (float)luck1 * 100f)) // 회피
                         {
-                            sw.WriteLine(cod2 + "님이 공격을 회피했습니다.(" + (int)((float)lucky2 / (float)luck1 * 100f) + "%)");
+                            sw.WriteLine(cod2 + "님이 공격을 회피했습니다.(" + (int)(lucky2 / (float)luck1 * 100f) + "%)");
                         }
                         else
                         {
                             sw.WriteLine(cod1 + "님이 " + cod2 + "님을 공격했습니다. 데미지 " + (damage1 - armor2) + "(" + damage1 + "-" + armor2 + ")");
-                            HP2 -= (damage1 - armor2);
+                            HP2 -= damage1 - armor2;
                         }
                     }
 
@@ -401,37 +401,37 @@ namespace Gaten.Game.BattleMaker
                     {
                         MP2 -= skillmp2;
                         cool2 = 0;
-                        if (rnd.Next(1, 100) <= (int)((float)lucky1 / (float)luck2 * 100f)) // 스킬회피
+                        if (rnd.Next(1, 100) <= (int)(lucky1 / (float)luck2 * 100f)) // 스킬회피
                         {
-                            sw.WriteLine(cod1 + "님이 스킬공격을 회피했습니다.(" + (int)((float)lucky1 / (float)luck2 * 100f) + "%)");
+                            sw.WriteLine(cod1 + "님이 스킬공격을 회피했습니다.(" + (int)(lucky1 / (float)luck2 * 100f) + "%)");
                         }
                         else
                         {
                             sw.WriteLine(cod2 + "님의 @" + skillname2 + "@로 " + cod1 + "님을 공격했습니다. 데미지 " + (skilldamage2 - armor1) + "(" + skilldamage2 + "-" + armor1 + ")");
-                            HP1 -= (skilldamage2 - armor1);
+                            HP1 -= skilldamage2 - armor1;
                         }
                     }
                     else // 평타
                     {
-                        if (rnd.Next(1, 100) <= (int)((float)lucky1 / (float)luck2 * 100f)) // 회피
+                        if (rnd.Next(1, 100) <= (int)(lucky1 / (float)luck2 * 100f)) // 회피
                         {
-                            sw.WriteLine(cod1 + "님이 공격을 회피했습니다.(" + (int)((float)lucky1 / (float)luck2 * 100f) + "%)");
+                            sw.WriteLine(cod1 + "님이 공격을 회피했습니다.(" + (int)(lucky1 / (float)luck2 * 100f) + "%)");
                         }
                         else
                         {
                             sw.WriteLine(cod2 + "님이 " + cod1 + "님을 공격했습니다. 데미지 " + (damage2 - armor1) + "(" + damage2 + "-" + armor1 + ")");
-                            HP1 -= (damage2 - armor1);
+                            HP1 -= damage2 - armor1;
                         }
                     }
                     sw.WriteLine(cod1 +
                         " HP: " + HP1 +
                         " MP: " + MP1 +
-                        "(" + (int)((float)MP1 / (float)skillmp1) + ")"
+                        "(" + (int)(MP1 / (float)skillmp1) + ")"
                         );
                     sw.WriteLine(cod2 +
                         " HP: " + HP2 +
                         " MP: " + MP2 +
-                        "(" + (int)((float)MP2 / (float)skillmp2) + ")"
+                        "(" + (int)(MP2 / (float)skillmp2) + ")"
                         );
                     sw.WriteLine();
                 }
