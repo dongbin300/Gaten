@@ -16,7 +16,7 @@ namespace Gaten.Visual.DataVisualizer
     /// </summary>
     public partial class CandleChartVisualizer : UserControl
     {
-        private double scale = 1.0;
+        private double scale = 0.3;
         private List<Candle> candles = new();
 
         private Pen yangPen = new(new SolidColorBrush(Color.FromRgb(59, 207, 134)), 1.0);
@@ -52,12 +52,12 @@ namespace Gaten.Visual.DataVisualizer
         {
             if (e.Delta > 0)
             {
-                if(scale <= 0.2)
+                if(scale <= 0.02)
                 {
                     return;
                 }
 
-                scale -= 0.1;
+                scale -= 0.02;
             }
             else
             {
@@ -66,7 +66,7 @@ namespace Gaten.Visual.DataVisualizer
                     return;
                 }
 
-                scale += 0.1;
+                scale += 0.02;
             }
 
             InvalidateVisual();

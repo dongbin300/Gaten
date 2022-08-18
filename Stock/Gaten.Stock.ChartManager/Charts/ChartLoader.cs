@@ -32,7 +32,7 @@ namespace Gaten.Stock.ChartManager.Charts
                     var fileName = files[i].FullName;
                     var date = SymbolUtil.GetDate(fileName);
                     var data = File.ReadAllLines(fileName);
-                    List<Candle> candles = new List<Candle>();
+                    var candles = new List<Candle>();
 
                     foreach (var d in data)
                     {

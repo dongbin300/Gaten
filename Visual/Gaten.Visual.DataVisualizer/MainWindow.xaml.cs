@@ -12,6 +12,7 @@ namespace Gaten.Visual.DataVisualizer
     public partial class MainWindow : Window
     {
         CandleChartVisualizer candleChartVisualizer = new ();
+        WaveVisualizer waveVisualizer = new ();
         string entryFileName = string.Empty;
 
         public MainWindow()
@@ -20,9 +21,9 @@ namespace Gaten.Visual.DataVisualizer
 
             entryFileName = Settings.Default.EntryFileName;
 
-            if (string.IsNullOrEmpty(entryFileName) || !File.Exists(entryFileName))
+            //if (string.IsNullOrEmpty(entryFileName) || !File.Exists(entryFileName))
             {
-                OpenFileDialog dialog = new OpenFileDialog();
+                var dialog = new OpenFileDialog();
                 if (dialog.ShowDialog() ?? true)
                 {
                     entryFileName = dialog.FileName;
@@ -33,8 +34,11 @@ namespace Gaten.Visual.DataVisualizer
                 }
             }
 
-            candleChartVisualizer.Init(entryFileName);
-            Screen.Content = candleChartVisualizer;
+            //candleChartVisualizer.Init(entryFileName);
+            //Screen.Content = candleChartVisualizer;
+
+            waveVisualizer.Init(entryFileName);
+            Screen.Content = waveVisualizer;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

@@ -42,5 +42,4 @@ namespace Gaten.Net.Extensions
             GFile.Write(path, contents);
         }
     }
-
 }

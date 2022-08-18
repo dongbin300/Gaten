@@ -225,6 +225,19 @@ namespace Gaten.Net.Math
                 .ToList();
         }
 
+        public static CompositeWave Recomposite(Complex[] data)
+        {
+            var compositeWave = new CompositeWave();
+            FFT(data, Direction.Forward);
+            var peaks = GetSmartPeaks(data);
+            foreach(var peak in peaks)
+            {
+                var complex = data[peak];
+                compositeWave.AddWave(new SineWave(48000, peak, complex.Magnitude, 0.01, complex.Phase));
+            }
+            return compositeWave;
+        }
+
         private static int[] GetReversedBits(int numberOfBits)
         {
             if (numberOfBits is < 1 or > 14)

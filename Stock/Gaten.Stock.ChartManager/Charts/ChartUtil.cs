@@ -1,4 +1,6 @@
-﻿using Gaten.Net.Math;
+﻿using Gaten.Net.Extensions;
+using Gaten.Net.IO;
+using Gaten.Net.Math;
 
 using Skender.Stock.Indicators;
 
@@ -42,8 +44,10 @@ namespace Gaten.Stock.ChartManager.Charts
             {
                 values[i] = new Complex((double)(newQuotes[i].Open + newQuotes[i].Close) / 2 - (double)mid, 0);
             }
+            values.Select(x => x.Real).SaveCsvFile(GPath.Desktop.Down("fft_test").Down($"{quotes[0].Date:yyyy-MM-dd}.csv"));
             FourierTransform.FFT(values, FourierTransform.Direction.Forward);
-            return FourierTransform.GetSmartPeaks(values);
+            var peaks = FourierTransform.GetSmartPeaks(values);
+            return peaks;
         }
     }
 }

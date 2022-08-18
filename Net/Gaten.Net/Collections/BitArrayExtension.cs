@@ -1,4 +1,4 @@
-﻿using Gaten.Net.Converter;
+﻿using Gaten.Net.Extensions;
 
 using System.Collections;
 
@@ -18,7 +18,7 @@ namespace Gaten.Net.Collections
         {
             for (int i = 0; i < values.Length; i++)
             {
-                array.Set(i, values[i] == 0 ? false : true);
+                array.Set(i, values[i] != 0);
             }
         }
 
@@ -26,7 +26,7 @@ namespace Gaten.Net.Collections
         {
             for (int i = 0; i < values.Length; i++)
             {
-                array.Set(i, QConverter<int>.ToBool(int.Parse(values[i].ToString())));
+                array.Set(i, values[i].Convert<int>().Convert<bool>());
             }
         }
     }
