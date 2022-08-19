@@ -178,6 +178,12 @@ namespace Gaten.GameTool.NemoNemoLogic.NnlSolver
         /// <param name="length">Rectangle count</param>
         private void GetAllLineCases(NnlLine line, int length)
         {
+            if (line.Hint[0] == 0)
+            {
+                line.EmptyCases.Add(new List<int>() { length });
+                return;
+            }
+
             var emptyLength = length - line.Hint.Sum();
             var emptyBlockCount = line.Hint.Count + 1;
             var caseCount = emptyLength - emptyBlockCount + 3;

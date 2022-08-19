@@ -5,24 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaten.GameTool.NemoNemoLogic.NnlSolver"
         mc:Ignorable="d"
-        Title="MainWindow" Height="570" Width="400">
+        Title="MainWindow" Height="400" Width="200">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="130"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
         <GroupBox Grid.Row="0" Header="네모로직 사이트">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="quid" Width="50"/>
-                <TextBox x:Name="QuidTextBox" Width="150" />
-                <Button x:Name="SolveButton" Width="150" Content="풀기" Click="SolveButton_Click"/>
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="quid" Width="30"/>
+                    <TextBox x:Name="QuidTextBox" Width="100" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="SolveButton" Width="65" Content="풀기" Click="SolveButton_Click"/>
+                    <Button x:Name="SolveTestButton" Width="65" Background="#0ba" Content="테스트" Click="SolveTestButton_Click"/>
+                </StackPanel>
             </StackPanel>
         </GroupBox>
 
         <Grid Grid.Row="1">
-            <local:NnlBoardControl x:Name="BoardControl"/>
+            <Viewbox>
+                <local:NnlBoardControl x:Name="BoardControl" Width="200" Height="200"/>
+            </Viewbox>
         </Grid>
 
         <Grid Grid.Row="2">

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Gaten.Stock.MolleHogaDeluxe
+namespace Gaten.Stock.BinanceBrowser
 {
     /// <summary>
     /// Interaction logic for App.xaml
