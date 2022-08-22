@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaten.GameTool.NemoNemoLogic.NnlSolver"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="200">
+        Title="네모네모로직 해결사" Height="540" Width="300">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="130"/>
+            <RowDefinition Height="170"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
@@ -20,8 +20,13 @@
                     <TextBox x:Name="QuidTextBox" Width="100" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Button x:Name="SolveButton" Width="65" Content="풀기" Click="SolveButton_Click"/>
-                    <Button x:Name="SolveTestButton" Width="65" Background="#0ba" Content="테스트" Click="SolveTestButton_Click"/>
+                    <TextBlock Text="html" Width="30"/>
+                    <TextBox x:Name="HtmlTextBox" Width="100" AcceptsReturn="True" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="SolveButton" Width="80" Height="40" Content="풀기" Click="SolveButton_Click"/>
+                    <Button x:Name="SolveTealButton" Width="80" Height="40" Background="#0ba" Content="Teal풀기" Click="SolveTealButton_Click"/>
+                    <Button x:Name="SolveTestButton" Width="80" Height="40" Background="#a7e" Content="테스트" Click="SolveTestButton_Click"/>
                 </StackPanel>
             </StackPanel>
         </GroupBox>

@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Windows;
 
 namespace Gaten.Stock.ChartManager.Charts
 {
@@ -75,6 +77,54 @@ namespace Gaten.Stock.ChartManager.Charts
             catch (FileNotFoundException)
             {
                 throw;
+            }
+        }
+
+        public static void GetCandleDataFromBinance(Worker worker)
+        {
+            try
+            {
+                var basePath = GPath.Desktop.Down("BinanceFuturesData");
+                var getStartTime = SymbolUtil.GetEndDate("BTCUSDT");
+                var symbols = LocalStorageApi.GetSymbols();
+                var csvFileCount = ((DateTime.Today - getStartTime).Days + 1) * symbols.Count;
+                worker.SetProgressBar(0, csvFileCount);
+
+                int p = 0;
+                foreach (var symbol in symbols)
+                {
+                    var startTime = getStartTime;
+                    var count = 400;
+                    var symbolPath = basePath.Down(symbol);
+
+                    if (!Directory.Exists(symbolPath))
+                    {
+                        Directory.CreateDirectory(symbolPath);
+                    }
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        var standardTime = startTime.AddDays(i);
+
+                        if (DateTime.Compare(standardTime, DateTime.Today) > 0)
+                        {
+                            break;
+                        }
+
+                        worker.Progress(p++);
+                        worker.ProgressText($"{symbol}, {standardTime:yyyy-MM-dd}");
+
+                        BinanceClientApi.GetCandleDataForOneDay(symbol, standardTime);
+
+                        Thread.Sleep(500);
+                    }
+                }
+
+                MessageBox.Show("1분봉 데이터 수집 완료");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 

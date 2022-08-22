@@ -42,6 +42,20 @@ namespace Gaten.GameTool.NemoNemoLogic.NnlSolver
             Vertical = vertical;
         }
 
+        public TealNnlProblem ToTealNnlProblem()
+        {
+            var result = new TealNnlProblem();
+            foreach (var h in Horizontal)
+            {
+                result.Hint.ver.Add(h.Hint);
+            }
+            foreach(var v in Vertical)
+            {
+                result.Hint.hor.Add(v.Hint);
+            }
+            return result;
+        }
+
         /// <summary>
         /// Solve a NNL problem
         /// </summary>

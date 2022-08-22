@@ -1,11 +1,13 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-
+﻿using Gaten.Net.IO;
 using Gaten.Net.Wpf;
 using Gaten.Net.Wpf.Models;
 using Gaten.Stock.ChartManager.Apis;
 using Gaten.Stock.ChartManager.Charts;
+
+using System;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Gaten.Stock.ChartManager
 {
@@ -23,7 +25,7 @@ namespace Gaten.Stock.ChartManager
 
         private static ProgressView progressView = new();
 
-        private System.IO.Stream iconStream = System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/ChartManager;component/Resources/chart2.ico")).Stream;
+        private Stream iconStream = System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/ChartManager;component/Resources/chart2.ico")).Stream;
 
         public TrayMenu()
         {
@@ -42,6 +44,10 @@ namespace Gaten.Stock.ChartManager
         {
             menuStrip = new ContextMenuStrip();
             menuStrip.Items.Add(new ToolStripMenuItem("차트 매니저 By Gaten"));
+            menuStrip.Items.Add(new ToolStripSeparator());
+            menuStrip.Items.Add(new ToolStripMenuItem("Binance Symbol 데이터 수집", null, new EventHandler(GetBinanceSymbolDataEvent)));
+            menuStrip.Items.Add(new ToolStripMenuItem("Binance Candle 데이터 수집", null, new EventHandler(GetBinanceCandleDataEvent)));
+            menuStrip.Items.Add(new ToolStripSeparator());
             var symbols = LocalStorageApi.GetSymbols();
             var majorSymbols = new string[]
             {
@@ -62,6 +68,44 @@ namespace Gaten.Stock.ChartManager
             trayIcon.ContextMenuStrip = menuStrip;
         }
 
+        public static void GetBinanceSymbolDataEvent(object? sender, EventArgs e)
+        {
+            try
+            {
+                var symbols = BinanceClientApi.GetExchangeInfo();
+
+                GFile.WriteByArray(
+                    GPath.Desktop.Down("BinanceFuturesData").Down($"symbol_{DateTime.Now:yyyy-MM-dd}.txt"),
+                    symbols);
+
+                MessageBox.Show("심볼 데이터 수집 완료");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public static void GetBinanceCandleDataEvent(object? sender, EventArgs e)
+        {
+            progressView.Show();
+            var worker = new Worker()
+            {
+                ProgressBar = progressView.ProgressBar,
+                Action = GetBinanceCandleData
+            };
+            worker.Start();
+        }
+
+        public static void GetBinanceCandleData(Worker worker, object? obj)
+        {
+            ChartLoader.GetCandleDataFromBinance(worker);
+            DispatcherService.Invoke(() =>
+            {
+                progressView.Hide();
+            });
+        }
+
         public static void LoadChartDataEvent(object? sender, EventArgs e, string symbol)
         {
             progressView.Show();
@@ -76,7 +120,7 @@ namespace Gaten.Stock.ChartManager
 
         public static void LoadChartData(Worker worker, object? obj)
         {
-            if(obj?.ToString() is not string str)
+            if (obj?.ToString() is not string str)
             {
                 return;
             }

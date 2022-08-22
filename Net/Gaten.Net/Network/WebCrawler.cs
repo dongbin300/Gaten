@@ -42,6 +42,15 @@ namespace Gaten.Net.Network
             htmlDocument.LoadHtml(Source);
         }
 
+        public static void SetHtml(string html)
+        {
+            if(htmlDocument == null)
+            {
+                htmlDocument = new HtmlDocument();
+            }
+            htmlDocument.LoadHtml(html);
+        }
+
         public static HtmlNode SelectNode(string xpath)
         {
             return htmlDocument.DocumentNode.SelectSingleNode(xpath);

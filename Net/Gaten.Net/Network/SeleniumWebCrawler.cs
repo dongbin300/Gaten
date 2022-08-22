@@ -2,8 +2,7 @@
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-
-using System.Text;
+using OpenQA.Selenium.Support.UI;
 
 namespace Gaten.Net.Network
 {
@@ -43,6 +42,33 @@ namespace Gaten.Net.Network
         public static void SetUrl(string url)
         {
             driver.Url = url;
+        }
+
+        public static ITargetLocator SwitchTo()
+        {
+            return driver.SwitchTo();
+        }
+
+        public static object ExecuteScript(string script, params object[] args)
+        {
+            var js = (IJavaScriptExecutor)driver;
+            return js.ExecuteScript(script, args);
+        }
+
+        public static bool WaitForVisible(string tag, string attribute, string argument, bool isContain = false, int seconds = 10)
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(seconds));
+
+            try
+            {
+                var element = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(ToBy(tag, attribute, argument, isContain)));
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public static IWebElement SelectNode(string xpath)
