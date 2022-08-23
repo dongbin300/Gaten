@@ -12,6 +12,7 @@ namespace Gaten.Net.IO
         public static string DotNetDirectoryPath => BaseFilePath.Down("dotnet");
         public static string[] MySqlInfoText => GetTextLines("mysql_info.msq");
         public static string[] BinanceApiKeyText => GetTextLines("binance_api.txt");
+        public static string BinanceFuturesDataPath => BaseFilePath.Down("BinanceFuturesData");
         public static string SolutionPath => Environment.CurrentDirectory;
 
         public static string GetPath(string subPath) => BaseFilePath.Down(subPath);

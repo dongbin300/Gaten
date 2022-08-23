@@ -1,7 +1,4 @@
-﻿using Binance.Net.Enums;
-
-using Gaten.Net.IO;
-using Gaten.Net.Extensions;
+﻿using Gaten.Net.IO;
 using Gaten.Stock.ChartManager.Charts;
 
 using System;
@@ -13,8 +10,6 @@ namespace Gaten.Stock.ChartManager.Apis
 {
     internal class LocalStorageApi
     {
-        public static string BasePath => GPath.Desktop.Down("BinanceFuturesData");
-
         public static void Init()
         {
 
@@ -22,15 +17,15 @@ namespace Gaten.Stock.ChartManager.Apis
 
         public static List<string> GetSymbols()
         {
-            var symbolFile = new DirectoryInfo(BasePath).GetFiles("symbol_*.txt").FirstOrDefault() ?? default!;
+            var symbolFile = new DirectoryInfo(GResource.BinanceFuturesDataPath).GetFiles("symbol_*.txt").FirstOrDefault() ?? default!;
             return File.ReadAllLines(symbolFile.FullName).ToList();
         }
 
-        public static List<Candle> GetCandlesForOneDay(string symbol, KlineInterval candleInterval, DateTime startTime)
+        public static List<Candle> GetCandlesForOneDay(string symbol, DateTime startTime)
         {
             try
             {
-                var data = File.ReadAllLines(Path.Combine(BasePath, symbol, $"{symbol}_{startTime:yyyy-MM-dd}.csv"));
+                var data = File.ReadAllLines(GResource.BinanceFuturesDataPath.Down("1m", symbol, $"{symbol}_{startTime:yyyy-MM-dd}.csv"));
 
                 var candles = new List<Candle>();
 
@@ -47,11 +42,6 @@ namespace Gaten.Stock.ChartManager.Apis
                         ));
                 }
 
-                if (candleInterval != KlineInterval.OneMinute)
-                {
-                    //return ConvertTo(candles, candleInterval);
-                }
-
                 return candles;
             }
             catch (FileNotFoundException)
@@ -59,7 +49,5 @@ namespace Gaten.Stock.ChartManager.Apis
                 throw;
             }
         }
-
-        
     }
 }

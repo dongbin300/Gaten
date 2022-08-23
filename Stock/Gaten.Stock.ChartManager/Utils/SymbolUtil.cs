@@ -1,5 +1,4 @@
 ﻿using Gaten.Net.IO;
-using Gaten.Stock.ChartManager.Apis;
 
 using System;
 using System.IO;
@@ -11,14 +10,20 @@ namespace Gaten.Stock.ChartManager.Utils
     {
         public static DateTime GetStartDate(string symbol)
         {
-            var fileNames = new DirectoryInfo(LocalStorageApi.BasePath.Down(symbol)).GetFiles("*.csv").OrderBy(x=>x.Name);
+            var fileNames = new DirectoryInfo(GResource.BinanceFuturesDataPath.Down("1m", symbol)).GetFiles("*.csv").OrderBy(x=>x.Name);
             return GetDate(fileNames.First().Name);
         }
 
         public static DateTime GetEndDate(string symbol)
         {
-            var fileNames = new DirectoryInfo(LocalStorageApi.BasePath.Down(symbol)).GetFiles("*.csv").OrderByDescending(x => x.Name);
+            var fileNames = new DirectoryInfo(GResource.BinanceFuturesDataPath.Down("1m", symbol)).GetFiles("*.csv").OrderByDescending(x => x.Name);
             return GetDate(fileNames.First().Name);
+        }
+
+        public static DateTime GetEndDateOf1D(string symbol)
+        {
+            var data = GFile.ReadToArray(GResource.BinanceFuturesDataPath.Down("1D", $"{symbol}.csv"));
+            return DateTime.Parse(data[^1].Split(',')[0].Split(' ')[0]);
         }
 
         public static DateTime GetDate(string fileName)

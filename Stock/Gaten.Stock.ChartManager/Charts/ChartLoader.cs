@@ -1,5 +1,7 @@
 ﻿using Binance.Net.Enums;
 
+using CryptoExchange.Net.CommonObjects;
+
 using Gaten.Net.IO;
 using Gaten.Net.Wpf.Models;
 using Gaten.Stock.ChartManager.Apis;
@@ -11,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Windows;
 
@@ -27,7 +30,7 @@ namespace Gaten.Stock.ChartManager.Charts
             try
             {
                 var chartInfo = new List<ChartInfo>();
-                var files = new DirectoryInfo(LocalStorageApi.BasePath.Down(symbol)).GetFiles("*.csv");
+                var files = new DirectoryInfo(GResource.BinanceFuturesDataPath.Down("1m", symbol)).GetFiles("*.csv");
 
                 worker.For(0, files.Length, 1, (i) =>
                 {
@@ -80,11 +83,99 @@ namespace Gaten.Stock.ChartManager.Charts
             }
         }
 
+        public static void ExtractCandle(KlineInterval candleInterval, Worker worker)
+        {
+            try
+            {
+                string intervalString = candleInterval switch
+                {
+                    KlineInterval.OneMinute => "1m",
+                    KlineInterval.ThreeMinutes => "3m",
+                    KlineInterval.FiveMinutes => "5m",
+                    KlineInterval.FifteenMinutes => "15m",
+                    KlineInterval.ThirtyMinutes => "30m",
+                    KlineInterval.OneHour => "1H",
+                    KlineInterval.TwoHour => "2H",
+                    KlineInterval.FourHour => "4H",
+                    KlineInterval.SixHour => "6H",
+                    KlineInterval.EightHour => "8H",
+                    KlineInterval.TwelveHour => "12H",
+                    KlineInterval.OneDay => "1D",
+                    _ => "1m"
+                };
+
+                var getStartTime = candleInterval == KlineInterval.OneDay ? (File.Exists(GResource.BinanceFuturesDataPath.Down("1D", "BTCUSDT.csv")) ?SymbolUtil.GetEndDateOf1D("BTCUSDT") : SymbolUtil.GetStartDate("BTCUSDT")) : SymbolUtil.GetEndDate("BTCUSDT");
+                var symbols = LocalStorageApi.GetSymbols();
+                var dayCount = (DateTime.Today - getStartTime).Days + 1;
+                var csvFileCount = symbols.Count * dayCount;
+                worker.SetProgressBar(0, csvFileCount);
+
+                int s = 0;
+                foreach(var symbol in symbols)
+                {
+                    var chartInfo = new List<ChartInfo>();
+                    var path = GResource.BinanceFuturesDataPath.Down(intervalString, $"{symbol}.csv");
+                    worker.Progress(++s);
+
+                    var newData = new List<string>();
+                    try
+                    {
+                        for (int i = 0; i < dayCount; i++)
+                        {
+                            var date = getStartTime.AddDays(i);
+                            var inputFileName = GResource.BinanceFuturesDataPath.Down("1m", symbol, $"{symbol}_{date:yyyy-MM-dd}.csv");
+                            var data = File.ReadAllLines(inputFileName);
+                            var candles = new List<Candle>();
+
+                            worker.ProgressText($"{symbol}, {i} / {dayCount}");
+
+                            foreach (var d in data)
+                            {
+                                var e = d.Split(',');
+                                candles.Add(new Candle(
+                                    DateTime.Parse(e[0]),
+                                    double.Parse(e[1]),
+                                    double.Parse(e[2]),
+                                    double.Parse(e[3]),
+                                    double.Parse(e[4]),
+                                    double.Parse(e[5])
+                                    ));
+                            }
+
+                            candles = ConvertTo(candles, candleInterval);
+
+                            newData.Add(
+                                string.Join(',', new string[] {
+                                    candles[0].Time.ToString("yyyy-MM-dd HH:mm:ss"),
+                                    candles[0].Open.ToString(),
+                                    candles[0].High.ToString(),
+                                    candles[0].Low.ToString(),
+                                    candles[0].Close.ToString(),
+                                    candles[0].Volume.ToString()
+                                })
+                                );
+                        }
+                    }
+                    catch (FileNotFoundException)
+                    {
+                    }
+                    var prevData = GFile.ReadToArray(path);
+                    var currentData = prevData.Take(prevData.Length - 1).ToList();
+                    currentData.AddRange(newData);
+                    GFile.WriteByArray(path, currentData);
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                throw;
+            }
+        }
+
         public static void GetCandleDataFromBinance(Worker worker)
         {
             try
             {
-                var basePath = GPath.Desktop.Down("BinanceFuturesData");
+                var basePath = GResource.BinanceFuturesDataPath.Down("1m");
                 var getStartTime = SymbolUtil.GetEndDate("BTCUSDT");
                 var symbols = LocalStorageApi.GetSymbols();
                 var csvFileCount = ((DateTime.Today - getStartTime).Days + 1) * symbols.Count;
@@ -111,7 +202,7 @@ namespace Gaten.Stock.ChartManager.Charts
                             break;
                         }
 
-                        worker.Progress(p++);
+                        worker.Progress(++p);
                         worker.ProgressText($"{symbol}, {standardTime:yyyy-MM-dd}");
 
                         BinanceClientApi.GetCandleDataForOneDay(symbol, standardTime);
@@ -119,8 +210,6 @@ namespace Gaten.Stock.ChartManager.Charts
                         Thread.Sleep(500);
                     }
                 }
-
-                MessageBox.Show("1분봉 데이터 수집 완료");
             }
             catch (Exception ex)
             {

@@ -87,11 +87,9 @@ namespace Gaten.Stock.ChartManager.Apis
             }
 
             File.WriteAllText(
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                "BinanceFuturesData",
-                symbol,
-                $"{symbol}_{startTime:yyyy-MM-dd}.csv"),
-                builder.ToString());
+                path: GResource.BinanceFuturesDataPath.Down("1m", symbol, $"{symbol}_{startTime:yyyy-MM-dd}.csv"),
+                contents: builder.ToString()
+                );
         }
 
         public static List<Candle> GetCandles(string symbol, KlineInterval candleInterval, DateTime startTime, DateTime endTime, int limit)

@@ -7,7 +7,7 @@
         xmlns:wpf="clr-namespace:Gaten.Net.Wpf.Controls;assembly=Gaten.Net.Wpf"
         mc:Ignorable="d"
         WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        Title="ProgressView" Height="25" Width="600">
+        Title="ProgressView" Height="25" Width="1280">
     <Grid>
         <wpf:TextProgressBar x:Name="ProgressBar" Background="#25A0DA" />
     </Grid>

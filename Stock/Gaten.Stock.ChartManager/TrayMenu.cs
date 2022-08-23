@@ -45,8 +45,10 @@ namespace Gaten.Stock.ChartManager
             menuStrip = new ContextMenuStrip();
             menuStrip.Items.Add(new ToolStripMenuItem("차트 매니저 By Gaten"));
             menuStrip.Items.Add(new ToolStripSeparator());
-            menuStrip.Items.Add(new ToolStripMenuItem("Binance Symbol 데이터 수집", null, new EventHandler(GetBinanceSymbolDataEvent)));
-            menuStrip.Items.Add(new ToolStripMenuItem("Binance Candle 데이터 수집", null, new EventHandler(GetBinanceCandleDataEvent)));
+            menuStrip.Items.Add(new ToolStripMenuItem("Binance 심볼 데이터 수집", null, new EventHandler(GetBinanceSymbolDataEvent)));
+            menuStrip.Items.Add(new ToolStripMenuItem("Binance 1분봉 데이터 수집", null, new EventHandler(GetBinanceCandleDataEvent)));
+            menuStrip.Items.Add(new ToolStripSeparator());
+            menuStrip.Items.Add(new ToolStripMenuItem("Binance 1일봉 데이터 추출", null, new EventHandler(Extract1DCandleEvent)));
             menuStrip.Items.Add(new ToolStripSeparator());
             var symbols = LocalStorageApi.GetSymbols();
             var majorSymbols = new string[]
@@ -68,6 +70,35 @@ namespace Gaten.Stock.ChartManager
             trayIcon.ContextMenuStrip = menuStrip;
         }
 
+        public static void Extract1DCandleEvent(object? sender, EventArgs e)
+        {
+            progressView.Show();
+            var worker = new Worker()
+            {
+                ProgressBar = progressView.ProgressBar,
+                Action = Extract1DCandle
+            };
+            worker.Start();
+        }
+
+        public static void Extract1DCandle(Worker worker, object? obj)
+        {
+            try
+            {
+                ChartLoader.ExtractCandle(Binance.Net.Enums.KlineInterval.OneDay, worker);
+                DispatcherService.Invoke(() =>
+                {
+                    progressView.Hide();
+                });
+
+                MessageBox.Show("바이낸스 1일봉 데이터 추출 완료");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         public static void GetBinanceSymbolDataEvent(object? sender, EventArgs e)
         {
             try
@@ -75,10 +106,10 @@ namespace Gaten.Stock.ChartManager
                 var symbols = BinanceClientApi.GetExchangeInfo();
 
                 GFile.WriteByArray(
-                    GPath.Desktop.Down("BinanceFuturesData").Down($"symbol_{DateTime.Now:yyyy-MM-dd}.txt"),
+                    GResource.BinanceFuturesDataPath.Down($"symbol_{DateTime.Now:yyyy-MM-dd}.txt"),
                     symbols);
 
-                MessageBox.Show("심볼 데이터 수집 완료");
+                MessageBox.Show("바이낸스 심볼 데이터 수집 완료");
             }
             catch (Exception ex)
             {
@@ -99,11 +130,20 @@ namespace Gaten.Stock.ChartManager
 
         public static void GetBinanceCandleData(Worker worker, object? obj)
         {
-            ChartLoader.GetCandleDataFromBinance(worker);
-            DispatcherService.Invoke(() =>
+            try
             {
-                progressView.Hide();
-            });
+                ChartLoader.GetCandleDataFromBinance(worker);
+                DispatcherService.Invoke(() =>
+                {
+                    progressView.Hide();
+                });
+
+                MessageBox.Show("바이낸스 1분봉 데이터 수집 완료");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         public static void LoadChartDataEvent(object? sender, EventArgs e, string symbol)
@@ -120,15 +160,22 @@ namespace Gaten.Stock.ChartManager
 
         public static void LoadChartData(Worker worker, object? obj)
         {
-            if (obj?.ToString() is not string str)
+            try
             {
-                return;
+                if (obj?.ToString() is not string str)
+                {
+                    return;
+                }
+                ChartLoader.Init(str, Binance.Net.Enums.KlineInterval.OneMinute, worker);
+                DispatcherService.Invoke(() =>
+                {
+                    progressView.Hide();
+                });
             }
-            ChartLoader.Init(str, Binance.Net.Enums.KlineInterval.OneMinute, worker);
-            DispatcherService.Invoke(() =>
+            catch (Exception ex)
             {
-                progressView.Hide();
-            });
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void Exit(object? sender, EventArgs e)
