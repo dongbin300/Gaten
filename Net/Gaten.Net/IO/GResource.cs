@@ -1,6 +1,4 @@
-﻿using Gaten.Net.Extensions;
-
-namespace Gaten.Net.IO
+﻿namespace Gaten.Net.IO
 {
     public class GResource
     {

@@ -8,6 +8,7 @@
 		<UseWindowsForms>true</UseWindowsForms>
 		<AssemblyName>MintPanda</AssemblyName>
 		<ApplicationIcon>Resources\Images\panda.ico</ApplicationIcon>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -23,12 +24,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="System.Management" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Resource Include="Resources\Images\panda.ico" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\Net\Gaten.Net.Wpf\Gaten.Net.Wpf.csproj" />
 		<ProjectReference Include="..\..\Net\Gaten.Net\Gaten.Net.csproj" />
+		<ProjectReference Include="..\..\Net\Windows\Gaten.Net.Windows.Forms\Gaten.Net.Windows.Forms.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

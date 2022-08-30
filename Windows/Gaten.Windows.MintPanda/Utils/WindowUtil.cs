@@ -1,24 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls.Primitives;
 
 namespace Gaten.Windows.MintPanda.Utils
 {
     internal class WindowUtil
     {
-        public static void InitWindow(Window window)
+        public static void ToggleWindow<T>(ToggleButton toggleButton) where T : new()
         {
-            window.Show();
-            window.Visibility = Visibility.Collapsed;
+            if (toggleButton.IsChecked ?? true)
+            {
+                if (new T() is Window window)
+                {
+                    window.Tag = toggleButton.Tag;
+                    window.Show();
+                }
+            }
+            else
+            {
+                if (toggleButton.Tag is not string tag)
+                {
+                    return;
+                }
+
+                CloseWindow(tag);
+            }
         }
 
-        public static void CheckVisibility(Window window, ToggleButton toggleButton)
+        public static void CloseWindow(string tag)
         {
-            window.Visibility = toggleButton.IsChecked ?? true ? Visibility.Visible : Visibility.Collapsed;
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window.Tag == null)
+                {
+                    continue;
+                }
+                if (window.Tag.Equals(tag))
+                {
+                    window.Close();
+                    break;
+                }
+            }
         }
     }
 }

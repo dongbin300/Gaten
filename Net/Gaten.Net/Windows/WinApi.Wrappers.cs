@@ -6,6 +6,13 @@ namespace Gaten.Net.Windows
 {
     public partial class WinApi
     {
+        public static Point GetCursorPosition()
+        {
+            var lpPoint = new Point();
+            GetCursorPos(ref lpPoint);
+            return lpPoint;
+        }
+
         public static Size GetConsoleFontSize()
         {
             // getting the console out buffer handle

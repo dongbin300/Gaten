@@ -16,7 +16,7 @@ namespace Gaten.Windows.MintPanda.Contents
             var mise = nodes[0].InnerText.Replace("\n", "").Replace("\t", "");
             var chomise = nodes[1].InnerText.Replace("\n", "").Replace("\t", "");
 
-            return $"{currentTemperature} {currentWeather}   미세: {mise}   초미세: {chomise}";
+            return $"{currentTemperature} {currentWeather}\r\n미세: {mise}\r\n초미세: {chomise}";
         }
     }
 }

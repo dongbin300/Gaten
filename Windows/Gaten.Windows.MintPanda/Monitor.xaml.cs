@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace Gaten.Windows.MintPanda
 {
@@ -20,32 +21,20 @@ namespace Gaten.Windows.MintPanda
         #region Variables
         readonly System.Timers.Timer MainTimer = new(60000);
         readonly System.Timers.Timer ClockTimer = new(1000);
-        Action<string> action;
+        Action<List<string>> action;
 
         string ClockText = string.Empty;
         string WeatherText = string.Empty;
         string DiskDriveText = string.Empty;
         string StockText = string.Empty;
         string UnseText = string.Empty;
-
-        Go go = new();
-        RandomHanja randomHanja = new();
-        RandomWord randomWord = new();
-        CheckList checkList = new();
-        ColorPick colorPick = new();
-        Dictionary dictionary = new();
-        HardwarePrice hardwarePrice = new();
-        RNG rng = new();
-        Translation translation = new();
-        WinSplit winSplit = new();
-        TaskBarWindow taskBarWindow = new();
         #endregion
 
         #region Initialize
-        public Monitor(Action<string> action)
+        public Monitor(Action<List<string>> action)
         {
             InitializeComponent();
-            InitContentWindow();
+            InitStatus();
 
             this.action = action;
             RefreshPowerOption();
@@ -58,47 +47,46 @@ namespace Gaten.Windows.MintPanda
             RefreshPowerOption();
         }
 
-        private void InitLazy()
+        private void InitStatus()
         {
-            winSplit.RefreshProcessList();
-            WeatherText = Weather.Get();
-            StockText = Stock.Get();
-            hardwarePrice.SearchHardwarePrice();
-            checkList.RefreshCheckList();
-            UnseText = Unse.Get();
-            DiskDriveText = DiskDrive.Get();
-            randomHanja.Refresh();
-            randomWord.Refresh();
+            ClockButton.IsChecked = true;
+            WeatherButton.IsChecked = true;
+            DiskDriveButton.IsChecked = true;
+            StockButton.IsChecked = true;
+            UnseButton.IsChecked = true;
         }
 
-        void InitContentWindow()
+        private void InitLazy()
         {
-            WindowUtil.InitWindow(go);
-            WindowUtil.InitWindow(randomHanja);
-            WindowUtil.InitWindow(randomWord);
-            WindowUtil.InitWindow(checkList);
-            WindowUtil.InitWindow(colorPick);
-            WindowUtil.InitWindow(dictionary);
-            WindowUtil.InitWindow(hardwarePrice);
-            WindowUtil.InitWindow(rng);
-            WindowUtil.InitWindow(translation);
-            WindowUtil.InitWindow(winSplit);
-            WindowUtil.InitWindow(taskBarWindow);
+            //winSplit.RefreshProcessList();
+            WeatherText = Weather.Get();
+            StockText = Stock.Get();
+            //hardwarePrice.SearchHardwarePrice();
+            //checkList.RefreshCheckList();
+            UnseText = Unse.Get();
+            DiskDriveText = DiskDrive.Get();
+            //randomHanja.Refresh();
+            //randomWord.Refresh();
         }
 
         private void WindowButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowUtil.CheckVisibility(go, GoButton);
-            WindowUtil.CheckVisibility(randomHanja, RandomHanjaButton);
-            WindowUtil.CheckVisibility(randomWord, RandomWordButton);
-            WindowUtil.CheckVisibility(checkList, CheckListButton);
-            WindowUtil.CheckVisibility(colorPick, ColorPickButton);
-            WindowUtil.CheckVisibility(dictionary, DictionaryButton);
-            WindowUtil.CheckVisibility(hardwarePrice, HardwarePriceButton);
-            WindowUtil.CheckVisibility(rng, RNGButton);
-            WindowUtil.CheckVisibility(translation, TranslationButton);
-            WindowUtil.CheckVisibility(winSplit, WinSplitButton);
-            WindowUtil.CheckVisibility(taskBarWindow, CamoBarButton);
+            if (sender is not ToggleButton toggleButton)
+            {
+                return;
+            }
+
+            WindowUtil.ToggleWindow<CheckList>(CheckListButton);
+            WindowUtil.ToggleWindow<TaskBarWindow>(CamoBarButton);
+            WindowUtil.ToggleWindow<Go>(GoButton);
+            WindowUtil.ToggleWindow<HardwarePrice>(HardwarePriceButton);
+            WindowUtil.ToggleWindow<RandomHanja>(RandomHanjaButton);
+            WindowUtil.ToggleWindow<RandomWord>(RandomWordButton);
+            WindowUtil.ToggleWindow<RNG>(RNGButton);
+            WindowUtil.ToggleWindow<Translation>(TranslationButton);
+            WindowUtil.ToggleWindow<WinSplit>(WinSplitButton);
+            WindowUtil.ToggleWindow<ColorPick>(ColorPickButton);
+            WindowUtil.ToggleWindow<Dictionary>(DictionaryButton);
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -121,7 +109,7 @@ namespace Gaten.Windows.MintPanda
             DispatcherService.Invoke(() =>
             {
                 ClockText = Clock.Get();
-                RefreshMarqueeText();
+                RefreshInfoText();
             });
         }
 
@@ -160,23 +148,24 @@ namespace Gaten.Windows.MintPanda
         }
         #endregion
 
-        #region Billboard
-        private void RefreshMarqueeText()
+        #region Billboard & Monitor
+        private void RefreshInfoText()
         {
-            List<string> strings = new List<string>();
+            var strings = new List<string>
+            {
+                ClockButton.IsChecked ?? true ? ClockText : "",
+                WeatherButton.IsChecked ?? true ? WeatherText : "",
+                DiskDriveButton.IsChecked ?? true ? DiskDriveText : "",
+                StockButton.IsChecked ?? true ? StockText : "",
+                UnseButton.IsChecked ?? true ? UnseText : ""
+            };
 
-            strings.Add(ClockButton.IsChecked ?? true ? ClockText : "");
-            strings.Add(WeatherButton.IsChecked ?? true ? WeatherText : "");
-            strings.Add(DiskDriveButton.IsChecked ?? true ? DiskDriveText : "");
-            strings.Add(StockButton.IsChecked ?? true ? StockText : "");
-            strings.Add(UnseButton.IsChecked ?? true ? UnseText : "");
-
-            action(string.Join("  ", strings));
+            action(strings);
         }
 
         private void TextButton_Click(object sender, RoutedEventArgs e)
         {
-            RefreshMarqueeText();
+            RefreshInfoText();
         }
         #endregion
 
@@ -201,17 +190,10 @@ namespace Gaten.Windows.MintPanda
         #region Application
         public void CloseWindow()
         {
-            go.Close();
-            randomHanja.Close();
-            randomWord.Close();
-            checkList.Close();
-            colorPick.Close();
-            dictionary.Close();
-            hardwarePrice.Close();
-            rng.Close();
-            translation.Close();
-            winSplit.Close();
-            taskBarWindow.Close();
+            for (int i = 1; i <= 30; i++)
+            {
+                WindowUtil.CloseWindow(string.Format("2{0:00}", i));
+            }
         }
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
@@ -248,7 +230,7 @@ namespace Gaten.Windows.MintPanda
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            Environment.Exit(0);
+            Application.Current.Shutdown();
         }
 
         private void TaskmgrButton_Click(object sender, RoutedEventArgs e)

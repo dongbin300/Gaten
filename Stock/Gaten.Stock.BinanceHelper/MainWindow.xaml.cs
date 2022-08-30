@@ -27,17 +27,17 @@ namespace Gaten.Stock.BinanceHelper
 
         private void ParseButton_Click(object sender, RoutedEventArgs e)
         {
-            var tradeHistoryParser = TradeHistoryParser.Instance;
-            tradeHistoryParser.ParseContent();
+            //var tradeHistoryParser = TradeHistoryParser.Instance;
+            //tradeHistoryParser.ParseContent();
 
-            List<string> targetSymbols = tradeHistoryParser.GetSymbolList();
-            for (int i = 0; i < targetSymbols.Count; i++)
-            {
-                string symbol = targetSymbols[i];
-                double totalFee = tradeHistoryParser.GetTotalFee(symbol);
-                string feeCoin = "USDT"; // 일단은 고정값이니 프로그램 설계에 맞게 알아서 허삼.
-                double totalRealizedProfit = tradeHistoryParser.GetTotalRealizedProfit(symbol);
-            }
+            //List<string> targetSymbols = tradeHistoryParser.GetSymbolList();
+            //for (int i = 0; i < targetSymbols.Count; i++)
+            //{
+            //    string symbol = targetSymbols[i];
+            //    double totalFee = tradeHistoryParser.GetTotalFee(symbol);
+            //    string feeCoin = "USDT";
+            //    double totalRealizedProfit = tradeHistoryParser.GetTotalRealizedProfit(symbol);
+            //}
         }
     }
 }

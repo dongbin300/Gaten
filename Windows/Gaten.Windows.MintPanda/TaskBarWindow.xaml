@@ -7,5 +7,5 @@
         mc:Ignorable="d"
         Title="TaskBarWindow" WindowStartupLocation="Manual" WindowStyle="None"
         Topmost="True" Margin="0" Padding="0" ResizeMode="NoResize">
-    <Image x:Name="TaskBarImage" Stretch="Fill" Margin="0" Source="" />
+    <Image x:Name="TaskBarImage" Stretch="Fill" Margin="0" />
 </Window>

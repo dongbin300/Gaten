@@ -8,6 +8,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using System.Runtime.Remoting.Channels.
 
 namespace Gaten.Stock.ChartManager
 {
@@ -49,6 +50,7 @@ namespace Gaten.Stock.ChartManager
             menuStrip.Items.Add(new ToolStripMenuItem("Binance 1분봉 데이터 수집", null, new EventHandler(GetBinanceCandleDataEvent)));
             menuStrip.Items.Add(new ToolStripSeparator());
             menuStrip.Items.Add(new ToolStripMenuItem("Binance 1일봉 데이터 추출", null, new EventHandler(Extract1DCandleEvent)));
+            menuStrip.Items.Add(new ToolStripMenuItem("IPC Test", null, new EventHandler(IpcTestEvent)));
             menuStrip.Items.Add(new ToolStripSeparator());
             var symbols = LocalStorageApi.GetSymbols();
             var majorSymbols = new string[]
@@ -68,6 +70,14 @@ namespace Gaten.Stock.ChartManager
 
             menuStrip.Items[0].Enabled = false;
             trayIcon.ContextMenuStrip = menuStrip;
+        }
+
+        public static void IpcTestEvent(object? sender, EventArgs e)
+        {
+            IpcServerChannel svr = new IpcServerChannel("remote");
+            ChannelServices.RegisterChannel(svr, false);
+            RemotingConfiguration.RegisterWellKnownServiceType(typeof(RemoteObject), "Cnt", WellKnownObjectMode.Singleton);
+            Console.WriteLine("Listening on " + svr.GetChannelUri());
         }
 
         public static void Extract1DCandleEvent(object? sender, EventArgs e)

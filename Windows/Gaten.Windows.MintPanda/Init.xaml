@@ -5,16 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Gaten.Windows.MintPanda"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="450">
+             d:DesignHeight="1040" d:DesignWidth="240">
     <UserControl.Resources>
         <Style TargetType="ToggleButton" BasedOn="{StaticResource NeonToggleButton}"/>
         <Style TargetType="Button" BasedOn="{StaticResource NeonButton}"/>
     </UserControl.Resources>
-    <UniformGrid Columns="8" Rows="8">
-        <ToggleButton x:Name="CheckListButton" Content="체크리스트" Click="WindowButton_Click"/>
+    <UniformGrid Columns="4" Rows="17">
+        <Button Tag="101" x:Name="RefreshButton" Content="새로고침" Click="RefreshButton_Click"/>
+        <ToggleButton Tag="201" x:Name="CheckListButton" Content="체크리스트" Click="WindowButton_Click"/>
 
         <!-- 설정 -->
-        <Button x:Name="InstallFontButton" Content="폰트 설치" Click="InstallFontButton_Click"/>
+        <Button Tag="301" x:Name="InstallFontButton" Content="폰트 설치" Click="InstallFontButton_Click"/>
         
         <!-- 설치 -->
         <Button x:Name="RmeMfButton" Content="RME MF" Tag="rmeinstaller_mf" Click="InstallButton_Click"/>
@@ -69,6 +70,5 @@
         <Button x:Name="ModPanelButton" Content="MOD패널" Tag="MODPanel" Click="ExecuteButton_Click"/>
         <Button x:Name="SfxrButton" Content="sfxr" Tag="sfxr" Click="ExecuteButton_Click"/>
 
-        <Button x:Name="RefreshButton" Content="새로고침" Click="RefreshButton_Click"/>
     </UniformGrid>
 </UserControl>

@@ -6,9 +6,10 @@
         xmlns:local="clr-namespace:Gaten.Study.TestWpf"
         xmlns:wpf="clr-namespace:Gaten.Net.Wpf.Controls;assembly=Gaten.Net.Wpf"
         mc:Ignorable="d"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
         Title="MainWindow" Height="100" Width="600">
 
     <StackPanel>
-        <Button x:Name="GetButton" Content="GET" Click="GetButton_Click"/>
+        <TextBlock x:Name="InfoText" Text="텍스트입니다." Foreground="Yellow"/>
     </StackPanel>
 </Window>

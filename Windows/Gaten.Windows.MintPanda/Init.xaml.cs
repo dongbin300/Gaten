@@ -1,24 +1,12 @@
 ﻿using Gaten.Net.Diagnostics;
 using Gaten.Net.IO;
-using Gaten.Net.Extensions;
 using Gaten.Windows.MintPanda.Contents;
 using Gaten.Windows.MintPanda.Utils;
 
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Controls.Primitives;
 
 namespace Gaten.Windows.MintPanda
 {
@@ -27,7 +15,6 @@ namespace Gaten.Windows.MintPanda
     /// </summary>
     public partial class Init : UserControl
     {
-        CheckList checkList = new CheckList();
         private string utilDirectory;
 
         public Init()
@@ -46,13 +33,16 @@ namespace Gaten.Windows.MintPanda
             {
                 utilDirectory = string.Empty;
             }
-
-            WindowUtil.InitWindow(checkList);
         }
 
         private void WindowButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowUtil.CheckVisibility(checkList, CheckListButton);
+            if(sender is not ToggleButton toggleButton)
+            {
+                return;
+            }
+
+            WindowUtil.ToggleWindow<CheckList>(toggleButton);
         }
 
         private void InstallFontButton_Click(object sender, RoutedEventArgs e)

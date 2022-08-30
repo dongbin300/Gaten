@@ -1,13 +1,4 @@
-﻿using Gaten.Net.Wpf;
-using Gaten.Net.Wpf.Controls;
-using Gaten.Net.Wpf.Models;
-
-using System;
-using System.ComponentModel;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using Gaten.Study.TestDll;
+﻿using System.Windows;
 
 namespace Gaten.Study.TestWpf
 {
@@ -19,13 +10,6 @@ namespace Gaten.Study.TestWpf
         public MainWindow()
         {
             InitializeComponent();
-
-            
-        }
-
-        private void GetButton_Click(object sender, RoutedEventArgs e)
-        {
-            var info = SiteInfoManager.GetSiteInfo();
         }
     }
 }

@@ -1,9 +1,18 @@
 ﻿using Gaten.Net.Network;
+using Gaten.Net.Windows;
+using Gaten.Net.Windows.Forms;
+using Gaten.Windows.MintPanda.Utils;
 
 using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 
 namespace Gaten.Windows.MintPanda
 {
@@ -12,7 +21,11 @@ namespace Gaten.Windows.MintPanda
     /// </summary>
     public partial class MainWindow : Window
     {
-        BillboardWindow billboardWindow = new();
+        UserActivityHook2 hook = new();
+        Thread worker = default!;
+        //BillboardWindow billboardWindow = new();
+        MonitorWindow monitorWindow = new();
+        SystemMonitorWindow systemMonitorWindow = new();
         Init init;
         Monitor monitor;
         Backup backup;
@@ -20,47 +33,86 @@ namespace Gaten.Windows.MintPanda
         public MainWindow()
         {
             InitializeComponent();
+            Boot.RegisterStartProgram("MintPanda", Environment.ProcessPath ?? "");
+            systemMonitorWindow.Show();
 
-            double screenWidth = SystemParameters.PrimaryScreenWidth;
-            double screenHeight = SystemParameters.PrimaryScreenHeight;
-            double taskbarHeight = 40;
+            Left = ScreenUtil.ScreenWidth;
+            Top = ScreenUtil.ScreenHeight - ScreenUtil.TaskbarHeight - Height;
 
-            Left = screenWidth - Width;
-            Top = screenHeight - taskbarHeight - Height;
-
+            hook.Start();
+            worker = new Thread(new ThreadStart(InputWorker));
+            worker.Start();
             init = new();
-            monitor = new(RefreshMarquee);
+            monitor = new(RefreshInfoText);
             backup = new();
         }
 
-        private void RefreshMarquee(string text)
+        private void InputWorker()
         {
-            billboardWindow.SetMarqueeText(text);
+            hook.MouseDown += (sender, e) =>
+            {
+                if (e.X >= ScreenUtil.ScreenWidth - 30)
+                {
+                    var storyboard = new Storyboard();
+                    var doubleAnimation = new DoubleAnimation(ScreenUtil.ScreenWidth, ScreenUtil.ScreenWidth - Width, new Duration(new TimeSpan(0, 0, 0, 0, 350)));
+                    Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("(Window.Left)"));
+                    storyboard.Children.Add(doubleAnimation);
+                    BeginStoryboard(storyboard);
+                }
+            };
+
+            hook.KeyDown += (sender, e) =>
+            {
+                if (e.KeyData == Keys.Oemtilde)
+                {
+                    monitorWindow.Visibility = Visibility.Visible;
+                }
+            };
+
+            hook.KeyUp += (sender, e) =>
+            {
+                if (e.KeyData == Keys.Oemtilde)
+                {
+                    monitorWindow.Visibility = Visibility.Collapsed;
+                }
+            };
+        }
+
+        private void RefreshInfoText(List<string> strings)
+        {
+            //billboardWindow.SetMarqueeText(string.Join("  ", strings));
+            monitorWindow.SetInfoText(string.Join("\r\n", strings));
         }
 
         private void Window_MouseEnter(object sender, MouseEventArgs e)
         {
-            Opacity = 1.0;
         }
 
         private void Window_MouseLeave(object sender, MouseEventArgs e)
         {
-            Opacity = 0.25;
+            var storyboard = new Storyboard();
+            var doubleAnimation = new DoubleAnimation(ScreenUtil.ScreenWidth - Width, ScreenUtil.ScreenWidth, new Duration(new TimeSpan(0, 0, 0, 0, 350)));
+            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("(Window.Left)"));
+            storyboard.Children.Add(doubleAnimation);
+            BeginStoryboard(storyboard);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            billboardWindow.Close();
+            //billboardWindow.Close();
             monitor.CloseWindow();
+            monitorWindow.Close();
+            systemMonitorWindow.Close();
+
+            worker.Join();
+            hook.Stop();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             control.Content = monitor;
-
-            billboardWindow.Show();
-            billboardWindow.Visibility = Visibility.Collapsed;
-
+            //billboardWindow.Show();
+            //billboardWindow.Visibility = Visibility.Collapsed;
             WebCrawler.Open();
         }
 

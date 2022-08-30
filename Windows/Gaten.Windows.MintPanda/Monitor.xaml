@@ -1,43 +1,44 @@
 ﻿<UserControl x:Class="Gaten.Windows.MintPanda.Monitor"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Gaten.Windows.MintPanda"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="450" Loaded="UserControl_Loaded"
+             d:DesignHeight="1040" d:DesignWidth="240" Loaded="UserControl_Loaded"
              >
     <UserControl.Resources>
         <Style TargetType="ToggleButton" BasedOn="{StaticResource NeonToggleButton}"/>
         <Style TargetType="Button" BasedOn="{StaticResource NeonButton}"/>
     </UserControl.Resources>
-    <UniformGrid Columns="6" Rows="6">
-        <ToggleButton x:Name="PowerOptionButton" Content="파워모드" Click="PowerOptionButton_Click"/>
-        <ToggleButton x:Name="ClockButton" Content="시계" Click="TextButton_Click"/>
-        <ToggleButton x:Name="WeatherButton" Content="날씨" Click="TextButton_Click"/>
-        <ToggleButton x:Name="DiskDriveButton" Content="디스크     드라이브" Click="TextButton_Click"/>
-        <ToggleButton x:Name="StockButton" Content="주식" Click="TextButton_Click"/>
-        <ToggleButton x:Name="UnseButton" Content="운세" Click="TextButton_Click"/>
-        <ToggleButton x:Name="CheckListButton" Content="체크리스트" Click="WindowButton_Click"/>
-        <ToggleButton x:Name="CamoBarButton" Content="카모바" Click="WindowButton_Click"/>
-        <ToggleButton x:Name="GoButton" Content="바둑" Click="WindowButton_Click"/>
-        <ToggleButton x:Name="HardwarePriceButton" Content="하드웨어" Click="WindowButton_Click"/>
-        <ToggleButton x:Name="RandomHanjaButton" Content="랜덤한자" Click="WindowButton_Click"/>
-        <ToggleButton x:Name="RandomWordButton" Content="랜덤단어" Click="WindowButton_Click"/>
-        <ToggleButton x:Name="RNGButton" Content="난수" Click="WindowButton_Click"/>
-        <ToggleButton x:Name="TranslationButton" Content="번역" Click="WindowButton_Click"/>
-        <ToggleButton x:Name="WinSplitButton" Content="창분할" Click="WindowButton_Click"/>
-        <ToggleButton x:Name="ColorPickButton" Content="색상" Click="WindowButton_Click"/>
-        <ToggleButton x:Name="DictionaryButton" Content="사전" Click="WindowButton_Click"/>
-        <ToggleButton x:Name="RestartButton" Content="재시작" Click="RestartButton_Click"/>
-        <ToggleButton x:Name="ExitButton" Content="종료" Click="ExitButton_Click"/>
+    <UniformGrid Columns="3" Rows="13">
+        <ToggleButton Tag="001" x:Name="PowerOptionButton" Content="파워모드" Click="PowerOptionButton_Click"/>
+        <ToggleButton Tag="002" x:Name="RestartButton" Content="재시작" Click="RestartButton_Click"/>
+        <ToggleButton Tag="003" x:Name="ExitButton" Content="종료" Click="ExitButton_Click"/>
+        <Button Tag="004" x:Name="RefreshButton" Content="새로고침" Click="RefreshButton_Click"/>
+
+        <ToggleButton Tag="101" x:Name="ClockButton" Content="시계" Click="TextButton_Click"/>
+        <ToggleButton Tag="102" x:Name="WeatherButton" Content="날씨" Click="TextButton_Click"/>
+        <ToggleButton Tag="103" x:Name="DiskDriveButton" Content="디스크&#10;드라이브" Click="TextButton_Click"/>
+        <ToggleButton Tag="104" x:Name="StockButton" Content="주식" Click="TextButton_Click"/>
+        <ToggleButton Tag="105" x:Name="UnseButton" Content="운세" Click="TextButton_Click"/>
         
-        <Button x:Name="RefreshButton" Content="새로고침" Click="RefreshButton_Click"/>
-        <Button x:Name="RegistryButton" Content="레지스트리" Click="RegistryButton_Click"/>
-        <Button x:Name="NotepadButton" Content="메모장" Click="NotepadButton_Click"/>
-        <Button x:Name="TaskmgrButton" Content="작업관리자" Click="TaskmgrButton_Click"/>
-        <Button x:Name="EventViewerButton" Content="이벤트뷰어" Click="EventViewerButton_Click"/>
-        <Button x:Name="PasswordManagerButton" Content="패스워드   매니저" Click="PasswordManagerButton_Click"/>
-        <Button x:Name="MintConsoleButton" Content="민트콘솔" Click="MintConsoleButton_Click"/>
+        <ToggleButton Tag="201" x:Name="CheckListButton" Content="체크리스트" Click="WindowButton_Click"/>
+        <ToggleButton Tag="202" x:Name="CamoBarButton" Content="카모바" Click="WindowButton_Click"/>
+        <ToggleButton Tag="203" x:Name="GoButton" Content="바둑" Click="WindowButton_Click"/>
+        <ToggleButton Tag="204" x:Name="HardwarePriceButton" Content="하드웨어" Click="WindowButton_Click"/>
+        <ToggleButton Tag="205" x:Name="RandomHanjaButton" Content="랜덤한자" Click="WindowButton_Click"/>
+        <ToggleButton Tag="206" x:Name="RandomWordButton" Content="랜덤단어" Click="WindowButton_Click"/>
+        <ToggleButton Tag="207" x:Name="RNGButton" Content="난수" Click="WindowButton_Click"/>
+        <ToggleButton Tag="208" x:Name="TranslationButton" Content="번역" Click="WindowButton_Click"/>
+        <ToggleButton Tag="209" x:Name="WinSplitButton" Content="창분할" Click="WindowButton_Click"/>
+        <ToggleButton Tag="210" x:Name="ColorPickButton" Content="색상" Click="WindowButton_Click"/>
+        <ToggleButton Tag="211" x:Name="DictionaryButton" Content="사전" Click="WindowButton_Click"/>
+        
+        <Button Tag="301" x:Name="RegistryButton" Content="레지스트리" Click="RegistryButton_Click"/>
+        <Button Tag="302" x:Name="NotepadButton" Content="메모장" Click="NotepadButton_Click"/>
+        <Button Tag="303" x:Name="TaskmgrButton" Content="작업관리자" Click="TaskmgrButton_Click"/>
+        <Button Tag="304" x:Name="EventViewerButton" Content="이벤트뷰어" Click="EventViewerButton_Click"/>
+        <Button Tag="305" x:Name="PasswordManagerButton" Content="패스워드&#10;매니저" Click="PasswordManagerButton_Click"/>
+        <Button Tag="306" x:Name="MintConsoleButton" Content="민트콘솔" Click="MintConsoleButton_Click"/>
     </UniformGrid>
 </UserControl>
