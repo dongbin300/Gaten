@@ -44,7 +44,7 @@ namespace Gaten.Windows.Console
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             consoleManager = new ConsoleManager(panel);
-            consoleManager.Input("Main", Command);
+            consoleManager.Input(consoleManager.BaseCamp, Command);
         }
 
         private void Command(object sender, KeyEventArgs e)
@@ -82,7 +82,7 @@ namespace Gaten.Windows.Console
                     currentPanel.IsEnabled = false;
                     currentTextBox.IsEnabled = false;
 
-                    consoleManager.Input("Main", Command);
+                    consoleManager.Input(consoleManager.BaseCamp, Command);
                     break;
             }
         }

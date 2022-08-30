@@ -15,6 +15,7 @@ namespace Gaten.Windows.Console
         private TextBlock blocks = default!;
         private List<string> inputLogs = new();
         private int inputPointer;
+        public string BaseCamp = "Main";
 
         public ConsoleManager(StackPanel mainPanel)
         {
@@ -29,7 +30,7 @@ namespace Gaten.Windows.Console
 
         public string GetInputUp()
         {
-            if(inputLogs.Count == 0)
+            if (inputLogs.Count == 0)
             {
                 return "";
             }
@@ -60,7 +61,7 @@ namespace Gaten.Windows.Console
                 };
             }
 
-            Run run = new Run()
+            var run = new Run()
             {
                 Text = text
             };
@@ -78,7 +79,7 @@ namespace Gaten.Windows.Console
                 };
             }
 
-            Run run = new Run()
+            var run = new Run()
             {
                 Text = text,
                 Foreground = foreground
@@ -97,7 +98,7 @@ namespace Gaten.Windows.Console
                 };
             }
 
-            Run run = new Run()
+            var run = new Run()
             {
                 Text = text,
                 Foreground = foreground,
@@ -147,7 +148,7 @@ namespace Gaten.Windows.Console
 
         public void Input(string text, KeyEventHandler handler)
         {
-            StackPanel panel = new StackPanel()
+            var panel = new StackPanel()
             {
                 Orientation = Orientation.Horizontal
             };
@@ -157,7 +158,7 @@ namespace Gaten.Windows.Console
                 TextWrapping = TextWrapping.Wrap
             };
             panel.Children.Add(textBlock);
-            ConsoleCaretTextBox textBox = new ConsoleCaretTextBox()
+            var textBox = new ConsoleCaretTextBox()
             {
                 Height = 20
             };

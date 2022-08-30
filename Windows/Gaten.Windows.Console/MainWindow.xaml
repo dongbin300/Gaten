@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaten.Windows.Console"
         mc:Ignorable="d"
+        WindowState="Maximized" WindowStyle="None"
         Title="MintChoco Console" Height="600" Width="800" 
         Background="#151515" Foreground="#ddd"
         Loaded="Window_Loaded">
