@@ -1,8 +1,8 @@
 ﻿using Gaten.Net.Network.MySql;
 
-namespace Gaten.Net.Stock
+namespace Gaten.Net.Stock.STUV
 {
-    public class STUVStockItem
+    public class StuvStockItem
     {
         /// <summary>
         /// 종목코드
@@ -41,7 +41,7 @@ namespace Gaten.Net.Stock
 
         public TransactionInfo LatestTransaction => GetLatestTransactionDataFromDb();
 
-        public STUVStockItem(string code, string name)
+        public StuvStockItem(string code, string name)
         {
             Code = code;
             Name = name;

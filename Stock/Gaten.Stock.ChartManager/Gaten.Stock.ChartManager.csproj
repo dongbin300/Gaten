@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Net\Gaten.Net.Stock\Gaten.Net.Stock.csproj" />
     <ProjectReference Include="..\..\Net\Gaten.Net.Wpf\Gaten.Net.Wpf.csproj" />
     <ProjectReference Include="..\..\Net\Gaten.Net\Gaten.Net.csproj" />
     <ProjectReference Include="..\..\Net\Stock\Gaten.Net.Stock.MercuryTradingModel\Gaten.Net.Stock.MercuryTradingModel.csproj" />

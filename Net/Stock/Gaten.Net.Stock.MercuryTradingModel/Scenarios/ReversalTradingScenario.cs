@@ -49,7 +49,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Scenarios
 
         public void Init()
         {
-            var trigger = new Trigger();
+            //var trigger = new Trigger();
             var condition1 = new Condition("5m").Max(200);
             var condition2 = new Condition("5m").Contrast(CandleProperty.Close, Comparison.GreaterThan, 1);
             var condition3 = new Condition("5m").Contrast(CandleProperty.Volume, Comparison.GreaterThan, 200);

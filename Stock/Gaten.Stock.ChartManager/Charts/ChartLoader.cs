@@ -1,6 +1,7 @@
 ﻿using Binance.Net.Enums;
 
 using Gaten.Net.IO;
+using Gaten.Net.Stock.Charts;
 using Gaten.Net.Wpf.Models;
 using Gaten.Stock.ChartManager.Apis;
 using Gaten.Stock.ChartManager.Indicators;
@@ -66,7 +67,7 @@ namespace Gaten.Stock.ChartManager.Charts
                         quotes.GetMacd(12, 26, 9).ToList(),
                         quotes.GetBollingerBands(20, 3).ToList(),
                         quotes.GetBollingerBands(20, 0.5).ToList(),
-                        quotes.GetRi().ToList()
+                        quotes.GetRi(14).ToList()
                     ));
                 });
 

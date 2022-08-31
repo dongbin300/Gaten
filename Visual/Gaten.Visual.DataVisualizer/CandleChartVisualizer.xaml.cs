@@ -1,6 +1,5 @@
 ﻿using Gaten.Net.IO;
-using Gaten.Net.Stock;
-
+using Gaten.Net.Stock.Charts;
 using System;
 using System.Collections.Generic;
 using System.Data;

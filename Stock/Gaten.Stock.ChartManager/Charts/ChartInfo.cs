@@ -1,4 +1,5 @@
-﻿using Gaten.Stock.ChartManager.Indicators;
+﻿using Gaten.Net.Stock.Charts;
+using Gaten.Stock.ChartManager.Indicators;
 
 using Skender.Stock.Indicators;
 

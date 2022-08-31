@@ -1,6 +1,6 @@
 ﻿using Binance.Net.Enums;
 
-using Gaten.Stock.ChartManager.Charts;
+using Gaten.Net.Stock.Charts;
 
 using Skender.Stock.Indicators;
 

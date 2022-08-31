@@ -5,6 +5,7 @@ using Binance.Net.Objects;
 using CryptoExchange.Net.Authentication;
 
 using Gaten.Net.IO;
+using Gaten.Net.Stock.Charts;
 using Gaten.Stock.ChartManager.Charts;
 
 using System;

@@ -1,4 +1,4 @@
-﻿namespace Gaten.Net.Stock
+﻿namespace Gaten.Net.Stock.STUV
 {
     public class TransactionInfo
     {

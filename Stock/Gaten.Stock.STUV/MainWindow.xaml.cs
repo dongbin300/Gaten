@@ -1,5 +1,4 @@
-﻿using Gaten.Net.Stock;
-
+﻿using Gaten.Net.Stock.STUV;
 using System.Windows;
 
 namespace Gaten.Stock.STUV
