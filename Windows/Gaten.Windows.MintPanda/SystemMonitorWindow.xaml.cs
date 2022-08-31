@@ -1,6 +1,5 @@
 ﻿using Gaten.Net.Extensions;
 using Gaten.Net.Wpf;
-using Gaten.Windows.MintPanda.Utils;
 
 using System;
 using System.Diagnostics;
@@ -21,7 +20,7 @@ namespace Gaten.Windows.MintPanda
         {
             InitializeComponent();
 
-            Left = ScreenUtil.ScreenWidth - Width;
+            Left = WindowsSystem.ScreenWidth - Width;
             Top = 10;
 
             timer.Elapsed += Timer_Elapsed;

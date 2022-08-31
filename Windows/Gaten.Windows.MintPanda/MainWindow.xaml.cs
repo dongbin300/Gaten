@@ -1,6 +1,7 @@
 ﻿using Gaten.Net.Network;
 using Gaten.Net.Windows;
 using Gaten.Net.Windows.Forms;
+using Gaten.Net.Wpf;
 using Gaten.Windows.MintPanda.Utils;
 
 using System;
@@ -36,8 +37,8 @@ namespace Gaten.Windows.MintPanda
             Boot.RegisterStartProgram("MintPanda", Environment.ProcessPath ?? "");
             systemMonitorWindow.Show();
 
-            Left = ScreenUtil.ScreenWidth;
-            Top = ScreenUtil.ScreenHeight - ScreenUtil.TaskbarHeight - Height;
+            Left = WindowsSystem.ScreenWidth;
+            Top = WindowsSystem.ScreenNoTaskBarHeight - Height;
 
             hook.Start();
             worker = new Thread(new ThreadStart(InputWorker));
@@ -51,10 +52,10 @@ namespace Gaten.Windows.MintPanda
         {
             hook.MouseDown += (sender, e) =>
             {
-                if (e.X >= ScreenUtil.ScreenWidth - 30)
+                if (e.X >= WindowsSystem.ScreenWidth - 30)
                 {
                     var storyboard = new Storyboard();
-                    var doubleAnimation = new DoubleAnimation(ScreenUtil.ScreenWidth, ScreenUtil.ScreenWidth - Width, new Duration(new TimeSpan(0, 0, 0, 0, 350)));
+                    var doubleAnimation = new DoubleAnimation(WindowsSystem.ScreenWidth, WindowsSystem.ScreenWidth - Width, new Duration(new TimeSpan(0, 0, 0, 0, 350)));
                     Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("(Window.Left)"));
                     storyboard.Children.Add(doubleAnimation);
                     BeginStoryboard(storyboard);
@@ -91,7 +92,7 @@ namespace Gaten.Windows.MintPanda
         private void Window_MouseLeave(object sender, MouseEventArgs e)
         {
             var storyboard = new Storyboard();
-            var doubleAnimation = new DoubleAnimation(ScreenUtil.ScreenWidth - Width, ScreenUtil.ScreenWidth, new Duration(new TimeSpan(0, 0, 0, 0, 350)));
+            var doubleAnimation = new DoubleAnimation(WindowsSystem.ScreenWidth - Width, WindowsSystem.ScreenWidth, new Duration(new TimeSpan(0, 0, 0, 0, 350)));
             Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("(Window.Left)"));
             storyboard.Children.Add(doubleAnimation);
             BeginStoryboard(storyboard);

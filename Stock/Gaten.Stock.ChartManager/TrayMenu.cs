@@ -1,4 +1,5 @@
-﻿using Gaten.Net.IO;
+﻿using Gaten.Net.Diagnostics;
+using Gaten.Net.IO;
 using Gaten.Net.Wpf;
 using Gaten.Net.Wpf.Models;
 using Gaten.Stock.ChartManager.Apis;
@@ -8,32 +9,24 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using System.Runtime.Remoting.Channels.
 
 namespace Gaten.Stock.ChartManager
 {
     internal class TrayMenu
     {
-        /// <summary>
-        /// 트레이 아이콘
-        /// </summary>
         private NotifyIcon trayIcon;
-
-        /// <summary>
-        /// 트레이 메뉴
-        /// </summary>
         private static ContextMenuStrip menuStrip = new();
-
         private static ProgressView progressView = new();
-
         private Stream iconStream = System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/ChartManager;component/Resources/chart2.ico")).Stream;
 
         public TrayMenu()
         {
-            trayIcon = new NotifyIcon();
-            trayIcon.Icon = new Icon(iconStream);
-            trayIcon.Text = $"Chart Manager By Gaten";
-            trayIcon.Visible = true;
+            trayIcon = new NotifyIcon
+            {
+                Icon = new Icon(iconStream),
+                Text = $"Chart Manager By Gaten",
+                Visible = true
+            };
 
             progressView = new ProgressView();
             progressView.Hide();
@@ -50,7 +43,6 @@ namespace Gaten.Stock.ChartManager
             menuStrip.Items.Add(new ToolStripMenuItem("Binance 1분봉 데이터 수집", null, new EventHandler(GetBinanceCandleDataEvent)));
             menuStrip.Items.Add(new ToolStripSeparator());
             menuStrip.Items.Add(new ToolStripMenuItem("Binance 1일봉 데이터 추출", null, new EventHandler(Extract1DCandleEvent)));
-            menuStrip.Items.Add(new ToolStripMenuItem("IPC Test", null, new EventHandler(IpcTestEvent)));
             menuStrip.Items.Add(new ToolStripSeparator());
             var symbols = LocalStorageApi.GetSymbols();
             var majorSymbols = new string[]
@@ -70,14 +62,6 @@ namespace Gaten.Stock.ChartManager
 
             menuStrip.Items[0].Enabled = false;
             trayIcon.ContextMenuStrip = menuStrip;
-        }
-
-        public static void IpcTestEvent(object? sender, EventArgs e)
-        {
-            IpcServerChannel svr = new IpcServerChannel("remote");
-            ChannelServices.RegisterChannel(svr, false);
-            RemotingConfiguration.RegisterWellKnownServiceType(typeof(RemoteObject), "Cnt", WellKnownObjectMode.Singleton);
-            Console.WriteLine("Listening on " + svr.GetChannelUri());
         }
 
         public static void Extract1DCandleEvent(object? sender, EventArgs e)
@@ -120,6 +104,8 @@ namespace Gaten.Stock.ChartManager
                     symbols);
 
                 MessageBox.Show("바이낸스 심볼 데이터 수집 완료");
+
+                GProcess.Start(GResource.BinanceFuturesDataPath);
             }
             catch (Exception ex)
             {

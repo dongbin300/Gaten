@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Gaten.Net.Wpf;
+
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Gaten.Stock.ChartManager
 {
@@ -22,6 +12,10 @@ namespace Gaten.Stock.ChartManager
         public ProgressView()
         {
             InitializeComponent();
+            Top = 0;
+            Left = 0;
+            Width = WindowsSystem.ScreenWidth;
+            Height = 20;
         }
     }
 }

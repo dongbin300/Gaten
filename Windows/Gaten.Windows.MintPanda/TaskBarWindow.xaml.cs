@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Gaten.Net.Wpf;
+
+using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -17,7 +19,7 @@ namespace Gaten.Windows.MintPanda
             TaskBarImage.Source = image;
 
             Left = 0;
-            Top = SystemParameters.PrimaryScreenHeight - image.Height;
+            Top = WindowsSystem.ScreenHeight - image.Height;
             Width = image.Width;
             Height = image.Height;
         }

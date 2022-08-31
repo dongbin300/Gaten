@@ -6,9 +6,10 @@
         xmlns:local="clr-namespace:Gaten.Stock.ChartManager"
         xmlns:wpf="clr-namespace:Gaten.Net.Wpf.Controls;assembly=Gaten.Net.Wpf"
         mc:Ignorable="d"
-        WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        Topmost="True"
+        WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="Manual"
         Title="ProgressView" Height="25" Width="1280">
     <Grid>
-        <wpf:TextProgressBar x:Name="ProgressBar" Background="#25A0DA" />
+        <wpf:TextProgressBar x:Name="ProgressBar" Background="#25A0DA" FontSize="13" />
     </Grid>
 </Window>

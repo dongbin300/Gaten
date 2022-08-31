@@ -1,4 +1,5 @@
-﻿using Gaten.Windows.MintPanda.Utils;
+﻿using Gaten.Net.Wpf;
+using Gaten.Windows.MintPanda.Utils;
 
 using System;
 using System.Collections.Generic;
@@ -26,8 +27,8 @@ namespace Gaten.Windows.MintPanda
             InitializeComponent();
 
             Left = 0;
-            Top = ScreenUtil.ScreenHeight - ScreenUtil.TaskbarHeight - 30;
-            Width = ScreenUtil.ScreenWidth;
+            Top = WindowsSystem.ScreenNoTaskBarHeight - 30;
+            Width = WindowsSystem.ScreenWidth;
             Height = 30;
         }
 

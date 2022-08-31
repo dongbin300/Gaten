@@ -7,6 +7,7 @@
     <UseWPF>true</UseWPF>
 	  <UseWindowsForms>true</UseWindowsForms>
 	  <AssemblyName>ChartManager</AssemblyName>
+	  <ApplicationIcon>Resources\chart2.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

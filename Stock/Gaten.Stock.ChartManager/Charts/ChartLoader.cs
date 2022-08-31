@@ -1,10 +1,9 @@
 ﻿using Binance.Net.Enums;
 
-using CryptoExchange.Net.CommonObjects;
-
 using Gaten.Net.IO;
 using Gaten.Net.Wpf.Models;
 using Gaten.Stock.ChartManager.Apis;
+using Gaten.Stock.ChartManager.Indicators;
 using Gaten.Stock.ChartManager.Utils;
 
 using Skender.Stock.Indicators;
@@ -13,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows;
 
@@ -22,7 +20,6 @@ namespace Gaten.Stock.ChartManager.Charts
     internal class ChartLoader
     {
         public static Dictionary<string, List<ChartInfo>>? Charts = new();
-        public static List<CustomChartInfo>? CustomCharts = new();
         public static ChartInfo? GetChart(string symbol, DateTime date) => Charts?[symbol].Find(c => c.Date.Equals(date));
 
         public static void Init(string symbol, KlineInterval candleInterval, Worker worker)
@@ -68,11 +65,9 @@ namespace Gaten.Stock.ChartManager.Charts
                         quotes.GetRsi(14).ToList(),
                         quotes.GetMacd(12, 26, 9).ToList(),
                         quotes.GetBollingerBands(20, 3).ToList(),
-                        quotes.GetBollingerBands(20, 0.5).ToList()
+                        quotes.GetBollingerBands(20, 0.5).ToList(),
+                        quotes.GetRi().ToList()
                     ));
-
-                    var customChartInfo = new CustomChartInfo(date, quotes);
-                    CustomCharts?.Add(customChartInfo);
                 });
 
                 Charts?.Add(symbol, chartInfo);
@@ -87,46 +82,32 @@ namespace Gaten.Stock.ChartManager.Charts
         {
             try
             {
-                string intervalString = candleInterval switch
-                {
-                    KlineInterval.OneMinute => "1m",
-                    KlineInterval.ThreeMinutes => "3m",
-                    KlineInterval.FiveMinutes => "5m",
-                    KlineInterval.FifteenMinutes => "15m",
-                    KlineInterval.ThirtyMinutes => "30m",
-                    KlineInterval.OneHour => "1H",
-                    KlineInterval.TwoHour => "2H",
-                    KlineInterval.FourHour => "4H",
-                    KlineInterval.SixHour => "6H",
-                    KlineInterval.EightHour => "8H",
-                    KlineInterval.TwelveHour => "12H",
-                    KlineInterval.OneDay => "1D",
-                    _ => "1m"
-                };
-
-                var getStartTime = candleInterval == KlineInterval.OneDay ? (File.Exists(GResource.BinanceFuturesDataPath.Down("1D", "BTCUSDT.csv")) ?SymbolUtil.GetEndDateOf1D("BTCUSDT") : SymbolUtil.GetStartDate("BTCUSDT")) : SymbolUtil.GetEndDate("BTCUSDT");
+                string intervalString = candleInterval.ToIntervalString();
+                var startTimeTemp = candleInterval == KlineInterval.OneDay ? (File.Exists(GResource.BinanceFuturesDataPath.Down("1D", "BTCUSDT.csv")) ? SymbolUtil.GetEndDateOf1D("BTCUSDT") : SymbolUtil.GetStartDate("BTCUSDT")) : SymbolUtil.GetEndDate("BTCUSDT");
                 var symbols = LocalStorageApi.GetSymbols();
-                var dayCount = (DateTime.Today - getStartTime).Days + 1;
-                var csvFileCount = symbols.Count * dayCount;
+                var dayCountTemp = (DateTime.Today - startTimeTemp).Days + 1;
+                var csvFileCount = symbols.Count * dayCountTemp;
                 worker.SetProgressBar(0, csvFileCount);
 
                 int s = 0;
-                foreach(var symbol in symbols)
+                foreach (var symbol in symbols)
                 {
+                    var startTime = candleInterval == KlineInterval.OneDay ? (File.Exists(GResource.BinanceFuturesDataPath.Down("1D", $"{symbol}.csv")) ? SymbolUtil.GetEndDateOf1D(symbol) : SymbolUtil.GetStartDate(symbol)) : SymbolUtil.GetEndDate(symbol);
+                    var dayCount = (DateTime.Today - startTime).Days + 1;
                     var chartInfo = new List<ChartInfo>();
                     var path = GResource.BinanceFuturesDataPath.Down(intervalString, $"{symbol}.csv");
-                    worker.Progress(++s);
 
                     var newData = new List<string>();
                     try
                     {
                         for (int i = 0; i < dayCount; i++)
                         {
-                            var date = getStartTime.AddDays(i);
+                            var date = startTime.AddDays(i);
                             var inputFileName = GResource.BinanceFuturesDataPath.Down("1m", symbol, $"{symbol}_{date:yyyy-MM-dd}.csv");
                             var data = File.ReadAllLines(inputFileName);
                             var candles = new List<Candle>();
 
+                            worker.Progress(++s);
                             worker.ProgressText($"{symbol}, {i} / {dayCount}");
 
                             foreach (var d in data)
@@ -159,10 +140,18 @@ namespace Gaten.Stock.ChartManager.Charts
                     catch (FileNotFoundException)
                     {
                     }
+                    GFile.TryCreate(path);
                     var prevData = GFile.ReadToArray(path);
-                    var currentData = prevData.Take(prevData.Length - 1).ToList();
-                    currentData.AddRange(newData);
-                    GFile.WriteByArray(path, currentData);
+                    if (prevData.Length < 1)
+                    {
+                        GFile.WriteByArray(path, newData);
+                    }
+                    else
+                    {
+                        var currentData = prevData.Take(prevData.Length - 1).ToList();
+                        currentData.AddRange(newData);
+                        GFile.WriteByArray(path, currentData);
+                    }
                 }
             }
             catch (FileNotFoundException)

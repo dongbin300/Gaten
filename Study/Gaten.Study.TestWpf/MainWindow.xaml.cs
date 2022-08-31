@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using Gaten.Net.Wpf;
+
+using System.Windows;
 
 namespace Gaten.Study.TestWpf
 {
@@ -10,6 +12,11 @@ namespace Gaten.Study.TestWpf
         public MainWindow()
         {
             InitializeComponent();
+
+            var a1 = WindowsSystem.ScreenWidth;
+            var a2 = WindowsSystem.ScreenHeight;
+            var a3 = WindowsSystem.ScreenNoTaskBarHeight;
+            var a4 = WindowsSystem.TaskBarHeight;
         }
     }
 }

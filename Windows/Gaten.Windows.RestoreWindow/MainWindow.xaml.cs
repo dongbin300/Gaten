@@ -1,6 +1,7 @@
 ﻿using Gaten.Net.Collections;
 using Gaten.Net.Diagnostics;
 using Gaten.Net.Windows;
+using Gaten.Net.Wpf;
 
 using System;
 using System.Collections.Generic;
@@ -18,8 +19,6 @@ namespace Gaten.Windows.RestoreWindow
     /// </summary>
     public partial class MainWindow : Window
     {
-        double screenWidth = SystemParameters.PrimaryScreenWidth;
-        double screenHeight = SystemParameters.PrimaryScreenHeight;
         List<ProcessWindow> processWindows = new();
 
         public MainWindow()
@@ -38,7 +37,7 @@ namespace Gaten.Windows.RestoreWindow
                 {
                     var placement = WinApi.GetWindowPlacement(process.MainWindowHandle);
 
-                    if (placement.showCmd == WinApi.ShowWindowCommands.Normal && placement.rcNormalPosition.X == 0 && placement.rcNormalPosition.Y == 0 && placement.rcNormalPosition.Width == screenWidth && placement.rcNormalPosition.Height == screenHeight)
+                    if (placement.showCmd == WinApi.ShowWindowCommands.Normal && placement.rcNormalPosition.X == 0 && placement.rcNormalPosition.Y == 0 && placement.rcNormalPosition.Width == WindowsSystem.ScreenWidth && placement.rcNormalPosition.Height == WindowsSystem.ScreenHeight)
                     {
                         continue;
                     }

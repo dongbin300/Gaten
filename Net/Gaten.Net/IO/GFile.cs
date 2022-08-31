@@ -11,6 +11,18 @@ namespace Gaten.Net.IO
         public static string DictionarySeparator { get; set; } = ":";
         public static Encoding Encoding { get; set;} = Encoding.UTF8;
 
+        public static bool Exists(string path)
+        {
+            return SystemFile.Exists(path);
+        }
+
+        public static void TryCreate(string path)
+        {
+            if (!Exists(path))
+            {
+                Write(path, string.Empty);
+            }
+        }
 
         public static string Read(string path)
         {

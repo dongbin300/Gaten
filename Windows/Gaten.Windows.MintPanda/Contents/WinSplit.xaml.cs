@@ -1,4 +1,5 @@
 ﻿using Gaten.Net.Windows;
+using Gaten.Net.Wpf;
 
 using System;
 using System.Collections.Generic;
@@ -44,15 +45,15 @@ namespace Gaten.Windows.MintPanda.Contents
 
         public static void Split(int widthCount, int heightCount, bool taskBarNone, bool allProcess, string processName = "")
         {
-            Rectangle screenRectangle = new Rectangle();
+            var screenRectangle = new Rectangle();
 
             if (taskBarNone)
             {
-                screenRectangle.Height = SystemParameters.PrimaryScreenHeight - TaskBarHeight;
+                screenRectangle.Height = WindowsSystem.ScreenNoTaskBarHeight;
             }
             else
             {
-                screenRectangle.Height = SystemParameters.PrimaryScreenHeight;
+                screenRectangle.Height = WindowsSystem.ScreenHeight;
             }
 
             var appWidth = screenRectangle.Width / widthCount;

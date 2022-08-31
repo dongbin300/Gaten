@@ -1,4 +1,6 @@
-﻿using Skender.Stock.Indicators;
+﻿using Gaten.Stock.ChartManager.Indicators;
+
+using Skender.Stock.Indicators;
 
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,8 @@ namespace Gaten.Stock.ChartManager.Charts
          IList<RsiResult> RSI,
          IList<MacdResult> MACD,
          IList<BollingerBandsResult> BollingerBands,
-         IList<BollingerBandsResult> BollingerBands2
+         IList<BollingerBandsResult> BollingerBands2,
+         IList<RiResult> RI
      )
     {
         /// <summary>
