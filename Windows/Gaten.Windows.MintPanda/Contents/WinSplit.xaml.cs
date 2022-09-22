@@ -1,11 +1,12 @@
-﻿using Gaten.Net.Windows;
+﻿using Gaten.Net.Diagnostics;
+using Gaten.Net.Windows;
 using Gaten.Net.Wpf;
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shapes;
@@ -31,156 +32,243 @@ namespace Gaten.Windows.MintPanda.Contents
 
         public WinSplit()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(WinSplit), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            try
             {
-                DragMove();
+                if (e.ChangedButton == MouseButton.Left)
+                {
+                    DragMove();
+                }
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(WinSplit), MethodBase.GetCurrentMethod()?.Name, ex);
             }
         }
 
 
         public static void Split(int widthCount, int heightCount, bool taskBarNone, bool allProcess, string processName = "")
         {
-            var screenRectangle = new Rectangle();
-
-            if (taskBarNone)
+            try
             {
-                screenRectangle.Height = WindowsSystem.ScreenNoTaskBarHeight;
-            }
-            else
-            {
-                screenRectangle.Height = WindowsSystem.ScreenHeight;
-            }
+                var screenRectangle = new Rectangle();
 
-            var appWidth = screenRectangle.Width / widthCount;
-            var appHeight = screenRectangle.Height / heightCount;
-
-            var processes = allProcess ? GetWindowProcesses() : GetWindowProcesses(processName);
-
-            for (int i = 0; i < widthCount * heightCount; i++)
-            {
-                if (i >= processes.Count)
+                if (taskBarNone)
                 {
-                    break;
+                    screenRectangle.Height = WindowsSystem.ScreenNoTaskBarHeight;
+                }
+                else
+                {
+                    screenRectangle.Height = WindowsSystem.ScreenHeight;
                 }
 
-                IntPtr handle = processes[i].MainWindowHandle;
+                var appWidth = screenRectangle.Width / widthCount;
+                var appHeight = screenRectangle.Height / heightCount;
 
-                if (handle != IntPtr.Zero)
+                var processes = allProcess ? GetWindowProcesses() : GetWindowProcesses(processName);
+
+                for (int i = 0; i < widthCount * heightCount; i++)
                 {
-                    WinApi.MoveWindow(handle, (int)(appWidth * (i % widthCount)), (int)(appHeight * (i / heightCount)), (int)appWidth, (int)appHeight, true);
+                    if (i >= processes.Count)
+                    {
+                        break;
+                    }
+
+                    IntPtr handle = processes[i].MainWindowHandle;
+
+                    if (handle != IntPtr.Zero)
+                    {
+                        WinApi.MoveWindow(handle, (int)(appWidth * (i % widthCount)), (int)(appHeight * (i / heightCount)), (int)appWidth, (int)appHeight, true);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(WinSplit), MethodBase.GetCurrentMethod()?.Name, ex);
             }
         }
 
         public static void SuperKill(bool allProcess, string processName = "")
         {
-            var processes = allProcess ? GetWindowProcesses() : GetWindowProcesses(processName);
-
-            foreach (Process process in processes)
+            try
             {
-                process.Kill();
+                var processes = allProcess ? GetWindowProcesses() : GetWindowProcesses(processName);
+
+                foreach (Process process in processes)
+                {
+                    process.Kill();
+                }
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(WinSplit), MethodBase.GetCurrentMethod()?.Name, ex);
             }
         }
 
         static List<Process> GetWindowProcesses(string processName = "")
         {
-            List<Process> result = new();
-            var processes = processName == "" ? Process.GetProcesses() : Process.GetProcessesByName(processName);
-
-            foreach (Process process in processes)
+            try
             {
-                if (process.MainWindowHandle != IntPtr.Zero && !string.IsNullOrEmpty(process.MainWindowTitle) && process.Responding)
+                List<Process> result = new();
+                var processes = processName == "" ? Process.GetProcesses() : Process.GetProcessesByName(processName);
+
+                foreach (Process process in processes)
                 {
-                    result.Add(process);
+                    if (process.MainWindowHandle != IntPtr.Zero && !string.IsNullOrEmpty(process.MainWindowTitle) && process.Responding)
+                    {
+                        result.Add(process);
+                    }
                 }
+                return result;
             }
-            return result;
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(WinSplit), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
+
+            return default!;
         }
 
         public static List<string> GetProcessList()
         {
-            List<string> result = new();
-
-            var processes = GetWindowProcesses();
-
-            foreach (Process process in processes)
+            try
             {
-                string processName = process.ProcessName;
+                List<string> result = new();
 
-                if (blacklist.Contains(processName.ToLower()) || result.Contains(processName))
+                var processes = GetWindowProcesses();
+
+                foreach (Process process in processes)
                 {
-                    continue;
+                    string processName = process.ProcessName;
+
+                    if (blacklist.Contains(processName.ToLower()) || result.Contains(processName))
+                    {
+                        continue;
+                    }
+
+                    result.Add(processName);
                 }
 
-                result.Add(processName);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(WinSplit), MethodBase.GetCurrentMethod()?.Name, ex);
             }
 
-            return result;
+            return default!;
         }
 
         public void RefreshProcessList()
         {
-            var processes = GetProcessList();
-            ProcessComboBox.Items.Clear();
-            foreach (var process in processes)
+            try
             {
-                ProcessComboBox.Items.Add(process);
-            }
+                var processes = GetProcessList();
+                ProcessComboBox.Items.Clear();
+                foreach (var process in processes)
+                {
+                    ProcessComboBox.Items.Add(process);
+                }
 
-            if (ProcessComboBox.Items.Count > 0)
+                if (ProcessComboBox.Items.Count > 0)
+                {
+                    ProcessComboBox.SelectedIndex = 0;
+                }
+            }
+            catch (Exception ex)
             {
-                ProcessComboBox.SelectedIndex = 0;
+                GLogger.Log(nameof(WinSplit), MethodBase.GetCurrentMethod()?.Name, ex);
             }
         }
 
         private void SplitButton_Click(object sender, RoutedEventArgs e)
         {
-            var processName = AllProcessCheckBox.IsChecked ?? true ? "" : ProcessComboBox.Text;
+            try
+            {
+                var processName = AllProcessCheckBox.IsChecked ?? true ? "" : ProcessComboBox.Text;
 
-            Split(
-                int.Parse(WinSplitHComboBox.Text),
-                int.Parse(WinSplitVComboBox.Text),
-                ExceptTaskBarCheckBox.IsChecked ?? true,
-                AllProcessCheckBox.IsChecked ?? true,
-                processName);
-
+                Split(
+                    int.Parse(WinSplitHComboBox.Text),
+                    int.Parse(WinSplitVComboBox.Text),
+                    ExceptTaskBarCheckBox.IsChecked ?? true,
+                    AllProcessCheckBox.IsChecked ?? true,
+                    processName);
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(WinSplit), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void KillButton_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(ProcessComboBox.Text))
+            try
             {
-                return;
-            }
+                if (string.IsNullOrEmpty(ProcessComboBox.Text))
+                {
+                    return;
+                }
 
-            if (MessageBox.Show(this, "정말 프로세스를 종료하시겠습니까?", "경고", MessageBoxButton.YesNoCancel) != MessageBoxResult.Yes)
+                if (MessageBox.Show(this, "정말 프로세스를 종료하시겠습니까?", "경고", MessageBoxButton.YesNoCancel) != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+
+                var processName = AllProcessCheckBox.IsChecked ?? true ? "" : ProcessComboBox.Text;
+
+                SuperKill(AllProcessCheckBox.IsChecked ?? true, processName);
+            }
+            catch (Exception ex)
             {
-                return;
+                GLogger.Log(nameof(WinSplit), MethodBase.GetCurrentMethod()?.Name, ex);
             }
-
-            var processName = AllProcessCheckBox.IsChecked ?? true ? "" : ProcessComboBox.Text;
-
-            SuperKill(AllProcessCheckBox.IsChecked ?? true, processName);
         }
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-            RefreshProcessList();
+            try
+            {
+                RefreshProcessList();
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(WinSplit), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void AllProcessCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            ProcessComboBox.IsEnabled = false;
+            try
+            {
+                ProcessComboBox.IsEnabled = false;
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(WinSplit), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void AllProcessCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            ProcessComboBox.IsEnabled = true;
+            try
+            {
+                ProcessComboBox.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(WinSplit), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
     }
 }

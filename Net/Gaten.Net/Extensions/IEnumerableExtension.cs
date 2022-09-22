@@ -1,6 +1,7 @@
 ﻿using Gaten.Net.IO;
 
 using System.Data;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Gaten.Net.Extensions
 {
@@ -38,8 +39,26 @@ namespace Gaten.Net.Extensions
 
         public static void SaveCsvFile<T>(this IEnumerable<T> obj, string path)
         {
-            var contents = string.Join(Environment.NewLine, obj);
-            GFile.Write(path, contents);
+            var alternativeColonChar = 'ꪪ';
+            var type = typeof(T);
+            var properties = type.GetProperties();
+            var contents = new List<string>
+            {
+                string.Join(',', properties.Select(x=>x.Name.Replace(',', alternativeColonChar)).ToArray())
+            };
+
+            foreach (var data in obj)
+            {
+                var values = new List<string>();
+                foreach (var property in properties)
+                {
+                    var value = type.GetProperty(property.Name)?.GetValue(data, null);
+                    values.Add(value.ToString().Replace(',', alternativeColonChar));
+                }
+                contents.Add(string.Join(',', values.ToArray()));
+            }
+
+            GFile.WriteByArray(path, contents);
         }
     }
 }

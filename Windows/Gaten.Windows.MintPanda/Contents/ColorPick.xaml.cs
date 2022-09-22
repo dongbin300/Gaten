@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Gaten.Net.Diagnostics;
+
+using System;
+using System.Reflection;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Gaten.Windows.MintPanda.Contents
 {
@@ -21,7 +13,14 @@ namespace Gaten.Windows.MintPanda.Contents
     {
         public ColorPick()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(ColorPick), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
     }
 }

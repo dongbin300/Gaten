@@ -1,6 +1,8 @@
 ﻿using Gaten.Net.Extensions;
 using Gaten.Net.Image;
 using Gaten.Net.Math;
+using Gaten.Net.Windows.KakaoTalk.Game.StockGame;
+using Gaten.Net.Windows.KakaoTalk.Quiz;
 
 using System.Drawing;
 using System.Runtime.Versioning;
@@ -26,6 +28,11 @@ namespace Gaten.Net.Windows.KakaoTalk.Chat
         private readonly static int ProfileSize = 43;
         private readonly static int ChatWidth = 25;
         private readonly static int ChatHeight = 30;
+
+        private static bool quizzing;
+        private static bool IsStockGameRefreshed;
+        private static bool IsStockGameRewarded;
+
         private static int ChatHeightMultiLine(int lineCount) => ChatHeight + (lineCount - 1) * 18;
 
         public static Bitmap ChatRoomImage { get; set; } = default!;
@@ -37,6 +44,8 @@ namespace Gaten.Net.Windows.KakaoTalk.Chat
 
         public static void Init(KakaoTalkChatWindow window)
         {
+            ChosungQuiz.Init();
+            KakaoTalkChatApi.SendChatMessage(window, StockGameEngine.Init());
             worker = new Thread(new ThreadStart(DoWork));
             Window = window;
         }
@@ -92,6 +101,14 @@ namespace Gaten.Net.Windows.KakaoTalk.Chat
                         case BotMode.Test:
                             AnalyzeCurrentChat();
                             break;
+
+                        case BotMode.Chosung:
+                            PlayChosungQuiz();
+                            break;
+
+                        case BotMode.StockGame:
+                            PlayStockGame();
+                            break;
                     }
 
                     Thread.Sleep(WorkInterval);
@@ -99,6 +116,420 @@ namespace Gaten.Net.Windows.KakaoTalk.Chat
                 catch
                 {
                 }
+            }
+        }
+
+        enum ActionType
+        {
+            RispiBuy,
+            RispiBuyFail,
+            RispiSell,
+            IrispiBuy,
+            IrispiBuyFail,
+            IrispiSell
+        }
+
+        private static string GmChatting(ActionType type)
+        {
+            int num = r.Next(5);
+
+            switch (type)
+            {
+                case ActionType.RispiBuy:
+                    return num switch
+                    {
+                        0 => "떡상 가즈아~",
+                        1 => "이제 오를거임 ㅅㄱ",
+                        2 => "내가 사는대로 따라 사면 무조건 수익임",
+                        3 => "상승장임 매수 ㄱㄱ",
+                        4 => "ㅇㅋ",
+                        _ => "떡상 가즈아~",
+                    };
+
+                case ActionType.RispiBuyFail:
+                    return num switch
+                    {
+                        0 => "ㅇㄴ 리스피 살 돈이없네",
+                        1 => "ㅇㄴ",
+                        2 => "리스피 좀 사게 기부좀",
+                        3 => "이런 좋은 기회에 돈이 없네",
+                        4 => "ㅇㅋ 일단 존버",
+                        _ => "ㅇㄴ 리스피 살 돈이없네",
+                    };
+
+                case ActionType.IrispiBuy:
+                    return num switch
+                    {
+                        0 => "인버스 사야지 ㅎㅎ",
+                        1 => "이제 폭락장임 빨리 파셈",
+                        2 => "인버스로 달달하게 이자나 땡겨야지",
+                        3 => "인덱스 이자 너무 달달한데",
+                        4 => "물량 다 던지셈",
+                        _ => "인버스 사야지 ㅎㅎ",
+                    };
+
+                case ActionType.IrispiBuyFail:
+                    return num switch
+                    {
+                        0 => "인버스 사고 싶은데 돈이 없네 ㅠ",
+                        1 => "ㅇㄴ 돈점",
+                        2 => "곧 폭락장인데 ㅠ",
+                        3 => "인버스 사고 싶었는데 흠",
+                        4 => "ㅇㅋ 일단 존버하고 본다",
+                        _ => "리스피 사고 싶은데 돈이 없네 ㅠ",
+                    };
+            }
+
+            return string.Empty;
+        }
+
+        public static void PlayStockGame()
+        {
+            string helpMessage = "잘못된 명령입니다.\n.도움말, .?를 입력하시면 도움말을 볼 수 있습니다.";
+            int RefreshIntervalMinute = 3;
+            int RewardIntervalHour = 1;
+
+            //if(DateTime.Now.Minute % RefreshIntervalMinute == 0 && DateTime.Now.Second == 10)
+            //{
+            //    if (StockGameEngine.MarketInterestDegree <= 45) // i리스피 매수, 리스피 매도
+            //    {
+            //        if (StockGameEngine.GmProfile.Assets.Find(x => x.Code.Equals("101"))._Quantity > 0)
+            //        {
+            //            KakaoTalkChatApi.SendChatMessage(Window, ".매도 101 1000");
+            //        }
+            //        else
+            //        {
+            //            if(StockGameEngine.GmProfile.Money >= StockGameEngine.GetCurrentIrispi() * 1000)
+            //            {
+            //                KakaoTalkChatApi.SendChatMessage(Window, GmChatting(ActionType.IrispiBuy));
+            //                KakaoTalkChatApi.SendChatMessage(Window, ".매수 102 1000");
+            //            }
+            //            else
+            //            {
+            //                KakaoTalkChatApi.SendChatMessage(Window, GmChatting(ActionType.IrispiBuyFail));
+            //            }
+            //        }
+            //    }
+            //    else if (StockGameEngine.MarketInterestDegree >= 55) // 리스피 매수, i리스피 매도
+            //    {
+            //        if (StockGameEngine.GmProfile.Assets.Find(x => x.Code.Equals("102"))._Quantity > 0)
+            //        {
+            //            KakaoTalkChatApi.SendChatMessage(Window, ".매도 102 1000");
+            //        }
+            //        else
+            //        {
+            //            if(StockGameEngine.GmProfile.Money >= StockGameEngine.GetCurrentRispi() * 1000)
+            //            {
+            //                KakaoTalkChatApi.SendChatMessage(Window, GmChatting(ActionType.RispiBuy));
+            //                KakaoTalkChatApi.SendChatMessage(Window, ".매수 101 1000");
+            //            }
+            //            else
+            //            {
+            //                KakaoTalkChatApi.SendChatMessage(Window, GmChatting(ActionType.RispiBuyFail));
+            //            }
+            //        }
+            //    }
+            //}
+
+            // 시장 업데이트
+            if (DateTime.Now.Minute % RefreshIntervalMinute == 0 && DateTime.Now.Second <= 5 && !IsStockGameRefreshed)
+            {
+                IsStockGameRefreshed = true;
+                StockGameEngine.GmProfile.Money *= 1.01M; // 운영자는 업데이트마다 1% 자동 수익
+                KakaoTalkChatApi.SendChatMessage(Window, StockGameEngine.Refresh());
+                StockGameEngine.Save();
+            }
+
+            if (DateTime.Now.Minute % RefreshIntervalMinute == 0 && DateTime.Now.Second > 6 && IsStockGameRefreshed)
+            {
+                IsStockGameRefreshed = false;
+            }
+
+            // 이자 지급 + 세금 납세
+            if (DateTime.Now.Hour % RewardIntervalHour == 0 && DateTime.Now.Minute == 0 && DateTime.Now.Second <= 5 && !IsStockGameRewarded)
+            {
+                IsStockGameRewarded = true;
+                KakaoTalkChatApi.SendChatMessage(Window, StockGameEngine.Reward());
+                KakaoTalkChatApi.SendChatMessage(Window, StockGameEngine.Tax());
+                StockGameEngine.Save();
+            }
+
+            if (DateTime.Now.Hour % RewardIntervalHour == 0 && DateTime.Now.Minute == 0 && DateTime.Now.Second > 6 && IsStockGameRewarded)
+            {
+                IsStockGameRewarded = false;
+            }
+
+            // 주말엔 매매 수수료 1%, 평일 2%
+            StockGameEngine.Fee = DateTime.Today.DayOfWeek == DayOfWeek.Saturday || DateTime.Today.DayOfWeek == DayOfWeek.Sunday ? 1.0M : 2.0M;
+
+            for (int i = pointerIndex; i < Messages.Count; i++, pointerIndex++)
+            {
+                if (i <= InitMessasgeCount)
+                {
+                    continue;
+                }
+                var message = Messages[i];
+                if (message.Type == MessageType.Talk && message.Content.StartsWith('.'))
+                {
+                    var data = message.Content.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                    switch (data[0])
+                    {
+                        case ".도움말":
+                        case ".?":
+                            KakaoTalkChatApi.SendChatMessage(Window, StockGameEngine.Help());
+                            break;
+
+                        case ".매매":
+                            KakaoTalkChatApi.SendChatMessage(Window, StockGameEngine.HelpTrading());
+                            break;
+
+                        case ".정보":
+                        case ".나":
+                        case ".":
+                            KakaoTalkChatApi.SendChatMessage(Window, StockGameEngine.Info(message.UserName));
+                            break;
+
+                        case ".계좌개설":
+                            KakaoTalkChatApi.SendChatMessage(Window, StockGameEngine.New(message.UserName));
+                            break;
+
+                        case ".현재":
+                            KakaoTalkChatApi.SendChatMessage(Window, StockGameEngine.Current());
+                            break;
+
+                        case ".랭킹":
+                            KakaoTalkChatApi.SendChatMessage(Window, StockGameEngine.AssetRanking());
+                            break;
+
+                        case ".매수":
+                            if (data.Length != 3)
+                            {
+                                pointerIndex++;
+                                KakaoTalkChatApi.SendChatMessage(Window, helpMessage);
+                                return;
+                            }
+                            if (data[2].EndsWith("."))
+                            {
+                                if (int.TryParse(data[2].AsSpan(0, data[2].Length - 1), out int percent))
+                                {
+                                    if (data[1].Length == 3)
+                                    {
+                                        string result = StockGameEngine.BuyIndexPer(data[1], message.UserName, percent);
+                                        KakaoTalkChatApi.SendChatMessage(Window, result);
+                                        StockGameEngine.Save();
+                                    }
+                                    else
+                                    {
+                                        string result = StockGameEngine.BuyPer(data[1], message.UserName, percent);
+                                        KakaoTalkChatApi.SendChatMessage(Window, result);
+                                        StockGameEngine.Save();
+                                    }
+                                }
+                                else
+                                {
+                                    pointerIndex++;
+                                    KakaoTalkChatApi.SendChatMessage(Window, helpMessage);
+                                    return;
+                                }
+                            }
+                            else if (decimal.TryParse(data[2], out decimal quantity))
+                            {
+                                quantity = System.Math.Round(quantity);
+
+                                if (data[1].Length == 3)
+                                {
+                                    string result = StockGameEngine.BuyIndex(data[1], message.UserName, quantity);
+                                    KakaoTalkChatApi.SendChatMessage(Window, result);
+                                    StockGameEngine.Save();
+                                }
+                                else
+                                {
+                                    string result = StockGameEngine.Buy(data[1], message.UserName, quantity);
+                                    KakaoTalkChatApi.SendChatMessage(Window, result);
+                                    StockGameEngine.Save();
+                                }
+                            }
+                            else
+                            {
+                                pointerIndex++;
+                                KakaoTalkChatApi.SendChatMessage(Window, helpMessage);
+                                return;
+                            }
+                            break;
+
+                        case ".ㅅ":
+                            if (data.Length != 2)
+                            {
+                                pointerIndex++;
+                                KakaoTalkChatApi.SendChatMessage(Window, helpMessage);
+                                return;
+                            }
+
+                            string buy_result = data[1].Length == 3 ?
+                                StockGameEngine.BuyIndexPer(data[1], message.UserName, 100) :
+                                StockGameEngine.BuyPer(data[1], message.UserName, 100);
+
+                            KakaoTalkChatApi.SendChatMessage(Window, buy_result);
+                            StockGameEngine.Save();
+                            break;
+
+                        case ".매도":
+                            if (data.Length != 3)
+                            {
+                                pointerIndex++;
+                                KakaoTalkChatApi.SendChatMessage(Window, helpMessage);
+                                return;
+                            }
+                            if (data[2].EndsWith("."))
+                            {
+                                if (int.TryParse(data[2].AsSpan(0, data[2].Length - 1), out int percent2))
+                                {
+                                    if (data[1].Length == 3)
+                                    {
+                                        string result = StockGameEngine.SellIndexPer(data[1], message.UserName, percent2);
+                                        KakaoTalkChatApi.SendChatMessage(Window, result);
+                                        StockGameEngine.Save();
+                                    }
+                                    else
+                                    {
+                                        string result = StockGameEngine.SellPer(data[1], message.UserName, percent2);
+                                        KakaoTalkChatApi.SendChatMessage(Window, result);
+                                        StockGameEngine.Save();
+                                    }
+                                }
+                                else
+                                {
+                                    pointerIndex++;
+                                    KakaoTalkChatApi.SendChatMessage(Window, helpMessage);
+                                    return;
+                                }
+                            }
+                            else if (decimal.TryParse(data[2], out decimal quantity2))
+                            {
+                                quantity2 = System.Math.Round(quantity2);
+
+                                if (data[1].Length == 3)
+                                {
+                                    string result = StockGameEngine.SellIndex(data[1], message.UserName, quantity2);
+                                    KakaoTalkChatApi.SendChatMessage(Window, result);
+                                    StockGameEngine.Save();
+                                }
+                                else
+                                {
+                                    string result = StockGameEngine.Sell(data[1], message.UserName, quantity2);
+                                    KakaoTalkChatApi.SendChatMessage(Window, result);
+                                    StockGameEngine.Save();
+                                }
+                            }
+                            else
+                            {
+                                pointerIndex++;
+                                KakaoTalkChatApi.SendChatMessage(Window, helpMessage);
+                                return;
+                            }
+                            break;
+
+                        case ".ㄷ":
+                            if (data.Length != 2)
+                            {
+                                pointerIndex++;
+                                KakaoTalkChatApi.SendChatMessage(Window, helpMessage);
+                                return;
+                            }
+
+                            string sell_result = data[1].Length == 3 ?
+                                StockGameEngine.SellIndexPer(data[1], message.UserName, 100) :
+                                StockGameEngine.SellPer(data[1], message.UserName, 100);
+
+                            KakaoTalkChatApi.SendChatMessage(Window, sell_result);
+                            StockGameEngine.Save();
+                            break;
+
+                        case ".롱":
+                            if (data.Length != 2)
+                            {
+                                pointerIndex++;
+                                KakaoTalkChatApi.SendChatMessage(Window, helpMessage);
+                                return;
+                            }
+                            if (data[1].EndsWith("."))
+                            {
+                                if (int.TryParse(data[1].AsSpan(0, data[1].Length - 1), out int percent3))
+                                {
+                                    var longResult = StockGameEngine.Long(message.UserName, percent3);
+                                    KakaoTalkChatApi.SendChatMessage(Window, longResult);
+                                }
+                            }
+                            else
+                            {
+                                pointerIndex++;
+                                KakaoTalkChatApi.SendChatMessage(Window, helpMessage);
+                                return;
+                            }
+                            break;
+
+                        case ".숏":
+                            if (data.Length != 2)
+                            {
+                                pointerIndex++;
+                                KakaoTalkChatApi.SendChatMessage(Window, helpMessage);
+                                return;
+                            }
+                            if (data[1].EndsWith("."))
+                            {
+                                if (int.TryParse(data[1].AsSpan(0, data[1].Length - 1), out int percent4))
+                                {
+                                    var shortResult = StockGameEngine.Short(message.UserName, percent4);
+                                    KakaoTalkChatApi.SendChatMessage(Window, shortResult);
+                                }
+                            }
+                            else
+                            {
+                                pointerIndex++;
+                                KakaoTalkChatApi.SendChatMessage(Window, helpMessage);
+                                return;
+                            }
+                            break;
+
+                        default:
+                            pointerIndex++;
+                            KakaoTalkChatApi.SendChatMessage(Window, helpMessage);
+                            return;
+                    }
+
+                }
+                Thread.Sleep(10);
+            }
+        }
+
+        public static void PlayChosungQuiz()
+        {
+            if (quizzing)
+            {
+                for (int i = pointerIndex; i < Messages.Count; i++, pointerIndex++)
+                {
+                    if (i <= InitMessasgeCount)
+                    {
+                        continue;
+                    }
+                    var message = Messages[i];
+                    if (message.Type == MessageType.Talk)
+                    {
+                        (var result, var answer) = ChosungQuiz.TryAnswer(message.Content);
+                        if (result)
+                        {
+                            quizzing = false;
+                            KakaoTalkChatApi.SendChatMessage(Window, $"정답자: {message.UserName}, 정답: {answer}");
+                        }
+                    }
+                    Thread.Sleep(10);
+                }
+            }
+            else
+            {
+                quizzing = true;
+                KakaoTalkChatApi.SendChatMessage(Window, $"{ChosungQuiz.GetQuestion()}");
             }
         }
 
@@ -151,13 +582,13 @@ namespace Gaten.Net.Windows.KakaoTalk.Chat
                     {
                         targetColor = chatColor.Split(10, i, targetColor.GetLength(0), targetColor.GetLength(1) + 5);
                         var target2Color = chatColor.Split(10, i + targetColor.GetLength(1), targetColor.GetLength(0), 3);
-            
+
                         int p = 1;
                         int lastChatHeight = ChatHeight;
                         // Vertical inspection
                         while (target2Color.Cast<Color>().Where(x => x.IsGrayColor(1) && x.IsBlack(50)).Count() < targetColor.Length * 0.05)
                         {
-                            if(i + ChatHeightMultiLine(p) + 3 > chatBitmap.Height)
+                            if (i + ChatHeightMultiLine(p) + 3 > chatBitmap.Height)
                             {
                                 lastChatHeight = chatBitmap.Height - i - 4;
                                 break;
@@ -166,7 +597,7 @@ namespace Gaten.Net.Windows.KakaoTalk.Chat
                             {
                                 lastChatHeight = ChatHeightMultiLine(p);
                             }
-                            
+
                             target2Color = chatColor.Split(10, i + lastChatHeight, target2Color.GetLength(0), 3);
                             p++;
                         }
@@ -253,7 +684,7 @@ namespace Gaten.Net.Windows.KakaoTalk.Chat
                 if (message.Type == MessageType.Talk && message.UserName != Window.MyNickname)
                 {
                     var builder = new StringBuilder();
-                    for(int j = 0; j < message.Content.Length; j++)
+                    for (int j = 0; j < message.Content.Length; j++)
                     {
                         builder.Append(message.Content[r.Next(message.Content.Length)].ToString());
                     }

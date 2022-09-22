@@ -6,6 +6,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.ExampleTradingModels
     public class FirstTradingModel : ITradingModel
     {
         public IList<IScenario> Scenarios { get; set; } = new List<IScenario>();
+        public string ScenarioNameInProgress { get; set; } = string.Empty;
 
         public FirstTradingModel()
         {

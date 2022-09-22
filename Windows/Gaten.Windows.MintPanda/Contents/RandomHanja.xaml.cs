@@ -1,6 +1,8 @@
-﻿using Gaten.Net.Network;
+﻿using Gaten.Net.Diagnostics;
+using Gaten.Net.Network;
 
 using System;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 
@@ -13,14 +15,28 @@ namespace Gaten.Windows.MintPanda.Contents
     {
         public RandomHanja()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(RandomHanja), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            try
             {
-                DragMove();
+                if (e.ChangedButton == MouseButton.Left)
+                {
+                    DragMove();
+                }
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(RandomHanja), MethodBase.GetCurrentMethod()?.Name, ex);
             }
         }
 
@@ -68,8 +84,9 @@ namespace Gaten.Windows.MintPanda.Contents
 
                 return (hanja, "U+" + hex + "   " + dok);
             }
-            catch
+            catch (Exception ex)
             {
+                GLogger.Log(nameof(RandomHanja), MethodBase.GetCurrentMethod()?.Name, ex);
             }
 
             return (string.Empty, string.Empty);
@@ -77,14 +94,28 @@ namespace Gaten.Windows.MintPanda.Contents
 
         public void Refresh()
         {
-            var a = Get();
-            RandomHanjaText.Text = a.Item1;
-            RandomHanjaMeanText.Text = a.Item2;
+            try
+            {
+                var a = Get();
+                RandomHanjaText.Text = a.Item1;
+                RandomHanjaMeanText.Text = a.Item2;
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(RandomHanja), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void RandomHanjaButton_Click(object sender, RoutedEventArgs e)
         {
-            Refresh();
+            try
+            {
+                Refresh();
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(RandomHanja), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
     }
 }

@@ -7,7 +7,8 @@
         UserJoin, 
         UserLeave, 
         Talk,
-        Blind
+        Blind,
+        Ban
     }
 
     public class KakaoTalkChatMessage
@@ -51,6 +52,9 @@
                     break;
                 case MessageType.Blind:
                     type = "Blind";
+                    break;
+                case MessageType.Ban:
+                    type = "Ban";
                     break;
             }
 
@@ -120,42 +124,40 @@
                 }
             }
 
+            if (fullContent.Contains("님을 내보냈습니다."))
+            {
+                if (!(fullContent.IndexOf("[") == 0 && fullContent.Contains("] [오") && fullContent.Contains("] ")))
+                {
+                    return MessageType.Ban;
+                }
+            }
+
             return MessageType.Unknown;
         }
 
         private static string GetUserName(string fullContent, MessageType type)
         {
-            switch (type)
+            return type switch
             {
-                case MessageType.UserJoin:
-                    return fullContent.Substring(0, fullContent.LastIndexOf("님이 들어왔습니다."));
-                case MessageType.UserLeave:
-                    return fullContent.Substring(0, fullContent.LastIndexOf("나갔습니다."));
-                case MessageType.Talk:
-                    return fullContent.Substring(1, fullContent.IndexOf("] [오") - 1);
-                default:
-                    return null;
-            }
+                MessageType.UserJoin => fullContent.Substring(0, fullContent.LastIndexOf("님이 들어왔습니다.")),
+                MessageType.UserLeave => fullContent.Substring(0, fullContent.LastIndexOf("나갔습니다.")),
+                MessageType.Talk => fullContent.Substring(1, fullContent.IndexOf("] [오") - 1),
+                _ => string.Empty,
+            };
         }
 
         private static string GetContent(string fullContent, MessageType type, string Username)
         {
-            switch (type)
+            return type switch
             {
-                case MessageType.DateChange:
-                    return string.Format("오늘은 {0}입니다.", fullContent);
-                case MessageType.UserJoin:
-                    return Username + "님이 들어왔습니다.";
-                case MessageType.UserLeave:
-                    return Username + "님이 나갔습니다.";
-                case MessageType.Talk:
-                    string temp = fullContent.Substring(Username.Length + 2);
-                    return temp.Substring(temp.IndexOf("] ") + 2);
-                case MessageType.Blind:
-                    return fullContent;
-                default:
-                    return null;
-            }
+                MessageType.DateChange => string.Format("오늘은 {0}입니다.", fullContent),
+                MessageType.UserJoin => Username + "님이 들어왔습니다.",
+                MessageType.UserLeave => Username + "님이 나갔습니다.",
+                MessageType.Talk => fullContent[(Username.Length + 2)..][(fullContent[(Username.Length + 2)..].IndexOf("] ") + 2)..],
+                MessageType.Blind => fullContent,
+                MessageType.Ban => fullContent,
+                _ => string.Empty,
+            };
         }
     }
 }

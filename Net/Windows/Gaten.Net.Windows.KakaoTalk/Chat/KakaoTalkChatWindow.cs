@@ -22,6 +22,8 @@
         Export,
         Encrypt,
         KoreanName,
-        Test
+        Test,
+        Chosung,
+        StockGame
     }
 }

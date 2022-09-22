@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gaten.Net.Stock.MercuryTradingModel.Interfaces
+﻿namespace Gaten.Net.Stock.MercuryTradingModel.Interfaces
 {
     public interface IScenario
     {
+        public string Name { get; set; }
+        public IList<ITrigger> Triggers { get; set; }
     }
 }

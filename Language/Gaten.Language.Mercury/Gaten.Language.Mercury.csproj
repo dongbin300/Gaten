@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Editor\MercuryHighlighting-Dark.xshd" />
+    <None Remove="Editor\MercuryHighlighting-Light.xshd" />
     <None Remove="Resources\Images\mercury.png" />
   </ItemGroup>
 
@@ -25,11 +27,32 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Editor\MercuryHighlighting-Dark.xshd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\MercuryHighlighting-Light.xshd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Resource Include="Resources\Images\mercury.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="View\Sub\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

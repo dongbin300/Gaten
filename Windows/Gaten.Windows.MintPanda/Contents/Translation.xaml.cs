@@ -1,7 +1,10 @@
-﻿using Gaten.Net.Network;
+﻿using Gaten.Net.Diagnostics;
+using Gaten.Net.Network;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Input;
@@ -15,58 +18,95 @@ namespace Gaten.Windows.MintPanda.Contents
     {
         public Translation()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(Translation), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            try
             {
-                DragMove();
+                if (e.ChangedButton == MouseButton.Left)
+                {
+                    DragMove();
+                }
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(Translation), MethodBase.GetCurrentMethod()?.Name, ex);
             }
         }
 
         public static string Get(Language language, string input)
         {
-            string languageQuery = language switch
+            try
             {
-                Contents.Language.Korean => "&tl=ko",
-                Contents.Language.English => "&tl=en",
-                Contents.Language.Japanese => "&tl=ja",
-                Contents.Language.Chinese => "&tl=zh-CN",
-                _ => ""
-            };
+                string languageQuery = language switch
+                {
+                    Contents.Language.Korean => "&tl=ko",
+                    Contents.Language.English => "&tl=en",
+                    Contents.Language.Japanese => "&tl=ja",
+                    Contents.Language.Chinese => "&tl=zh-CN",
+                    _ => ""
+                };
 
-            string url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto" + languageQuery + "&dt=t&dj=1&q=" + input;
-            WebCrawler.SetUrl(url);
-            var result = JsonSerializer.Deserialize<Translation_JsonObject>(WebCrawler.Source) ?? default!;
-            var translatedText = string.Join(" ", result.sentences.Select(s => s.trans));
+                string url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto" + languageQuery + "&dt=t&dj=1&q=" + input;
+                WebCrawler.SetUrl(url);
+                var result = JsonSerializer.Deserialize<Translation_JsonObject>(WebCrawler.Source) ?? default!;
+                var translatedText = string.Join(" ", result.sentences.Select(s => s.trans));
 
-            return translatedText;
+                return translatedText;
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(Translation), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
+
+            return string.Empty;
         }
 
         private void TranslationButton_Click(object sender, RoutedEventArgs e)
         {
-            if (TranslationText1.Text.Length < 1)
+            try
             {
-                return;
+                if (TranslationText1.Text.Length < 1)
+                {
+                    return;
+                }
+
+                string text = Get((Language)TranslationComboBox.SelectedIndex, TranslationText1.Text);
+
+                if (string.IsNullOrEmpty(text))
+                {
+                    return;
+                }
+
+                TranslationText2.Text = text;
             }
-
-            string text = Get((Language)TranslationComboBox.SelectedIndex, TranslationText1.Text);
-
-            if (string.IsNullOrEmpty(text))
+            catch (Exception ex)
             {
-                return;
+                GLogger.Log(nameof(Translation), MethodBase.GetCurrentMethod()?.Name, ex);
             }
-
-            TranslationText2.Text = text;
         }
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
-            TranslationText1.Text = "";
-            TranslationText2.Text = "";
-            TranslationText1.Focus();
+            try
+            {
+                TranslationText1.Text = "";
+                TranslationText2.Text = "";
+                TranslationText1.Focus();
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(Translation), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
     }
 

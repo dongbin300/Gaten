@@ -4,41 +4,152 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" 
-             d:DesignHeight="1040" d:DesignWidth="240" Loaded="UserControl_Loaded"
+             d:DesignHeight="49" d:DesignWidth="1920" Loaded="UserControl_Loaded"
              >
     <UserControl.Resources>
         <Style TargetType="ToggleButton" BasedOn="{StaticResource NeonToggleButton}"/>
         <Style TargetType="Button" BasedOn="{StaticResource NeonButton}"/>
+        <Style TargetType="Path">
+            <Setter Property="Fill" Value="AliceBlue" />
+            <Setter Property="Width" Value="38" />
+            <Setter Property="Height" Value="38" />
+            <Setter Property="Stretch" Value="Uniform" />
+        </Style>
     </UserControl.Resources>
-    <UniformGrid Columns="3" Rows="13">
-        <ToggleButton Tag="001" x:Name="PowerOptionButton" Content="파워모드" Click="PowerOptionButton_Click"/>
-        <ToggleButton Tag="002" x:Name="RestartButton" Content="재시작" Click="RestartButton_Click"/>
-        <ToggleButton Tag="003" x:Name="ExitButton" Content="종료" Click="ExitButton_Click"/>
-        <Button Tag="004" x:Name="RefreshButton" Content="새로고침" Click="RefreshButton_Click"/>
+    <UniformGrid x:Name="ButtonGrid" Columns="39" Rows="1">
 
-        <ToggleButton Tag="101" x:Name="ClockButton" Content="시계" Click="TextButton_Click"/>
-        <ToggleButton Tag="102" x:Name="WeatherButton" Content="날씨" Click="TextButton_Click"/>
-        <ToggleButton Tag="103" x:Name="DiskDriveButton" Content="디스크&#10;드라이브" Click="TextButton_Click"/>
-        <ToggleButton Tag="104" x:Name="StockButton" Content="주식" Click="TextButton_Click"/>
-        <ToggleButton Tag="105" x:Name="UnseButton" Content="운세" Click="TextButton_Click"/>
-        
-        <ToggleButton Tag="201" x:Name="CheckListButton" Content="체크리스트" Click="WindowButton_Click"/>
-        <ToggleButton Tag="202" x:Name="CamoBarButton" Content="카모바" Click="WindowButton_Click"/>
-        <ToggleButton Tag="203" x:Name="GoButton" Content="바둑" Click="WindowButton_Click"/>
-        <ToggleButton Tag="204" x:Name="HardwarePriceButton" Content="하드웨어" Click="WindowButton_Click"/>
-        <ToggleButton Tag="205" x:Name="RandomHanjaButton" Content="랜덤한자" Click="WindowButton_Click"/>
-        <ToggleButton Tag="206" x:Name="RandomWordButton" Content="랜덤단어" Click="WindowButton_Click"/>
-        <ToggleButton Tag="207" x:Name="RNGButton" Content="난수" Click="WindowButton_Click"/>
-        <ToggleButton Tag="208" x:Name="TranslationButton" Content="번역" Click="WindowButton_Click"/>
-        <ToggleButton Tag="209" x:Name="WinSplitButton" Content="창분할" Click="WindowButton_Click"/>
-        <ToggleButton Tag="210" x:Name="ColorPickButton" Content="색상" Click="WindowButton_Click"/>
-        <ToggleButton Tag="211" x:Name="DictionaryButton" Content="사전" Click="WindowButton_Click"/>
-        
-        <Button Tag="301" x:Name="RegistryButton" Content="레지스트리" Click="RegistryButton_Click"/>
-        <Button Tag="302" x:Name="NotepadButton" Content="메모장" Click="NotepadButton_Click"/>
-        <Button Tag="303" x:Name="TaskmgrButton" Content="작업관리자" Click="TaskmgrButton_Click"/>
-        <Button Tag="304" x:Name="EventViewerButton" Content="이벤트뷰어" Click="EventViewerButton_Click"/>
-        <Button Tag="305" x:Name="PasswordManagerButton" Content="패스워드&#10;매니저" Click="PasswordManagerButton_Click"/>
-        <Button Tag="306" x:Name="MintConsoleButton" Content="민트콘솔" Click="MintConsoleButton_Click"/>
+        <ToggleButton Tag="003" x:Name="ExitButton" Click="ExitButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M16.56 5.44 L15.11 6.89 C16.84 7.94 18 9.83 18 12 A6 6 0 0 1 12 18 A6 6 0 0 1 6 12 C6 9.83 7.16 7.94 8.88 6.88 L7.44 5.44 C5.36 6.88 4 9.28 4 12 A 8 8 0 0 0 12 20 A8 8 0 0 0 20 12 C20 9.28 18.64 6.88 16.56 5.44 M13 3 H11 V13 H13"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton Tag="002" x:Name="RestartButton" Click="RestartButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M12 4 C14.1 4 16.1 4.8 17.6 6.3 C20.7 9.4 20.7 14.5 17.6 17.6 C15.8 19.5 13.3 20.2 10.9 19.9 L11.4 17.9 C13.1 18.1 14.9 17.5 16.2 16.2 C18.5 13.9 18.5 10.1 16.2 7.7 C15.1 6.6 13.5 6 12 6 V10.6 L7 5.6 L12 0.6 V4 M6.3 17.6 C3.7 15 3.3 11 5.1 7.9 L6.6 9.4 C5.5 11.6 5.9 14.4 7.8 16.2 C8.3 16.7 8.9 17.1 9.6 17.4 L9 19.4 C8 19 7.1 18.4 6.3 17.6Z"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton Tag="001" x:Name="PowerOptionButton" Click="PowerOptionButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M16 7 V3 H14 V7 H10 V3 H8 V7 H8 C7 7 6 8 6 9 V14.5 L9.5 18 V21 H14.5 V18 L18 14.5 V9 C18 8 17 7 16 7Z"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <Button Tag="004" x:Name="RefreshButton" Click="RefreshButton_Click">
+            <Button.Content>
+                <Path Data="M17.65 6.35 C16.2 4.9 14.21 4 12 4 A8 8 0 0 0 4 12 A8 8 0 0 0 12 20 C15.73 20 18.84 17.45 19.73 14 H17.65 C16.83 16.33 14.61 18 12 18 A6 6 0 0 1 6 12 A6 6 0 0 1 12 6 C13.66 6 15.14 6.69 16.22 7.78 L13 11 H20 V4 L17.65 6.35Z"/>
+            </Button.Content>
+        </Button>
+
+        <ToggleButton Tag="101" x:Name="ClockButton" Click="TextButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M12 2 A10 10 0 0 0 2 12 A10 10 0 0 0 12 22 A10 10 0 0 0 22 12 A10 10 0 0 0 12 2 M16.2 16.2 L11 13 V7 H12.5 V12.2 L17 14.9 L16.2 16.2Z"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton Tag="102" x:Name="WeatherButton" Click="TextButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M12.74 5.47 C15.1 6.5 16.35 9.03 15.92 11.46 C17.19 12.56 18 14.19 18 16 V16.17 C18.31 16.06 18.65 16 19 16 A3 3 0 0 1 22 19 A3 3 0 0 1 19 22 H6 A4 4 0 0 1 6 14 H6.27 C5 12.45 4.6 10.24 5.5 8.26 C6.72 5.5 9.97 4.24 12.74 5.47 M11.93 7.3 C10.16 6.5 8.09 7.31 7.31 9.07 C6.85 10.09 6.93 11.22 7.41 12.13 C8.5 10.83 10.16 10 12 10 C12.7 10 13.38 10.12 14 10.34 C13.94 9.06 13.18 7.86 11.93 7.3 M13.55 3.64 C13 3.4 12.45 3.23 11.88 3.12 L14.37 1.82 L15.27 4.71 C14.76 4.29 14.19 3.93 13.44 3.64 M6.09 4.44 C5.6 4.79 5.17 5.19 4.8 5.63 L4.91 2.82 L7.87 3.5 C7.25 3.71 6.65 4.03 6.09 4.44 M18 9.71 C17.91 9.12 17.78 8.55 17.59 8 L19.97 9.5 L17.92 11.73 C18.03 11.08 18.05 10.4 18 9.71 M3.04 11.3 C3.11 11.9 3.24 12.47 3.43 13 L1.06 11.5 L3.1 9.28 C3 9.93 2.97 10.61 3.04 11.3 M19 18 H16 V16 A4 4 0 0 0 12 12 A4 4 0 0 0 8 16 H6 A2 2 0 0 0 4 18 A2 2 0 0 0 6 20 H19 A1 1 0 0 0 20 19 A1 1 0 0 0 19 18Z"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton Tag="103" x:Name="DiskDriveButton" Click="TextButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M6 2 H18 A2 2 0 0 1 20 4 V20 A2 2 0 0 1 18 22 H6 A2 2 0 0 1 4 20 V4 A2 2 0 0 1 6 2 M12 4 A6 6 0 0 0 6 10 C6 13.31 8.69 16 12.1 16 L11.22 13.77 C10.95 13.29 11.11 12.68 11.59 12.4 L12.45 11.9 C12.93 11.63 13.54 11.79 13.82 12.27 L15.75 14.69 C17.12 13.59 18 11.9 18 10 A6 6 0 0 0 12 4 M12 9 A1 1 0 0 1 13 10 A1 1 0 0 1 12 11 A1 1 0 0 1 11 10 A1 1 0 0 1 12 9 M7 18 A1 1 0 0 0 6 19 A1 1 0 0 0 7 20 A1 1 0 0 0 8 19 A1 1 0 0 0 7 18 M12.09 13.27 L14.58 19.58 L17.17 18.08 L12.95 12.77 L12.09 13.27Z"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton Tag="104" x:Name="StockButton" Click="TextButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M12 2 A10 10 0 0 1 22 12 A10 10 0 0 1 12 22 A10 10 0 0 1 2 12 A10 10 0 0 1 12 2 M12 4 A8 8 0 0 0 4 12 A8 8 0 0 0 12 20 A8 8 0 0 0 20 12 A8 8 0 0 0 12 4 M11 17 V16 H9 V14 H13 V13 H10 A1 1 0 0 1 9 12 V9 A1 1 0 0 1 10 8 H11 V7 H13 V8 H15 V10 H11 V11 H14 A1 1 0 0 1 15 12 V15 A1 1 0 0 1 14 16 H13 V17 H11Z"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton Tag="105" x:Name="UnseButton" Click="TextButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M12 11.18 C15.3 8.18 17 6.64 17 4.69 C17 3.19 15.75 2 14.25 2 C13.39 2 12.57 2.36 12 3 C11.43 2.36 10.61 2 9.69 2 C8.19 2 7 3.25 7 4.75 C7 6.64 8.7 8.18 12 11.18 M11.18 12 C8.18 8.7 6.64 7 4.69 7 C3.19 7 2 8.25 2 9.75 C2 10.61 2.36 11.43 3 12 C2.36 12.57 2 13.39 2 14.31 C2 15.81 3.25 17 4.75 17 C6.64 17 8.18 15.3 11.18 12 M12.83 12 C15.82 15.3 17.36 17 19.31 17 C20.81 17 22 15.75 22 14.25 C22 13.39 21.64 12.57 21 12 C21.64 11.43 22 10.61 22 9.69 C22 8.19 20.75 7 19.25 7 C17.36 7 15.82 8.7 12.83 12 M12 12.82 C8.7 15.82 7 17.36 7 19.31 C7 20.81 8.25 22 9.75 22 C10.61 22 11.43 21.64 12 21 C12.57 21.64 13.39 22 14.31 22 C15.81 22 17 20.75 17 19.25 C17 17.36 15.3 15.82 12 12.82Z"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+
+        <ToggleButton Tag="201" x:Name="CheckListButton" Click="WindowButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M14 10 H3 V12 H14 V10 M14 6 H3 V8 H14 V6 M3 16 H10 V14 H3 V16 M21.5 11.5 L23 13 L16 20 L11.5 15.5 L13 14 L16 17 L21.5 11.5Z"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton Tag="202" x:Name="CamoBarButton" Click="WindowButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M20 14 H4 V10 H20"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton Tag="203" x:Name="GoButton" Click="WindowButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M10 4 V8 H14 V4 H10 M16 4 V8 H20 V4 H16 M16 10 V14 H20 V10 H16 M16 16 V20 H20 V16 H16 M14 20 V16 H10 V20 H14 M8 20 V16 H4 V20 H8 M8 14 V10 H4 V14 H8 M8 8 V4 H4 V8 H8 M10 14 H14 V10 H10 V14 M4 2 H20 A2 2 0 0 1 22 4 V20 A2 2 0 0 1 20 22 H4 C2.92 22 2 21.1 2 20 V4 A2 2 0 0 1 4 2Z"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton Tag="204" x:Name="HardwarePriceButton" Click="WindowButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M2 5 H22 V20 H2 V5 M20 18 V7 H4 V18 H20 M17 8 A2 2 0 0 0 19 10 V15 A2 2 0 0 0 17 17 H7 A2 2 0 0 0 5 15 V10 A2 2 0 0 0 7 8 H17 M17 13 V12 C17 10.9 16.33 10 15.5 10 C14.67 10 14 10.9 14 12 V13 C14 14.1 14.67 15 15.5 15 C16.33 15 17 14.1 17 13 M15.5 11 A0.5 0.5 0 0 1 16 11.5 V13.5 A0.5 0.5 0 0 1 15.5 14 A0.5 0.5 0 0 1 15 13.5 V11.5 A0.5 0.5 0 0 1 15.5 11 M13 13 V12 C13 10.9 12.33 10 11.5 10 C10.67 10 10 10.9 10 12 V13 C10 14.1 10.67 15 11.5 15 C12.33 15 13 14.1 13 13 M11.5 11 A0.5 0.5 0 0 1 12 11.5 V13.5 A0.5 0.5 0 0 1 11.5 14 A0.5 0.5 0 0 1 11 13.5 V 11.5 A0.5 0.5 0 0 1 11.4 11 M8 15 H9 V10 H8 L7 10.5 V11.5 L8 11 V5Z"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton Tag="205" x:Name="RandomHanjaButton" Click="WindowButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M3 11 H21 V13 H15 V19 H21 V21 H15 A2 2 0 0 1 13 19 V13 H10.35 L5.73 21 L4 20 L8.04 13 H3 V11 M5 3 H19 V5 H5 V3Z"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton Tag="206" x:Name="RandomWordButton" Click="WindowButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M6 11 A2 2 0 0 1 8 13 V17 H4 A2 2 0 0 1 2 15 V13 A2 2 0 0 1 4 11 H6 M4 13 V15 H6 V13 H4 M20 13 V15 H22 V17 H20 A2 2 0 0 1 18 15 V13 A2 2 0 0 1 20 11 H22 V13 H20 M12 7 V11 H14 A2 2 0 0 1 16 13 V15 A2 2 0 0 1 14 17 H12 A2 2 0 0 1 10 15 V7 H12 M12 15 H14 V13 H12 V15Z"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton Tag="207" x:Name="RNGButton" Click="WindowButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M19 5 V19 H5 V5 H19 M19 3 H5 C3.9 3 3 3.9 3 5 V19 C3 20.11 3.9 21 5 21 H19 C20.11 21 21 20.11 21 19 V5 C21 3.9 20.11 3 19 3 M7.5 6 C6.67 6 6 6.67 6 7.5 S6.67 9 7.5 9 9 8.33 9 7.5 8.33 6 7.5 6 M16.5 15 C15.67 15 15 15.67 15 16.5 C 15 17.33 15.67 18 16.5 18 C17.33 18 18 17.33 18 16.5 C18 15.67 17.33 15 16.5 15Z"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton Tag="208" x:Name="TranslationButton" Click="WindowButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M20 5 H10.88 L10 2 H4 A2 2 0 0 0 2 4 V17 A2 2 0 0 0 4 19 H11 L12 22 H20 A2 2 0 0 0 22 20 V7 A2 2 0 0 0 20 5 M7.17 14.59 A4.09 4.09 0 0 1 3.08 10.5 A4.09 4.09 0 0 1 7.17 6.41 C8.21 6.41 9.16 6.78 9.91 7.5 L10 7.54 L8.75 8.72 L8.69 8.67 C8.4 8.4 7.91 8.08 7.17 8.08 C5.86 8.08 4.79 9.17 4.79 10.5 C4.79 11.83 5.86 12.92 7.17 12.92 C8.54 12.92 9.13 12.05 9.29 11.46 H7.08 V9.91 H11.03 L11.04 10 C11.08 10.19 11.09 10.38 11.09 10.59 C11.09 12.94 9.5 14.59 7.17 14.59 M13.2 12.88 C13.53 13.5 13.94 14.06 14.39 14.58 L13.85 15.11 L13.2 12.88 M13.97 12.12 H13 L12.67 11.08 H16.66 C16.66 11.08 16.32 12.39 15.1 13.82 C14.58 13.2 14.21 12.59 13.97 12.12 M21 20 A1 1 0 0 1 20 21 H13 L15 19 L14.19 16.23 L15.11 15.31 L17.79 18 L18.5 17.27 L15.81 14.59 C16.71 13.56 17.41 12.34 17.73 11.08 H19 V10.04 H15.36 V9 H14.32 V10.04 H12.36 L11.18 6 H20 A1 1 0 0 1 21 7 V20Z"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton Tag="209" x:Name="WinSplitButton" Click="WindowButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M3 11 H11 V3 H3 M3 21 H11 V13 H3 M13 21 H21 V13 H13 M13 3 V11 H21 V3"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton Tag="210" x:Name="ColorPickButton" Click="WindowButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M3.88 3 C3.38 3.06 3 3.5 3 4 V4 L3 5 H4 L5 5 V4 L5 3 H4 L3.88 3 M7 3 V5 H9 V3 H7 M11 3 V5 H13 V3 H11 M15 3 V5 H17 V3 H15 M19 3 V4 L19 5 H20 L21 5 V4 L21 3.88 C20.94 3.38 20.5 3 20 3 H19 M3 7 V9 H5 V7 H3 M19 7 V9 H21 V7 H19 M3 11 V13 H5 V11 H3 M19.31 12 C19.18 12 19.05 12.05 18.95 12.14 L17.39 13.71 L16.43 12.75 L15.72 13.46 L16.43 14.17 L11.97 18.63 V21 H14.35 L18.8 16.54 L19.5 17.25 L20.22 16.54 L19.26 15.58 L20.82 14.03 C21 13.83 21 13.5 20.82 13.31 L19.65 12.14 C19.56 12.05 19.44 12 19.31 12 M3 15 V17 H5 V15 H3 M17 15 L17.97 15.97 L13.93 20 L12.97 19.04 L17 15 M3 19 V20 L3 20.12 C3.06 20.62 3.5 21 4 21 V21 H5 V20 L5 19 H4 L3 19 M7 19 V21 H9 V19 H7Z"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+        <ToggleButton Tag="211" x:Name="DictionaryButton" Click="WindowButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M5.81 2 C4.83 2.09 4 3 4 4 V20 C4 21.05 4.95 22 6 22 H18 C19.05 22 20 21.05 20 20 V4 C20 2.89 19.1 2 18 2 H12 V9 L9.5 7.5 L7 9 V2 H6 C5.94 2 5.87 2 5.81 2 M12 13 H13 A1 1 0 0 1 14 14 V18 H13 V16 H12 V18 H11 V14 A1 1 0 0 1 12 13 M12 14 V15 H13 V14 H12 M15 15 H18 V16 L16 19 H18 V20 H15 V19 L17 16 H15 V15Z"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+
+        <Button Tag="301" x:Name="RegistryButton" Click="RegistryButton_Click">
+            <Button.Content>
+                <Path Data="M21 16.5 C21 16.88 20.79 17.21 20.47 17.38 L12.57 21.82 C12.41 21.94 12.21 22 12 22 C11.79 22 11.59 21.94 11.43 21.82 L3.53 17.38 C3.21 17.21 3 16.88 3 16.5 V7.5 C3 7.12 3.21 6.79 3.53 6.62 L11.43 2.18 C11.59 2.06 11.79 2 12 2 C12.21 2 12.41 2.06 12.57 2.18 L20.47 6.62 C20.79 6.79 21 7.12 21 7.5 V16.5 M12 4.15 L6.04 7.5 L12 10.85 L17.96 7.5 L12 4.15Z"/>
+            </Button.Content>
+        </Button>
+        <Button Tag="302" x:Name="NotepadButton" Click="NotepadButton_Click">
+            <Button.Content>
+                <Path Data="M14 10 H19.5 L14 4.5 V10 M5 3 H15 L21 9 V19 A2 2 0 0 1 19 21 H5 C3.89 21 3 20.1 3 19 V5 C3 3.89 3.89 3 5 3 M5 5 V19 H19 V12 H12 V5 H5Z"/>
+            </Button.Content>
+        </Button>
+        <Button Tag="303" x:Name="TaskmgrButton" Click="TaskmgrButton_Click">
+            <Button.Content>
+                <Path Data="M21 16 V4 H3 V16 H21 M21 2 A2 2 0 0 1 23 4 V16 A2 2 0 0 1 21 18 H14 V20 H16 V22 H8 V20 H10 V18 H3 C1.89 18 1 17.1 1 16 V4 C1 2.89 1.89 2 3 2 H21 M5 6 H14 V11 H5 V6 M15 6 H19 V8 H15 V6 M19 9 V14 H15 V9 H19 M5 12 H9 V14 H5 V12 M10 12 H14 V14 H10 V12Z"/>
+            </Button.Content>
+        </Button>
+        <Button Tag="304" x:Name="EventViewerButton" Click="EventViewerButton_Click">
+            <Button.Content>
+                <Path Data="M17 4 V10 L15 8 L13 10 V4 H9 V20 H19 V4 H17 M3 7 V5 H5 V4 C5 2.89 5.9 2 7 2 H19 C20.05 2 21 2.95 21 4 V20 C21 21.05 20.05 22 19 22 H7 C5.95 22 5 21.05 5 20 V19 H3 V17 H5 V13 H3 V11 H5 V7 H3 M5 5 V7 H7 V5 H5 M5 19 H7 V17 H5 V19 M5 13 H7 V11 H5 V13Z"/>
+            </Button.Content>
+        </Button>
+        <Button Tag="305" x:Name="PasswordManagerButton" Click="PasswordManagerButton_Click">
+            <Button.Content>
+                <Path Data="M6.5 2 C8.46 2 10.13 3.25 10.74 5 H22 V8 H18 V11 H15 V8 H10.74 C10.13 9.75 8.46 11 6.5 11 C4 11 2 9 2 6.5 C2 4 4 2 6.5 2 M6.5 5 A1.5 1.5 0 0 0 5 6.5 A1.5 1.5 0 0 0 6.5 8 A1.5 1.5 0 0 0 8 6.5 A1.5 1.5 0 0 0 6.5 5 M6.5 13 C8.46 13 10.13 14.25 10.74 16 H22 V19 H20 V22 H18 V19 H16 V22 H13 V19 H10.74 C10.13 20.75 8.46 22 6.5 22 C4 22 2 20 2 17.5 C2 15 4 13 6.5 13 M6.5 16 A1.5 1.5 0 0 0 5 17.5 A1.5 1.5 0 0 0 6.5 19 A1.5 1.5 0 0 0 8 17.7 A1.5 1.5 0 0 0 6.5 16Z"/>
+            </Button.Content>
+        </Button>
+        <Button Tag="306" x:Name="MintConsoleButton" Click="MintConsoleButton_Click">
+            <Button.Content>
+                <Path Data="M20 19 V7 H4 V19 H20 M20 3 A2 2 0 0 1 22 5 V19 A2 2 0 0 1 20 21 H4 A2 2 0 0 1 2 19 V5 C2 3.89 2.9 3 4 3 H20 M13 17 V15 H18 V17 H13 M9.58 13 L5.57 9 H8.4 L11.7 12.3 C12.09 12.69 12.09 13.33 11.7 13.72 L8.42 17 H5.59 L9.58 13Z"/>
+            </Button.Content>
+        </Button>
     </UniformGrid>
 </UserControl>

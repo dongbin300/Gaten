@@ -1,6 +1,8 @@
-﻿namespace Gaten.Stock.ChartManager.Interfaces
+﻿using System;
+
+namespace Gaten.Stock.ChartManager.Interfaces
 {
-    public interface IBot
+    public interface IBot : IDisposable
     {
     }
 }

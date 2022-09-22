@@ -27,6 +27,8 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Scenarios
     /// </summary>
     public class ReversalTradingScenario : IScenario
     {
+        public string Name { get; set; }
+
         /// <summary>
         /// 이 시나리오가 진행중인지
         /// </summary>

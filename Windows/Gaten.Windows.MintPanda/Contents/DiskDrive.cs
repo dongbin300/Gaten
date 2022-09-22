@@ -1,4 +1,8 @@
-﻿using System.IO;
+﻿using Gaten.Net.Diagnostics;
+
+using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace Gaten.Windows.MintPanda.Contents
@@ -24,8 +28,9 @@ namespace Gaten.Windows.MintPanda.Contents
 
                 return builder.ToString();
             }
-            catch
+            catch (Exception ex)
             {
+                GLogger.Log(nameof(DiskDrive), MethodBase.GetCurrentMethod()?.Name, ex);
                 return string.Empty;
             }
         }

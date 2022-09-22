@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿using Org.BouncyCastle.Utilities;
+
+using System.Data;
 using System.Text;
 
 using SystemFile = System.IO.File;
@@ -153,6 +155,12 @@ namespace Gaten.Net.IO
             }
 
             Append(path, builder.ToString());
+        }
+
+        public static void AppendBinary(string path, byte[] contents)
+        {
+            using var stream = new FileStream(path, FileMode.Append);
+            stream.Write(contents, 0, contents.Length);
         }
 
         public static void CopyDirectory(string sourcePath, string destPath)

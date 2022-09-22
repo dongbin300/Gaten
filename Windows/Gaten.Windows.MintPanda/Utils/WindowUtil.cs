@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿using Gaten.Net.Diagnostics;
+
+using System;
+using System.Reflection;
+using System.Windows;
 using System.Windows.Controls.Primitives;
 
 namespace Gaten.Windows.MintPanda.Utils
@@ -7,38 +11,52 @@ namespace Gaten.Windows.MintPanda.Utils
     {
         public static void ToggleWindow<T>(ToggleButton toggleButton) where T : new()
         {
-            if (toggleButton.IsChecked ?? true)
+            try
             {
-                if (new T() is Window window)
+                if (toggleButton.IsChecked ?? true)
                 {
-                    window.Tag = toggleButton.Tag;
-                    window.Show();
+                    if (new T() is Window window)
+                    {
+                        window.Tag = toggleButton.Tag;
+                        window.Show();
+                    }
+                }
+                else
+                {
+                    if (toggleButton.Tag is not string tag)
+                    {
+                        return;
+                    }
+
+                    CloseWindow(tag);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                if (toggleButton.Tag is not string tag)
-                {
-                    return;
-                }
-
-                CloseWindow(tag);
+                GLogger.Log(nameof(WindowUtil), MethodBase.GetCurrentMethod()?.Name, ex);
             }
         }
 
         public static void CloseWindow(string tag)
         {
-            foreach (Window window in Application.Current.Windows)
+            try
             {
-                if (window.Tag == null)
+                foreach (Window window in Application.Current.Windows)
                 {
-                    continue;
+                    if (window.Tag == null)
+                    {
+                        continue;
+                    }
+                    if (window.Tag.Equals(tag))
+                    {
+                        window.Close();
+                        break;
+                    }
                 }
-                if (window.Tag.Equals(tag))
-                {
-                    window.Close();
-                    break;
-                }
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(WindowUtil), MethodBase.GetCurrentMethod()?.Name, ex);
             }
         }
     }

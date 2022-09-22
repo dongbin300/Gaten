@@ -1,6 +1,8 @@
-﻿using Gaten.Net.Network;
+﻿using Gaten.Net.Diagnostics;
+using Gaten.Net.Network;
 
 using System;
+using System.Reflection;
 
 namespace Gaten.Windows.MintPanda.Contents
 {
@@ -19,8 +21,9 @@ namespace Gaten.Windows.MintPanda.Contents
 
                 return allDog + Environment.NewLine + dog94;
             }
-            catch
+            catch(Exception ex)
             {
+                GLogger.Log(nameof(Unse), MethodBase.GetCurrentMethod()?.Name, ex);
                 return "Error";
             }
         }

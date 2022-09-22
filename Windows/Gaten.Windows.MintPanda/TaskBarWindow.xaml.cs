@@ -1,6 +1,8 @@
-﻿using Gaten.Net.Wpf;
+﻿using Gaten.Net.Diagnostics;
+using Gaten.Net.Wpf;
 
 using System;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -13,15 +15,22 @@ namespace Gaten.Windows.MintPanda
     {
         public TaskBarWindow()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
 
-            var image = new BitmapImage(new Uri("pack://application:,,,/MintPanda;component/Resources/Images/taskbar.png"));
-            TaskBarImage.Source = image;
+                var image = new BitmapImage(new Uri("pack://application:,,,/MintPanda;component/Resources/Images/taskbar.png"));
+                TaskBarImage.Source = image;
 
-            Left = 0;
-            Top = WindowsSystem.ScreenHeight - image.Height;
-            Width = image.Width;
-            Height = image.Height;
+                Left = 0;
+                Top = WindowsSystem.ScreenHeight - image.Height;
+                Width = image.Width;
+                Height = image.Height;
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(SystemMonitorWindow), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
     }
 }

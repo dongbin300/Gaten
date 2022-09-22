@@ -7,22 +7,26 @@
         xmlns:wpf="clr-namespace:Gaten.Net.Wpf.Controls;assembly=Gaten.Net.Wpf"
         xmlns:local="clr-namespace:Gaten.Language.Mercury"
         xmlns:view="clr-namespace:Gaten.Language.Mercury.View"
+        xmlns:editor="clr-namespace:Gaten.Language.Mercury.Editor"
         mc:Ignorable="d" WindowStyle="None" Icon="/Gaten.Language.Mercury;component/Resources/Images/mercury.png"
-         WindowStartupLocation="CenterScreen"
+         WindowStartupLocation="CenterScreen" Closing="Window_Closing"
         Title="Mercury Editor" Width="800" Height="450" MinWidth="300" MinHeight="200">
-    
+
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <view:MercuryTitleBar Grid.Row="0"/>
+        <view:MercuryTitleBar x:Name="TitleBar" Grid.Row="0"/>
         <view:MercuryTaskBar Grid.Row="1"/>
-        <a:TextEditor Grid.Row="2" x:Name="textEditor" FontFamily="Consolas" FontSize="10pt" SyntaxHighlighting="C#"/>
+        <a:TextEditor Grid.Row="2" x:Name="textEditor" FontFamily="Consolas" FontSize="10pt"
+                      Foreground="{DynamicResource EditorForeground}"  Background="{DynamicResource EditorBackground}"
+                      TextChanged="textEditor_TextChanged"
+                      />
     </Grid>
 </Window>

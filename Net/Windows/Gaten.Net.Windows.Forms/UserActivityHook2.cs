@@ -229,6 +229,9 @@ namespace Gaten.Net.Windows.Forms
             int wParam,
             IntPtr lParam);
 
+        [DllImport("user32.dll")]
+        private static extern short GetAsyncKeyState(Keys key);
+
         /// <summary>
         /// The CallWndProc hook procedure is an application-defined or library-defined callback 
         /// function used with the SetWindowsHookEx function. The HOOKPROC type defines a pointer 
@@ -593,6 +596,27 @@ namespace Gaten.Net.Windows.Forms
         #endregion
 
         #region Hook Delegate Methods
+        public static Modifiers PressingModifiers()
+        {
+            Modifiers modifiers = Modifiers.None;
+            if (GetAsyncKeyState(Keys.Control) < 0 || GetAsyncKeyState(Keys.ControlKey) < 0 || GetAsyncKeyState(Keys.LControlKey) < 0 || GetAsyncKeyState(Keys.RControlKey) < 0)
+            {
+                modifiers |= Modifiers.Ctrl;
+            }
+            if (GetAsyncKeyState(Keys.Menu) < 0 || GetAsyncKeyState(Keys.LMenu) < 0 || GetAsyncKeyState(Keys.RMenu) < 0)
+            {
+                modifiers |= Modifiers.Alt;
+            }
+            if (GetAsyncKeyState(Keys.Shift) < 0 || GetAsyncKeyState(Keys.ShiftKey) < 0 || GetAsyncKeyState(Keys.LShiftKey) < 0 || GetAsyncKeyState(Keys.RShiftKey) < 0)
+            {
+                modifiers |= Modifiers.Shift;
+            }
+            if (GetAsyncKeyState(Keys.LWin) < 0 || GetAsyncKeyState(Keys.RWin) < 0)
+            {
+                modifiers |= Modifiers.Window;
+            }
+            return modifiers;
+        }
 
         /// <summary>
         /// A callback function which will be called every time a mouse activity detected.

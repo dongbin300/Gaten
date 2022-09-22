@@ -1,6 +1,9 @@
-﻿using Gaten.Net.IO;
+﻿using Binance.Net.Enums;
+
+using Gaten.Net.Extensions;
+using Gaten.Net.IO;
 using Gaten.Net.Stock.Charts;
-using Gaten.Stock.ChartManager.Charts;
+using Gaten.Stock.ChartManager.Markets;
 
 using System;
 using System.Collections.Generic;
@@ -11,17 +14,38 @@ namespace Gaten.Stock.ChartManager.Apis
 {
     internal class LocalStorageApi
     {
+        #region Initialize
         public static void Init()
         {
 
         }
+        #endregion
 
-        public static List<string> GetSymbols()
+        #region Market API
+        public static List<string> GetSymbolNames()
         {
             var symbolFile = new DirectoryInfo(GResource.BinanceFuturesDataPath).GetFiles("symbol_*.txt").FirstOrDefault() ?? default!;
             return File.ReadAllLines(symbolFile.FullName).ToList();
         }
 
+        public static List<FuturesSymbol> GetSymbols()
+        {
+            var symbolFile = new DirectoryInfo(GResource.BinanceFuturesDataPath).GetFiles("symbol_detail_*.csv").FirstOrDefault() ?? default!;
+            var data = File.ReadAllLines(symbolFile.FullName);
+
+            var symbols = new List<FuturesSymbol>();
+            for (int i = 1; i < data.Length; i++)
+            {
+                var item = data[i];
+                var d = item.Split(',');
+                symbols.Add(new FuturesSymbol(d[0], d[1].Convert<decimal>(), d[2].Convert<DateTime>(), d[3].Convert<decimal>(), d[4].Convert<decimal>(), d[5].Convert<decimal>(), d[6].Convert<decimal>(), d[7].Convert<decimal>(), d[8].Convert<decimal>(), d[9].Convert<int>(), d[10].Convert<int>(), d[11].Convert<UnderlyingType>()));
+            }
+
+            return symbols;
+        }
+        #endregion
+
+        #region Chart API
         public static List<Candle> GetCandlesForOneDay(string symbol, DateTime startTime)
         {
             try
@@ -50,5 +74,10 @@ namespace Gaten.Stock.ChartManager.Apis
                 throw;
             }
         }
+        #endregion
+
+        #region Account API
+
+        #endregion
     }
 }

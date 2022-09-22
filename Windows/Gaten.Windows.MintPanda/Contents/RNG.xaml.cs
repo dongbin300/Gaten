@@ -1,7 +1,9 @@
-﻿using Gaten.Net.IO;
+﻿using Gaten.Net.Diagnostics;
+using Gaten.Net.IO;
 using Gaten.Net.Network;
 
 using System;
+using System.Reflection;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Input;
@@ -18,20 +20,41 @@ namespace Gaten.Windows.MintPanda.Contents
 
         public RNG()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(RNG), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            try
             {
-                DragMove();
+                if (e.ChangedButton == MouseButton.Left)
+                {
+                    DragMove();
+                }
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(RNG), MethodBase.GetCurrentMethod()?.Name, ex);
             }
         }
 
         public static void Init()
         {
-            key = GResource.GetText("randomorg_api.txt");
+            try
+            {
+                key = GResource.GetText("randomorg_api.txt");
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(RNG), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         public static string Get(int min, int max)
@@ -50,9 +73,9 @@ namespace Gaten.Windows.MintPanda.Contents
 
                 return responseObject.result.random.data[0].ToString();
             }
-            catch
+            catch (Exception ex)
             {
-
+                GLogger.Log(nameof(RNG), MethodBase.GetCurrentMethod()?.Name, ex);
             }
 
             return string.Empty;
@@ -60,7 +83,14 @@ namespace Gaten.Windows.MintPanda.Contents
 
         private void RNGButton_Click(object sender, RoutedEventArgs e)
         {
-            RNGResultText.Text = Get(int.Parse(RNGMin.Text), int.Parse(RNGMax.Text));
+            try
+            {
+                RNGResultText.Text = Get(int.Parse(RNGMin.Text), int.Parse(RNGMax.Text));
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(RNG), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
     }
 

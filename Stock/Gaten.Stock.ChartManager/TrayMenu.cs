@@ -1,9 +1,14 @@
-﻿using Gaten.Net.Diagnostics;
+﻿using Binance.Net.Enums;
+
+using Gaten.Net.Diagnostics;
+using Gaten.Net.Extensions;
 using Gaten.Net.IO;
 using Gaten.Net.Wpf;
 using Gaten.Net.Wpf.Models;
 using Gaten.Stock.ChartManager.Apis;
+using Gaten.Stock.ChartManager.Bots;
 using Gaten.Stock.ChartManager.Charts;
+using Gaten.Stock.ChartManager.Markets;
 
 using System;
 using System.Drawing;
@@ -44,7 +49,13 @@ namespace Gaten.Stock.ChartManager
             menuStrip.Items.Add(new ToolStripSeparator());
             menuStrip.Items.Add(new ToolStripMenuItem("Binance 1일봉 데이터 추출", null, new EventHandler(Extract1DCandleEvent)));
             menuStrip.Items.Add(new ToolStripSeparator());
+            var symbolNames = LocalStorageApi.GetSymbolNames();
             var symbols = LocalStorageApi.GetSymbols();
+            var accountInfo = BinanceClientApi.GetFuturesAccountInfo();
+            var positionInformation = BinanceClientApi.GetPositionInformation();
+            var balance = BinanceClientApi.GetBalance();
+            BinanceClientApi.ChangeInitialLeverage("BTCUSDT", 5);
+            //BinanceClientApi.Order("BTCUSDT", Binance.Net.Enums.OrderSide.Buy, Binance.Net.Enums.FuturesOrderType.Market, (decimal)0.002);
             var majorSymbols = new string[]
             {
                 "BTCUSDT",
@@ -56,12 +67,52 @@ namespace Gaten.Stock.ChartManager
             };
             foreach (var symbol in majorSymbols)
             {
-                menuStrip.Items.Add(new ToolStripMenuItem(symbol + " 데이터 로드", null, new EventHandler((sender, e) => LoadChartDataEvent(sender, e, symbol))));
+                menuStrip.Items.Add(new ToolStripMenuItem(symbol + " 1분봉 데이터 로드", null, new EventHandler((sender, e) => LoadChartDataEvent(sender, e, symbol, KlineInterval.OneMinute))));
             }
+            menuStrip.Items.Add(new ToolStripSeparator());
+            foreach (var symbol in majorSymbols)
+            {
+                menuStrip.Items.Add(new ToolStripMenuItem(symbol + " 5분봉 데이터 로드", null, new EventHandler((sender, e) => LoadChartDataEvent(sender, e, symbol, KlineInterval.FiveMinutes))));
+            }
+            menuStrip.Items.Add(new ToolStripSeparator());
+            menuStrip.Items.Add(new ToolStripMenuItem("TempBot Run", null, TempBotRunEvent));
             menuStrip.Items.Add(new ToolStripMenuItem("종료", null, Exit));
 
             menuStrip.Items[0].Enabled = false;
             trayIcon.ContextMenuStrip = menuStrip;
+        }
+
+        private void TempBotRunEvent(object? sender, EventArgs e)
+        {
+            progressView.Show();
+            var worker = new Worker()
+            {
+                ProgressBar = progressView.ProgressBar,
+                Action = TempBotRun
+            };
+            worker.Start();
+        }
+
+        public static void TempBotRun(Worker worker, object? obj)
+        {
+            try
+            {
+                var bot = new TempBot(worker);
+                var result = bot.Run();
+                DispatcherService.Invoke(() =>
+                {
+                    progressView.Hide();
+                });
+
+                var path = GPath.Desktop.Down("ChartManager", $"TempBot_{DateTime.Now.ToStandardFileName()}.txt");
+                GFile.Write(path, result);
+
+                GProcess.Start(path);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         public static void Extract1DCandleEvent(object? sender, EventArgs e)
@@ -97,11 +148,13 @@ namespace Gaten.Stock.ChartManager
         {
             try
             {
-                var symbols = BinanceClientApi.GetExchangeInfo();
-
+                var symbolNames = BinanceClientApi.GetFuturesSymbolNames();
                 GFile.WriteByArray(
                     GResource.BinanceFuturesDataPath.Down($"symbol_{DateTime.Now:yyyy-MM-dd}.txt"),
-                    symbols);
+                    symbolNames);
+
+                var symbolData = BinanceClientApi.GetFuturesSymbols();
+                symbolData.SaveCsvFile(GResource.BinanceFuturesDataPath.Down($"symbol_detail_{DateTime.Now:yyyy-MM-dd}.csv"));
 
                 MessageBox.Show("바이낸스 심볼 데이터 수집 완료");
 
@@ -142,14 +195,16 @@ namespace Gaten.Stock.ChartManager
             }
         }
 
-        public static void LoadChartDataEvent(object? sender, EventArgs e, string symbol)
+        record ChartDataType(string symbol, KlineInterval interval);
+
+        public static void LoadChartDataEvent(object? sender, EventArgs e, string symbol, KlineInterval interval)
         {
             progressView.Show();
             var worker = new Worker()
             {
                 ProgressBar = progressView.ProgressBar,
                 Action = LoadChartData,
-                Arguments = symbol
+                Arguments = new ChartDataType(symbol, interval)
             };
             worker.Start();
         }
@@ -158,11 +213,11 @@ namespace Gaten.Stock.ChartManager
         {
             try
             {
-                if (obj?.ToString() is not string str)
+                if (obj is not ChartDataType chartDataType)
                 {
                     return;
                 }
-                ChartLoader.Init(str, Binance.Net.Enums.KlineInterval.OneMinute, worker);
+                ChartLoader.Init(chartDataType.symbol, chartDataType.interval, worker);
                 DispatcherService.Invoke(() =>
                 {
                     progressView.Hide();

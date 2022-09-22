@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿using Gaten.Net.Diagnostics;
+
+using System;
+using System.Reflection;
+using System.Windows;
 
 namespace Gaten.Windows.MintPanda
 {
@@ -9,12 +13,26 @@ namespace Gaten.Windows.MintPanda
     {
         public MonitorWindow()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(MonitorWindow), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         public void SetInfoText(string text)
         {
-            InfoText.Text = text;
+            try
+            {
+                InfoText.Text = text;
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(MonitorWindow), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
     }
 }

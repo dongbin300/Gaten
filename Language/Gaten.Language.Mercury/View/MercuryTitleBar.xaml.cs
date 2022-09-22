@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿using Gaten.Language.Mercury.IO;
+using Gaten.Net.Wpf.Controls;
+
+using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -13,6 +17,7 @@ namespace Gaten.Language.Mercury.View
     {
         #region Variable
         Window parentWindow => GetParentWindow() ?? Application.Current.MainWindow;
+        MainWindow mainWindow => (MainWindow)parentWindow;
         bool moveMode = false;
         Geometry NormalButtonGeometry;
         Geometry MaximizeButtonGeometry;
@@ -101,17 +106,12 @@ namespace Gaten.Language.Mercury.View
         {
             parentWindow.WindowState = WindowState.Minimized;
         }
-
-        static void Escape()
-        {
-            Application.Current.Shutdown();
-        }
         #endregion
 
         #region Event
         private void CloseButton_Click(object sender, MouseButtonEventArgs e)
         {
-            Escape();
+            mainWindow.Escape();
         }
 
         private void MaximizeButton_Click(object sender, MouseButtonEventArgs e)
@@ -136,7 +136,13 @@ namespace Gaten.Language.Mercury.View
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                parentWindow.DragMove();
+                try
+                {
+                    parentWindow.DragMove();
+                }
+                catch (InvalidOperationException)
+                {
+                }
             }
             moveMode = false;
             Cursor = Cursors.Arrow;
@@ -189,7 +195,7 @@ namespace Gaten.Language.Mercury.View
         private void EscapeMenuItem_Click(object sender, RoutedEventArgs e)
         {
             IconImageContextMenu.IsSubmenuOpen = false;
-            Escape();
+            mainWindow.Escape();
         }
 
         private void IconImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -197,5 +203,42 @@ namespace Gaten.Language.Mercury.View
             IconImageContextMenu.IsSubmenuOpen = !IconImageContextMenu.IsSubmenuOpen;
         }
         #endregion
+
+        #region MenuItem
+
+        #region File
+        private void FileNewMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.New();
+        }
+
+        private void FileOpenMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.Open();
+        }
+
+        private void FileCloseMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.FileClose();
+        }
+
+        private void FileSaveMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.Save();
+        }
+
+        private void FileSaveAsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.SaveAs();
+        }
+
+        private void FileEscapeMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.Escape();
+        }
+        #endregion
+
+        #endregion
+
     }
 }

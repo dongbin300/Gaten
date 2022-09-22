@@ -8,8 +8,16 @@
         Deactivated="Window_Deactivated"
         WindowStyle="None" AllowsTransparency="True" Topmost="True" Background="Transparent"
         ShowInTaskbar="False"
-        Title="SystemMonitorWindow" Height="300" Width="200">
-    <StackPanel>
-        <TextBlock x:Name="SystemInfoText" FontSize="11" TextWrapping="Wrap"/>
-    </StackPanel>
+        Title="SystemMonitorWindow" Width="200" Height="300">
+    <Border BorderBrush="Red" BorderThickness="0">
+        <Grid Background="Transparent">
+            <Canvas Width="200" Height="300">
+                <TextBlock x:Name="SystemInfoText1" FontSize="11" Canvas.Top="2" Canvas.Left="10" Foreground="Black"/>
+                <TextBlock x:Name="SystemInfoText2" FontSize="11" Canvas.Top="2" Canvas.Left="12" Foreground="Black"/>
+                <TextBlock x:Name="SystemInfoText3" FontSize="11" Canvas.Top="4" Canvas.Left="10" Foreground="Black"/>
+                <TextBlock x:Name="SystemInfoText4" FontSize="11" Canvas.Top="4" Canvas.Left="12" Foreground="Black"/>
+                <TextBlock x:Name="SystemInfoText5" FontSize="11" Canvas.Top="3" Canvas.Left="11" Foreground="White"/>
+            </Canvas>
+        </Grid>
+    </Border>
 </Window>

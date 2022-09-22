@@ -14,5 +14,13 @@
         {
             return Path.Combine(path, Path.Combine(downPaths));
         }
+
+        public static void TryCreateDirectory(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
     }
 }

@@ -12,6 +12,16 @@ namespace Gaten.Stock.ChartManager.Utils
 {
     internal static class Extensions
     {
+        public static Quote ToQuote(this Candle candle) => new()
+        {
+            Date = candle.Time,
+            Open = Convert.ToDecimal(candle.Open),
+            High = Convert.ToDecimal(candle.High),
+            Low = Convert.ToDecimal(candle.Low),
+            Close = Convert.ToDecimal(candle.Close),
+            Volume = Convert.ToDecimal(candle.Volume),
+        };
+
         public static List<Quote> ToQuotes(this List<Candle> candles) => candles.Select(x => new Quote()
         {
             Date = x.Time,

@@ -1,11 +1,12 @@
-﻿using Gaten.Net.Network;
+﻿using Gaten.Net.Diagnostics;
+using Gaten.Net.Network;
 using Gaten.Net.Windows;
 using Gaten.Net.Windows.Forms;
 using Gaten.Net.Wpf;
-using Gaten.Windows.MintPanda.Utils;
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
@@ -27,127 +28,231 @@ namespace Gaten.Windows.MintPanda
         //BillboardWindow billboardWindow = new();
         MonitorWindow monitorWindow = new();
         SystemMonitorWindow systemMonitorWindow = new();
-        Init init;
-        Monitor monitor;
-        Backup backup;
+        Init init = new();
+        Monitor monitor = default!;
+        Backup backup = new();
+        bool windowAppear = false;
 
         public MainWindow()
         {
-            InitializeComponent();
-            Boot.RegisterStartProgram("MintPanda", Environment.ProcessPath ?? "");
-            systemMonitorWindow.Show();
+            try
+            {
+                InitializeComponent();
+                Boot.RegisterStartProgram("MintPanda", Environment.ProcessPath ?? "");
+                systemMonitorWindow.Show();
 
-            Left = WindowsSystem.ScreenWidth;
-            Top = WindowsSystem.ScreenNoTaskBarHeight - Height;
+                Width = WindowsSystem.ScreenWidth;
+                Height = 49;
+                Left = 0;
+                Top = WindowsSystem.ScreenHeight;
 
-            hook.Start();
-            worker = new Thread(new ThreadStart(InputWorker));
-            worker.Start();
-            init = new();
-            monitor = new(RefreshInfoText);
-            backup = new();
+                hook.Start();
+                worker = new Thread(new ThreadStart(InputWorker));
+                worker.Start();
+                init = new();
+                monitor = new(RefreshInfoText);
+                backup = new();
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(MainWindow), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void InputWorker()
         {
-            hook.MouseDown += (sender, e) =>
+            try
             {
-                if (e.X >= WindowsSystem.ScreenWidth - 30)
+                hook.KeyDown += (sender, e) =>
+                {
+                    switch (e.KeyData)
+                    {
+                        case Keys.Z:
+                            if (UserActivityHook2.PressingModifiers().HasFlag(Modifiers.Ctrl | Modifiers.Shift))
+                            {
+                                monitorWindow.Visibility = Visibility.Visible;
+                            }
+                            break;
+
+                        case Keys.LWin:
+                            if (UserActivityHook2.PressingModifiers().HasFlag(Modifiers.Ctrl | Modifiers.Alt))
+                            {
+                                WindowAppearAnimation();
+                            }
+                            break;
+                    }
+                };
+
+                hook.KeyUp += (sender, e) =>
+                {
+                    switch (e.KeyData)
+                    {
+                        case Keys.Z:
+                            monitorWindow.Visibility = Visibility.Collapsed;
+                            break;
+
+                        case Keys.LWin:
+                            WindowDisappearAnimation();
+                            break;
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(MainWindow), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
+        }
+
+        private void WindowAppearAnimation()
+        {
+            try
+            {
+                if (!windowAppear)
                 {
                     var storyboard = new Storyboard();
-                    var doubleAnimation = new DoubleAnimation(WindowsSystem.ScreenWidth, WindowsSystem.ScreenWidth - Width, new Duration(new TimeSpan(0, 0, 0, 0, 350)));
-                    Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("(Window.Left)"));
+                    var doubleAnimation = new DoubleAnimation(WindowsSystem.ScreenHeight, WindowsSystem.ScreenHeight - WindowsSystem.TaskBarHeight - Height, new Duration(new TimeSpan(0, 0, 0, 0, 150)));
+                    Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("(Window.Top)"));
                     storyboard.Children.Add(doubleAnimation);
                     BeginStoryboard(storyboard);
+                    windowAppear = true;
                 }
-            };
-
-            hook.KeyDown += (sender, e) =>
+            }
+            catch (Exception ex)
             {
-                if (e.KeyData == Keys.Oemtilde)
-                {
-                    monitorWindow.Visibility = Visibility.Visible;
-                }
-            };
+                GLogger.Log(nameof(MainWindow), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
+        }
 
-            hook.KeyUp += (sender, e) =>
+        private void WindowDisappearAnimation()
+        {
+            try
             {
-                if (e.KeyData == Keys.Oemtilde)
+                if (windowAppear)
                 {
-                    monitorWindow.Visibility = Visibility.Collapsed;
+                    var storyboard = new Storyboard();
+                    var doubleAnimation = new DoubleAnimation(WindowsSystem.ScreenHeight - WindowsSystem.TaskBarHeight - Height, WindowsSystem.ScreenHeight, new Duration(new TimeSpan(0, 0, 0, 0, 150)));
+                    Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("(Window.Top)"));
+                    storyboard.Children.Add(doubleAnimation);
+                    BeginStoryboard(storyboard);
+                    windowAppear = false;
                 }
-            };
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(MainWindow), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void RefreshInfoText(List<string> strings)
         {
-            //billboardWindow.SetMarqueeText(string.Join("  ", strings));
-            monitorWindow.SetInfoText(string.Join("\r\n", strings));
+            try
+            {
+                //billboardWindow.SetMarqueeText(string.Join("  ", strings));
+                monitorWindow.SetInfoText(string.Join("\r\n", strings));
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(MainWindow), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void Window_MouseEnter(object sender, MouseEventArgs e)
         {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(MainWindow), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void Window_MouseLeave(object sender, MouseEventArgs e)
         {
-            var storyboard = new Storyboard();
-            var doubleAnimation = new DoubleAnimation(WindowsSystem.ScreenWidth - Width, WindowsSystem.ScreenWidth, new Duration(new TimeSpan(0, 0, 0, 0, 350)));
-            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("(Window.Left)"));
-            storyboard.Children.Add(doubleAnimation);
-            BeginStoryboard(storyboard);
+            try
+            {
+                //WindowDisappearAnimation();
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(MainWindow), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //billboardWindow.Close();
-            monitor.CloseWindow();
-            monitorWindow.Close();
-            systemMonitorWindow.Close();
+            try
+            {
+                //billboardWindow.Close();
+                monitor.CloseWindow();
+                monitorWindow.Close();
+                systemMonitorWindow.Close();
 
-            worker.Join();
-            hook.Stop();
+                worker.Join();
+                hook.Stop();
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(MainWindow), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            control.Content = monitor;
-            //billboardWindow.Show();
-            //billboardWindow.Visibility = Visibility.Collapsed;
-            WebCrawler.Open();
-        }
-
-        private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            //Environment.Exit(0);
+            try
+            {
+                control.Content = monitor;
+                //billboardWindow.Show();
+                //billboardWindow.Visibility = Visibility.Collapsed;
+                WebCrawler.Open();
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(MainWindow), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.Key)
+            try
             {
-                case Key.F1:
-                    control.Content = init;
-                    break;
+                switch (e.Key)
+                {
+                    case Key.F1:
+                        control.Content = init;
+                        break;
 
-                case Key.F2:
-                    control.Content = monitor;
-                    break;
+                    case Key.F2:
+                        control.Content = monitor;
+                        break;
 
-                case Key.F3:
-                    control.Content = backup;
-                    break;
+                    case Key.F3:
+                        control.Content = backup;
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(MainWindow), MethodBase.GetCurrentMethod()?.Name, ex);
             }
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            try
             {
-                DragMove();
+                if (e.ChangedButton == MouseButton.Left)
+                {
+                    DragMove();
+                }
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(MainWindow), MethodBase.GetCurrentMethod()?.Name, ex);
             }
         }
     }

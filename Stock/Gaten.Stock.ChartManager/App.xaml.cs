@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using Gaten.Stock.ChartManager.Apis;
+
+using System.Windows;
 
 namespace Gaten.Stock.ChartManager
 {
@@ -9,6 +11,7 @@ namespace Gaten.Stock.ChartManager
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            BinanceClientApi.Init();
             var trayMenu = new TrayMenu();
         }
     }

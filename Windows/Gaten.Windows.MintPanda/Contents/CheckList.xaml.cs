@@ -1,7 +1,9 @@
 ﻿using Gaten.Net.Diagnostics;
 using Gaten.Net.Network;
 
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 
@@ -16,50 +18,94 @@ namespace Gaten.Windows.MintPanda.Contents
 
         public CheckList()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(CheckList), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            try
             {
-                DragMove();
+                if (e.ChangedButton == MouseButton.Left)
+                {
+                    DragMove();
+                }
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(CheckList), MethodBase.GetCurrentMethod()?.Name, ex);
             }
         }
 
         public static void Init()
         {
-            //CheckLists.Add(NaverMembershipDay());
+            try
+            {
+                //CheckLists.Add(NaverMembershipDay());
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(CheckList), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         static Check NaverMembershipDay()
         {
-            string url = "https://smartstore.naver.com/enlcorp/products/4741788053?NaPm=ct%3Dl39ld9z4%7Cci%3Da4e90f8214cf93ea267024a529b56d6d1c49ef9a%7Ctr%3Dslbrc%7Csn%3D575259%7Chk%3D22b93dc785c056631e33aaa003ab25d4463faa04";
-            WebCrawler.SetUrl(url);
-            var accumulatePoint = WebCrawler.SelectNode("span", "class", "_1uWi-x17sn").InnerText;
+            try
+            {
+                string url = "https://smartstore.naver.com/enlcorp/products/4741788053?NaPm=ct%3Dl39ld9z4%7Cci%3Da4e90f8214cf93ea267024a529b56d6d1c49ef9a%7Ctr%3Dslbrc%7Csn%3D575259%7Chk%3D22b93dc785c056631e33aaa003ab25d4463faa04";
+                WebCrawler.SetUrl(url);
+                var accumulatePoint = WebCrawler.SelectNode("span", "class", "_1uWi-x17sn").InnerText;
 
-            return new Check("네이버 멤버십데이", accumulatePoint, url);
+                return new Check("네이버 멤버십데이", accumulatePoint, url);
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(CheckList), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
+
+            return default!;
         }
 
         public void RefreshCheckList()
         {
-            CheckListBox.Items.Clear();
-            foreach (var check in Checks)
+            try
             {
-                CheckListBox.Items.Add(check);
+                CheckListBox.Items.Clear();
+                foreach (var check in Checks)
+                {
+                    CheckListBox.Items.Add(check);
+                }
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(CheckList), MethodBase.GetCurrentMethod()?.Name, ex);
             }
         }
 
         private void CheckListListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var check = CheckListBox.SelectedItem as Check;
-
-            if (check == null)
+            try
             {
-                return;
-            }
+                var check = CheckListBox.SelectedItem as Check;
 
-            check.Start();
+                if (check == null)
+                {
+                    return;
+                }
+
+                check.Start();
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(CheckList), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
     }
 
@@ -79,7 +125,14 @@ namespace Gaten.Windows.MintPanda.Contents
 
         public void Start()
         {
-            GProcess.Start(Url);
+            try
+            {
+                GProcess.Start(Url);
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(Check), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
     }
 }

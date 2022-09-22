@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Gaten.Windows.MintPanda.Contents
@@ -23,86 +23,135 @@ namespace Gaten.Windows.MintPanda.Contents
 
         public HardwarePrice()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(HardwarePrice), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            try
             {
-                DragMove();
+                if (e.ChangedButton == MouseButton.Left)
+                {
+                    DragMove();
+                }
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(HardwarePrice), MethodBase.GetCurrentMethod()?.Name, ex);
             }
         }
 
         public static void Init()
         {
-            LoadTextFile();
+            try
+            {
+                LoadTextFile();
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(HardwarePrice), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         public static void SaveTextFile()
         {
-            DateTime now = DateTime.Now;
-            StringBuilder builder = new();
-            builder.AppendLine("저장: " + now.ToString());
-            builder.AppendLine();
-            foreach (Device d in Devices)
+            try
             {
-                switch (d.Type)
+                DateTime now = DateTime.Now;
+                StringBuilder builder = new();
+                builder.AppendLine("저장: " + now.ToString());
+                builder.AppendLine();
+                foreach (Device d in Devices)
                 {
-                    case Device.Types.Product:
-                        builder.AppendLine($"P|{d.Name}|{d.Url}|{d.Price}|{d.CashPrice}|{d.ChangePrice}|{d.ChangeCash}");
-                        break;
-                    case Device.Types.Sum:
-                        builder.AppendLine($"S|{d.Name}|{d.Price}|{d.CashPrice}|{d.ChangePrice}|{d.ChangeCash}");
-                        break;
+                    switch (d.Type)
+                    {
+                        case Device.Types.Product:
+                            builder.AppendLine($"P|{d.Name}|{d.Url}|{d.Price}|{d.CashPrice}|{d.ChangePrice}|{d.ChangeCash}");
+                            break;
+                        case Device.Types.Sum:
+                            builder.AppendLine($"S|{d.Name}|{d.Price}|{d.CashPrice}|{d.ChangePrice}|{d.ChangeCash}");
+                            break;
+                    }
                 }
-            }
 
-            File.WriteAllText(Path.Combine(GResource.GetPath("hm"), "" + now.Year + now.Month + now.Day + now.Hour + now.Minute + now.Second + ".txt"), builder.ToString());
+                File.WriteAllText(Path.Combine(GResource.GetPath("hm"), "" + now.Year + now.Month + now.Day + now.Hour + now.Minute + now.Second + ".txt"), builder.ToString());
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(HardwarePrice), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         public static void LoadTextFile()
         {
-            var files = new DirectoryInfo(GResource.GetPath("hm")).GetFiles("*.txt").ToList();
-            var filePath = files[Enumerable.Range(0, files.Count).Aggregate((max, i) => files[max].LastWriteTime > files[i].LastWriteTime ? max : i)].FullName;
-
-            var data = File.ReadAllLines(filePath);
-            foreach (var d in data)
+            try
             {
-                var d2 = d.Split('|');
-                switch (d2[0])
+                var files = new DirectoryInfo(GResource.GetPath("hm")).GetFiles("*.txt").ToList();
+                var filePath = files[Enumerable.Range(0, files.Count).Aggregate((max, i) => files[max].LastWriteTime > files[i].LastWriteTime ? max : i)].FullName;
+
+                var data = File.ReadAllLines(filePath);
+                foreach (var d in data)
                 {
-                    case "P":
-                        Devices.Add(new Device
-                        {
-                            Type = Device.Types.Product,
-                            Name = d2[1],
-                            Url = d2[2],
-                            PrevPrice = d2[3],
-                            PrevCashPrice = d2[4]
-                        });
-                        break;
-                    case "S":
-                        Devices.Add(new Device
-                        {
-                            Type = Device.Types.Sum,
-                            Name = d2[1],
-                            PrevPrice = d2[2],
-                            PrevCashPrice = d2[3]
-                        });
-                        break;
+                    var d2 = d.Split('|');
+                    switch (d2[0])
+                    {
+                        case "P":
+                            Devices.Add(new Device
+                            {
+                                Type = Device.Types.Product,
+                                Name = d2[1],
+                                Url = d2[2],
+                                PrevPrice = d2[3],
+                                PrevCashPrice = d2[4]
+                            });
+                            break;
+                        case "S":
+                            Devices.Add(new Device
+                            {
+                                Type = Device.Types.Sum,
+                                Name = d2[1],
+                                PrevPrice = d2[2],
+                                PrevCashPrice = d2[3]
+                            });
+                            break;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(HardwarePrice), MethodBase.GetCurrentMethod()?.Name, ex);
             }
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            SaveTextFile();
+            try
+            {
+                SaveTextFile();
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(HardwarePrice), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void HardwareDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            GProcess.Start(Devices[HardwareDataGrid.Items.IndexOf(HardwareDataGrid.CurrentItem)].Url);
+            try
+            {
+                GProcess.Start(Devices[HardwareDataGrid.Items.IndexOf(HardwareDataGrid.CurrentItem)].Url);
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(HardwarePrice), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         public void SearchHardwarePrice()
@@ -127,28 +176,35 @@ namespace Gaten.Windows.MintPanda.Contents
                 }
                 First = false;
             }
-            catch
+            catch (Exception ex)
             {
-
+                GLogger.Log(nameof(HardwarePrice), MethodBase.GetCurrentMethod()?.Name, ex);
             }
         }
 
         public void RefreshHardwarePrice()
         {
-            // 이전에 조사했던 가격은 이전가격으로 설정
-            foreach (Device device in Devices)
+            try
             {
-                if (device.Price == null) continue;
-                device.PrevPrice = device.Price;
-                if (device.CashPrice == null) continue;
-                device.PrevCashPrice = device.CashPrice;
+                // 이전에 조사했던 가격은 이전가격으로 설정
+                foreach (Device device in Devices)
+                {
+                    if (device.Price == null) continue;
+                    device.PrevPrice = device.Price;
+                    if (device.CashPrice == null) continue;
+                    device.PrevCashPrice = device.CashPrice;
+                }
+
+                // 지우고
+                HardwareDataGrid.Items.Clear();
+
+                // 새롭게 조사
+                SearchHardwarePrice();
             }
-
-            // 지우고
-            HardwareDataGrid.Items.Clear();
-
-            // 새롭게 조사
-            SearchHardwarePrice();
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(HardwarePrice), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         //public static string GetSumPrice(DataGridView dataGridView)
@@ -168,9 +224,9 @@ namespace Gaten.Windows.MintPanda.Contents
     public class Device
     {
         public enum Types
-        { 
+        {
             Product,
-            Sum 
+            Sum
         }
 
         public Types Type { get; set; }

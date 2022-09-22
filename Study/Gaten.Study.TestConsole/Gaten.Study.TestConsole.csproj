@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DecimalMath.DecimalEx" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Net\Gaten.Net\Gaten.Net.csproj" />
     <ProjectReference Include="..\Gaten.Study.TestDll\Gaten.Study.TestDll.csproj" />
   </ItemGroup>

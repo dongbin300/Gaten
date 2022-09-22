@@ -1,0 +1,55 @@
+﻿<?xml version="1.0"?>
+<SyntaxDefinition name="Mercury Highlighting" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+	<Color name="Comment" foreground="LimeGreen" />
+	<Color name="String" foreground="Orange" />
+	
+	<!-- This is the main ruleset. -->
+	<RuleSet>
+		<Span color="Comment" begin="//" />
+		<Span color="Comment" multiline="true" begin="/\*" end="\*/" />
+		
+		<Span color="String">
+			<Begin>"</Begin>
+			<End>"</End>
+			<RuleSet>
+				<!-- nested span for escape sequences -->
+				<Span begin="\\" end="." />
+			</RuleSet>
+		</Span>
+		
+		<Keywords fontWeight="bold" foreground="#4A9AD3">
+			<Word>asset</Word>
+			<Word>period</Word>
+			<Word>interval</Word>
+			<Word>target</Word>
+			<Word>model</Word>
+			<Word>scenario</Word>
+			<Word>strategy</Word>
+			<Word>signal</Word>
+			<Word>order</Word>
+			<Word>long</Word>
+			<Word>short</Word>
+			<Word>limit</Word>
+			<Word>market</Word>
+			<Word>balance</Word>
+			<Word>poe</Word>
+			<Word>ri</Word>
+			<Word>rsi</Word>
+			<Word>macd</Word>
+		</Keywords>
+		
+		<Keywords fontWeight="bold" fontStyle="italic" foreground="Red">
+			<Word>Mercury</Word>
+		</Keywords>
+		
+		<!-- Digits -->
+		<Rule foreground="#41C291">
+            \b0[xX][0-9a-fA-F]+  # hex number
+        |    \b
+            (    \d+(\.[0-9]+)?   #number with optional floating point
+            |    \.[0-9]+         #or just starting with floating point
+            )
+            ([eE][+-]?[0-9]+)? # optional exponent
+        </Rule>
+	</RuleSet>
+</SyntaxDefinition>

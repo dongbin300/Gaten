@@ -3,7 +3,9 @@ using Gaten.Net.IO;
 using Gaten.Windows.MintPanda.Contents;
 using Gaten.Windows.MintPanda.Utils;
 
+using System;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -15,81 +17,123 @@ namespace Gaten.Windows.MintPanda
     /// </summary>
     public partial class Init : UserControl
     {
-        private string utilDirectory;
+        private string utilDirectory = string.Empty;
 
         public Init()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
 
-            if (Directory.Exists("D:\\유틸"))
-            {
-                utilDirectory = "D:\\유틸";
+                if (Directory.Exists("D:\\유틸"))
+                {
+                    utilDirectory = "D:\\유틸";
+                }
+                else if (Directory.Exists("E:\\유틸"))
+                {
+                    utilDirectory = "E:\\유틸";
+                }
+                else
+                {
+                    utilDirectory = string.Empty;
+                }
             }
-            else if (Directory.Exists("E:\\유틸"))
+            catch (Exception ex)
             {
-                utilDirectory = "E:\\유틸";
-            }
-            else
-            {
-                utilDirectory = string.Empty;
+                GLogger.Log(nameof(Init), MethodBase.GetCurrentMethod()?.Name, ex);
             }
         }
 
         private void WindowButton_Click(object sender, RoutedEventArgs e)
         {
-            if(sender is not ToggleButton toggleButton)
+            try
             {
-                return;
-            }
+                if (sender is not ToggleButton toggleButton)
+                {
+                    return;
+                }
 
-            WindowUtil.ToggleWindow<CheckList>(toggleButton);
+                WindowUtil.ToggleWindow<CheckList>(toggleButton);
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(Init), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void InstallFontButton_Click(object sender, RoutedEventArgs e)
         {
-            GFile.CopyDirectory(utilDirectory.Down("폰트", "JP"), GPath.Fonts);
-            GFile.CopyDirectory(utilDirectory.Down("폰트", "KR"), GPath.Fonts);
+            try
+            {
+                GFile.CopyDirectory(utilDirectory.Down("폰트", "JP"), GPath.Fonts);
+                GFile.CopyDirectory(utilDirectory.Down("폰트", "KR"), GPath.Fonts);
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(Init), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void InstallButton_Click(object sender, RoutedEventArgs e)
         {
-            if(sender is not Button button)
+            try
             {
-                return;
+                if (sender is not Button button)
+                {
+                    return;
+                }
+
+                var tag = button.Tag.ToString();
+
+                if (string.IsNullOrWhiteSpace(tag))
+                {
+                    MessageBox.Show("존재하지 않는 태그입니다.");
+                    return;
+                }
+
+                GProcess.StartInstaller(tag, utilDirectory);
             }
-
-            var tag = button.Tag.ToString();
-
-            if (string.IsNullOrWhiteSpace(tag))
+            catch (Exception ex)
             {
-                MessageBox.Show("존재하지 않는 태그입니다.");
-                return;
+                GLogger.Log(nameof(Init), MethodBase.GetCurrentMethod()?.Name, ex);
             }
-
-            GProcess.StartInstaller(tag, utilDirectory);
         }
 
         private void ExecuteButton_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is not Button button)
+            try
             {
-                return;
+                if (sender is not Button button)
+                {
+                    return;
+                }
+
+                var tag = button.Tag.ToString();
+
+                if (string.IsNullOrWhiteSpace(tag))
+                {
+                    MessageBox.Show("존재하지 않는 태그입니다.");
+                    return;
+                }
+
+                GProcess.StartExe(tag, utilDirectory);
             }
-
-            var tag = button.Tag.ToString();
-
-            if (string.IsNullOrWhiteSpace(tag))
+            catch (Exception ex)
             {
-                MessageBox.Show("존재하지 않는 태그입니다.");
-                return;
+                GLogger.Log(nameof(Init), MethodBase.GetCurrentMethod()?.Name, ex);
             }
-
-            GProcess.StartExe(tag, utilDirectory);
         }
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
 
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(Init), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
     }
 }

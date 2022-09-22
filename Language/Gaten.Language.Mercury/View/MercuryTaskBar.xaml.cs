@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Gaten.Language.Mercury.View
 {
@@ -22,6 +11,7 @@ namespace Gaten.Language.Mercury.View
     {
         #region Variable
         Window parentWindow => GetParentWindow() ?? Application.Current.MainWindow;
+        MainWindow mainWindow => (MainWindow)parentWindow;
 
         #endregion
 
@@ -29,11 +19,6 @@ namespace Gaten.Language.Mercury.View
         public MercuryTaskBar()
         {
             InitializeComponent();
-        }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-
         }
         #endregion
 
@@ -51,28 +36,19 @@ namespace Gaten.Language.Mercury.View
         #endregion
 
         #region Event
-        private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                parentWindow.DragMove();
-            }
-        }
-        #endregion
-
         private void NewButton_Click(object sender, MouseButtonEventArgs e)
         {
-
+            mainWindow.New();
         }
 
         private void OpenButton_Click(object sender, MouseButtonEventArgs e)
         {
-
+            mainWindow.Open();
         }
 
         private void SaveButton_Click(object sender, MouseButtonEventArgs e)
         {
-
+            mainWindow.Save();
         }
 
         private void CutButton_Click(object sender, MouseButtonEventArgs e)
@@ -94,5 +70,51 @@ namespace Gaten.Language.Mercury.View
         {
 
         }
+
+        private void RedoButton_Click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void WrapButton_Click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void NumberButton_Click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void InspectionButton_Click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void InspectionRunButton_Click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void FindReplaceButton_Click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void CommentButton_Click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void DecommentButton_Click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void ThemeButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            Delegater.ChangeTheme();
+        }
+        #endregion
     }
 }

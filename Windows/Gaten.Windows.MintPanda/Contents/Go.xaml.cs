@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿using Gaten.Net.Diagnostics;
+
+using System;
+using System.Reflection;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -11,25 +15,54 @@ namespace Gaten.Windows.MintPanda.Contents
     {
         public Go()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(Go), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            try
             {
-                DragMove();
+                if (e.ChangedButton == MouseButton.Left)
+                {
+                    DragMove();
+                }
             }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(Go), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
+
         }
 
         private void BadukButton_Click(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText((sender as Button)?.Content.ToString());
+            try
+            {
+                Clipboard.SetText((sender as Button)?.Content.ToString());
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(Go), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
 
         private void BadukButtonChange_Click(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText(Clipboard.GetText().Replace("韩", "ㅁ").Replace("中", "韩").Replace("ㅁ", "中"));
+            try
+            {
+                Clipboard.SetText(Clipboard.GetText().Replace("韩", "ㅁ").Replace("中", "韩").Replace("ㅁ", "中"));
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(Go), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
         }
     }
 }
