@@ -6,10 +6,11 @@ using CryptoExchange.Net.Authentication;
 
 using Gaten.Net.Extensions;
 using Gaten.Net.IO;
-using Gaten.Net.Stock.Charts;
 using Gaten.Stock.ChartManager.Accounts;
 using Gaten.Stock.ChartManager.Markets;
 using Gaten.Stock.ChartManager.NewFolder;
+
+using Skender.Stock.Indicators;
 
 using System;
 using System.Collections.Generic;
@@ -133,31 +134,32 @@ namespace Gaten.Stock.ChartManager.Apis
         /// 봉 데이터 가져오기
         /// </summary>
         /// <param name="symbol"></param>
-        /// <param name="candleInterval"></param>
+        /// <param name="interval"></param>
         /// <param name="startTime"></param>
         /// <param name="endTime"></param>
         /// <param name="limit"></param>
         /// <returns></returns>
-        public static List<Candle> GetCandles(string symbol, KlineInterval candleInterval, DateTime startTime, DateTime endTime, int limit)
+        public static List<Quote> GetQuotes(string symbol, KlineInterval interval, DateTime startTime, DateTime endTime, int limit)
         {
-            var result = binanceClient.UsdFuturesApi.ExchangeData.GetKlinesAsync(symbol, candleInterval, startTime, endTime, limit);
+            var result = binanceClient.UsdFuturesApi.ExchangeData.GetKlinesAsync(symbol, interval, startTime, endTime, limit);
             result.Wait();
 
-            var candles = new List<Candle>();
+            var quotes = new List<Quote>();
 
             foreach (var data in result.Result.Data)
             {
-                candles.Add(new Candle(
-                    data.OpenTime,
-                    decimal.ToDouble(data.OpenPrice),
-                    decimal.ToDouble(data.HighPrice),
-                    decimal.ToDouble(data.LowPrice),
-                    decimal.ToDouble(data.ClosePrice),
-                    decimal.ToDouble(data.Volume)
-                    ));
+                quotes.Add(new Quote
+                {
+                    Date = data.OpenTime,
+                    Open = data.OpenPrice,
+                    High = data.HighPrice,
+                    Low = data.LowPrice,
+                    Close = data.ClosePrice,
+                    Volume = data.Volume
+                });
             }
 
-            return candles;
+            return quotes;
         }
         #endregion
 

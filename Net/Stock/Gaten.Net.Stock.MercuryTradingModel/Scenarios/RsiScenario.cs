@@ -3,7 +3,7 @@ using Gaten.Net.Stock.MercuryTradingModel.Enums;
 using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
 using Gaten.Net.Stock.MercuryTradingModel.Triggers;
 
-using Action = Gaten.Net.Stock.MercuryTradingModel.Actions.Action;
+using Action = Gaten.Net.Stock.MercuryTradingModel.Actions.Order;
 
 namespace Gaten.Net.Stock.MercuryTradingModel.Scenarios
 {
@@ -23,12 +23,12 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Scenarios
         /// <summary>
         /// 이 시나리오가 진행중일 때 원래 상태로 되돌아가는 조건(신호 단계 초기화)
         /// </summary>
-        public ICondition RevertCondition { get; set; }
+        public ISignal RevertCondition { get; set; }
 
         /// <summary>
         /// 이 시나리오의 트리거
         /// </summary>
-        public IList<ITrigger> Triggers { get; set; } = new List<ITrigger>();
+        public IList<IStrategy> Triggers { get; set; } = new List<IStrategy>();
 
         public RsiScenario()
         {
@@ -37,14 +37,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Scenarios
 
         public void Init()
         {
-            var condition1 = new IndicatorCondition("5m").Rsi(Comparison.LessThanOrEqual, 30);
-            var condition2 = new IndicatorCondition("5m").Rsi(Comparison.GreaterThanOrEqual, 70);
-            var action1 = new Action().Position(PositionSide.Long, OrderType.Seed, 5);
-            var action2 = new Action().Position(PositionSide.Short, OrderType.Seed, 5);
-            var trigger1 = new Trigger(condition1, action1);
-            var trigger2 = new Trigger(condition2, action2);
-            Triggers.Add(trigger1);
-            Triggers.Add(trigger2);
+
         }
     }
 }

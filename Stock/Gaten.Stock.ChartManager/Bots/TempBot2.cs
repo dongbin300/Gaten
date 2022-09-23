@@ -8,18 +8,12 @@ using System.Text;
 
 namespace Gaten.Stock.ChartManager.Bots
 {
-    /// <summary>
-    /// 백테스트 봇으로 사용예정
-    /// 트레이메뉴에 1분봉데이터, 5분봉데이터, 1일봉데이터.. 등등 여러개 추가
-    /// 5분봉데이터는 1분봉데이터를 얻어오고 그걸 가공
-    /// 
-    /// </summary>
-    internal class TempBot
+    internal class TempBot2
     {
         public StringBuilder TradeLog = new();
         public Worker Worker = new();
 
-        public TempBot(Worker worker)
+        public TempBot2(Worker worker)
         {
             Worker = worker;
         }

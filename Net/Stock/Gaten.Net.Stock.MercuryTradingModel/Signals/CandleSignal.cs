@@ -4,9 +4,9 @@ using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
 
 namespace Gaten.Net.Stock.MercuryTradingModel.Conditions
 {
-    public class CandleCondition : Condition
+    public class CandleSignal : Signal
     {
-        public CandleCondition(CandleInterval interval) : base(interval)
+        public CandleSignal(CandleInterval interval) : base(interval)
         {
         }
 

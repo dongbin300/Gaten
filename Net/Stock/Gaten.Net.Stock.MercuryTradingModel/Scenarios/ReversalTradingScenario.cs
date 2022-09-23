@@ -37,12 +37,12 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Scenarios
         /// <summary>
         /// 이 시나리오가 진행중일 때 원래 상태로 되돌아가는 조건(신호 단계 초기화)
         /// </summary>
-        public ICondition RevertCondition { get; set; }
+        public ISignal RevertCondition { get; set; }
 
         /// <summary>
         /// 이 시나리오의 트리거
         /// </summary>
-        public IList<ITrigger> Triggers { get; set; } = new List<ITrigger>();
+        public IList<IStrategy> Triggers { get; set; } = new List<IStrategy>();
 
         public ReversalTradingScenario()
         {
@@ -52,10 +52,10 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Scenarios
         public void Init()
         {
             //var trigger = new Trigger();
-            var condition1 = new Condition("5m").Max(200);
-            var condition2 = new Condition("5m").Contrast(CandleProperty.Close, Comparison.GreaterThan, 1);
-            var condition3 = new Condition("5m").Contrast(CandleProperty.Volume, Comparison.GreaterThan, 200);
-            var condition4 = new Condition("5m").Contrast(CandleProperty.High, Comparison.GreaterThan, 1);
+            var condition1 = new Signal("5m").Max(200);
+            var condition2 = new Signal("5m").Contrast(CandleProperty.Close, Comparison.GreaterThan, 1);
+            var condition3 = new Signal("5m").Contrast(CandleProperty.Volume, Comparison.GreaterThan, 200);
+            var condition4 = new Signal("5m").Contrast(CandleProperty.High, Comparison.GreaterThan, 1);
 
         }
     }

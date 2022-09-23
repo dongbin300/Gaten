@@ -75,11 +75,24 @@ namespace Gaten.Stock.ChartManager
                 menuStrip.Items.Add(new ToolStripMenuItem(symbol + " 5분봉 데이터 로드", null, new EventHandler((sender, e) => LoadChartDataEvent(sender, e, symbol, KlineInterval.FiveMinutes))));
             }
             menuStrip.Items.Add(new ToolStripSeparator());
+            menuStrip.Items.Add(new ToolStripMenuItem("Mercury Editor 열기", null, MercuryEditorOpenEvent));
             menuStrip.Items.Add(new ToolStripMenuItem("TempBot Run", null, TempBotRunEvent));
             menuStrip.Items.Add(new ToolStripMenuItem("종료", null, Exit));
 
             menuStrip.Items[0].Enabled = false;
             trayIcon.ContextMenuStrip = menuStrip;
+        }
+
+        private void MercuryEditorOpenEvent(object? sender, EventArgs e)
+        {
+            try
+            {
+                GProcess.StartExe("MercuryEditor");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void TempBotRunEvent(object? sender, EventArgs e)

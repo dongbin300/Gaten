@@ -1,10 +1,11 @@
 ﻿using Binance.Net.Enums;
 
 using Gaten.Net.IO;
-using Gaten.Net.Stock.Charts;
 using Gaten.Net.Wpf.Models;
 using Gaten.Stock.ChartManager.Apis;
 using Gaten.Stock.ChartManager.Utils;
+
+using Skender.Stock.Indicators;
 
 using System;
 using System.Collections.Generic;
@@ -43,8 +44,16 @@ namespace Gaten.Stock.ChartManager.Charts
                     foreach (var d in data)
                     {
                         var e = d.Split(',');
-                        var candle = new Candle(DateTime.Parse(e[0]), double.Parse(e[1]), double.Parse(e[2]), double.Parse(e[3]), double.Parse(e[4]), double.Parse(e[5]));
-                        chartPack.AddChart(new ChartInfo(symbol, candle));
+                        var quote = new Quote
+                        {
+                            Date = DateTime.Parse(e[0]),
+                            Open = decimal.Parse(e[1]),
+                            High = decimal.Parse(e[2]),
+                            Low = decimal.Parse(e[3]),
+                            Close = decimal.Parse(e[4]),
+                            Volume = decimal.Parse(e[5])
+                        };
+                        chartPack.AddChart(new ChartInfo(symbol, quote));
                     }
                 });
 
@@ -75,8 +84,16 @@ namespace Gaten.Stock.ChartManager.Charts
                 foreach (var d in data)
                 {
                     var e = d.Split(',');
-                    var candle = new Candle(DateTime.Parse(e[0]), double.Parse(e[1]), double.Parse(e[2]), double.Parse(e[3]), double.Parse(e[4]), double.Parse(e[5]));
-                    chartPack.AddChart(new ChartInfo(symbol, candle));
+                    var quote = new Quote
+                    {
+                        Date = DateTime.Parse(e[0]),
+                        Open = decimal.Parse(e[1]),
+                        High = decimal.Parse(e[2]),
+                        Low = decimal.Parse(e[3]),
+                        Close = decimal.Parse(e[4]),
+                        Volume = decimal.Parse(e[5])
+                    };
+                    chartPack.AddChart(new ChartInfo(symbol, quote));
                 }
 
                 chartPack.CalculateIndicators();
@@ -122,8 +139,16 @@ namespace Gaten.Stock.ChartManager.Charts
                             foreach (var d in data)
                             {
                                 var e = d.Split(',');
-                                var candle = new Candle(DateTime.Parse(e[0]), double.Parse(e[1]), double.Parse(e[2]), double.Parse(e[3]), double.Parse(e[4]), double.Parse(e[5]));
-                                chartPack.AddChart(new ChartInfo(symbol, candle));
+                                var quote = new Quote
+                                {
+                                    Date = DateTime.Parse(e[0]),
+                                    Open = decimal.Parse(e[1]),
+                                    High = decimal.Parse(e[2]),
+                                    Low = decimal.Parse(e[3]),
+                                    Close = decimal.Parse(e[4]),
+                                    Volume = decimal.Parse(e[5])
+                                };
+                                chartPack.AddChart(new ChartInfo(symbol, quote));
                             }
                         }
                     }
@@ -133,9 +158,12 @@ namespace Gaten.Stock.ChartManager.Charts
 
                     chartPack.ConvertCandle();
 
-                    var newData = chartPack.Charts.Select(x => x.Candle).Select(x => string.Join(',', new string[] {
-                            x.Time.ToString("yyyy-MM-dd HH:mm:ss"), x.Open.ToString(), x.High.ToString(), x.Low.ToString(), x.Close.ToString(), x.Volume.ToString()
-                        })).ToList();
+                    var newData = chartPack.Charts
+                        .Select(x => x.Quote)
+                        .Select(x => string.Join(',', new string[] {
+                            x.Date.ToString("yyyy-MM-dd HH:mm:ss"), x.Open.ToString(), x.High.ToString(), x.Low.ToString(), x.Close.ToString(), x.Volume.ToString()
+                        }))
+                        .ToList();
 
                     GFile.TryCreate(path);
                     var prevData = GFile.ReadToArray(path);

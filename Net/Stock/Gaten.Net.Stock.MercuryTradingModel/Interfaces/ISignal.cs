@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gaten.Net.Stock.MercuryTradingModel.Interfaces
 {
-    public interface IAction
+    public interface ISignal
     {
     }
 }

@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:Gaten.Language.Mercury"
         xmlns:view="clr-namespace:Gaten.Language.Mercury.View"
         xmlns:editor="clr-namespace:Gaten.Language.Mercury.Editor"
-        mc:Ignorable="d" WindowStyle="None" Icon="/Gaten.Language.Mercury;component/Resources/Images/mercury.png"
+        mc:Ignorable="d" WindowStyle="None" Icon="Resources/Images/mercury.png"
          WindowStartupLocation="CenterScreen" Closing="Window_Closing"
         Title="Mercury Editor" Width="800" Height="450" MinWidth="300" MinHeight="200">
 

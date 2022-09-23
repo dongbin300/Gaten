@@ -35,12 +35,12 @@ namespace Gaten.Language.Mercury
                 case "Light":
                     Delegater.CurrentTheme = Themes.Light;
                     mainWindow.textEditor.SyntaxHighlighting = MercuryEditor.MercuryLightHighlighting;
-                    AddResourceDictionary("/Gaten.Language.Mercury;component/Resources/Themes/LightTheme.xaml");
+                    AddResourceDictionary("Resources/Themes/LightTheme.xaml");
                     break;
                 case "Dark":
                     Delegater.CurrentTheme = Themes.Dark;
                     mainWindow.textEditor.SyntaxHighlighting = MercuryEditor.MercuryDarkHighlighting;
-                    AddResourceDictionary("/Gaten.Language.Mercury;component/Resources/Themes/DarkTheme.xaml");
+                    AddResourceDictionary("Resources/Themes/DarkTheme.xaml");
                     break;
             }
         }
@@ -53,14 +53,14 @@ namespace Gaten.Language.Mercury
                     Delegater.CurrentTheme = Themes.Dark;
                     mainWindow.textEditor.SyntaxHighlighting = MercuryEditor.MercuryDarkHighlighting;
                     Resources.MergedDictionaries.Clear();
-                    AddResourceDictionary("/Gaten.Language.Mercury;component/Resources/Themes/DarkTheme.xaml");
+                    AddResourceDictionary("Resources/Themes/DarkTheme.xaml");
                     break;
                 default:
                 case Themes.Dark:
                     Delegater.CurrentTheme = Themes.Light;
                     mainWindow.textEditor.SyntaxHighlighting = MercuryEditor.MercuryLightHighlighting;
                     Resources.MergedDictionaries.Clear();
-                    AddResourceDictionary("/Gaten.Language.Mercury;component/Resources/Themes/LightTheme.xaml");
+                    AddResourceDictionary("Resources/Themes/LightTheme.xaml");
                     break;
             }
         }

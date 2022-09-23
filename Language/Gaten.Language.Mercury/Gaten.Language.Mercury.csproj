@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Resources\Images\mercury.ico</ApplicationIcon>
+    <AssemblyName>MercuryEditor</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,7 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Resources\Images\mercury.ico" />
+    <Content Include="Resources\Images\mercury.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -33,7 +36,9 @@
     <EmbeddedResource Include="Editor\MercuryHighlighting-Light.xshd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <Resource Include="Resources\Images\mercury.png" />
+    <Content Include="Resources\Images\mercury.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

@@ -2,8 +2,9 @@
 
 using Gaten.Net.Extensions;
 using Gaten.Net.IO;
-using Gaten.Net.Stock.Charts;
 using Gaten.Stock.ChartManager.Markets;
+
+using Skender.Stock.Indicators;
 
 using System;
 using System.Collections.Generic;
@@ -46,28 +47,29 @@ namespace Gaten.Stock.ChartManager.Apis
         #endregion
 
         #region Chart API
-        public static List<Candle> GetCandlesForOneDay(string symbol, DateTime startTime)
+        public static List<Quote> GetQuotesForOneDay(string symbol, DateTime startTime)
         {
             try
             {
                 var data = File.ReadAllLines(GResource.BinanceFuturesDataPath.Down("1m", symbol, $"{symbol}_{startTime:yyyy-MM-dd}.csv"));
 
-                var candles = new List<Candle>();
+                var quotes = new List<Quote>();
 
                 foreach (var d in data)
                 {
                     var e = d.Split(',');
-                    candles.Add(new Candle(
-                        DateTime.Parse(e[0]),
-                        double.Parse(e[1]),
-                        double.Parse(e[2]),
-                        double.Parse(e[3]),
-                        double.Parse(e[4]),
-                        double.Parse(e[5])
-                        ));
+                    quotes.Add(new Quote
+                    {
+                        Date = DateTime.Parse(e[0]),
+                        Open = decimal.Parse(e[1]),
+                        High = decimal.Parse(e[2]),
+                        Low = decimal.Parse(e[3]),
+                        Close = decimal.Parse(e[4]),
+                        Volume = decimal.Parse(e[5])
+                    });
                 }
 
-                return candles;
+                return quotes;
             }
             catch (FileNotFoundException)
             {

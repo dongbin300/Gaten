@@ -4,27 +4,26 @@ using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
 
 namespace Gaten.Net.Stock.MercuryTradingModel.Conditions
 {
-    public class Condition : ICondition
+    public class Signal : ISignal
     {
         public CandleInterval Interval { get; set; }
-        public bool Signal { get; set; }
 
-        public Condition(CandleInterval interval)
+        public Signal(CandleInterval interval)
         {
             Interval = interval;
         }
 
-        public Condition(string intervalFormatString)
+        public Signal(string intervalFormatString)
         {
             Interval = new CandleInterval(intervalFormatString);
         }
 
-        public Condition Max(int candleCount)
+        public Signal Max(int candleCount)
         {
             return this;
         }
 
-        public Condition Contrast(CandleProperty property, Comparison comparison, int value)
+        public Signal Contrast(CandleProperty property, Comparison comparison, int value)
         {
             return this;
         }

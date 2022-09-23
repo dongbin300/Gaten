@@ -1,6 +1,5 @@
 ﻿using Binance.Net.Enums;
 
-using Gaten.Net.Stock.Charts;
 using Gaten.Stock.ChartManager.Indicators;
 using Gaten.Stock.ChartManager.Utils;
 
@@ -42,7 +41,7 @@ namespace Gaten.Stock.ChartManager.Charts
                 return;
             }
 
-            var newCandles = new List<Candle>();
+            var newQuotes = new List<Quote>();
 
             int unitCount = interval switch
             {
@@ -63,25 +62,26 @@ namespace Gaten.Stock.ChartManager.Charts
 
             for (int i = 0; i < Charts.Count; i += unitCount)
             {
-                var targets = Charts.Skip(i).Take(unitCount).Select(x => x.Candle).ToList();
+                var targets = Charts.Skip(i).Take(unitCount).Select(x => x.Quote).ToList();
 
-                newCandles.Add(new Candle(
-                    targets[0].Time,
-                    targets[0].Open,
-                    targets.Max(t => t.High),
-                    targets.Min(t => t.Low),
-                    targets[^1].Close,
-                    targets.Sum(t => t.Volume)
-                    ));
+                newQuotes.Add(new Quote
+                {
+                    Date = targets[0].Date,
+                    Open = targets[0].Open,
+                    High = targets.Max(t => t.High),
+                    Low = targets.Min(t => t.Low),
+                    Close = targets[^1].Close,
+                    Volume = targets.Sum(t => t.Volume)
+                });
             }
 
-            var newChart = newCandles.Select(candle => new ChartInfo(Symbol, candle)).ToList();
+            var newChart = newQuotes.Select(candle => new ChartInfo(Symbol, candle)).ToList();
             Charts = newChart;
         }
 
         public void CalculateIndicators()
         {
-            var quotes = Charts.Select(x => x.Candle.ToQuote());
+            var quotes = Charts.Select(x => x.Quote);
             var sma = quotes.GetSma(112).ToList();
             var ema = quotes.GetEma(112).ToList();
             var rsi = quotes.GetRsi(14).ToList();
