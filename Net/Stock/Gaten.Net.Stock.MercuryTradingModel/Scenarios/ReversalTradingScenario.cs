@@ -42,7 +42,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Scenarios
         /// <summary>
         /// 이 시나리오의 트리거
         /// </summary>
-        public IList<IStrategy> Triggers { get; set; } = new List<IStrategy>();
+        public IList<IStrategy> Strategies { get; set; } = new List<IStrategy>();
 
         public ReversalTradingScenario()
         {

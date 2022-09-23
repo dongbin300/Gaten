@@ -2,7 +2,7 @@
 {
     public interface IStrategy
     {
-        public IList<ISignal> Conditions { get; set; }
-        public IList<IOrder> Actions { get; set; }
+        public IList<ISignal> Signals { get; set; }
+        public IList<IOrder> Orders { get; set; }
     }
 }

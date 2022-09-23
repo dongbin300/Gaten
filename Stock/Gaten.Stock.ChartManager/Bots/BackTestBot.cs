@@ -49,7 +49,7 @@ namespace Gaten.Stock.ChartManager.Bots
                     {
                         foreach(var scenario in TradingModel.Scenarios)
                         {
-                            foreach(var trigger in scenario.Triggers)
+                            foreach(var trigger in scenario.Strategies)
                             {
 
                             }

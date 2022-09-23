@@ -4,19 +4,19 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Triggers
 {
     public class Strategy : IStrategy
     {
-        public IList<ISignal> Conditions { get; set; } = new List<ISignal>();
-        public IList<IOrder> Actions { get; set; } = new List<IOrder>();
+        public IList<ISignal> Signals { get; set; } = new List<ISignal>();
+        public IList<IOrder> Orders { get; set; } = new List<IOrder>();
 
         public Strategy(IList<ISignal> conditions, IList<IOrder> actions)
         {
-            Conditions = conditions;
-            Actions = actions;
+            Signals = conditions;
+            Orders = actions;
         }
 
         public Strategy(ISignal condition, IOrder action)
         {
-            Conditions.Add(condition);
-            Actions.Add(action);
+            Signals.Add(condition);
+            Orders.Add(action);
         }
     }
 }
