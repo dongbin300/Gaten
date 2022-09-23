@@ -88,7 +88,7 @@ namespace Gaten.Language.Mercury.View
 
         private void InspectionButton_Click(object sender, MouseButtonEventArgs e)
         {
-
+            mainWindow.Inspection();
         }
 
         private void InspectionRunButton_Click(object sender, MouseButtonEventArgs e)

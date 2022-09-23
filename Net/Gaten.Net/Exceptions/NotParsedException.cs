@@ -1,6 +1,6 @@
 ﻿namespace Gaten.Net.Exceptions
 {
-    public class NotParsedException : System.Exception
+    public class NotParsedException : Exception
     {
         public NotParsedException()
         {

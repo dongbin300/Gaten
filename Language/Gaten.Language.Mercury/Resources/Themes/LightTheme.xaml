@@ -12,6 +12,8 @@
     <SolidColorBrush x:Key="TaskBarMouseOver" Color="#FCFCFD"/>
     <SolidColorBrush x:Key="ModelNameForeground" Color="#000000"/>
     <SolidColorBrush x:Key="ModelNameBackground" Color="#FEFEFE"/>
+    <SolidColorBrush x:Key="StatusForeground" Color="#000000"/>
+    <SolidColorBrush x:Key="StatusBackground" Color="AliceBlue"/>
     
     <!--#region MenuItem & Separator -->
     <Style TargetType="MenuItem" x:Key="MainMenuItem">

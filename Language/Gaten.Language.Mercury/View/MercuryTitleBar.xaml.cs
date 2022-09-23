@@ -1,4 +1,5 @@
-﻿using Gaten.Language.Mercury.IO;
+﻿using Gaten.Language.Mercury.Inspection;
+using Gaten.Language.Mercury.IO;
 using Gaten.Net.Wpf.Controls;
 
 using System;
@@ -238,7 +239,15 @@ namespace Gaten.Language.Mercury.View
         }
         #endregion
 
+        #region Model
+        private void ModelInspectionMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.Inspection();
+        }
         #endregion
+
+        #endregion
+
 
     }
 }

@@ -67,6 +67,40 @@ namespace Gaten.Net.Extensions
             return -1;
         }
 
+        public static byte[][] Split(this byte[] source, byte[] separator)
+        {
+            var Parts = new List<byte[]>();
+            var Index = 0;
+            byte[] Part;
+            for (var I = 0; I < source.Length; ++I)
+            {
+                if (Equals(source, separator, I))
+                {
+                    Part = new byte[I - Index];
+                    Array.Copy(source, Index, Part, 0, Part.Length);
+                    Parts.Add(Part);
+                    Index = I + separator.Length;
+                    I += separator.Length - 1;
+                }
+            }
+            Part = new byte[source.Length - Index];
+            Array.Copy(source, Index, Part, 0, Part.Length);
+            Parts.Add(Part);
+            return Parts.ToArray();
+        }
+
+        private static bool Equals(byte[] source, byte[] separator, int index)
+        {
+            for (int i = 0; i < separator.Length; ++i)
+            {
+                if (index + i >= source.Length || source[index + i] != separator[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public static char ToChar(this byte b) => b < 10 ? (char)(b + 48) : (char)(b + 55);
 
         public static void CopyHexStringBytes(this byte[] bytes, int index, string target)

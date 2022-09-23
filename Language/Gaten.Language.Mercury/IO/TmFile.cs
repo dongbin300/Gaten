@@ -5,6 +5,9 @@ using Microsoft.Win32;
 
 namespace Gaten.Language.Mercury.IO
 {
+    /// <summary>
+    /// Trading Model File
+    /// </summary>
     internal class TmFile
     {
         public static string CurrentFilePath = string.Empty;

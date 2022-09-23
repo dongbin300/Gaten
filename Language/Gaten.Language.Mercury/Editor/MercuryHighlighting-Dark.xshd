@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0"?>
 <SyntaxDefinition name="Mercury Highlighting" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
-	<Color name="Comment" foreground="LimeGreen" />
+	<Color name="Comment" foreground="Gray" />
 	<Color name="String" foreground="Orange" />
+	<Color name="System" foreground="#4CC6AD" />
 	
 	<!-- This is the main ruleset. -->
 	<RuleSet>
@@ -16,6 +17,8 @@
 				<Span begin="\\" end="." />
 			</RuleSet>
 		</Span>
+
+		<Span color="System" begin="#" />
 		
 		<Keywords fontWeight="bold" foreground="#4A9AD3">
 			<Word>asset</Word>

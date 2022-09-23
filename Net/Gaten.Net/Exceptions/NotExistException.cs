@@ -1,6 +1,6 @@
 ﻿namespace Gaten.Net.Exceptions
 {
-    public class NotExistException : System.Exception
+    public class NotExistException : Exception
     {
         public NotExistException()
         {

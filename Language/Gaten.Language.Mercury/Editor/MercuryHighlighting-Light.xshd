@@ -2,7 +2,8 @@
 <SyntaxDefinition name="Mercury Highlighting" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
 	<Color name="Comment" foreground="LimeGreen" />
 	<Color name="String" foreground="Blue" />
-	
+	<Color name="System" foreground="#2D90AD" />
+
 	<!-- This is the main ruleset. -->
 	<RuleSet>
 		<Span color="Comment" begin="//" />
@@ -17,6 +18,8 @@
 			</RuleSet>
 		</Span>
 		
+		<Span color="System" begin="#" />
+
 		<Keywords fontWeight="bold" foreground="Blue">
 			<Word>asset</Word>
 			<Word>period</Word>

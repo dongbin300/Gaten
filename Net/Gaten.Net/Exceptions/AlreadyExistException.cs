@@ -1,6 +1,6 @@
 ﻿namespace Gaten.Net.Exceptions
 {
-    public class AlreadyExistException : System.Exception
+    public class AlreadyExistException : Exception
     {
         public AlreadyExistException()
         {

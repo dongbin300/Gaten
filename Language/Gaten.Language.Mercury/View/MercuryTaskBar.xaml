@@ -39,7 +39,7 @@
             <Setter Property="Stroke" Value="#CCC" />
             <Setter Property="StrokeThickness" Value="1" />
             <Setter Property="SnapsToDevicePixels" Value="True" />
-            <Setter Property="Data" Value="M7.5 3 L7.5 37" />
+            <Setter Property="Data" Value="M7.5 3 L7.5 27" />
             <Setter Property="RenderTransform">
                 <Setter.Value>
                     <ScaleTransform ScaleX="1" ScaleY="1"/>

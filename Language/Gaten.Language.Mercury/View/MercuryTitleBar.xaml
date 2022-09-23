@@ -171,7 +171,7 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="편집" Style="{DynamicResource MainMenuItem}" Height="30">
-                    <MenuItem x:Name="EditFindMenuItem" Style="{DynamicResource SubMenuItem}" Header="찾기 및 바꾸기" Height="28" />
+                    <MenuItem x:Name="EditFindReplaceMenuItem" Style="{DynamicResource SubMenuItem}" Header="찾기 및 바꾸기" Height="28" />
                     <Separator Style="{DynamicResource SubMenuSeparator}" />
                     <MenuItem x:Name="EditUndoMenuItem" Style="{DynamicResource SubMenuItem}" Header="실행 취소" Height="28" />
                     <MenuItem x:Name="EditRedoMenuItem" Style="{DynamicResource SubMenuItem}" Header="다시 실행" Height="28" />
@@ -197,7 +197,7 @@
                     <MenuItem x:Name="ViewFullScreenMenuItem" Style="{DynamicResource SubMenuItem}" Header="전체 화면" Height="28" />
                 </MenuItem>
                 <MenuItem Header="모델" Style="{DynamicResource MainMenuItem}" Height="30">
-                    <MenuItem x:Name="ModelInspectionMenuItem" Style="{DynamicResource SubMenuItem}" Header="검사" Height="28" />
+                    <MenuItem x:Name="ModelInspectionMenuItem" Style="{DynamicResource SubMenuItem}" Header="검사" Height="28" Click="ModelInspectionMenuItem_Click" />
                     <MenuItem x:Name="ModelInspectionRunMenuItem" Style="{DynamicResource SubMenuItem}" Header="검사 후 시작" Height="28" />
                     <Separator Style="{DynamicResource SubMenuSeparator}" />
                     <MenuItem x:Name="ModelAddTriggerSetMenuItem" Style="{DynamicResource SubMenuItem}" Header="트리거셋 추가" Height="28" />

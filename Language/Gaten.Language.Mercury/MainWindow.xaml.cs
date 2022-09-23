@@ -1,4 +1,5 @@
 ﻿using Gaten.Language.Mercury.Editor;
+using Gaten.Language.Mercury.Inspection;
 using Gaten.Language.Mercury.IO;
 using Gaten.Net.Wpf.Controls;
 
@@ -156,6 +157,22 @@ namespace Gaten.Language.Mercury
         }
         #endregion
 
+        #region Model
+        public void Inspection()
+        {
+            var inspector = new MercuryInspector();
+            var result = inspector.Run(textEditor.Text);
+
+            if (!result.IsOk)
+            {
+                EditorStatusText.Text = result.ErrorMessage;
+                return;
+            }
+
+            EditorStatusText.Text = "검사 완료.";
+        }
+        #endregion
+
         #region Text Editor
         void textEditor_TextArea_TextEntered(object sender, TextCompositionEventArgs e)
         {
@@ -217,6 +234,7 @@ namespace Gaten.Language.Mercury
             TmFile.IsSaved = false;
             RefreshFileName();
             MercuryEditor.UpdateFolding(textEditor);
+            EditorStatusText.Text = "";
         }
         #endregion
     }
