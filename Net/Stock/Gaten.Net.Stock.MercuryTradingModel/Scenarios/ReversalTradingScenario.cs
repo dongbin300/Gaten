@@ -1,8 +1,4 @@
-﻿using Gaten.Net.Stock.MercuryTradingModel.Charts;
-using Gaten.Net.Stock.MercuryTradingModel.Conditions;
-using Gaten.Net.Stock.MercuryTradingModel.Enums;
-using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
-using Gaten.Net.Stock.MercuryTradingModel.Triggers;
+﻿using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
 
 namespace Gaten.Net.Stock.MercuryTradingModel.Scenarios
 {
@@ -51,11 +47,6 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Scenarios
 
         public void Init()
         {
-            //var trigger = new Trigger();
-            var condition1 = new Signal("5m").Max(200);
-            var condition2 = new Signal("5m").Contrast(CandleProperty.Close, Comparison.GreaterThan, 1);
-            var condition3 = new Signal("5m").Contrast(CandleProperty.Volume, Comparison.GreaterThan, 200);
-            var condition4 = new Signal("5m").Contrast(CandleProperty.High, Comparison.GreaterThan, 1);
 
         }
     }

@@ -2,11 +2,7 @@
 {
     public enum OrderType
     {
-        Seed,
-        Asset,
-        Balance,
-        SymbolBalance,
-        Fixed,
-        FixedSymbol
+        Market,
+        Limit
     }
 }

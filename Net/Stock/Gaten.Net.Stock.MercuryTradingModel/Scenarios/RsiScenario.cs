@@ -1,9 +1,4 @@
-﻿using Gaten.Net.Stock.MercuryTradingModel.Conditions;
-using Gaten.Net.Stock.MercuryTradingModel.Enums;
-using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
-using Gaten.Net.Stock.MercuryTradingModel.Triggers;
-
-using Action = Gaten.Net.Stock.MercuryTradingModel.Actions.Order;
+﻿using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
 
 namespace Gaten.Net.Stock.MercuryTradingModel.Scenarios
 {

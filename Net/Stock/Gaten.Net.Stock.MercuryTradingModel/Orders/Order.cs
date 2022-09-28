@@ -1,24 +1,21 @@
 ﻿using Gaten.Net.Stock.MercuryTradingModel.Assets;
 using Gaten.Net.Stock.MercuryTradingModel.Enums;
 using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
-using Gaten.Net.Stock.MercuryTradingModel.Times;
 
-namespace Gaten.Net.Stock.MercuryTradingModel.Actions
+namespace Gaten.Net.Stock.MercuryTradingModel.Orders
 {
     public class Order : IOrder
     {
-        public ActionTiming Timing { get; set; }
         public PositionSide Side { get; set; }
         public OrderAmount Amount { get; set; }
 
         public Order()
         {
-            Timing = new ActionTiming(TimingType.Now);
         }
 
-        public Order(ActionTiming timing)
+        public void Run()
         {
-            Timing = timing;
+
         }
 
         public Order Position(PositionSide side, OrderAmount amount)
@@ -26,7 +23,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Actions
             return this;
         }
 
-        public Order Position(PositionSide side, OrderType orderType, double amount)
+        public Order Position(PositionSide side, OrderAmountType orderType, double amount)
         {
             return this;
         }
@@ -36,7 +33,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Actions
             return this;
         }
 
-        public Order Close(OrderType orderType, double amount)
+        public Order Close(OrderAmountType orderType, double amount)
         {
             return this;
         }

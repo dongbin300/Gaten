@@ -2,7 +2,8 @@
 {
     public interface IStrategy
     {
-        public IList<ISignal> Signals { get; set; }
-        public IList<IOrder> Orders { get; set; }
+        public string Name { get; set; }
+        public ISignal Signal { get; set; }
+        public IOrder Order { get; set; }
     }
 }
