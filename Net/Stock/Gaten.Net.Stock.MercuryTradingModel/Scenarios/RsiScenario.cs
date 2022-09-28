@@ -34,5 +34,10 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Scenarios
         {
 
         }
+
+        public IScenario AddStrategy(IStrategy strategy)
+        {
+            return this;
+        }
     }
 }

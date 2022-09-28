@@ -237,6 +237,18 @@ namespace Gaten.Net.Extensions
             return !ch.Where(b => b == false).Any();
         }
 
-        
+        public static string[] SplitKeep(this string str, char[] separator)
+        {
+            string pattern = $@"([{new string(separator)}])";
+            string[] parts = Regex.Split(str, pattern);
+            return parts;
+        }
+
+        public static string[] SplitKeep(this string str, string[] separator)
+        {
+            string pattern = $@"({string.Join('|', separator)})";
+            string[] parts = Regex.Split(str, pattern);
+            return parts;
+        }
     }
 }

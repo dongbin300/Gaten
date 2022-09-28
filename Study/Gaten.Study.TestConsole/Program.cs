@@ -1,14 +1,14 @@
-﻿namespace Gaten.Study.TestConsole
+﻿using Gaten.Net.Extensions;
+
+namespace Gaten.Study.TestConsole
 {
     public class Program
     {
         public static void Main()
         {
-            string test = " \t BBBBBBB  \n\t\r";
+            string test = " a, b_+ e; c_- d_+e f gh";
 
-            var a1 = test.Trim();
-            var a2 = test.TrimEnd();
-            var a3 = test.TrimStart();
+            var a1 = test.SplitKeep(new string[] { "_-", "_+" });
         }
 
     }

@@ -43,7 +43,11 @@ namespace Gaten.Stock.MercuryEditor.Inspection
                                 {
                                     case ModelType.backtest:
                                         var inspector = new MercuryBinanceFuturesBackTestInspector(lineNumber);
-                                        inspector.Run(code);
+                                        var backTestResult = inspector.Run(code);
+                                        if (backTestResult != string.Empty)
+                                        {
+                                            throw new Exception(backTestResult);
+                                        }
                                         break;
 
                                     case ModelType.mocktrade:

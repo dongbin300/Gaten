@@ -1,6 +1,10 @@
-﻿using Gaten.Net.Stock.MercuryTradingModel.Intervals;
+﻿using Gaten.Net.Extensions;
+using Gaten.Net.Stock.MercuryTradingModel.Enums;
+using Gaten.Net.Stock.MercuryTradingModel.Formulae;
+using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
+using Gaten.Net.Stock.MercuryTradingModel.Intervals;
 using Gaten.Net.Stock.MercuryTradingModel.Orders;
-using Gaten.Net.Stock.MercuryTradingModel.Signals.Primitives;
+using Gaten.Net.Stock.MercuryTradingModel.Signals;
 using Gaten.Net.Stock.MercuryTradingModel.TradingModels;
 using Gaten.Stock.MercuryEditor.Editor;
 
@@ -11,12 +15,6 @@ using System.Linq;
 namespace Gaten.Stock.MercuryEditor.Inspection.V1
 {
     /// <summary>
-    /// default value
-    /// asset: 100000
-    /// period: -7일~현재
-    /// interval: 1m
-    /// target: btcusdt
-    /// 
     /// 10k->10000
     /// </summary>
     internal class MercuryBinanceFuturesBackTestInspector
@@ -115,7 +113,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                 var startTimeString = periodValue.Split(':')[0];
                 var periodString = periodValue.Split(':')[1];
                 var startTimeSegments = startTimeString.Split(',');
-                var periodSegments = periodValue.Split(',');
+                var periodSegments = periodString.Split(',');
                 var startTime = new DateTime(
                     int.Parse(startTimeSegments[0]),
                     int.Parse(startTimeSegments[1]),
@@ -176,7 +174,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                 }
                 lineNumber = targetCode.LineNumber;
                 var targetValue = targetCode.Text.Split('=')[1].Trim();
-                var target = targetValue;
+                var target = targetValue.ToUpper();
                 TradingModel.Targets.Add(target);
                 return string.Empty;
             }
@@ -191,25 +189,20 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             TextLine? scenarioCode = null;
             try
             {
-                for (int i = lineNumber + 1; i <= code.Max(x => x.LineNumber); i++)
+                for (int i = lineNumber; i < code.Max(x => x.LineNumber); i++)
                 {
                     scenarioCode = code[i];
-                    if (string.IsNullOrEmpty(scenarioCode.Text))
+                    if (string.IsNullOrEmpty(scenarioCode.Text) || !scenarioCode.Text.Contains('='))
                     {
                         continue;
                     }
                     var key = scenarioCode.Text.Split('=')[0].Trim();
                     var value = scenarioCode.Text.Split('=')[1].Trim();
 
-                    var keyResult = ParseKeyPart(key);
-                    if (!string.IsNullOrEmpty(keyResult))
+                    var strategyResult = ParseStrategy(key, value);
+                    if (!string.IsNullOrEmpty(strategyResult))
                     {
-                        return keyResult + scenarioCode.ToString();
-                    }
-                    var valueResult = ParseValuePart(value);
-                    if (!string.IsNullOrEmpty(valueResult))
-                    {
-                        return valueResult + scenarioCode.ToString();
+                        return strategyResult + scenarioCode.ToString();
                     }
                 }
                 return string.Empty;
@@ -220,15 +213,21 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             }
         }
 
-        public string ParseKeyPart(string keyString)
+        public string ParseStrategy(string key, string value)
         {
             try
             {
-                var keySegments = keyString.Split('.');
+                var keySegments = key.Split('.');
                 switch (keySegments[2])
                 {
                     case "signal":
-                        TradingModel.AddSignal(keySegments[0], keySegments[1], new Signal()); // TODO
+                        var formula = ParseFormula(value);
+                        if(formula == null)
+                        {
+                            return $"signal formula 형식의 오류입니다. :: ";
+                        }
+                        var signal = new Signal(formula);
+                        TradingModel.AddSignal(keySegments[0], keySegments[1], signal);
                         break;
                     case "order":
                         TradingModel.AddOrder(keySegments[0], keySegments[1], new Order()); // TODO
@@ -240,19 +239,37 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             }
             catch
             {
-                return $"scenario key 형식의 오류입니다. :: ";
+                return $"strategy 형식의 오류입니다. :: ";
             }
         }
 
-        public string ParseValuePart(string valueString)
+        public IFormula? ParseFormula(string signalValue)
         {
             try
             {
-                return string.Empty;
+                var segments1 = signalValue.SplitKeep(new string[] { ">=", "<=", "!=" }).Select(x => x.Trim()).ToArray();
+                //var segments1 = signalValue.Split(new string[] { ">=", "<=", "!=" }, StringSplitOptions.None);
+                if (segments1.Length == 1)
+                {
+                    var segments2 = signalValue.SplitKeep(new string[] { ">", "<", "=" }).Select(x=>x.Trim()).ToArray();
+                    //var segments2 = signalValue.Split(new string[] { ">", "<", "=" }, StringSplitOptions.None);
+                    if (segments2.Length == 1)
+                    {
+                        return null;
+                    }
+                    var chartElement = (ChartElement)Enum.Parse(typeof(ChartElement), segments2[0]);
+                    var comparison = FormulaUtil.ToComparison(segments2[1]);
+                    var value = double.Parse(segments2[2]);
+                    return new ComparisonFormula(chartElement, comparison, value);
+                }
+                var chartElement2 = (ChartElement)Enum.Parse(typeof(ChartElement), segments1[0]);
+                var comparison2 = FormulaUtil.ToComparison(segments1[1]);
+                var value2 = double.Parse(segments1[2]);
+                return new ComparisonFormula(chartElement2, comparison2, value2);
             }
             catch
             {
-                return $"scenario value 형식의 오류입니다. :: ";
+                return null;
             }
         }
     }

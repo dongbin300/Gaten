@@ -23,7 +23,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.TradingModels
         public TimeSpan Period { get; set; }
         public KlineInterval Interval { get; set; }
         public IList<string> Targets { get; set; } = new List<string>();
-        public IList<IScenario> Scenarios { get; set; }
+        public IList<IScenario> Scenarios { get; set; } = new List<IScenario>();
 
         public MercuryBackTestTradingModel()
         {
@@ -32,22 +32,20 @@ namespace Gaten.Net.Stock.MercuryTradingModel.TradingModels
 
         public void AddSignal(string scenarioName, string strategyName, ISignal signal)
         {
-            var scenario = Scenarios.First(s => s.Name.Equals(scenarioName));
+            var scenario = Scenarios.FirstOrDefault(s => s.Name.Equals(scenarioName));
             if (scenario == null)
             {
-                var newScenario = new Scenario(scenarioName);
-                var newStrategy = new Strategy(strategyName);
-                newStrategy.Signal = signal;
-                Scenarios.Add(newScenario);
+                Scenarios.Add(
+                    new Scenario(scenarioName)
+                    .AddStrategy(new Strategy(strategyName, signal))
+                    );
                 return;
             }
 
-            var strategy = scenario.Strategies.First(s => s.Name.Equals(strategyName));
+            var strategy = scenario.Strategies.FirstOrDefault(s => s.Name.Equals(strategyName));
             if (strategy == null)
             {
-                var newStrategy = new Strategy(strategyName);
-                newStrategy.Signal = signal;
-                scenario.Strategies.Add(newStrategy);
+                scenario.AddStrategy(new Strategy(strategyName, signal));
                 return;
             }
 
@@ -56,22 +54,20 @@ namespace Gaten.Net.Stock.MercuryTradingModel.TradingModels
 
         public void AddOrder(string scenarioName, string strategyName, IOrder order)
         {
-            var scenario = Scenarios.First(s => s.Name.Equals(scenarioName));
+            var scenario = Scenarios.FirstOrDefault(s => s.Name.Equals(scenarioName));
             if (scenario == null)
             {
-                var newScenario = new Scenario(scenarioName);
-                var newStrategy = new Strategy(strategyName);
-                newStrategy.Order = order;
-                Scenarios.Add(newScenario);
+                Scenarios.Add(
+                new Scenario(scenarioName)
+                   .AddStrategy(new Strategy(strategyName, order))
+                   );
                 return;
             }
 
-            var strategy = scenario.Strategies.First(s => s.Name.Equals(strategyName));
+            var strategy = scenario.Strategies.FirstOrDefault(s => s.Name.Equals(strategyName));
             if (strategy == null)
             {
-                var newStrategy = new Strategy(strategyName);
-                newStrategy.Order = order;
-                scenario.Strategies.Add(newStrategy);
+                scenario.AddStrategy(new Strategy(strategyName, order));
                 return;
             }
 
