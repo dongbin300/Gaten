@@ -36,7 +36,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             try
             {
                 var assetResult = ParseAsset(code);
-                if(assetResult != string.Empty)
+                if (assetResult != string.Empty)
                 {
                     return assetResult;
                 }
@@ -222,7 +222,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                 {
                     case "signal":
                         var formula = ParseFormula(value);
-                        if(formula == null)
+                        if (formula == null)
                         {
                             return $"signal formula 형식의 오류입니다. :: ";
                         }
@@ -230,7 +230,12 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                         TradingModel.AddSignal(keySegments[0], keySegments[1], signal);
                         break;
                     case "order":
-                        TradingModel.AddOrder(keySegments[0], keySegments[1], new Order()); // TODO
+                        var order = ParseOrder(value);
+                        if(order == null)
+                        {
+                            return $"order 형식의 오류입니다. :: ";
+                        }
+                        TradingModel.AddOrder(keySegments[0], keySegments[1], order);
                         break;
                     default:
                         return $"scenario key 형식의 오류입니다. :: ";
@@ -251,7 +256,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                 //var segments1 = signalValue.Split(new string[] { ">=", "<=", "!=" }, StringSplitOptions.None);
                 if (segments1.Length == 1)
                 {
-                    var segments2 = signalValue.SplitKeep(new string[] { ">", "<", "=" }).Select(x=>x.Trim()).ToArray();
+                    var segments2 = signalValue.SplitKeep(new string[] { ">", "<", "=" }).Select(x => x.Trim()).ToArray();
                     //var segments2 = signalValue.Split(new string[] { ">", "<", "=" }, StringSplitOptions.None);
                     if (segments2.Length == 1)
                     {
@@ -266,6 +271,42 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                 var comparison2 = FormulaUtil.ToComparison(segments1[1]);
                 var value2 = double.Parse(segments1[2]);
                 return new ComparisonFormula(chartElement2, comparison2, value2);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public BackTestOrder? ParseOrder(string orderValue)
+        {
+            try
+            {
+                var segments = orderValue.Split(',');
+                if (segments.Length < 3)
+                {
+                    return null;
+                }
+                var positionSide = segments[0] switch
+                {
+                    "long" => PositionSide.Long,
+                    "short" => PositionSide.Short,
+                    _ => PositionSide.None
+                };
+                var quantity = decimal.Parse(segments[1]);
+                var orderType = segments[2] switch
+                {
+                    "market" => OrderType.Market,
+                    "limit" => OrderType.Limit,
+                    _ => OrderType.None
+                };
+                if (orderType == OrderType.Limit)
+                {
+                    var price = decimal.Parse(segments[3]);
+                    return new BackTestOrder(orderType, positionSide, quantity, price);
+                }
+
+                return new BackTestOrder(orderType, positionSide, quantity);
             }
             catch
             {

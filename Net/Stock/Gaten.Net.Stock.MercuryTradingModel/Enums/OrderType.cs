@@ -2,6 +2,7 @@
 {
     public enum OrderType
     {
+        None,
         Market,
         Limit
     }

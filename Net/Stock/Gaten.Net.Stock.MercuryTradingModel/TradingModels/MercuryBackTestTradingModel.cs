@@ -6,16 +6,6 @@ using Gaten.Net.Stock.MercuryTradingModel.Triggers;
 
 namespace Gaten.Net.Stock.MercuryTradingModel.TradingModels
 {
-    /// <summary>
-    /// default value
-    /// asset: 100000
-    /// period: -7일~현재
-    /// interval: 1m
-    /// target: btcusdt
-    /// 
-    /// 10k->10000
-    /// 
-    /// </summary>
     public class MercuryBackTestTradingModel
     {
         public decimal Asset { get; set; }
