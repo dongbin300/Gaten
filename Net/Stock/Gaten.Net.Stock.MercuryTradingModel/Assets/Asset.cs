@@ -5,23 +5,11 @@
         /// <summary>
         /// 현금 잔고
         /// </summary>
-        public decimal Balance { get; set; }
+        public decimal Balance { get; set; } = 0m;
 
         /// <summary>
         /// 포지션
         /// </summary>
         public Position Position { get; set; } = new();
-
-        public void Buy(decimal price, decimal quantity)
-        {
-            Balance -= price;
-            Position.Long(quantity);
-        }
-
-        public void Sell(decimal price, decimal quantity)
-        {
-            Balance += price;
-            Position.Short(quantity);
-        }
     }
 }

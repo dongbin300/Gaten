@@ -1,4 +1,6 @@
-﻿namespace Gaten.Net.Stock.MercuryTradingModel.Interfaces
+﻿using Newtonsoft.Json;
+
+namespace Gaten.Net.Stock.MercuryTradingModel.Interfaces
 {
     public interface IStrategy
     {

@@ -171,6 +171,22 @@ namespace Gaten.Stock.MercuryEditor
 
             EditorStatusText.Text = "검사 완료.";
         }
+
+        public void InspectionRun()
+        {
+            var inspector = new MercuryInspector();
+            var result = inspector.Run(textEditor.Text);
+
+            if (!result.IsOk)
+            {
+                EditorStatusText.Text = result.ErrorMessage;
+                return;
+            }
+
+            EditorStatusText.Text = "검사 완료. 실행합니다.";
+
+            //BackTest
+        }
         #endregion
 
         #region Text Editor

@@ -8,11 +8,17 @@ using System.Linq;
 using System.Reflection;
 using Gaten.Stock.MercuryEditor.Enums;
 using Gaten.Stock.MercuryEditor.Inspection.V1;
+using Gaten.Net.IO;
+using System.Text.Json;
+using Gaten.Stock.MercuryEditor.IO;
+using Gaten.Net.Stock.MercuryTradingModel.TradingModels;
+using Newtonsoft.Json;
 
 namespace Gaten.Stock.MercuryEditor.Inspection
 {
     internal class MercuryInspector
     {
+        public string InspectedPath { get; set; } = string.Empty;
         private List<TextLine> code = new();
         private int lineNumber = 0;
         private int lineCount => code.Count;
@@ -26,8 +32,6 @@ namespace Gaten.Stock.MercuryEditor.Inspection
         {
             try
             {
-                var result = new MercuryInspectionResult();
-
                 code = codeText.Split(Environment.NewLine, StringSplitOptions.None).Select((x, i) => new TextLine(i + 1, x.Trim())).ToList();
                 lineNumber = 0;
 
@@ -48,6 +52,16 @@ namespace Gaten.Stock.MercuryEditor.Inspection
                                         {
                                             throw new Exception(backTestResult);
                                         }
+
+                                        var jsonString = JsonConvert.SerializeObject(inspector.TradingModel, new JsonSerializerSettings
+                                        {
+                                             NullValueHandling = NullValueHandling.Ignore,
+                                             TypeNameHandling = TypeNameHandling.Auto,
+                                             Formatting = Formatting.Indented
+                                        });
+                                        //var jsonString = JsonSerializer.Serialize<object>(inspector.TradingModel);
+                                        InspectedPath = TradingModelPath.InspectedBackTestDirectory.Down(TmFile.TmName + ".json");
+                                        GFile.Write(InspectedPath, jsonString);
                                         break;
 
                                     case ModelType.mocktrade:
@@ -70,7 +84,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection
                         throw new Exception("알 수 없는 Code Version입니다.");
                 }
 
-                return result;
+                return new MercuryInspectionResult();
             }
             catch (Exception ex)
             {

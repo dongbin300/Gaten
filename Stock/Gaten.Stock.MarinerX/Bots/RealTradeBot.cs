@@ -2,7 +2,7 @@
 
 namespace Gaten.Stock.MarinerX.Bots
 {
-    internal class RealTradeBot : IBot
+    public class RealTradeBot : IBot
     {
     }
 }

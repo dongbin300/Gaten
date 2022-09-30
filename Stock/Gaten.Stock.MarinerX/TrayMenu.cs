@@ -3,15 +3,22 @@
 using Gaten.Net.Diagnostics;
 using Gaten.Net.Extensions;
 using Gaten.Net.IO;
+using Gaten.Net.Stock.MercuryTradingModel.IO;
+using Gaten.Net.Stock.MercuryTradingModel.TradingModels;
 using Gaten.Net.Wpf;
 using Gaten.Net.Wpf.Models;
 using Gaten.Stock.MarinerX.Apis;
 using Gaten.Stock.MarinerX.Bots;
 using Gaten.Stock.MarinerX.Charts;
 
+using Newtonsoft.Json;
+
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Text.Json;
 using System.Windows.Forms;
 
 namespace Gaten.Stock.MarinerX
@@ -23,6 +30,9 @@ namespace Gaten.Stock.MarinerX
         private static ProgressView progressView = new();
         private string iconFileName = "Resources/Images/chart2.ico";
         private Image iconImage;
+        private List<BackTestTmFile> tmBackTestFiles = new();
+        private List<string> tmMockTradeFileNames = new();
+        private List<string> tmRealTradeFileNames = new();
 
         public TrayMenu()
         {
@@ -35,10 +45,34 @@ namespace Gaten.Stock.MarinerX
                 Visible = true
             };
 
+            var watcher = new FileSystemWatcher
+            {
+                Path = TradingModelPath.InspectedDirectory,
+                NotifyFilter = NotifyFilters.FileName,
+                Filter = "*.json"
+            };
+            watcher.Changed += new FileSystemEventHandler(OnChanged);
+            watcher.Created += new FileSystemEventHandler(OnChanged);
+            watcher.Deleted += new FileSystemEventHandler(OnChanged);
+            watcher.EnableRaisingEvents = true;
+
             progressView = new ProgressView();
             progressView.Hide();
 
+            RefreshTmFile();
             RefreshMenu();
+        }
+
+        private void OnChanged(object source, FileSystemEventArgs e)
+        {
+            RefreshTmFile();
+        }
+
+        private void RefreshTmFile()
+        {
+            tmBackTestFiles = Directory.GetFiles(TradingModelPath.InspectedBackTestDirectory).Select(x=> new BackTestTmFile(x)).ToList();
+            tmMockTradeFileNames = Directory.GetFiles(TradingModelPath.InspectedMockTradeDirectory).ToList();
+            tmRealTradeFileNames = Directory.GetFiles(TradingModelPath.InspectedRealTradeDirectory).ToList();
         }
 
         public void RefreshMenu()
@@ -78,7 +112,12 @@ namespace Gaten.Stock.MarinerX
             }
             menuStrip.Items.Add(new ToolStripSeparator());
             menuStrip.Items.Add(new ToolStripMenuItem("Mercury Editor 열기", null, MercuryEditorOpenEvent));
-            menuStrip.Items.Add(new ToolStripMenuItem("Back Test Bot Run", null, BackTestBotRunEvent));
+            menuStrip.Items.Add(new ToolStripSeparator());
+            foreach(var file in tmBackTestFiles)
+            {
+                menuStrip.Items.Add(new ToolStripMenuItem(file.MenuString, null, BackTestBotRunEvent, file.ToString()));
+            }
+            menuStrip.Items.Add(new ToolStripSeparator());
             menuStrip.Items.Add(new ToolStripMenuItem("종료", null, Exit));
 
             menuStrip.Items[0].Enabled = false;
@@ -99,11 +138,25 @@ namespace Gaten.Stock.MarinerX
 
         private void BackTestBotRunEvent(object? sender, EventArgs e)
         {
+            if(sender is not ToolStripMenuItem menuItem)
+            {
+                return;
+            }
+
+            var menuNameSegments = menuItem.Name.Split("|+|");
+            var jsonString = GFile.Read(menuNameSegments[0]);
+            var result = JsonConvert.DeserializeObject<MercuryBackTestTradingModel>(jsonString, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto,
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
             progressView.Show();
             var worker = new Worker()
             {
                 ProgressBar = progressView.ProgressBar,
-                Action = BackTestBotRun
+                Action = BackTestBotRun,
+                Arguments = result
             };
             worker.Start();
         }
@@ -112,17 +165,31 @@ namespace Gaten.Stock.MarinerX
         {
             try
             {
-                //var bot = new BackTestBot(worker);
-                //var result = bot.Run();
-                //DispatcherService.Invoke(() =>
-                //{
-                //    progressView.Hide();
-                //});
+                if(obj is not MercuryBackTestTradingModel model)
+                {
+                    DispatcherService.Invoke(() =>
+                    {
+                        progressView.Hide();
+                    });
+                    return;
+                }
 
-                //var path = GPath.Desktop.Down("MarinerX", $"BackTestBot_{DateTime.Now.ToStandardFileName()}.txt");
-                //GFile.Write(path, result);
+                var bot = new BackTestBot(model, worker);
+                var result = bot.Run();
+                DispatcherService.Invoke(() =>
+                {
+                    progressView.Hide();
+                });
 
-                //GProcess.Start(path);
+                if(result.Length < 32)
+                {
+                    throw new Exception(result);
+                }
+
+                var path = GPath.Desktop.Down("MarinerX", $"BackTest_{DateTime.Now.ToStandardFileName()}.txt");
+                GFile.Write(path, result);
+
+                GProcess.Start(path);
             }
             catch (Exception ex)
             {

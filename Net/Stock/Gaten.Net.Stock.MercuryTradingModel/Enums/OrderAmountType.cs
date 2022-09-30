@@ -2,6 +2,7 @@
 {
     public enum OrderAmountType
     {
+        None,
         Seed,
         Asset,
         Balance,

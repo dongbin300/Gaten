@@ -1,5 +1,7 @@
 ﻿using Gaten.Net.Stock.MercuryTradingModel.Enums;
 
+using System.Text.Json.Serialization;
+
 namespace Gaten.Net.Stock.MercuryTradingModel.Formulae
 {
     public class ComparisonFormula : Formula

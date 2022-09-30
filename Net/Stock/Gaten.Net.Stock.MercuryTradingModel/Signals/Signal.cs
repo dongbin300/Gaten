@@ -7,8 +7,6 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Signals
 {
     public class Signal : ISignal
     {
-        public ChartInfo Chart { get; set; } = new ChartInfo("", new Skender.Stock.Indicators.Quote());
-        public bool Flare => IsFlare();
         public IFormula Formula { get; set; } = new Formula();
 
         public Signal()
@@ -16,33 +14,38 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Signals
 
         }
 
-        public Signal(ChartInfo chart)
-        {
-            Chart = chart;
-        }
-
         public Signal(IFormula formula)
         {
             Formula = formula;
         }
 
-        public virtual bool IsFlare() => Formula switch
+        public virtual bool IsFlare(ChartInfo chart)
         {
-            ComparisonFormula x => x.ChartElement switch
+            if (chart.RSI == null)
             {
-                ChartElement.rsi => x.Comparison switch
+                return false;
+            }
+
+            var rsi = chart.RSI.Rsi;
+
+            return Formula switch
+            {
+                ComparisonFormula x => x.ChartElement switch
                 {
-                    Comparison.Equal => Chart.RSI.Rsi == x.Value,
-                    Comparison.NotEqual => Chart.RSI.Rsi != x.Value,
-                    Comparison.LessThan => Chart.RSI.Rsi < x.Value,
-                    Comparison.LessThanOrEqual => Chart.RSI.Rsi <= x.Value,
-                    Comparison.GreaterThan => Chart.RSI.Rsi > x.Value,
-                    Comparison.GreaterThanOrEqual => Chart.RSI.Rsi >= x.Value,
-                    _ => false,
+                    ChartElement.rsi => x.Comparison switch
+                    {
+                        Comparison.Equal => rsi == x.Value,
+                        Comparison.NotEqual => rsi != x.Value,
+                        Comparison.LessThan => rsi < x.Value,
+                        Comparison.LessThanOrEqual => rsi <= x.Value,
+                        Comparison.GreaterThan => rsi > x.Value,
+                        Comparison.GreaterThanOrEqual => rsi >= x.Value,
+                        _ => false,
+                    },
+                    _ => false
                 },
                 _ => false
-            },
-            _ => false
-        };
+            };
+        }
     }
 }

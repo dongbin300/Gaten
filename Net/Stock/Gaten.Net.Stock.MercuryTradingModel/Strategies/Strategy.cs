@@ -2,7 +2,7 @@
 using Gaten.Net.Stock.MercuryTradingModel.Orders;
 using Gaten.Net.Stock.MercuryTradingModel.Signals;
 
-namespace Gaten.Net.Stock.MercuryTradingModel.Triggers
+namespace Gaten.Net.Stock.MercuryTradingModel.Strategies
 {
     public class Strategy : IStrategy
     {

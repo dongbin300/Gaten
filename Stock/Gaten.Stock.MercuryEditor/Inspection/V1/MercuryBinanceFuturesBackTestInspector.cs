@@ -231,7 +231,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                         break;
                     case "order":
                         var order = ParseOrder(value);
-                        if(order == null)
+                        if (order == null)
                         {
                             return $"order 형식의 오류입니다. :: ";
                         }
