@@ -7,7 +7,7 @@
              Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <Style TargetType="{x:Type Canvas}" x:Key="ButtonCanvas">
-            <Setter Property="Width" Value="28" />
+            <Setter Property="Width" Value="40" />
             <Setter Property="Height" Value="28" />
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
@@ -20,94 +20,12 @@
         </Style>
 
         <Style TargetType="{x:Type Path}">
+            <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="Stroke" Value="{DynamicResource IconStroke}" />
-            <Setter Property="StrokeThickness" Value="2" />
-            <Setter Property="Stretch" Value="Uniform" />
-            <Setter Property="Margin" Value="6" />
+            <Setter Property="Margin" Value="12,6" />
         </Style>
 
-        <!--<Style TargetType="{x:Type Path}" x:Key="SavePath">
-            <Setter Property="Fill" Value="Red" />
-            <Setter Property="Stroke" Value="Red" />
-            <Setter Property="StrokeThickness" Value="5" />
-            <Setter Property="Data" Value="M1 1 L20 20Z" />
-        </Style>-->
-
-        <Style TargetType="{x:Type Image}" x:Key="NormalSizeIcon">
-            <Setter Property="Source">
-                <Setter.Value>
-                    <DrawingImage>
-                        <DrawingImage.Drawing>
-                            <GeometryDrawing>
-                                <GeometryDrawing.Geometry>
-                                    M10 16 L24 16 L24 30 L10 30 L10 15 M12 16 L12 12 L28 12 L28 28 L24 28
-                                </GeometryDrawing.Geometry>
-                                <GeometryDrawing.Pen>
-                                    <Pen Brush="{DynamicResource TitleBarForeground}" Thickness="2"/>
-                                </GeometryDrawing.Pen>
-                            </GeometryDrawing>
-                        </DrawingImage.Drawing>
-                    </DrawingImage>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style TargetType="{x:Type Image}" x:Key="MinimizeIcon">
-            <Setter Property="Source">
-                <Setter.Value>
-                    <DrawingImage>
-                        <DrawingImage.Drawing>
-                            <GeometryDrawing>
-                                <GeometryDrawing.Geometry>
-                                    M13 20 L27 20
-                                </GeometryDrawing.Geometry>
-                                <GeometryDrawing.Pen>
-                                    <Pen Brush="{DynamicResource TitleBarForeground}" Thickness="2"/>
-                                </GeometryDrawing.Pen>
-                            </GeometryDrawing>
-                        </DrawingImage.Drawing>
-                    </DrawingImage>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style TargetType="{x:Type Image}" x:Key="MaximizeIcon">
-            <Setter Property="Source">
-                <Setter.Value>
-                    <DrawingImage>
-                        <DrawingImage.Drawing>
-                            <GeometryDrawing>
-                                <GeometryDrawing.Geometry>
-                                    M13 13 L27 13 L27 27 L13 27 L13 12
-                                </GeometryDrawing.Geometry>
-                                <GeometryDrawing.Pen>
-                                    <Pen Brush="{DynamicResource TitleBarForeground}" Thickness="2"/>
-                                </GeometryDrawing.Pen>
-                            </GeometryDrawing>
-                        </DrawingImage.Drawing>
-                    </DrawingImage>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style TargetType="{x:Type Image}" x:Key="CloseIcon">
-            <Setter Property="Source">
-                <Setter.Value>
-                    <DrawingImage>
-                        <DrawingImage.Drawing>
-                            <GeometryDrawing>
-                                <GeometryDrawing.Geometry>
-                                    M13 13 L27 27 M27 13 L13 27
-                                </GeometryDrawing.Geometry>
-                                <GeometryDrawing.Pen>
-                                    <Pen Brush="{DynamicResource TitleBarForeground}" Thickness="2"/>
-                                </GeometryDrawing.Pen>
-                            </GeometryDrawing>
-                        </DrawingImage.Drawing>
-                    </DrawingImage>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <Pen x:Key="MenuIconPen" Thickness="2" Brush="{DynamicResource IconStroke}" />
     </UserControl.Resources>
 
     <Grid Background="{DynamicResource TitleBarBackground}">
@@ -116,32 +34,83 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="200" MinWidth="200"/>
             <ColumnDefinition Width="20" MinWidth="20"/>
-            <ColumnDefinition Width="30" MinWidth="30" MaxWidth="30"/>
-            <ColumnDefinition Width="30" MinWidth="30" MaxWidth="30"/>
-            <ColumnDefinition Width="30" MinWidth="30" MaxWidth="30"/>
+            <ColumnDefinition Width="40" MinWidth="40" MaxWidth="40"/>
+            <ColumnDefinition Width="40" MinWidth="40" MaxWidth="40"/>
+            <ColumnDefinition Width="40" MinWidth="40" MaxWidth="40"/>
         </Grid.ColumnDefinitions>
 
         <MenuItem x:Name="IconImageContextMenu" Style="{DynamicResource MainMenuItem}" Height="28" Visibility="Hidden">
             <MenuItem x:Name="NormalSizeMenuItem" Style="{DynamicResource SubMenuItem}" Header="이전 크기로" Width="150" Height="28" Click="NormalSizeMenuItem_Click">
                 <MenuItem.Icon>
-                    <Image Style="{StaticResource NormalSizeIcon}"/>
+                    <Image>
+                        <Image.Source>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <GeometryDrawing Pen="{StaticResource MenuIconPen}">
+                                        <GeometryDrawing.Geometry>
+                                            M10 16 H20 V26 H10 V15 M14 16 V12 H24 V22 H20
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </Image.Source>
+                    </Image>
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem x:Name="MoveMenuItem" Style="{DynamicResource SubMenuItem}" Header="이동" Height="28" Click="MoveMenuItem_Click"/>
             <MenuItem x:Name="MinimizeMenuItem" Style="{DynamicResource SubMenuItem}" Header="최소화" Height="28" Click="MinimizeMenuItem_Click">
                 <MenuItem.Icon>
-                    <Image Style="{StaticResource MinimizeIcon}"/>
+                    <Image>
+                        <Image.Source>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <GeometryDrawing Pen="{StaticResource MenuIconPen}">
+                                        <GeometryDrawing.Geometry>
+                                            M13 20 L27 20
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </Image.Source>
+                    </Image>
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem x:Name="MaximizeMenuItem" Style="{DynamicResource SubMenuItem}" Header="최대화" Height="28" Click="MaximizeMenuItem_Click">
                 <MenuItem.Icon>
-                    <Image Style="{StaticResource MaximizeIcon}"/>
+                    <Image>
+                        <Image.Source>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <GeometryDrawing Pen="{StaticResource MenuIconPen}">
+                                        <GeometryDrawing.Geometry>
+                                            M13 13 L27 13 L27 27 L13 27 L13 12
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </Image.Source>
+                    </Image>
                 </MenuItem.Icon>
             </MenuItem>
             <Separator Style="{DynamicResource SubMenuSeparator}" />
             <MenuItem x:Name="EscapeMenuItem" Style="{DynamicResource SubMenuItem}" Header="닫기" Height="28" Click="EscapeMenuItem_Click">
                 <MenuItem.Icon>
-                    <Image Style="{StaticResource CloseIcon}"/>
+                    <Image>
+                        <Image.Source>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Geometry>
+                                            M13 13 L27 27 M27 13 L13 27
+                                        </GeometryDrawing.Geometry>
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="Red" Thickness="3"/>
+                                        </GeometryDrawing.Pen>
+                                    </GeometryDrawing>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </Image.Source>
+                    </Image>
                 </MenuItem.Icon>
             </MenuItem>
         </MenuItem>
@@ -162,7 +131,22 @@
                     <Separator Style="{DynamicResource SubMenuSeparator}" />
                     <MenuItem x:Name="FileEscapeMenuItem" Style="{DynamicResource SubMenuItem}" Header="끝내기" Height="28" Click="FileEscapeMenuItem_Click">
                         <MenuItem.Icon>
-                            <Image Style="{StaticResource CloseIcon}" />
+                            <Image>
+                                <Image.Source>
+                                    <DrawingImage>
+                                        <DrawingImage.Drawing>
+                                            <GeometryDrawing>
+                                                <GeometryDrawing.Geometry>
+                                                    M13 13 L27 27 M27 13 L13 27
+                                                </GeometryDrawing.Geometry>
+                                                <GeometryDrawing.Pen>
+                                                    <Pen Brush="Red" Thickness="3"/>
+                                                </GeometryDrawing.Pen>
+                                            </GeometryDrawing>
+                                        </DrawingImage.Drawing>
+                                    </DrawingImage>
+                                </Image.Source>
+                            </Image>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
@@ -220,17 +204,17 @@
         <TextBlock x:Name="FileNameText" Grid.Column="2" Foreground="{DynamicResource ModelNameForeground}" Background="{DynamicResource ModelNameBackground}" FontSize="14" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="12,4"/>
         <Border Grid.Column="4" Background="Transparent" MouseLeftButtonDown="MinimizeButton_Click">
             <Canvas Style="{StaticResource ButtonCanvas}">
-                <Path Data="M10 20 L26 20"/>
+                <Path Stretch="None" Data="M2 8 H14" StrokeThickness="1"/>
             </Canvas>
         </Border>
-        <Border Grid.Column="5" Background="Transparent" MouseLeftButtonDown="MaximizeButton_Click">
+        <Border Grid.Column="5" Background="Transparent" MouseLeftButtonDown="MaximizeButton_Click" >
             <Canvas Style="{StaticResource ButtonCanvas}">
-                <Path x:Name="MaximizePath" />
+                <Path x:Name="MaximizePath" StrokeThickness="1.5" />
             </Canvas>
         </Border>
         <Border Grid.Column="6" Background="Transparent" MouseLeftButtonDown="CloseButton_Click">
             <Canvas Style="{StaticResource ButtonCanvas}">
-                <Path Data="M13 13 L27 27 M27 13 L13 27"/>
+                <Path Data="M4 4 L12 12 M12 4 L4 12" StrokeThickness="1"/>
             </Canvas>
         </Border>
     </Grid>

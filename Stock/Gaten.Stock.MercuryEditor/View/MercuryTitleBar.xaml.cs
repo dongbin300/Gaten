@@ -46,8 +46,8 @@ namespace Gaten.Stock.MercuryEditor.View
         {
             InitializeComponent();
 
-            NormalButtonGeometry = Geometry.Parse("M10 16 L24 16 L24 30 L10 30 L10 15 M12 16 L12 12 L28 12 L28 28 L24 28");
-            MaximizeButtonGeometry = Geometry.Parse("M13 13 L27 13 L27 27 L13 27 L13 12");
+            NormalButtonGeometry = Geometry.Parse("M2 8 H12 V18 H2 V7 M6 8 V4 H16 V14 H12");
+            MaximizeButtonGeometry = Geometry.Parse("M3 3 H12 V12 H3 V2");
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

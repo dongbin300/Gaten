@@ -35,11 +35,13 @@ namespace Gaten.Stock.MercuryEditor
                 case "Light":
                     Delegater.CurrentTheme = Themes.Light;
                     mainWindow.textEditor.SyntaxHighlighting = MercuryEditorEntire.MercuryLightHighlighting;
+                    Resources.MergedDictionaries.Clear();
                     AddResourceDictionary("Resources/Themes/LightTheme.xaml");
                     break;
                 case "Dark":
                     Delegater.CurrentTheme = Themes.Dark;
                     mainWindow.textEditor.SyntaxHighlighting = MercuryEditorEntire.MercuryDarkHighlighting;
+                    Resources.MergedDictionaries.Clear();
                     AddResourceDictionary("Resources/Themes/DarkTheme.xaml");
                     break;
             }
