@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Gaten.Net.Wpf;
+
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,9 +17,12 @@ namespace Gaten.Stock.MercuryEditor.View
         #region Variable
         Window parentWindow => GetParentWindow() ?? Application.Current.MainWindow;
         MainWindow mainWindow => (MainWindow)parentWindow;
-        bool moveMode = false;
         Geometry NormalButtonGeometry;
         Geometry MaximizeButtonGeometry;
+        double prevLeft = 0;
+        double prevTop = 0;
+        double prevWidth = 0;
+        double prevHeight = 0;
 
         private static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register("Title", typeof(string), typeof(MercuryTitleBar), new PropertyMetadata(""));
@@ -46,7 +51,7 @@ namespace Gaten.Stock.MercuryEditor.View
         {
             InitializeComponent();
 
-            NormalButtonGeometry = Geometry.Parse("M2 8 H12 V18 H2 V7 M6 8 V4 H16 V14 H12");
+            NormalButtonGeometry = Geometry.Parse("M1 5 H11 V15 H1 V4 M5 4 V1 H15 V11 H11");
             MaximizeButtonGeometry = Geometry.Parse("M3 3 H12 V12 H3 V2");
         }
 
@@ -57,9 +62,24 @@ namespace Gaten.Stock.MercuryEditor.View
                 return;
             }
 
+            switch (Delegater.CurrentTheme)
+            {
+                case Themes.Light:
+                    SettingsThemeLightMenuItem.IsChecked = true;
+                    break;
+
+                case Themes.Dark:
+                    SettingsThemeDarkMenuItem.IsChecked = true;
+                    break;
+
+                default:
+                    break;
+            }
+
             //TitleText.Text = parentWindow.Title ?? Title;
             IconImage.Source = parentWindow.Icon ?? Icon;
-            MaximizePath.Data = parentWindow.WindowState == WindowState.Maximized ? NormalButtonGeometry : MaximizeButtonGeometry;
+            HelpInfoImage.Source = parentWindow.Icon ?? Icon;
+            MaximizePath.Data = MaximizeButtonGeometry;
         }
         #endregion
 
@@ -77,7 +97,15 @@ namespace Gaten.Stock.MercuryEditor.View
 
         void Maximize()
         {
-            parentWindow.WindowState = WindowState.Maximized;
+            // Manual Maximizing
+            prevLeft = parentWindow.Left;
+            prevTop = parentWindow.Top;
+            prevWidth = parentWindow.Width;
+            prevHeight = parentWindow.Height;
+            parentWindow.Left = 0;
+            parentWindow.Top = 0;
+            parentWindow.Width = WindowsSystem.ScreenWidth;
+            parentWindow.Height = WindowsSystem.ScreenNoTaskBarHeight;
             MaximizePath.Data = NormalButtonGeometry;
 
             NormalSizeMenuItem.IsEnabled = true;
@@ -89,7 +117,11 @@ namespace Gaten.Stock.MercuryEditor.View
 
         void Normalize()
         {
-            parentWindow.WindowState = WindowState.Normal;
+            // Manual Normalizing
+            parentWindow.Left = prevLeft;
+            parentWindow.Top = prevTop;
+            parentWindow.Width = prevWidth;
+            parentWindow.Height = prevHeight;
             MaximizePath.Data = MaximizeButtonGeometry;
 
             NormalSizeMenuItem.IsEnabled = false;
@@ -113,14 +145,13 @@ namespace Gaten.Stock.MercuryEditor.View
 
         private void MaximizeButton_Click(object sender, MouseButtonEventArgs e)
         {
-            switch (parentWindow.WindowState)
+            if(MaximizePath.Data == NormalButtonGeometry)
             {
-                case WindowState.Maximized:
-                    Normalize();
-                    break;
-                default:
-                    Maximize();
-                    break;
+                Normalize();
+            }
+            else
+            {
+                Maximize();
             }
         }
 
@@ -141,21 +172,19 @@ namespace Gaten.Stock.MercuryEditor.View
                 {
                 }
             }
-            moveMode = false;
             Cursor = Cursors.Arrow;
         }
 
         private void UserControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             IconImageContextMenu.IsSubmenuOpen = false;
-            switch (parentWindow.WindowState)
+            if (MaximizePath.Data == NormalButtonGeometry)
             {
-                case WindowState.Maximized:
-                    Normalize();
-                    break;
-                default:
-                    Maximize();
-                    break;
+                Normalize();
+            }
+            else
+            {
+                Maximize();
             }
         }
 
@@ -168,7 +197,6 @@ namespace Gaten.Stock.MercuryEditor.View
         private void MoveMenuItem_Click(object sender, RoutedEventArgs e)
         {
             IconImageContextMenu.IsSubmenuOpen = false;
-            moveMode = true;
             Cursor = Cursors.SizeAll;
         }
 
@@ -240,10 +268,27 @@ namespace Gaten.Stock.MercuryEditor.View
         {
             mainWindow.Inspection();
         }
-        #endregion
 
         #endregion
 
+        #endregion
 
+        private void SettingsThemeLightMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsThemeDarkMenuItem.IsChecked = false;
+            if (Delegater.CurrentTheme != Themes.Light)
+            {
+                Delegater.ChangeTheme();
+            }
+        }
+
+        private void SettingsThemeDarkMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsThemeLightMenuItem.IsChecked = false;
+            if (Delegater.CurrentTheme != Themes.Dark)
+            {
+                Delegater.ChangeTheme();
+            }
+        }
     }
 }
