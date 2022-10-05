@@ -1,4 +1,6 @@
-﻿using Gaten.Net.Wpf.Controls;
+﻿using Gaten.Net.IO;
+using Gaten.Net.Wpf.Controls;
+using Gaten.Stock.MercuryEditor.Commands;
 using Gaten.Stock.MercuryEditor.Editor;
 using Gaten.Stock.MercuryEditor.Inspection;
 using Gaten.Stock.MercuryEditor.IO;
@@ -45,6 +47,7 @@ namespace Gaten.Stock.MercuryEditor
         public MainWindow()
         {
             InitializeComponent();
+            MercuryEditorEntire.InitCommand(textEditor);
             MercuryEditorEntire.InitStrategy(textEditor);
             textEditor.TextArea.IndentationStrategy = MercuryEditorEntire.IndentationStrategy;
             textEditor.TextArea.TextEntering += textEditor_TextArea_TextEntering;
@@ -157,6 +160,69 @@ namespace Gaten.Stock.MercuryEditor
         }
         #endregion
 
+        #region Edit
+        public void OpenFindReplace()
+        {
+            
+        }
+
+        public void CloseFindReplace()
+        {
+
+        }
+
+        public void Undo()
+        {
+            textEditor.Undo();
+        }
+
+        public void Redo()
+        {
+            textEditor.Redo();
+        }
+
+        public void Cut()
+        {
+            textEditor.Cut();
+        }
+
+        public void Copy()
+        {
+            textEditor.Copy();
+        }
+
+        public void Paste()
+        {
+            textEditor.Paste();
+        }
+
+        public void Duplicate()
+        {
+            var command = new DuplicateCommand(textEditor);
+            command.Execute(null);
+        }
+
+        public void Delete()
+        {
+            textEditor.Delete();
+        }
+
+        public void AllSelect()
+        {
+            textEditor.SelectAll();
+        }
+
+        public void Comment()
+        {
+            
+        }
+
+        public void Decomment()
+        {
+
+        }
+        #endregion
+
         #region Model
         public void Inspection()
         {
@@ -253,5 +319,7 @@ namespace Gaten.Stock.MercuryEditor
             EditorStatusText.Text = "";
         }
         #endregion
+
+        
     }
 }

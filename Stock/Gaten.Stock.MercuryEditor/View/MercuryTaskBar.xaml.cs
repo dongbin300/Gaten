@@ -53,27 +53,27 @@ namespace Gaten.Stock.MercuryEditor.View
 
         private void CutButton_Click(object sender, MouseButtonEventArgs e)
         {
-
+            mainWindow.Cut();
         }
 
         private void CopyButton_Click(object sender, MouseButtonEventArgs e)
         {
-
+            mainWindow.Copy();
         }
 
         private void PasteButton_Click(object sender, MouseButtonEventArgs e)
         {
-
+            mainWindow.Paste();
         }
 
         private void UndoButton_Click(object sender, MouseButtonEventArgs e)
         {
-
+            mainWindow.Undo();
         }
 
         private void RedoButton_Click(object sender, MouseButtonEventArgs e)
         {
-
+            mainWindow.Redo();
         }
 
         private void WrapButton_Click(object sender, MouseButtonEventArgs e)

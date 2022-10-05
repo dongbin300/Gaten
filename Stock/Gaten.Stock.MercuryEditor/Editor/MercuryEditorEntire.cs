@@ -1,10 +1,13 @@
-﻿using ICSharpCode.AvalonEdit;
+﻿using Gaten.Stock.MercuryEditor.Commands;
+
+using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Indentation;
 
 using System.IO;
+using System.Windows.Input;
 using System.Xml;
 
 namespace Gaten.Stock.MercuryEditor.Editor
@@ -23,6 +26,11 @@ namespace Gaten.Stock.MercuryEditor.Editor
 
         public static void Init()
         {
+            InitHighlighting();
+        }
+
+        private static void InitHighlighting()
+        {
             using (Stream? s = typeof(MainWindow).Assembly.GetManifestResourceStream("Gaten.Stock.MercuryEditor.Editor.MercuryHighlighting-Light.xshd"))
             {
                 using XmlReader reader = new XmlTextReader(s);
@@ -35,6 +43,12 @@ namespace Gaten.Stock.MercuryEditor.Editor
             }
             HighlightingManager.Instance.RegisterHighlighting("Mercury_Light", new string[] { ".tm" }, MercuryLightHighlighting);
             HighlightingManager.Instance.RegisterHighlighting("Mercury_Dark", new string[] { ".tm" }, MercuryDarkHighlighting);
+        }
+
+        public static void InitCommand(TextEditor textEditor)
+        {
+            AvalonEditCommands.DeleteLine.InputGestures.Clear();
+            textEditor.InputBindings.Add(new InputBinding(new DuplicateCommand(textEditor), new KeyGesture(Key.D, ModifierKeys.Control)));
         }
 
         public static void InitStrategy(TextEditor textEditor)

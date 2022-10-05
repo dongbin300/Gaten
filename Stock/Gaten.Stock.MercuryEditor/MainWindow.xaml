@@ -25,11 +25,17 @@
         <Border Grid.Row="2" Background="{DynamicResource StatusBackground}">
             <TextBlock x:Name="EditorStatusText" TextAlignment="Left" VerticalAlignment="Center" Margin="8,0" Foreground="{DynamicResource StatusForeground}"/>
         </Border>
-        <a:TextEditor Grid.Row="3" x:Name="textEditor" FontFamily="Consolas" FontSize="10pt"
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <a:TextEditor Grid.Column="0" x:Name="textEditor" FontFamily="Consolas" FontSize="10pt"
                       Foreground="{DynamicResource EditorForeground}"  Background="{DynamicResource EditorBackground}"
                       TextChanged="textEditor_TextChanged" 
                       HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
                       ShowLineNumbers="True"
                       />
+        </Grid>
+        
     </Grid>
 </Window>

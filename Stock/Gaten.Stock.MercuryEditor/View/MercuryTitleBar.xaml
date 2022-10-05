@@ -225,7 +225,7 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="편집" Style="{DynamicResource MainMenuItem}" Height="30">
-                    <MenuItem x:Name="EditFindReplaceMenuItem" Style="{DynamicResource SubMenuItem}" Header="찾기 및 바꾸기" Height="28">
+                    <MenuItem x:Name="EditFindReplaceMenuItem" Style="{DynamicResource SubMenuItem}" Header="찾기 및 바꾸기" Height="28" Click="EditFindReplaceMenuItem_Click">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -243,7 +243,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator Style="{DynamicResource SubMenuSeparator}" />
-                    <MenuItem x:Name="EditUndoMenuItem" Style="{DynamicResource SubMenuItem}" Header="실행 취소" Height="28">
+                    <MenuItem x:Name="EditUndoMenuItem" Style="{DynamicResource SubMenuItem}" Header="실행 취소" Height="28" Click="EditUndoMenuItem_Click">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -263,7 +263,7 @@
                             </Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="EditRedoMenuItem" Style="{DynamicResource SubMenuItem}" Header="다시 실행" Height="28">
+                    <MenuItem x:Name="EditRedoMenuItem" Style="{DynamicResource SubMenuItem}" Header="다시 실행" Height="28" Click="EditRedoMenuItem_Click">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -284,7 +284,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator Style="{DynamicResource SubMenuSeparator}" />
-                    <MenuItem x:Name="EditCutMenuItem" Style="{DynamicResource SubMenuItem}" Header="잘라내기" Height="28">
+                    <MenuItem x:Name="EditCutMenuItem" Style="{DynamicResource SubMenuItem}" Header="잘라내기" Height="28" Click="EditCutMenuItem_Click">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -301,7 +301,7 @@
                             </Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="EditCopyMenuItem" Style="{DynamicResource SubMenuItem}" Header="복사" Height="28">
+                    <MenuItem x:Name="EditCopyMenuItem" Style="{DynamicResource SubMenuItem}" Header="복사" Height="28" Click="EditCopyMenuItem_Click">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -318,7 +318,7 @@
                             </Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="EditPasteMenuItem" Style="{DynamicResource SubMenuItem}" Header="붙여넣기" Height="28">
+                    <MenuItem x:Name="EditPasteMenuItem" Style="{DynamicResource SubMenuItem}" Header="붙여넣기" Height="28" Click="EditPasteMenuItem_Click">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -335,7 +335,7 @@
                             </Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="EditDuplicateMenuItem" Style="{DynamicResource SubMenuItem}" Header="복제" Height="28">
+                    <MenuItem x:Name="EditDuplicateMenuItem" Style="{DynamicResource SubMenuItem}" Header="복제" Height="28" Click="EditDuplicateMenuItem_Click">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -352,7 +352,7 @@
                             </Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="EditDeleteMenuItem" Style="{DynamicResource SubMenuItem}" Header="삭제" Height="28">
+                    <MenuItem x:Name="EditDeleteMenuItem" Style="{DynamicResource SubMenuItem}" Header="삭제" Height="28" Click="EditDeleteMenuItem_Click">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -373,7 +373,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator Style="{DynamicResource SubMenuSeparator}" />
-                    <MenuItem x:Name="EditAllSelectMenuItem" Style="{DynamicResource SubMenuItem}" Header="모두 선택" Height="28">
+                    <MenuItem x:Name="EditAllSelectMenuItem" Style="{DynamicResource SubMenuItem}" Header="모두 선택" Height="28" Click="EditAllSelectMenuItem_Click">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -394,7 +394,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator Style="{DynamicResource SubMenuSeparator}" />
-                    <MenuItem x:Name="EditCommentMenuItem" Style="{DynamicResource SubMenuItem}" Header="주석 처리" Height="28">
+                    <MenuItem x:Name="EditCommentMenuItem" Style="{DynamicResource SubMenuItem}" Header="주석 처리" Height="28" Click="EditCommentMenuItem_Click">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -414,7 +414,7 @@
                             </Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="EditDecommentMenuItem" Style="{DynamicResource SubMenuItem}" Header="주석 처리 제거" Height="28">
+                    <MenuItem x:Name="EditDecommentMenuItem" Style="{DynamicResource SubMenuItem}" Header="주석 처리 제거" Height="28" Click="EditDecommentMenuItem_Click">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>

@@ -1,5 +1,7 @@
 ﻿using Gaten.Net.Wpf;
 
+using OpenQA.Selenium;
+
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -263,6 +265,63 @@ namespace Gaten.Stock.MercuryEditor.View
         }
         #endregion
 
+        #region Edit
+        private void EditFindReplaceMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.OpenFindReplace();
+        }
+
+        private void EditUndoMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.Undo();
+        }
+
+        private void EditRedoMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.Redo();
+        }
+
+        private void EditCutMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.Cut();
+        }
+
+        private void EditCopyMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.Copy();
+        }
+
+        private void EditPasteMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.Paste();
+        }
+
+        private void EditDuplicateMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.Duplicate();
+        }
+
+        private void EditDeleteMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.Delete();
+        }
+
+        private void EditAllSelectMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.AllSelect();
+        }
+
+        private void EditCommentMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.Comment();
+        }
+
+        private void EditDecommentMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.Decomment();
+        }
+        #endregion
+
         #region Model
         private void ModelInspectionMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -271,8 +330,7 @@ namespace Gaten.Stock.MercuryEditor.View
 
         #endregion
 
-        #endregion
-
+        #region Settings
         private void SettingsThemeLightMenuItem_Click(object sender, RoutedEventArgs e)
         {
             SettingsThemeDarkMenuItem.IsChecked = false;
@@ -290,5 +348,10 @@ namespace Gaten.Stock.MercuryEditor.View
                 Delegater.ChangeTheme();
             }
         }
+        #endregion
+
+        #endregion
+
+        
     }
 }
