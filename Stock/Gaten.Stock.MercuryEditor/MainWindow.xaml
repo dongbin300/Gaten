@@ -29,7 +29,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <a:TextEditor Grid.Column="0" x:Name="textEditor" FontFamily="Consolas" FontSize="10pt"
+            <a:TextEditor Grid.Column="0" x:Name="textEditor" FontFamily="Consolas" FontSize="9.45pt"
                       Foreground="{DynamicResource EditorForeground}"  Background="{DynamicResource EditorBackground}"
                       TextChanged="textEditor_TextChanged" 
                       HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"

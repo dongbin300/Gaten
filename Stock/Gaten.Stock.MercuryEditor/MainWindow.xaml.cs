@@ -214,12 +214,27 @@ namespace Gaten.Stock.MercuryEditor
 
         public void Comment()
         {
-            
+            var selectionFirstLine = textEditor.Document.GetLineByOffset(textEditor.SelectionStart);
+            var selectionLastLine = textEditor.Document.GetLineByOffset(textEditor.SelectionStart + textEditor.SelectionLength);
+            for (int i = selectionFirstLine.LineNumber; i <= selectionLastLine.LineNumber; i++)
+            {
+                var offset = textEditor.Document.GetOffset(i, 0);
+                textEditor.Document.Insert(offset, "//");
+            }
         }
 
         public void Decomment()
         {
-
+            var selectionFirstLine = textEditor.Document.GetLineByOffset(textEditor.SelectionStart);
+            var selectionLastLine = textEditor.Document.GetLineByOffset(textEditor.SelectionStart + textEditor.SelectionLength);
+            for (int i = selectionFirstLine.LineNumber; i <= selectionLastLine.LineNumber; i++)
+            {
+                var offset = textEditor.Document.GetOffset(i, 0);
+                var line = textEditor.Document.GetLineByOffset(offset);
+                var lineText = textEditor.Document.GetText(line.Offset, line.Length);
+                var newLineText = lineText.Replace("//", "");
+                textEditor.Document.Replace(new SelectionSegment(line.Offset, line.EndOffset), newLineText);
+            }
         }
         #endregion
 
