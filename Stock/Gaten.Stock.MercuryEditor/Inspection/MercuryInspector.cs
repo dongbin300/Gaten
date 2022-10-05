@@ -32,7 +32,8 @@ namespace Gaten.Stock.MercuryEditor.Inspection
         {
             try
             {
-                code = codeText.Split(Environment.NewLine, StringSplitOptions.None).Select((x, i) => new TextLine(i + 1, x.Trim())).ToList();
+                code = codeText.Split(Environment.NewLine, StringSplitOptions.None)
+                    .Select((x, i) => new TextLine(i + 1, x.Split(new string[] {"//", "/*", "*/"}, StringSplitOptions.None)[0].Trim())).ToList();
                 lineNumber = 0;
 
                 var systemCodes = GetSystemCode();

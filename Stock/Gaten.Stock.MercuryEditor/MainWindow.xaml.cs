@@ -226,6 +226,8 @@ namespace Gaten.Stock.MercuryEditor
         #region Model
         public void Inspection()
         {
+            Save();
+
             var inspector = new MercuryInspector();
             var result = inspector.Run(textEditor.Text);
 
