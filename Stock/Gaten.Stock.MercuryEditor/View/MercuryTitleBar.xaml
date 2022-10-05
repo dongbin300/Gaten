@@ -41,7 +41,7 @@
         </Grid.ColumnDefinitions>
 
         <MenuItem x:Name="IconImageContextMenu" Style="{DynamicResource MainMenuItem}" Height="28" Visibility="Hidden">
-            <MenuItem x:Name="NormalSizeMenuItem" Style="{DynamicResource SubMenuItem}" Header="이전 크기로" Width="150" Height="28" Click="NormalSizeMenuItem_Click">
+            <MenuItem x:Name="NormalSizeMenuItem" Style="{DynamicResource SubMenuItem}" Header="이전 크기로" Height="28" Click="NormalSizeMenuItem_Click">
                 <MenuItem.Icon>
                     <Image>
                         <Image.Source>
@@ -94,7 +94,8 @@
                 </MenuItem.Icon>
             </MenuItem>
             <Separator Style="{DynamicResource SubMenuSeparator}" />
-            <MenuItem x:Name="EscapeMenuItem" Style="{DynamicResource SubMenuItem}" Header="닫기" Height="28" Click="EscapeMenuItem_Click">
+            <MenuItem x:Name="EscapeMenuItem" Style="{DynamicResource SubMenuItem}" Header="닫기" Height="28" Click="EscapeMenuItem_Click"
+                      InputGestureText="Alt+F4">
                 <MenuItem.Icon>
                     <Image>
                         <Image.Source>
@@ -122,7 +123,8 @@
         <WrapPanel Orientation="Horizontal" Margin="5,0" Grid.Column="1">
             <Menu Background="{DynamicResource TitleBarBackground}">
                 <MenuItem Header="파일" Style="{DynamicResource MainMenuItem}" Height="30">
-                    <MenuItem x:Name="FileNewMenuItem" Style="{DynamicResource SubMenuItem}" Header="새로 만들기" Height="28" Click="FileNewMenuItem_Click">
+                    <MenuItem x:Name="FileNewMenuItem" Style="{DynamicResource SubMenuItem}" Header="새로 만들기" Height="28" Click="FileNewMenuItem_Click"
+                              InputGestureText="Ctrl+N">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -139,7 +141,8 @@
                             </Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="FileOpenMenuItem" Style="{DynamicResource SubMenuItem}" Header="열기" Height="28" Click="FileOpenMenuItem_Click">
+                    <MenuItem x:Name="FileOpenMenuItem" Style="{DynamicResource SubMenuItem}" Header="열기" Height="28" Click="FileOpenMenuItem_Click"
+                              InputGestureText="Ctrl+O">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -162,7 +165,8 @@
                     <Separator Style="{DynamicResource SubMenuSeparator}" />
                     <MenuItem x:Name="FileCloseMenuItem" Style="{DynamicResource SubMenuItem}" Header="닫기" Height="28" Click="FileCloseMenuItem_Click"/>
                         <Separator Style="{DynamicResource SubMenuSeparator}" />
-                        <MenuItem x:Name="FileSaveMenuItem" Style="{DynamicResource SubMenuItem}" Header="저장" Height="28" Click="FileSaveMenuItem_Click">
+                        <MenuItem x:Name="FileSaveMenuItem" Style="{DynamicResource SubMenuItem}" Header="저장" Height="28" Click="FileSaveMenuItem_Click"
+                                  InputGestureText="Ctrl+S">
                             <MenuItem.Icon>
                                 <Image>
                                     <Image.Source>
@@ -182,7 +186,8 @@
                             </Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="FileSaveAsMenuItem" Style="{DynamicResource SubMenuItem}" Header="다른 이름으로 저장" Height="28" Click="FileSaveAsMenuItem_Click">
+                    <MenuItem x:Name="FileSaveAsMenuItem" Style="{DynamicResource SubMenuItem}" Header="다른 이름으로 저장" Height="28" Click="FileSaveAsMenuItem_Click"
+                              InputGestureText="Ctrl+Alt+S">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -203,7 +208,8 @@
                             </MenuItem.Icon>
                         </MenuItem>
                         <Separator Style="{DynamicResource SubMenuSeparator}" />
-                        <MenuItem x:Name="FileEscapeMenuItem" Style="{DynamicResource SubMenuItem}" Header="끝내기" Height="28" Click="FileEscapeMenuItem_Click">
+                        <MenuItem x:Name="FileEscapeMenuItem" Style="{DynamicResource SubMenuItem}" Header="끝내기" Height="28" Click="FileEscapeMenuItem_Click"
+                                  InputGestureText="Alt+F4">
                             <MenuItem.Icon>
                                 <Image>
                                     <Image.Source>
@@ -225,7 +231,8 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="편집" Style="{DynamicResource MainMenuItem}" Height="30">
-                    <MenuItem x:Name="EditFindReplaceMenuItem" Style="{DynamicResource SubMenuItem}" Header="찾기 및 바꾸기" Height="28" Click="EditFindReplaceMenuItem_Click">
+                    <MenuItem x:Name="EditFindReplaceMenuItem" Style="{DynamicResource SubMenuItem}" Header="찾기 및 바꾸기" Height="28" Click="EditFindReplaceMenuItem_Click"
+                              InputGestureText="Ctrl+F">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -243,7 +250,8 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator Style="{DynamicResource SubMenuSeparator}" />
-                    <MenuItem x:Name="EditUndoMenuItem" Style="{DynamicResource SubMenuItem}" Header="실행 취소" Height="28" Click="EditUndoMenuItem_Click">
+                    <MenuItem x:Name="EditUndoMenuItem" Style="{DynamicResource SubMenuItem}" Header="실행 취소" Height="28" Click="EditUndoMenuItem_Click"
+                              InputGestureText="Ctrl+Z">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -263,7 +271,8 @@
                             </Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="EditRedoMenuItem" Style="{DynamicResource SubMenuItem}" Header="다시 실행" Height="28" Click="EditRedoMenuItem_Click">
+                    <MenuItem x:Name="EditRedoMenuItem" Style="{DynamicResource SubMenuItem}" Header="다시 실행" Height="28" Click="EditRedoMenuItem_Click"
+                              InputGestureText="Ctrl+Y">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -284,7 +293,8 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator Style="{DynamicResource SubMenuSeparator}" />
-                    <MenuItem x:Name="EditCutMenuItem" Style="{DynamicResource SubMenuItem}" Header="잘라내기" Height="28" Click="EditCutMenuItem_Click">
+                    <MenuItem x:Name="EditCutMenuItem" Style="{DynamicResource SubMenuItem}" Header="잘라내기" Height="28" Click="EditCutMenuItem_Click"
+                              InputGestureText="Ctrl+X">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -301,7 +311,8 @@
                             </Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="EditCopyMenuItem" Style="{DynamicResource SubMenuItem}" Header="복사" Height="28" Click="EditCopyMenuItem_Click">
+                    <MenuItem x:Name="EditCopyMenuItem" Style="{DynamicResource SubMenuItem}" Header="복사" Height="28" Click="EditCopyMenuItem_Click"
+                              InputGestureText="Ctrl+C">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -318,7 +329,8 @@
                             </Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="EditPasteMenuItem" Style="{DynamicResource SubMenuItem}" Header="붙여넣기" Height="28" Click="EditPasteMenuItem_Click">
+                    <MenuItem x:Name="EditPasteMenuItem" Style="{DynamicResource SubMenuItem}" Header="붙여넣기" Height="28" Click="EditPasteMenuItem_Click"
+                              InputGestureText="Ctrl+V">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -335,7 +347,8 @@
                             </Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="EditDuplicateMenuItem" Style="{DynamicResource SubMenuItem}" Header="복제" Height="28" Click="EditDuplicateMenuItem_Click">
+                    <MenuItem x:Name="EditDuplicateMenuItem" Style="{DynamicResource SubMenuItem}" Header="복제" Height="28" Click="EditDuplicateMenuItem_Click"
+                              InputGestureText="Ctrl+D">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -352,7 +365,8 @@
                             </Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="EditDeleteMenuItem" Style="{DynamicResource SubMenuItem}" Header="삭제" Height="28" Click="EditDeleteMenuItem_Click">
+                    <MenuItem x:Name="EditDeleteMenuItem" Style="{DynamicResource SubMenuItem}" Header="삭제" Height="28" Click="EditDeleteMenuItem_Click"
+                              InputGestureText="DEL">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -373,7 +387,8 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator Style="{DynamicResource SubMenuSeparator}" />
-                    <MenuItem x:Name="EditAllSelectMenuItem" Style="{DynamicResource SubMenuItem}" Header="모두 선택" Height="28" Click="EditAllSelectMenuItem_Click">
+                    <MenuItem x:Name="EditAllSelectMenuItem" Style="{DynamicResource SubMenuItem}" Header="모두 선택" Height="28" Click="EditAllSelectMenuItem_Click"
+                              InputGestureText="Ctrl+A">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -487,7 +502,8 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator Style="{DynamicResource SubMenuSeparator}" />
-                    <MenuItem x:Name="ViewFullScreenMenuItem" Style="{DynamicResource SubMenuItem}" Header="전체 화면" Height="28">
+                    <MenuItem x:Name="ViewFullScreenMenuItem" Style="{DynamicResource SubMenuItem}" Header="전체 화면" Height="28"
+                              InputGestureText="F11">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -506,7 +522,8 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="모델" Style="{DynamicResource MainMenuItem}" Height="30">
-                    <MenuItem x:Name="ModelInspectionMenuItem" Style="{DynamicResource SubMenuItem}" Header="검사" Height="28" Click="ModelInspectionMenuItem_Click">
+                    <MenuItem x:Name="ModelInspectionMenuItem" Style="{DynamicResource SubMenuItem}" Header="검사" Height="28" Click="ModelInspectionMenuItem_Click"
+                              InputGestureText="F5">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -645,7 +662,8 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="도움말" Style="{DynamicResource MainMenuItem}" Height="30">
-                    <MenuItem x:Name="HelpViewMenuItem" Style="{DynamicResource SubMenuItem}" Header="도움말 보기" Height="28">
+                    <MenuItem x:Name="HelpViewMenuItem" Style="{DynamicResource SubMenuItem}" Header="도움말 보기" Height="28"
+                              InputGestureText="F1">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
