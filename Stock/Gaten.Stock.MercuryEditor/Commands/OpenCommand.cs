@@ -23,7 +23,7 @@ namespace Gaten.Stock.MercuryEditor.Commands
 
         public bool CanExecute(object? parameter) => true;
 
-        public void Execute(object? param)
+        public void Execute(object? parameter)
         {
             if (!Delegater.CheckSave())
             {

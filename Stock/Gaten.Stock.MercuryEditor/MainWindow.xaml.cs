@@ -1,4 +1,5 @@
-﻿using Gaten.Net.Wpf.Controls;
+﻿using Gaten.Net.Wpf;
+using Gaten.Net.Wpf.Controls;
 using Gaten.Stock.MercuryEditor.Commands;
 using Gaten.Stock.MercuryEditor.Editor;
 using Gaten.Stock.MercuryEditor.Inspection;
@@ -44,6 +45,7 @@ namespace Gaten.Stock.MercuryEditor
         ICommand saveAsCommand;
         ICommand closeCommand;
         ICommand duplicateCommand;
+        ICommand fullScreenCommand;
 
         #region Window
         public MainWindow()
@@ -61,12 +63,24 @@ namespace Gaten.Stock.MercuryEditor
             Delegater.RefreshFileName = () => TitleBar.FileNameText.Text = TmFile.TmName;
             Delegater.CheckSave = CheckSave;
             Delegater.SetEditorText = (text) => textEditor.Text = text;
+            Delegater.SetFullScreen = () =>
+            {
+                if (TitleBarRow.Height.Value > 0)
+                {
+                    TitleBar.FullScreen();
+                }
+                else
+                {
+                    TitleBar.DefaultScreen();
+                }
+            };
             newCommand = new NewCommand(textEditor);
             openCommand = new OpenCommand(textEditor);
             saveCommand = new SaveCommand(textEditor);
             saveAsCommand = new SaveAsCommand(textEditor);
             closeCommand = new CloseCommand(textEditor);
             duplicateCommand = new DuplicateCommand(textEditor);
+            fullScreenCommand = new FullScreenCommand();
         }
 
         private void SettingTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
@@ -217,6 +231,13 @@ namespace Gaten.Stock.MercuryEditor
         }
         #endregion
 
+        #region View
+        public void SetFullScreen()
+        {
+            fullScreenCommand.Execute(null);
+        }
+        #endregion
+
         #region Model
         public void Inspection()
         {
@@ -248,6 +269,22 @@ namespace Gaten.Stock.MercuryEditor
             EditorStatusText.Text = "검사 완료. 실행합니다.";
 
             //BackTest
+        }
+        #endregion
+
+        #region Settings
+        public void SetWrap(bool wrap)
+        {
+            textEditor.WordWrap = wrap;
+            Settings.Default.TextWrap = wrap;
+            Settings.Default.Save();
+        }
+
+        public void SetEnableLineNumber(bool enable)
+        {
+            textEditor.ShowLineNumbers = enable;
+            Settings.Default.LineNumber = enable;
+            Settings.Default.Save();
         }
         #endregion
 

@@ -34,5 +34,29 @@ namespace Gaten.Stock.MercuryEditor {
                 this["Theme"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool TextWrap {
+            get {
+                return ((bool)(this["TextWrap"]));
+            }
+            set {
+                this["TextWrap"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LineNumber {
+            get {
+                return ((bool)(this["LineNumber"]));
+            }
+            set {
+                this["LineNumber"] = value;
+            }
+        }
     }
 }

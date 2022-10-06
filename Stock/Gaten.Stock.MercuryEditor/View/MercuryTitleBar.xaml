@@ -449,41 +449,6 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="보기" Style="{DynamicResource MainMenuItem}" Height="30">
-                    <MenuItem x:Name="ViewWrapMenuItem" Style="{DynamicResource SubMenuItem}" Header="자동 줄 바꿈" Height="28">
-                        <MenuItem.Icon>
-                            <Image>
-                                <Image.Source>
-                                    <DrawingImage>
-                                        <DrawingImage.Drawing>
-                                            <GeometryDrawing Brush="{StaticResource MenuIconBrush}">
-                                                <GeometryDrawing.Geometry>
-                                                    M21 5 H3 V7 H21 V5 M3 19 H10 V17 H3 V19 M3 13 H18 C19 13 20 13.43 20 15 C20 16.57 19 17 18 17 H16 V15 L12 18 L16 21 V19 H18 C20.95 19 22 17.73 22 15 C22 12.28 21 11 18 11 H3 V13Z
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-                                        </DrawingImage.Drawing>
-                                    </DrawingImage>
-                                </Image.Source>
-                            </Image>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem x:Name="ViewNumberMenuItem" Style="{DynamicResource SubMenuItem}" Header="줄 번호" Height="28">
-                        <MenuItem.Icon>
-                            <Image>
-                                <Image.Source>
-                                    <DrawingImage>
-                                        <DrawingImage.Drawing>
-                                            <GeometryDrawing Brush="{StaticResource MenuIconBrush}">
-                                                <GeometryDrawing.Geometry>
-                                                    M7 13 V11 H21 V13 H7 M7 19 V17 H21 V19 H7 M7 7 V5 H21 V7 H7 M3 8 V5 H2 V4 H4 V8 H3 M2 17 V16 H5 V20 H2V19 H4 V18.5 H3 V17.5 H4 V17 H2 M4.25 10 A0.75 0.75 0 0 1 5 10.75 C5 10.95 4.92 11.14 4.79 11.27 L3.12 13 H5 V14 H2 V13.08 L4 11 H2 V10 H4.25Z
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-                                        </DrawingImage.Drawing>
-                                    </DrawingImage>
-                                </Image.Source>
-                            </Image>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <Separator Style="{DynamicResource SubMenuSeparator}" />
                     <MenuItem x:Name="ViewModelExplorerMenuItem" Style="{DynamicResource SubMenuItem}" Header="모델 탐색기" Height="28" />
                     <MenuItem x:Name="ViewPropertyWindowMenuItem" Style="{DynamicResource SubMenuItem}" Header="속성 창" Height="28">
                         <MenuItem.Icon>
@@ -503,7 +468,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator Style="{DynamicResource SubMenuSeparator}" />
-                    <MenuItem x:Name="ViewFullScreenMenuItem" Style="{DynamicResource SubMenuItem}" Header="전체 화면" Height="28"
+                    <MenuItem x:Name="ViewFullScreenMenuItem" Style="{DynamicResource SubMenuItem}" Header="전체 화면" Height="28" Click="ViewFullScreenMenuItem_Click" 
                               InputGestureText="F11">
                         <MenuItem.Icon>
                             <Image>
@@ -565,7 +530,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator Style="{DynamicResource SubMenuSeparator}" />
-                    <MenuItem x:Name="ModelAddScenarioMenuItem" Style="{DynamicResource SubMenuItem}" Header="시나리오 추가" Height="28">
+                    <MenuItem x:Name="ModelAddScenarioMenuItem" Style="{DynamicResource SubMenuItem}" Header="시나리오 추가" Height="28" Click="ModelAddScenarioMenuItem_Click">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -585,7 +550,7 @@
                             </Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem x:Name="ModelAddStrategyMenuItem" Style="{DynamicResource SubMenuItem}" Header="전략 추가" Height="28">
+                    <MenuItem x:Name="ModelAddStrategyMenuItem" Style="{DynamicResource SubMenuItem}" Header="전략 추가" Height="28" Click="ModelAddStrategyMenuItem_Click">
                         <MenuItem.Icon>
                             <Image>
                                 <Image.Source>
@@ -625,6 +590,9 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="설정" Style="{DynamicResource MainMenuItem}" Height="30">
+                    <MenuItem x:Name="SettingsWrapMenuItem" Style="{DynamicResource SubMenuItem}" Header="자동 줄 바꿈" Height="28" Click="SettingsWrapMenuItem_Click" IsCheckable="True" />
+                    <MenuItem x:Name="SettingsNumberMenuItem" Style="{DynamicResource SubMenuItem}" Header="줄 번호" Height="28" Click="SettingsNumberMenuItem_Click" IsCheckable="True" />
+                    <Separator Style="{DynamicResource SubMenuSeparator}" />
                     <MenuItem x:Name="SettingsThemeMenuItem" Style="{DynamicResource SubMenuItem}" Header="테마" Height="28">
                         <MenuItem x:Name="SettingsThemeLightMenuItem" Style="{DynamicResource SubMenuItem}" Header="밝은 테마" Height="28" IsCheckable="True" Click="SettingsThemeLightMenuItem_Click"/>
                         <MenuItem x:Name="SettingsThemeDarkMenuItem" Style="{DynamicResource SubMenuItem}" Header="어두운 테마" Height="28" IsCheckable="True" Click="SettingsThemeDarkMenuItem_Click"/>

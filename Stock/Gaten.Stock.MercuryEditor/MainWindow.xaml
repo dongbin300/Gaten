@@ -15,7 +15,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition x:Name="TitleBarRow" Height="30" />
             <RowDefinition Height="30"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>

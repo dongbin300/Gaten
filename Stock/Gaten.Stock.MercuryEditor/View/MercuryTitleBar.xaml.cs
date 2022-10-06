@@ -21,10 +21,10 @@ namespace Gaten.Stock.MercuryEditor.View
         MainWindow mainWindow => (MainWindow)parentWindow;
         Geometry NormalButtonGeometry;
         Geometry MaximizeButtonGeometry;
-        double prevLeft = 0;
-        double prevTop = 0;
-        double prevWidth = 0;
-        double prevHeight = 0;
+        public double prevLeft = 0;
+        public double prevTop = 0;
+        public double prevWidth = 0;
+        public double prevHeight = 0;
 
         private static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register("Title", typeof(string), typeof(MercuryTitleBar), new PropertyMetadata(""));
@@ -126,6 +126,42 @@ namespace Gaten.Stock.MercuryEditor.View
             parentWindow.Height = prevHeight;
             MaximizePath.Data = MaximizeButtonGeometry;
 
+            NormalSizeMenuItem.IsEnabled = false;
+            MoveMenuItem.IsEnabled = true;
+            MinimizeMenuItem.IsEnabled = true;
+            MaximizeMenuItem.IsEnabled = true;
+            EscapeMenuItem.IsEnabled = true;
+        }
+
+        public void FullScreen()
+        {
+            prevLeft = parentWindow.Left;
+            prevTop = parentWindow.Top;
+            prevWidth = parentWindow.Width;
+            prevHeight = parentWindow.Height;
+            parentWindow.Left = 0;
+            parentWindow.Top = 0;
+            parentWindow.Width = WindowsSystem.ScreenWidth;
+            parentWindow.Height = WindowsSystem.ScreenHeight;
+            //MaximizePath.Data = NormalButtonGeometry;
+
+            mainWindow.TitleBarRow.Height = new GridLength(0);
+            NormalSizeMenuItem.IsEnabled = true;
+            MoveMenuItem.IsEnabled = false;
+            MinimizeMenuItem.IsEnabled = true;
+            MaximizeMenuItem.IsEnabled = false;
+            EscapeMenuItem.IsEnabled = true;
+        }
+
+        public void DefaultScreen()
+        {
+            parentWindow.Left = prevLeft;
+            parentWindow.Top = prevTop;
+            parentWindow.Width = prevWidth;
+            parentWindow.Height = prevHeight;
+            //MaximizePath.Data = MaximizeButtonGeometry;
+
+            mainWindow.TitleBarRow.Height = new GridLength(30);
             NormalSizeMenuItem.IsEnabled = false;
             MoveMenuItem.IsEnabled = true;
             MinimizeMenuItem.IsEnabled = true;
@@ -320,6 +356,13 @@ namespace Gaten.Stock.MercuryEditor.View
         {
             mainWindow.Decomment();
         }
+        #endregion  
+
+        #region View
+        private void ViewFullScreenMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.SetFullScreen();
+        }
         #endregion
 
         #region Model
@@ -328,9 +371,28 @@ namespace Gaten.Stock.MercuryEditor.View
             mainWindow.Inspection();
         }
 
+        private void ModelAddScenarioMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ModelAddStrategyMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         #endregion
 
         #region Settings
+        private void SettingsWrapMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.SetWrap(SettingsWrapMenuItem.IsChecked);
+        }
+
+        private void SettingsNumberMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.SetEnableLineNumber(SettingsNumberMenuItem.IsChecked);
+        }
+
         private void SettingsThemeLightMenuItem_Click(object sender, RoutedEventArgs e)
         {
             SettingsThemeDarkMenuItem.IsChecked = false;
@@ -352,5 +414,9 @@ namespace Gaten.Stock.MercuryEditor.View
         #endregion
 
         #endregion
+
+        
+
+        
     }
 }

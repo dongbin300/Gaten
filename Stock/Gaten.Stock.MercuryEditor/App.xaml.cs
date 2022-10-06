@@ -24,11 +24,11 @@ namespace Gaten.Stock.MercuryEditor
             Delegater.ChangeTheme = ChangeTheme;
 
             mainWindow = new MainWindow();
-            InitTheme();
+            InitSettings();
             mainWindow.Show();
         }
 
-        private void InitTheme()
+        private void InitSettings()
         {
             switch (Settings.Default.Theme)
             {
@@ -45,6 +45,9 @@ namespace Gaten.Stock.MercuryEditor
                     AddResourceDictionary("Resources/Themes/DarkTheme.xaml");
                     break;
             }
+
+            mainWindow.textEditor.WordWrap = mainWindow.TitleBar.SettingsWrapMenuItem.IsChecked = Settings.Default.TextWrap;
+            mainWindow.textEditor.ShowLineNumbers = mainWindow.TitleBar.SettingsNumberMenuItem.IsChecked = Settings.Default.LineNumber;
         }
 
         public void ChangeTheme()

@@ -21,7 +21,7 @@ namespace Gaten.Stock.MercuryEditor.Commands
 
         public bool CanExecute(object? parameter) => true;
 
-        public void Execute(object? param)
+        public void Execute(object? parameter)
         {
             int offset = editor.CaretOffset;
             var line = editor.Document.GetLineByOffset(offset);
