@@ -8,7 +8,11 @@ namespace Gaten.Stock.MercuryEditor.Commands
     public class DuplicateCommand : ICommand
     {
         private readonly TextEditor editor;
-        public event EventHandler? CanExecuteChanged;
+        public event EventHandler? CanExecuteChanged
+        {
+            add { }
+            remove { }
+        }
 
         public DuplicateCommand(TextEditor editor)
         {

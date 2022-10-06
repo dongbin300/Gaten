@@ -348,10 +348,9 @@ namespace Gaten.Stock.MercuryEditor.View
                 Delegater.ChangeTheme();
             }
         }
-        #endregion
 
         #endregion
 
-        
+        #endregion
     }
 }

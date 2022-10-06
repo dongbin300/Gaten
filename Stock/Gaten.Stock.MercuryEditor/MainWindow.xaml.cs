@@ -1,5 +1,4 @@
-﻿using Gaten.Net.IO;
-using Gaten.Net.Wpf.Controls;
+﻿using Gaten.Net.Wpf.Controls;
 using Gaten.Stock.MercuryEditor.Commands;
 using Gaten.Stock.MercuryEditor.Editor;
 using Gaten.Stock.MercuryEditor.Inspection;
@@ -19,10 +18,6 @@ namespace Gaten.Stock.MercuryEditor
     /// </summary>
     public partial class MainWindow : Window
     {
-        // Indentation
-        // Folding
-        // Keyword Description
-
         /*
          * #v1
          * #binancefutures
@@ -43,6 +38,13 @@ namespace Gaten.Stock.MercuryEditor
         System.Timers.Timer settingTimer = new(5000);
         MercuryCompletionWindow? completionWindow;
 
+        ICommand newCommand;
+        ICommand openCommand;
+        ICommand saveCommand;
+        ICommand saveAsCommand;
+        ICommand closeCommand;
+        ICommand duplicateCommand;
+
         #region Window
         public MainWindow()
         {
@@ -55,6 +57,16 @@ namespace Gaten.Stock.MercuryEditor
 
             settingTimer.Elapsed += SettingTimer_Elapsed;
             settingTimer.Start();
+
+            Delegater.RefreshFileName = () => TitleBar.FileNameText.Text = TmFile.TmName;
+            Delegater.CheckSave = CheckSave;
+            Delegater.SetEditorText = (text) => textEditor.Text = text;
+            newCommand = new NewCommand(textEditor);
+            openCommand = new OpenCommand(textEditor);
+            saveCommand = new SaveCommand(textEditor);
+            saveAsCommand = new SaveAsCommand(textEditor);
+            closeCommand = new CloseCommand(textEditor);
+            duplicateCommand = new DuplicateCommand(textEditor);
         }
 
         private void SettingTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
@@ -93,61 +105,29 @@ namespace Gaten.Stock.MercuryEditor
             return true;
         }
 
-        private void RefreshFileName()
-        {
-            TitleBar.FileNameText.Text = TmFile.TmName;
-        }
-
         public void New()
         {
-            if (!CheckSave())
-            {
-                return;
-            }
-            textEditor.Clear();
-            TmFile.CurrentFilePath = string.Empty;
-            TmFile.IsSaved = true;
-            RefreshFileName();
+            newCommand.Execute(null);
         }
 
         public void Open()
         {
-            if (!CheckSave())
-            {
-                return;
-            }
-            var data = TmFile.Open();
-            if (data == string.Empty)
-            {
-                return;
-            }
-            textEditor.Text = data;
-            TmFile.IsSaved = true;
-            RefreshFileName();
+            openCommand.Execute(null);
         }
 
         public void FileClose()
         {
-            if (!CheckSave())
-            {
-                return;
-            }
-            textEditor.Clear();
-            TmFile.CurrentFilePath = string.Empty;
-            TmFile.IsSaved = true;
-            RefreshFileName();
+            closeCommand.Execute(null);
         }
 
         public void Save()
         {
-            TmFile.Save(textEditor.Text);
-            RefreshFileName();
+            saveCommand.Execute(null);
         }
 
         public void SaveAs()
         {
-            TmFile.SaveAs(textEditor.Text);
-            RefreshFileName();
+            saveAsCommand.Execute(null);
         }
 
         public void Escape()
@@ -198,8 +178,7 @@ namespace Gaten.Stock.MercuryEditor
 
         public void Duplicate()
         {
-            var command = new DuplicateCommand(textEditor);
-            command.Execute(null);
+            duplicateCommand.Execute(null);
         }
 
         public void Delete()
@@ -331,7 +310,7 @@ namespace Gaten.Stock.MercuryEditor
         private void textEditor_TextChanged(object sender, System.EventArgs e)
         {
             TmFile.IsSaved = false;
-            RefreshFileName();
+            Delegater.RefreshFileName();
             MercuryEditorEntire.UpdateFolding(textEditor);
             EditorStatusText.Text = "";
         }

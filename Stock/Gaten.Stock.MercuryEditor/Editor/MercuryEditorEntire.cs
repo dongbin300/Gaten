@@ -14,11 +14,11 @@ namespace Gaten.Stock.MercuryEditor.Editor
 {
     public class MercuryEditorEntire
     {
-        public static IHighlightingDefinition MercuryLightHighlighting;
-        public static IHighlightingDefinition MercuryDarkHighlighting;
-        public static FoldingManager FoldingManager;
-        public static XmlFoldingStrategy FoldingStrategy;
-        public static DefaultIndentationStrategy IndentationStrategy;
+        public static IHighlightingDefinition MercuryLightHighlighting = default!;
+        public static IHighlightingDefinition MercuryDarkHighlighting = default!;
+        public static FoldingManager FoldingManager = default!;
+        public static XmlFoldingStrategy FoldingStrategy = default!;
+        public static DefaultIndentationStrategy IndentationStrategy = default!;
         private static char[] WordSeparator =
         {
             ' ', '=', ';', '/'
@@ -33,11 +33,19 @@ namespace Gaten.Stock.MercuryEditor.Editor
         {
             using (Stream? s = typeof(MainWindow).Assembly.GetManifestResourceStream("Gaten.Stock.MercuryEditor.Editor.MercuryHighlighting-Light.xshd"))
             {
+                if (s == null)
+                {
+                    return;
+                }
                 using XmlReader reader = new XmlTextReader(s);
                 MercuryLightHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
             }
             using (Stream? s = typeof(MainWindow).Assembly.GetManifestResourceStream("Gaten.Stock.MercuryEditor.Editor.MercuryHighlighting-Dark.xshd"))
             {
+                if(s == null)
+                {
+                    return;
+                }
                 using XmlReader reader = new XmlTextReader(s);
                 MercuryDarkHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
             }
@@ -49,6 +57,10 @@ namespace Gaten.Stock.MercuryEditor.Editor
         {
             AvalonEditCommands.DeleteLine.InputGestures.Clear();
             textEditor.InputBindings.Add(new InputBinding(new DuplicateCommand(textEditor), new KeyGesture(Key.D, ModifierKeys.Control)));
+            textEditor.InputBindings.Add(new InputBinding(new NewCommand(textEditor), new KeyGesture(Key.N, ModifierKeys.Control)));
+            textEditor.InputBindings.Add(new InputBinding(new OpenCommand(textEditor), new KeyGesture(Key.O, ModifierKeys.Control)));
+            textEditor.InputBindings.Add(new InputBinding(new SaveCommand(textEditor), new KeyGesture(Key.S, ModifierKeys.Control)));
+            textEditor.InputBindings.Add(new InputBinding(new SaveAsCommand(textEditor), new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Alt)));
         }
 
         public static void InitStrategy(TextEditor textEditor)
