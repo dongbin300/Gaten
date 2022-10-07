@@ -8,6 +8,7 @@
         low,
         close,
         volume,
+        ri,
         rsi,
         ma,
         ema,

@@ -1,7 +1,5 @@
 ﻿using Gaten.Net.Stock.MercuryTradingModel.Enums;
 
-using System.Text.Json.Serialization;
-
 namespace Gaten.Net.Stock.MercuryTradingModel.Formulae
 {
     public class ComparisonFormula : Formula
@@ -15,6 +13,11 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Formulae
             ChartElement = chartElement;
             Comparison = comparison;
             Value = value;
+        }
+
+        public override string ToString()
+        {
+            return ChartElement.ToString() + FormulaUtil.ComparisonToString(Comparison) + Value.ToString();
         }
     }
 }

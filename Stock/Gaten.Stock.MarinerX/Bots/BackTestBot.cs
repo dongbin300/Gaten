@@ -5,6 +5,7 @@ using Gaten.Net.Wpf.Models;
 using Gaten.Stock.MarinerX.Charts;
 using Gaten.Stock.MarinerX.Interfaces;
 
+using System;
 using System.Text;
 
 namespace Gaten.Stock.MarinerX.Bots
@@ -66,6 +67,8 @@ namespace Gaten.Stock.MarinerX.Bots
                         if (strategy.Signal.IsFlare(info))
                         {
                             TradeLog.Append(strategy.Order.Run(asset, info));
+                            TradeLog.Append(" by " + strategy.Name + " : ");
+                            TradeLog.Append(strategy.Signal.Formula.ToString() + Environment.NewLine);
                         }
                     }
                 }

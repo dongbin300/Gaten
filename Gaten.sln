@@ -320,6 +320,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Game.RubiksCubeAlgorithmCreator", "Game\Gaten.Game.RubiksCubeAlgorithmCreator\Gaten.Game.RubiksCubeAlgorithmCreator.csproj", "{89706C89-D9F3-4257-8FA3-591D9EAC6007}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Stock.MarinerX", "Stock\Gaten.Stock.MarinerX\Gaten.Stock.MarinerX.csproj", "{266ADDAA-9001-4208-9B4B-ED64D212EFA5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{78E70E49-04F4-4CBD-A981-F03D10173737} = {78E70E49-04F4-4CBD-A981-F03D10173737}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Stock.MercuryEditor", "Stock\Gaten.Stock.MercuryEditor\Gaten.Stock.MercuryEditor.csproj", "{78E70E49-04F4-4CBD-A981-F03D10173737}"
 EndProject

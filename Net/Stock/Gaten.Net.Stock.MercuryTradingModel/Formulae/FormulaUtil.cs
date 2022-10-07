@@ -14,5 +14,16 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Formulae
             "!=" => Comparison.NotEqual,
             _ => Comparison.NotEqual
         };
+
+        public static string ComparisonToString(Comparison comparison) => comparison switch
+        {
+            Comparison.LessThan => "<",
+            Comparison.LessThanOrEqual => "<=",
+            Comparison.GreaterThan => ">",
+            Comparison.GreaterThanOrEqual => ">=",
+            Comparison.Equal => "=",
+            Comparison.NotEqual => "!=",
+            _ => "!=",
+        };
     }
 }

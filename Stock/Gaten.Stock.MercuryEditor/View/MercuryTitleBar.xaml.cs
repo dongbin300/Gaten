@@ -1,7 +1,5 @@
 ﻿using Gaten.Net.Wpf;
 
-using OpenQA.Selenium;
-
 using System;
 using System.Windows;
 using System.Windows.Controls;

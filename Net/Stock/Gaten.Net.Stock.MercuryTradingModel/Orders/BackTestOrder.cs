@@ -43,12 +43,12 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Orders
                 case PositionSide.Long:
                     Buy(asset, Price.Value, Quantity);
                     var estimatedAsset = Price.Value * asset.Position.ToDecimal() + asset.Balance;
-                    return $"{chart.DateTime.ToStandardString()},Buy,{Price},{Quantity},현재 {asset.Balance} USDT, {asset.Position} SOL ({estimatedAsset}USDT)" + Environment.NewLine;
+                    return $"{chart.DateTime.ToStandardString()},Buy,{Price},{Quantity},현재 {asset.Balance} USDT, {asset.Position} SOL ({estimatedAsset}USDT)";
 
                 case PositionSide.Short:
                     Sell(asset, Price.Value, Quantity);
                     var estimatedAsset2 = Price.Value * asset.Position.ToDecimal() + asset.Balance;
-                    return $"{chart.DateTime.ToStandardString()},Sell,{Price},{Quantity},현재 {asset.Balance} USDT, {asset.Position} SOL ({estimatedAsset2}USDT)" + Environment.NewLine;
+                    return $"{chart.DateTime.ToStandardString()},Sell,{Price},{Quantity},현재 {asset.Balance} USDT, {asset.Position} SOL ({estimatedAsset2}USDT)";
             }
 
             return string.Empty;
