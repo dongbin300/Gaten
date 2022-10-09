@@ -5,8 +5,59 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Gaten.Windows.MintPanda"
              mc:Ignorable="d" 
-             d:DesignHeight="1040" d:DesignWidth="240">
-    <Grid Background="AliceBlue">
-            
-    </Grid>
+             d:DesignHeight="49" d:DesignWidth="3840">
+    <UserControl.Resources>
+        <Style TargetType="ToggleButton" BasedOn="{StaticResource NeonToggleButton}"/>
+        <Style TargetType="Button" BasedOn="{StaticResource NeonButton}"/>
+        <Style TargetType="Path">
+            <Setter Property="Fill" Value="AliceBlue" />
+            <Setter Property="Width" Value="38" />
+            <Setter Property="Height" Value="38" />
+            <Setter Property="Stretch" Value="Uniform" />
+        </Style>
+    </UserControl.Resources>
+    <UniformGrid x:Name="ButtonGrid" Columns="78" Rows="1">
+
+        <ToggleButton x:Name="VsProjectButton" Click="VsProjectButton_Click">
+            <ToggleButton.Content>
+                <Image Source="Resources/Images/vs2022.ico"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+
+        <ToggleButton x:Name="StarMapButton" Click="StarMapButton_Click">
+            <ToggleButton.Content>
+                <Image Source="Resources/Images/battlenet.png"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+
+        <ToggleButton x:Name="DownloadButton" Click="DownloadButton_Click">
+            <ToggleButton.Content>
+                <Image Source="Resources/Images/downloads.png"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+
+        <ToggleButton x:Name="PicpickButton" Click="PicpickButton_Click">
+            <ToggleButton.Content>
+                <Image Source="Resources/Images/picpick.ico"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+
+        <ToggleButton x:Name="OsuButton" Click="OsuButton_Click">
+            <ToggleButton.Content>
+                <Image Source="Resources/Images/osu.ico"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+
+        <ToggleButton x:Name="HanQButton" Click="HanQButton_Click">
+            <ToggleButton.Content>
+                <Image Source="Resources/Images/foxwq.ico"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+
+        <ToggleButton x:Name="GatenButton" Click="GatenButton_Click">
+            <ToggleButton.Content>
+                <Image Source="Resources/Images/panda.ico"/>
+            </ToggleButton.Content>
+        </ToggleButton>
+    </UniformGrid>
 </UserControl>

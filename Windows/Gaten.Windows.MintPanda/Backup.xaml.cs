@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Gaten.Net.Diagnostics;
+using Gaten.Net.IO;
+
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Gaten.Windows.MintPanda
 {
@@ -23,6 +14,41 @@ namespace Gaten.Windows.MintPanda
         public Backup()
         {
             InitializeComponent();
+        }
+
+        private void VsProjectButton_Click(object sender, RoutedEventArgs e)
+        {
+            GProcess.Start(GPath.Users.Down("source", "repos"));
+        }
+
+        private void StarMapButton_Click(object sender, RoutedEventArgs e)
+        {
+            GProcess.Start(GPath.Documents.Down("StarCraft", "Maps"));
+        }
+
+        private void DownloadButton_Click(object sender, RoutedEventArgs e)
+        {
+            GProcess.Start(GPath.Downloads);
+        }
+
+        private void PicpickButton_Click(object sender, RoutedEventArgs e)
+        {
+            GProcess.Start(GPath.Desktop.Down("픽픽"));
+        }
+
+        private void OsuButton_Click(object sender, RoutedEventArgs e)
+        {
+            GProcess.Start(GPath.LocalAppData.Down("osu!"));
+        }
+
+        private void HanQButton_Click(object sender, RoutedEventArgs e)
+        {
+            GProcess.Start(GPath.ProgramFilesX86.Down("foxwq"));
+        }
+
+        private void GatenButton_Click(object sender, RoutedEventArgs e)
+        {
+            GProcess.Start(GPath.AppData.Down("Gaten"));
         }
     }
 }

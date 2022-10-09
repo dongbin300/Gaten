@@ -5,9 +5,9 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Assets
     public class OrderAmount
     {
         public OrderAmountType OrderType { get; set; }
-        public double Value { get; set; }
+        public decimal Value { get; set; }
 
-        public OrderAmount(OrderAmountType orderType, double value)
+        public OrderAmount(OrderAmountType orderType, decimal value)
         {
             OrderType = orderType;
             Value = value;

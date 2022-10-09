@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" 
-             d:DesignHeight="49" d:DesignWidth="1920" Loaded="UserControl_Loaded"
+             d:DesignHeight="49" d:DesignWidth="3840" Loaded="UserControl_Loaded"
              >
     <UserControl.Resources>
         <Style TargetType="ToggleButton" BasedOn="{StaticResource NeonToggleButton}"/>
@@ -16,7 +16,7 @@
             <Setter Property="Stretch" Value="Uniform" />
         </Style>
     </UserControl.Resources>
-    <UniformGrid x:Name="ButtonGrid" Columns="39" Rows="1">
+    <UniformGrid x:Name="ButtonGrid" Columns="78" Rows="1">
 
         <ToggleButton Tag="003" x:Name="ExitButton" Click="ExitButton_Click">
             <ToggleButton.Content>

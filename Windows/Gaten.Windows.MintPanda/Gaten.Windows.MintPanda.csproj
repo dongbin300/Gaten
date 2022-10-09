@@ -12,15 +12,67 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<None Remove="Resources\Images\3dp-chip.ico" />
+		<None Remove="Resources\Images\3dp-net.ico" />
+		<None Remove="Resources\Images\aimp.ico" />
+		<None Remove="Resources\Images\bandizip.ico" />
+		<None Remove="Resources\Images\battlenet.png" />
+		<None Remove="Resources\Images\cheat-engine.ico" />
 		<None Remove="Resources\Images\color-pick.png" />
+		<None Remove="Resources\Images\cpu-z.ico" />
+		<None Remove="Resources\Images\cubase.png" />
+		<None Remove="Resources\Images\discord.ico" />
+		<None Remove="Resources\Images\downloads.png" />
+		<None Remove="Resources\Images\excel.ico" />
+		<None Remove="Resources\Images\fonts.png" />
+		<None Remove="Resources\Images\foxwq.ico" />
+		<None Remove="Resources\Images\gobbler.ico" />
+		<None Remove="Resources\Images\gtx.ico" />
+		<None Remove="Resources\Images\hancom.ico" />
+		<None Remove="Resources\Images\huion.ico" />
+		<None Remove="Resources\Images\hw-monitor.ico" />
+		<None Remove="Resources\Images\hxd.ico" />
+		<None Remove="Resources\Images\ivideomate.ico" />
+		<None Remove="Resources\Images\izotope.ico" />
+		<None Remove="Resources\Images\kairos.png" />
+		<None Remove="Resources\Images\kakaotalk.ico" />
+		<None Remove="Resources\Images\kwhero.png" />
+		<None Remove="Resources\Images\ld-player.ico" />
+		<None Remove="Resources\Images\line.ico" />
+		<None Remove="Resources\Images\masm32.ico" />
+		<None Remove="Resources\Images\mod-panel.ico" />
+		<None Remove="Resources\Images\musescore.png" />
+		<None Remove="Resources\Images\nectar.ico" />
+		<None Remove="Resources\Images\obs.ico" />
+		<None Remove="Resources\Images\ocam.png" />
+		<None Remove="Resources\Images\osu.ico" />
+		<None Remove="Resources\Images\ozone.ico" />
 		<None Remove="Resources\Images\panda.png" />
 		<None Remove="Resources\Images\panda1.ico" />
 		<None Remove="Resources\Images\panda1.png" />
 		<None Remove="Resources\Images\panda2.ico" />
 		<None Remove="Resources\Images\panda2.png" />
+		<None Remove="Resources\Images\photoshop.ico" />
+		<None Remove="Resources\Images\picpick.ico" />
+		<None Remove="Resources\Images\potplayer.ico" />
 		<None Remove="Resources\Images\power-option.png" />
+		<None Remove="Resources\Images\premiere-pro.png" />
+		<None Remove="Resources\Images\qt-tab-bar.png" />
+		<None Remove="Resources\Images\rme-mfu.ico" />
+		<None Remove="Resources\Images\rme-tmf.ico" />
+		<None Remove="Resources\Images\samsung-printer.png" />
+		<None Remove="Resources\Images\samsung-ssd.ico" />
+		<None Remove="Resources\Images\sfxr.png" />
 		<None Remove="Resources\Images\shield.png" />
 		<None Remove="Resources\Images\taskbar.png" />
+		<None Remove="Resources\Images\teamviewer.ico" />
+		<None Remove="Resources\Images\vmware.ico" />
+		<None Remove="Resources\Images\vocaloid4.ico" />
+		<None Remove="Resources\Images\vpngate.png" />
+		<None Remove="Resources\Images\vs-code.ico" />
+		<None Remove="Resources\Images\vs2019.ico" />
+		<None Remove="Resources\Images\vs2022.ico" />
+		<None Remove="Resources\Images\winscp.ico" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -28,7 +80,156 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Resource Include="Resources\Images\panda.ico" />
+		<Content Include="Resources\Images\3dp-chip.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\3dp-net.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\aimp.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\bandizip.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\battlenet.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\cheat-engine.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\cpu-z.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\cubase.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\discord.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\excel.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\foxwq.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\gobbler.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\gtx.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\hancom.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\huion.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\hw-monitor.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\hxd.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\ivideomate.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\izotope.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\kairos.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\kakaotalk.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\kwhero.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\ld-player.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\line.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\masm32.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\mod-panel.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\musescore.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\nectar.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\obs.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\ocam.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\ozone.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\panda.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\photoshop.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\picpick.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\potplayer.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\premiere-pro.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\qt-tab-bar.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\rme-mfu.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\rme-tmf.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\samsung-printer.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\samsung-ssd.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\sfxr.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\teamviewer.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\vmware.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\vocaloid4.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\vpngate.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\vs-code.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\vs2019.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\vs2022.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\winscp.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -38,15 +239,45 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Resource Include="Resources\Images\color-pick.png" />
-		<Resource Include="Resources\Images\panda.png" />
-		<Resource Include="Resources\Images\panda1.ico" />
-		<Resource Include="Resources\Images\panda1.png" />
-		<Resource Include="Resources\Images\panda2.ico" />
-		<Resource Include="Resources\Images\panda2.png" />
-		<Resource Include="Resources\Images\power-option.png" />
-		<Resource Include="Resources\Images\shield.png" />
-		<Resource Include="Resources\Images\taskbar.png" />
+		<Content Include="Resources\Images\color-pick.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\fonts.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\panda.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\panda1.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\panda1.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\panda2.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\panda2.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\power-option.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\shield.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\taskbar.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="Resources\Images\downloads.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="Resources\Images\osu.ico">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 
 </Project>

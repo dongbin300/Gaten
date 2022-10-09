@@ -8,8 +8,10 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Interfaces
     {
         public OrderType Type { get; set; }
         public PositionSide Side { get; set; }
-        public decimal Quantity { get; set; }
+        public OrderAmount Amount { get; set; }
         public decimal? Price { get; set; }
+        public decimal MakerFee { get; }
+        public decimal TakerFee { get; }
 
         public string Run(Asset asset, ChartInfo chart);
     }

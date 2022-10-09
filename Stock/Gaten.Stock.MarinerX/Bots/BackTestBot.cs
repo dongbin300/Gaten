@@ -22,31 +22,15 @@ namespace Gaten.Stock.MarinerX.Bots
             Worker = worker;
         }
 
-        /*
-         * asset = 10000
-         * period = 2022,7,17,0,0:0,0,7,0,0
-         * interval = 5m
-         * target = SOLUSDT
-         * scenario1.strategy1.signal = rsi < 30
-         * scenario1.strategy1.order = long,market,1.0
-         * scenario1.strategy2.signal = rsi > 70
-         * scenario1.strategy2.order = short,market,1.0
-         * scenario1.strategy3.signal = SOLUSDT.poe < -20%
-         * scenario1.strategy3.order = long,market,SOLUSDT.amount * 1
-         */
         public string Run()
         {
             // 자산 초기화
-            Asset asset = new BackTestAsset()
-            {
-                Balance = TradingModel.Asset,
-                Position = new Position()
-            };
+            Asset asset = new BackTestAsset(TradingModel.Asset, new Position());
 
             var tickCount = (int)(TradingModel.Period / TradingModel.Interval.ToTimeSpan()) + 1;
             var charts = ChartLoader.GetChartPack(TradingModel.Targets[0], TradingModel.Interval); // 현재 타겟은 1개만 지원됨
 
-            if(charts == null)
+            if (charts == null)
             {
                 return "차트 정보가 없습니다.";
             }
@@ -60,7 +44,7 @@ namespace Gaten.Stock.MarinerX.Bots
                 Worker.ProgressText($"{p} / {tickCount}");
 
                 var info = charts.Next();
-                foreach(var scenario in TradingModel.Scenarios)
+                foreach (var scenario in TradingModel.Scenarios)
                 {
                     foreach (var strategy in scenario.Strategies)
                     {

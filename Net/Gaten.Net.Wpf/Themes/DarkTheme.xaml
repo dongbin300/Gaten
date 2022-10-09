@@ -177,8 +177,12 @@
                         </Border.Effect>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="BorderBrush" Value="Transparent" />
+                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" Value="#45484A" />
+                            <Setter Property="BorderBrush" Value="#00BB80" />
+                            <Setter Property="BorderThickness" Value="3" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="BorderThickness" Value="2" />
@@ -198,9 +202,9 @@
         <Setter Property="Margin" Value="3" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                <ControlTemplate x:Name="weqwe" TargetType="{x:Type ToggleButton}">
                     <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                            Tag="#00FFC0" Background="Transparent">
+                            Tag="#00FFC0">
                         <ContentPresenter x:Name="contentPresenter"
                                           ContentTemplate="{TemplateBinding ContentTemplate}" 
                                           Content="{TemplateBinding Content}" 
@@ -218,8 +222,12 @@
                         </Border.Effect>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="BorderBrush" Value="Transparent" />
+                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" Value="#45484A" />
+                            <Setter TargetName="border" Property="Background" Value="#00BB80" />
+                            <Setter Property="BorderThickness" Value="3" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="BorderThickness" Value="2" />
@@ -227,7 +235,7 @@
                             <Setter Property="Tag" Value="#00FFC0" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="False">
-                            <Setter Property="BorderBrush" Value="#87888B" />
+                            <Setter Property="BorderBrush" Value="Transparent" />
                             <Setter Property="Tag" Value="#87888B" />
                         </Trigger>
                     </ControlTemplate.Triggers>

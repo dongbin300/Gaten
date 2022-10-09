@@ -4,6 +4,8 @@
     {
         None,
         Long,
-        Short
+        Short,
+        Open,
+        Close
     }
 }

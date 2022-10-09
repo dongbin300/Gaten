@@ -25,7 +25,7 @@ namespace Gaten.Stock.MarinerX.Charts
 
         public ChartPack(KlineInterval interval)
         {
-            this.Interval = interval;
+            Interval = interval;
             CurrentChart = null;
         }
 

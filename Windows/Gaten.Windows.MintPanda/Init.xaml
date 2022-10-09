@@ -5,70 +5,284 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Gaten.Windows.MintPanda"
              mc:Ignorable="d" 
-             d:DesignHeight="1040" d:DesignWidth="240">
+             d:DesignHeight="49" d:DesignWidth="3840">
     <UserControl.Resources>
         <Style TargetType="ToggleButton" BasedOn="{StaticResource NeonToggleButton}"/>
         <Style TargetType="Button" BasedOn="{StaticResource NeonButton}"/>
+        <Style TargetType="Path">
+            <Setter Property="Fill" Value="AliceBlue" />
+            <Setter Property="Width" Value="38" />
+            <Setter Property="Height" Value="38" />
+            <Setter Property="Stretch" Value="Uniform" />
+        </Style>
     </UserControl.Resources>
-    <UniformGrid Columns="4" Rows="17">
-        <Button Tag="101" x:Name="RefreshButton" Content="새로고침" Click="RefreshButton_Click"/>
-        <ToggleButton Tag="201" x:Name="CheckListButton" Content="체크리스트" Click="WindowButton_Click"/>
+    <UniformGrid x:Name="ButtonGrid" Columns="78" Rows="1">
+        <Button Tag="101" x:Name="RefreshButton" Click="RefreshButton_Click">
+            <Button.Content>
+                <Path Data="M17.65 6.35 C16.2 4.9 14.21 4 12 4 A8 8 0 0 0 4 12 A8 8 0 0 0 12 20 C15.73 20 18.84 17.45 19.73 14 H17.65 C16.83 16.33 14.61 18 12 18 A6 6 0 0 1 6 12 A6 6 0 0 1 12 6 C13.66 6 15.14 6.69 16.22 7.78 L13 11 H20 V4 L17.65 6.35Z"/>
+            </Button.Content>
+        </Button>
+        <ToggleButton Tag="201" x:Name="CheckListButton" Click="WindowButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M14 10 H3 V12 H14 V10 M14 6 H3 V8 H14 V6 M3 16 H10 V14 H3 V16 M21.5 11.5 L23 13 L16 20 L11.5 15.5 L13 14 L16 17 L21.5 11.5Z"/>
+            </ToggleButton.Content>
+        </ToggleButton>
 
         <!-- 설정 -->
-        <Button Tag="301" x:Name="InstallFontButton" Content="폰트 설치" Click="InstallFontButton_Click"/>
+        <Button Tag="301" x:Name="InstallFontButton" Click="InstallFontButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/fonts.png"/>
+            </Button.Content>
+        </Button>
         
         <!-- 설치 -->
-        <Button x:Name="RmeMfButton" Content="RME MF" Tag="rmeinstaller_mf" Click="InstallButton_Click"/>
-        <Button x:Name="RmeTbButton" Content="RME TB" Tag="rmeinstaller_tb" Click="InstallButton_Click"/>
-        <Button x:Name="SamsungPrinterButton" Content="삼성 프린터" Tag="SamsungUniversalPrintDriver" Click="InstallButton_Click"/>
-        <Button x:Name="SamsungScannerButton" Content="삼성 스캔" Tag="UniversalScanDriver" Click="InstallButton_Click"/>
-        <Button x:Name="DpNetButton" Content="3DP Net" Tag="3DP_Net" Click="InstallButton_Click"/>
-        <Button x:Name="DpChipButton" Content="3DP Chip" Tag="3DP_Chip_Lite" Click="InstallButton_Click"/>
-        <Button x:Name="CpuZButton" Content="CPU Z" Tag="cpu-z" Click="InstallButton_Click"/>
-        <Button x:Name="HwMonitorButton" Content="HW모니터" Tag="hwmonitor" Click="InstallButton_Click"/>
-        <Button x:Name="Gtx960Button" Content="GTX960" Tag="GTX960" Click="InstallButton_Click"/>
-        <Button x:Name="HuionTabletButton" Content="휴이온 타블렛" Tag="HuionTablet_WinDriver" Click="InstallButton_Click"/>
-        <Button x:Name="SamsungSsdButton" Content="삼성 SSD 드라이버" Tag="삼성 SSD 드라이버" Click="InstallButton_Click"/>
-        <Button x:Name="Masm32Button" Content="MASM32" Tag="MASM32" Click="InstallButton_Click"/>
-        <Button x:Name="Vs2019Button" Content="VS 2019" Tag="vs 2019" Click="InstallButton_Click"/>
-        <Button x:Name="Vs2022Button" Content="VS 2022" Tag="vs 2022" Click="InstallButton_Click"/>
-        <Button x:Name="VsCodeButton" Content="VS Code" Tag="VSCode" Click="InstallButton_Click"/>
-        <Button x:Name="VmwareButton" Content="VMware" Tag="VMware-workstation-full" Click="InstallButton_Click"/>
-        <Button x:Name="IVideoMateButton" Content="iVideoMate" Tag="iVideoMate" Click="InstallButton_Click"/>
-        <Button x:Name="WinScpButton" Content="WinSCP" Tag="WinSCP" Click="InstallButton_Click"/>
-        <Button x:Name="Photoshop2021Button" Content="포토샵2021" Tag="Photoshop2021" Click="InstallButton_Click"/>
-        <Button x:Name="Vocaloid4Button" Content="보컬로이드4" Tag="vocaloid4" Click="InstallButton_Click"/>
-        <Button x:Name="IZotopeOzoneButton" Content="iZotope Ozone" Tag="iZotope_Ozone_Advanced_v9" Click="InstallButton_Click"/>
-        <Button x:Name="Gobbler2Button" Content="Gobbler2" Tag="Gobbler2.0-windows" Click="InstallButton_Click"/>
-        <Button x:Name="IZotopeNectarButton" Content="iZotope Nectar" Tag="iZotope_Nectar_Elements" Click="InstallButton_Click"/>
-        <Button x:Name="IZotopeProductButton" Content="iZotope Product" Tag="iZotope_Product_Portal" Click="InstallButton_Click"/>
-        <Button x:Name="AimpButton" Content="AIMP" Tag="aimp" Click="InstallButton_Click"/>
-        <Button x:Name="MuseScoreButton" Content="MuseScore" Tag="MuseScore" Click="InstallButton_Click"/>
-        <Button x:Name="Cubase11Button" Content="큐베이스11" Tag="Steinberg_Download_Assistant" Click="InstallButton_Click"/>
-        <Button x:Name="Premiere2021Button" Content="프리미어2021" Tag="premiere2021" Click="InstallButton_Click"/>
-        <Button x:Name="PotPlayerButton" Content="팟플레이어" Tag="PotPlayerSetup" Click="InstallButton_Click"/>
-        <Button x:Name="TeamViewerButton" Content="팀뷰어" Tag="TeamViewer" Click="InstallButton_Click"/>
-        <Button x:Name="KiwoomHeroButton" Content="영웅문" Tag="KiwoomHero" Click="InstallButton_Click"/>
-        <Button x:Name="KairosButton" Content="카이로스" Tag="Setup_KairosHTS" Click="InstallButton_Click"/>
-        <Button x:Name="ObsStudioButton" Content="OBS스튜디오" Tag="OBS-Studio" Click="InstallButton_Click"/>
-        <Button x:Name="OcamButton" Content="오캠" Tag="oCam" Click="InstallButton_Click"/>
-        <Button x:Name="PicpickButton" Content="픽픽" Tag="picpick" Click="InstallButton_Click"/>
-        <Button x:Name="MsOffice2021Button" Content="MS오피스2021" Tag="OInstall" Click="InstallButton_Click"/>
-        <Button x:Name="Hancom2021Button" Content="한컴오피스2014" Tag="Hancom" Click="InstallButton_Click"/>
-        <Button x:Name="CheatEngineButton" Content="치트엔진" Tag="CheatEngine" Click="InstallButton_Click"/>
-        <Button x:Name="HxDButton" Content="HxD" Tag="HxDSetup" Click="InstallButton_Click"/>
-        <Button x:Name="BandizipButton" Content="반디집" Tag="BANDIZIP" Click="InstallButton_Click"/>
-        <Button x:Name="DiscordButton" Content="디스코드" Tag="DiscordSetup" Click="InstallButton_Click"/>
-        <Button x:Name="KakaoTalkButton" Content="카카오톡" Tag="KakaoTalk_Setup" Click="InstallButton_Click"/>
-        <Button x:Name="LdPlayerButton" Content="LD플레이어" Tag="LDPlayer" Click="InstallButton_Click"/>
-        <Button x:Name="LineButton" Content="라인" Tag="LineInst" Click="InstallButton_Click"/>
-        <Button x:Name="QtTabBarButton" Content="QT탭바" Tag="QTTabBar" Click="InstallButton_Click"/>
-        <Button x:Name="VpnGateButton" Content="VPN게이트" Tag="vpngate-client" Click="InstallButton_Click"/>
-        <Button x:Name="BattleNetButton" Content="배틀넷" Tag="Battle.net" Click="InstallButton_Click"/>
+        <Button x:Name="RmeMfButton" Tag="rmeinstaller_mf" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/rme-tmf.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="RmeTbButton" Tag="rmeinstaller_tb" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/rme-mfu.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="SamsungPrinterButton" Tag="SamsungUniversalPrintDriver" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/samsung-printer.png"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="SamsungScannerButton" Tag="UniversalScanDriver" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/samsung-printer.png"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="DpNetButton" Tag="3DP_Net" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/3dp-net.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="DpChipButton" Tag="3DP_Chip_Lite" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/3dp-chip.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="CpuZButton" Tag="cpu-z" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/cpu-z.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="HwMonitorButton" Tag="hwmonitor" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/hw-monitor.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="Gtx960Button" Tag="GTX Win10" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/gtx.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="HuionTabletButton" Tag="HuionTablet_WinDriver" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/huion.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="SamsungSsdButton" Tag="삼성 SSD 드라이버" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/samsung-ssd.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="Masm32Button" Tag="MASM32" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/masm32.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="Vs2019Button" Tag="vs 2019" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/vs2019.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="Vs2022Button" Tag="vs 2022" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/vs2022.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="VsCodeButton" Tag="VSCode" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/vs-code.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="VmwareButton" Tag="VMware-workstation-full" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/vmware.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="IVideoMateButton" Tag="iVideoMate" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/ivideomate.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="WinScpButton" Tag="WinSCP" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/winscp.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="Photoshop2021Button" Tag="Photoshop2021" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/photoshop.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="Vocaloid4Button" Tag="vocaloid4" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/vocaloid4.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="IZotopeOzoneButton" Tag="iZotope_Ozone_Advanced_v9" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/ozone.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="Gobbler2Button" Tag="Gobbler2.0-windows" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/gobbler.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="IZotopeNectarButton" Tag="iZotope_Nectar_Elements" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/nectar.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="IZotopeProductButton" Tag="iZotope_Product_Portal" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/izotope.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="AimpButton" Tag="aimp" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/aimp.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="MuseScoreButton" Tag="MuseScore" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/musescore.png"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="Cubase11Button" Tag="Steinberg_Download_Assistant" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/cubase.png"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="Premiere2021Button" Tag="premiere2021" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/premiere-pro.png"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="PotPlayerButton" Tag="PotPlayerSetup" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/potplayer.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="TeamViewerButton" Tag="TeamViewer" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/teamviewer.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="KiwoomHeroButton" Tag="KiwoomHero" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/kwhero.png"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="KairosButton" Tag="Setup_KairosHTS" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/kairos.png"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="ObsStudioButton" Tag="OBS-Studio" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/obs.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="OcamButton" Tag="oCam" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/ocam.png"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="PicpickButton" Tag="picpick" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/picpick.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="MsOffice2021Button" Tag="OInstall" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/excel.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="Hancom2021Button" Tag="Hancom" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/hancom.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="CheatEngineButton" Tag="CheatEngine" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/cheat-engine.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="HxDButton" Tag="HxDSetup" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/hxd.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="BandizipButton" Tag="BANDIZIP" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/bandizip.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="DiscordButton" Tag="DiscordSetup" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/discord.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="KakaoTalkButton" Tag="KakaoTalk_Setup" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/kakaotalk.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="LdPlayerButton" Tag="LDPlayer" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/ld-player.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="LineButton" Tag="LineInst" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/line.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="QtTabBarButton" Tag="QTTabBar" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/qt-tab-bar.png"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="VpnGateButton" Tag="vpngate-client" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/vpngate.png"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="BattleNetButton" Tag="Battle.net" Click="InstallButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/battlenet.png"/>
+            </Button.Content>
+        </Button>
 
         <!-- 실행 -->
-        <Button x:Name="ModPanelButton" Content="MOD패널" Tag="MODPanel" Click="ExecuteButton_Click"/>
-        <Button x:Name="SfxrButton" Content="sfxr" Tag="sfxr" Click="ExecuteButton_Click"/>
+        <Button x:Name="ModPanelButton" Tag="MODPanel" Click="ExecuteButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/mod-panel.ico"/>
+            </Button.Content>
+        </Button>
+        <Button x:Name="SfxrButton" Tag="sfxr" Click="ExecuteButton_Click">
+            <Button.Content>
+                <Image Source="Resources/Images/sfxr.png"/>
+            </Button.Content>
+        </Button>
 
     </UniformGrid>
 </UserControl>

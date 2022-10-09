@@ -10,6 +10,7 @@ using Gaten.Net.Wpf.Models;
 using Gaten.Stock.MarinerX.Apis;
 using Gaten.Stock.MarinerX.Bots;
 using Gaten.Stock.MarinerX.Charts;
+using Gaten.Stock.MarinerX.Indicators;
 
 using Newtonsoft.Json;
 
@@ -118,10 +119,24 @@ namespace Gaten.Stock.MarinerX
                 menuStrip.Items.Add(new ToolStripMenuItem(file.MenuString, null, BackTestBotRunEvent, file.ToString()));
             }
             menuStrip.Items.Add(new ToolStripSeparator());
+            menuStrip.Items.Add(new ToolStripMenuItem("RI Histogram", null, RiHistogramEvent));
+            menuStrip.Items.Add(new ToolStripSeparator());
             menuStrip.Items.Add(new ToolStripMenuItem("종료", null, Exit));
 
             menuStrip.Items[0].Enabled = false;
             trayIcon.ContextMenuStrip = menuStrip;
+        }
+
+        private void RiHistogramEvent(object? sender, EventArgs e)
+        {
+            try
+            {
+                IndicatorHistogram.GetRiHistogram("BTCUSDT", KlineInterval.FiveMinutes);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void MercuryEditorOpenEvent(object? sender, EventArgs e)

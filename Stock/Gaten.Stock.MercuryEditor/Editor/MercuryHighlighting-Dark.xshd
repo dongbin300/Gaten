@@ -34,11 +34,16 @@
 			<Word>short</Word>
 			<Word>limit</Word>
 			<Word>market</Word>
-			<Word>balance</Word>
 			<Word>poe</Word>
 			<Word>ri</Word>
 			<Word>rsi</Word>
 			<Word>macd</Word>
+			<Word>seed</Word>
+			<Word>balance</Word>
+			<Word>asset</Word>
+			<Word>balancesymbol</Word>
+			<Word>open</Word>
+			<Word>close</Word>
 			
 			<Word>BTCUSDT</Word>
 			<Word>ETHUSDT</Word>
@@ -145,7 +150,6 @@
 			<Word>SCUSDT</Word>
 			<Word>DGBUSDT</Word>
 			<Word>1000SHIBUSDT</Word>
-			<Word>ICPUSDT</Word>
 			<Word>BAKEUSDT</Word>
 			<Word>GTCUSDT</Word>
 			<Word>BTCDOMUSDT</Word>
@@ -188,6 +192,9 @@
 			<Word>SPELLUSDT</Word>
 			<Word>1000LUNCUSDT</Word>
 			<Word>LUNA2USDT</Word>
+			<Word>LDOUSDT</Word>
+			<Word>CVXUSDT</Word>
+			<Word>ICPUSDT</Word>
 		</Keywords>
 		
 		<Keywords fontWeight="bold" fontStyle="italic" foreground="Red">

@@ -2,16 +2,8 @@
 {
     public class BackTestAsset : Asset
     {
-        public void Buy(decimal price, decimal quantity)
+        public BackTestAsset(decimal seed, Position position) : base(seed, position)
         {
-            Balance -= price;
-            Position.Long(quantity);
-        }
-
-        public void Sell(decimal price, decimal quantity)
-        {
-            Balance += price;
-            Position.Short(quantity);
         }
     }
 }

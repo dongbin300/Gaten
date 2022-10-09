@@ -6,7 +6,7 @@
         Seed,
         Asset,
         Balance,
-        SymbolBalance,
+        BalanceSymbol,
         Fixed,
         FixedSymbol
     }

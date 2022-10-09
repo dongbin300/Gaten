@@ -15,7 +15,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Indicators
             for (int i = 0; i < quoteList.Count; i++)
             {
                 var average = quoteList.CloseAverage(i, period);
-                var ri = (quoteList[i].Close.Convert<double>() - average) / average * 100;
+                var ri = (quoteList[i].Close.Convert<double>() - average) / average * 1000;
                 result.Add(new RiResult(quoteList[i].Date, ri));
             }
 

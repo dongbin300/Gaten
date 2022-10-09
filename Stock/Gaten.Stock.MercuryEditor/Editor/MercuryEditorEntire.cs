@@ -84,7 +84,7 @@ namespace Gaten.Stock.MercuryEditor.Editor
             
             for (i = caretOffset - 1; i > 0; i--)
             {
-                if (textArea.Document.Text[i] == ' ')
+                if (textArea.Document.Text[i] == ' ' || textArea.Document.Text[i] == '\n')
                 {
                     i++;
                     break;
@@ -93,7 +93,7 @@ namespace Gaten.Stock.MercuryEditor.Editor
 
             for (j = caretOffset - 1; j < textArea.Document.Text.Length; j++)
             {
-                if (textArea.Document.Text[j] == ' ')
+                if (textArea.Document.Text[j] == ' ' || textArea.Document.Text[j] == '\n')
                 {
                     break;
                 }

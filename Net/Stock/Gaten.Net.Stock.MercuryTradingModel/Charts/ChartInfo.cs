@@ -7,6 +7,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Charts
     public class ChartInfo
     {
         public string Symbol { get; set; }
+        public string BaseAsset => Symbol.Replace("USDT", "");
         public DateTime DateTime => Quote.Date;
         public Quote Quote { get; set; }
         public SmaResult MA { get; set; }

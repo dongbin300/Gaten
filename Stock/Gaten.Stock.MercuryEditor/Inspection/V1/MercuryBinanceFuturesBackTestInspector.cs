@@ -1,4 +1,5 @@
 ﻿using Gaten.Net.Extensions;
+using Gaten.Net.Stock.MercuryTradingModel.Assets;
 using Gaten.Net.Stock.MercuryTradingModel.Enums;
 using Gaten.Net.Stock.MercuryTradingModel.Formulae;
 using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
@@ -8,7 +9,10 @@ using Gaten.Net.Stock.MercuryTradingModel.Signals;
 using Gaten.Net.Stock.MercuryTradingModel.TradingModels;
 using Gaten.Stock.MercuryEditor.Editor;
 
+using K4os.Compression.LZ4.Streams;
+
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -278,35 +282,112 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             }
         }
 
+        /// <summary>
+        /// long, 1, market (Fixed Symbol)
+        /// long, 10t, market (Fixed (Tether))
+        /// long, seed, 0.1, market (Seed)
+        /// long, balance, 0.1, market (Balance)
+        /// long, asset, 0.1, market (Asset)
+        /// long, balancesymbol, 0.1, market (Balance Symbol)
+        /// long, 20, limit, 42.50 (Limit(only fixed symbol))
+        /// open, 0.1 (Open)
+        /// close, 0.1 (Close)
+        /// </summary>
+        /// <param name="orderValue"></param>
+        /// <returns></returns>
         public BackTestOrder? ParseOrder(string orderValue)
         {
             try
             {
-                var segments = orderValue.Split(',');
+                var segments = orderValue.Split(',').Select(x => x.Trim()).ToArray();
                 if (segments.Length < 3)
                 {
                     return null;
                 }
+
                 var positionSide = segments[0] switch
                 {
                     "long" => PositionSide.Long,
                     "short" => PositionSide.Short,
+                    "open" => PositionSide.Open,
+                    "close" => PositionSide.Close,
                     _ => PositionSide.None
                 };
-                var quantity = decimal.Parse(segments[1]);
-                var orderType = segments[2] switch
+
+                if (positionSide == PositionSide.Open || positionSide == PositionSide.Close)
                 {
-                    "market" => OrderType.Market,
-                    "limit" => OrderType.Limit,
-                    _ => OrderType.None
-                };
-                if (orderType == OrderType.Limit)
-                {
-                    var price = decimal.Parse(segments[3]);
-                    return new BackTestOrder(orderType, positionSide, quantity, price);
+                    var _value = decimal.Parse(segments[1]);
+                    return new BackTestOrder(OrderType.Market, positionSide, new OrderAmount(OrderAmountType.None, _value));
                 }
 
-                return new BackTestOrder(orderType, positionSide, quantity);
+                OrderType orderType = OrderType.None;
+                OrderAmountType orderAmountType = OrderAmountType.None;
+                decimal value = 0m;
+                decimal? price = null;
+
+                // Fixed Symbol
+                if (decimal.TryParse(segments[1], out decimal d1))
+                {
+                    orderAmountType = OrderAmountType.FixedSymbol;
+                    value = d1;
+
+                    orderType = segments[2] switch
+                    {
+                        "market" => OrderType.Market,
+                        "limit" => OrderType.Limit,
+                        _ => OrderType.None
+                    };
+                    if (orderType == OrderType.Limit)
+                    {
+                        price = decimal.Parse(segments[3]);
+                    }
+                }
+                // Fixed
+                else if (decimal.TryParse(segments[1].Replace("t", ""), out decimal d2))
+                {
+                    orderAmountType = OrderAmountType.Fixed;
+                    value = d2;
+
+                    orderType = segments[2] switch
+                    {
+                        "market" => OrderType.Market,
+                        _ => OrderType.None
+                    };
+                }
+                else
+                {
+                    switch (segments[1])
+                    {
+                        case "seed":
+                            orderAmountType = OrderAmountType.Seed;
+                            value = decimal.Parse(segments[2]);
+                            break;
+
+                        case "balance":
+                            orderAmountType = OrderAmountType.Balance;
+                            value = decimal.Parse(segments[2]);
+                            break;
+
+                        case "asset":
+                            orderAmountType = OrderAmountType.Asset;
+                            value = decimal.Parse(segments[2]);
+                            break;
+
+                        case "balancesymbol":
+                            orderAmountType = OrderAmountType.BalanceSymbol;
+                            value = decimal.Parse(segments[2]);
+                            break;
+                    }
+
+                    orderType = segments[3] switch
+                    {
+                        "market" => OrderType.Market,
+                        _ => OrderType.None
+                    };
+                }
+
+                var orderAmount = new OrderAmount(orderAmountType, value);
+                return new BackTestOrder(orderType, positionSide, orderAmount, price);
             }
             catch
             {

@@ -67,6 +67,8 @@ namespace Gaten.Windows.MintPanda
             {
                 GFile.CopyDirectory(utilDirectory.Down("폰트", "JP"), GPath.Fonts);
                 GFile.CopyDirectory(utilDirectory.Down("폰트", "KR"), GPath.Fonts);
+
+                MessageBox.Show("폰트 설치가 완료되었습니다.");
             }
             catch (Exception ex)
             {

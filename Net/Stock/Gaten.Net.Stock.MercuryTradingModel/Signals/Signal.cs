@@ -26,7 +26,13 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Signals
                 return false;
             }
 
+            if(chart.RI == null)
+            {
+                return false;
+            }
+
             var rsi = chart.RSI.Rsi;
+            var ri = chart.RI.Ri;
 
             return Formula switch
             {
@@ -40,6 +46,16 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Signals
                         Comparison.LessThanOrEqual => rsi <= x.Value,
                         Comparison.GreaterThan => rsi > x.Value,
                         Comparison.GreaterThanOrEqual => rsi >= x.Value,
+                        _ => false,
+                    },
+                    ChartElement.ri => x.Comparison switch
+                    {
+                        Comparison.Equal => ri == x.Value,
+                        Comparison.NotEqual => ri != x.Value,
+                        Comparison.LessThan => ri < x.Value,
+                        Comparison.LessThanOrEqual => ri <= x.Value,
+                        Comparison.GreaterThan => ri > x.Value,
+                        Comparison.GreaterThanOrEqual => ri >= x.Value,
                         _ => false,
                     },
                     _ => false
