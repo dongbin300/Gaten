@@ -9,10 +9,7 @@ using Gaten.Net.Stock.MercuryTradingModel.Signals;
 using Gaten.Net.Stock.MercuryTradingModel.TradingModels;
 using Gaten.Stock.MercuryEditor.Editor;
 
-using K4os.Compression.LZ4.Streams;
-
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -256,25 +253,34 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
         {
             try
             {
-                var segments1 = signalValue.SplitKeep(new string[] { ">=", "<=", "!=" }).Select(x => x.Trim()).ToArray();
-                //var segments1 = signalValue.Split(new string[] { ">=", "<=", "!=" }, StringSplitOptions.None);
-                if (segments1.Length == 1)
+                var segments0 = signalValue.SplitKeep(new string[] { "&", "|" }).Select(x => x.Trim()).ToArray();
+                if(segments0.Length == 1)
                 {
-                    var segments2 = signalValue.SplitKeep(new string[] { ">", "<", "=" }).Select(x => x.Trim()).ToArray();
-                    //var segments2 = signalValue.Split(new string[] { ">", "<", "=" }, StringSplitOptions.None);
-                    if (segments2.Length == 1)
+                    var segments1 = signalValue.SplitKeep(new string[] { ">=", "<=", "!=" }).Select(x => x.Trim()).ToArray();
+                    if (segments1.Length == 1)
                     {
-                        return null;
+                        var segments2 = signalValue.SplitKeep(new string[] { ">", "<", "=" }).Select(x => x.Trim()).ToArray();
+                        if (segments2.Length == 1)
+                        {
+                            return null;
+                        }
+                        var chartElement = (ChartElement)Enum.Parse(typeof(ChartElement), segments2[0]);
+                        var comparison = FormulaUtil.ToComparison(segments2[1]);
+                        var value = double.Parse(segments2[2]);
+                        return new ComparisonFormula(chartElement, comparison, value);
                     }
-                    var chartElement = (ChartElement)Enum.Parse(typeof(ChartElement), segments2[0]);
-                    var comparison = FormulaUtil.ToComparison(segments2[1]);
-                    var value = double.Parse(segments2[2]);
-                    return new ComparisonFormula(chartElement, comparison, value);
+                    var chartElement2 = (ChartElement)Enum.Parse(typeof(ChartElement), segments1[0]);
+                    var comparison2 = FormulaUtil.ToComparison(segments1[1]);
+                    var value2 = double.Parse(segments1[2]);
+                    return new ComparisonFormula(chartElement2, comparison2, value2);
                 }
-                var chartElement2 = (ChartElement)Enum.Parse(typeof(ChartElement), segments1[0]);
-                var comparison2 = FormulaUtil.ToComparison(segments1[1]);
-                var value2 = double.Parse(segments1[2]);
-                return new ComparisonFormula(chartElement2, comparison2, value2);
+
+                return segments0[1] switch
+                {
+                    "&" => new AndFormula(ParseFormula(segments0[0]), ParseFormula(segments0[2])),
+                    "|" => new OrFormula(ParseFormula(segments0[0]), ParseFormula(segments0[2])),
+                    _ => null
+                };
             }
             catch
             {

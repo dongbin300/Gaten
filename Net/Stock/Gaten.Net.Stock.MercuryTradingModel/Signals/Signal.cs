@@ -19,14 +19,22 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Signals
             Formula = formula;
         }
 
-        public virtual bool IsFlare(ChartInfo chart)
+        public virtual bool IsFlare(ChartInfo chart) => Formula switch
+        {
+            ComparisonFormula x => IsFlare(x, chart),
+            AndFormula x => IsFlare(x.Formula1, chart) && IsFlare(x.Formula2, chart),
+            OrFormula x => IsFlare(x.Formula1, chart) || IsFlare(x.Formula2, chart),
+            _ => false
+        };
+
+        private bool IsFlare(IFormula formula, ChartInfo chart)
         {
             if (chart.RSI == null)
             {
                 return false;
             }
 
-            if(chart.RI == null)
+            if (chart.RI == null)
             {
                 return false;
             }
@@ -34,7 +42,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Signals
             var rsi = chart.RSI.Rsi;
             var ri = chart.RI.Ri;
 
-            return Formula switch
+            return formula switch
             {
                 ComparisonFormula x => x.ChartElement switch
                 {
