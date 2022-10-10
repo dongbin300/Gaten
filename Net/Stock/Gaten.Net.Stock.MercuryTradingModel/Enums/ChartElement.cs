@@ -13,6 +13,7 @@
         ma,
         ema,
         bb, // bollinger band
-        macd
+        macd,
+        position
     }
 }

@@ -61,7 +61,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Orders
                     break;
 
                 case OrderAmountType.Asset:
-                    var estimatedAsset = Price.Value * asset.Position.ToDecimal() + asset.Balance;
+                    var estimatedAsset = Price.Value * asset.Position.Value + asset.Balance;
                     var transactionAmount3 = decimal.Round(estimatedAsset * Amount.Value, 2);
                     quantity = decimal.Round(transactionAmount3 / Price.Value, 2);
                     break;
@@ -81,13 +81,13 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Orders
             {
                 case PositionSide.Long:
                     var buyFee = Buy(asset, Price.Value, quantity);
-                    var estimatedAsset = Price.Value * asset.Position.ToDecimal() + asset.Balance;
+                    var estimatedAsset = Price.Value * asset.Position.Value + asset.Balance;
                     return $"{chart.DateTime.ToStandardString()},Buy,{Price},{quantity} (Fee {buyFee:#.##}USDT)" +
                         $" | {asset.Balance:#.##} USDT, {asset.Position} {chart.BaseAsset} ({estimatedAsset:#.##}USDT?)";
 
                 case PositionSide.Short:
                     var sellFee = Sell(asset, Price.Value, quantity);
-                    var estimatedAsset2 = Price.Value * asset.Position.ToDecimal() + asset.Balance;
+                    var estimatedAsset2 = Price.Value * asset.Position.Value + asset.Balance;
                     return $"{chart.DateTime.ToStandardString()},Sell,{Price},{quantity} (Fee {sellFee:#.##}USDT)" +
                         $" | {asset.Balance:#.##} USDT, {asset.Position} {chart.BaseAsset} ({estimatedAsset2:#.##}USDT?)";
 
@@ -100,7 +100,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Orders
                     {
                         quantity = asset.Position.Amount * Amount.Value;
                         var openBuyFee = Buy(asset, Price.Value, quantity);
-                        var openEstimatedAsset = Price.Value * asset.Position.ToDecimal() + asset.Balance;
+                        var openEstimatedAsset = Price.Value * asset.Position.Value + asset.Balance;
                         return $"{chart.DateTime.ToStandardString()},Buy,{Price},{quantity} (Fee {openBuyFee:#.##}USDT)" +
                         $" | {asset.Balance:#.##} USDT, {asset.Position} {chart.BaseAsset} ({openEstimatedAsset:#.##}USDT?)";
                     }
@@ -108,7 +108,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Orders
                     {
                         quantity = asset.Position.Amount * Amount.Value;
                         var openSellFee = Sell(asset, Price.Value, quantity);
-                        var openEstimatedAsset2 = Price.Value * asset.Position.ToDecimal() + asset.Balance;
+                        var openEstimatedAsset2 = Price.Value * asset.Position.Value + asset.Balance;
                         return $"{chart.DateTime.ToStandardString()},Sell,{Price},{quantity} (Fee {openSellFee:#.##}USDT)" +
                         $" | {asset.Balance:#.##} USDT, {asset.Position} {chart.BaseAsset} ({openEstimatedAsset2:#.##}USDT?)";
                     }
@@ -122,7 +122,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Orders
                     {
                         quantity = asset.Position.Amount * Amount.Value;
                         var closeBuyFee = Buy(asset, Price.Value, quantity);
-                        var closeEstimatedAsset = Price.Value * asset.Position.ToDecimal() + asset.Balance;
+                        var closeEstimatedAsset = Price.Value * asset.Position.Value + asset.Balance;
                         return $"{chart.DateTime.ToStandardString()},Buy,{Price},{quantity} (Fee {closeBuyFee:#.##}USDT)" +
                         $" | {asset.Balance:#.##} USDT, {asset.Position} {chart.BaseAsset} ({closeEstimatedAsset:#.##}USDT?)";
                     }
@@ -130,7 +130,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Orders
                     {
                         quantity = asset.Position.Amount * Amount.Value;
                         var closeSellFee = Sell(asset, Price.Value, quantity);
-                        var closeEstimatedAsset2 = Price.Value * asset.Position.ToDecimal() + asset.Balance;
+                        var closeEstimatedAsset2 = Price.Value * asset.Position.Value + asset.Balance;
                         return $"{chart.DateTime.ToStandardString()},Sell,{Price},{quantity} (Fee {closeSellFee:#.##}USDT)" +
                         $" | {asset.Balance:#.##} USDT, {asset.Position} {chart.BaseAsset} ({closeEstimatedAsset2:#.##}USDT?)";
                     }

@@ -4,8 +4,9 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Assets
 {
     public class Position
     {
-        public PositionSide Side { get; set; }
-        public decimal Amount { get; set; }
+        public PositionSide Side { get; set; } = PositionSide.None;
+        public decimal Amount { get; set; } = 0m;
+        public decimal Value => Side == PositionSide.Short ? -Amount : Amount;
 
         public void Long(decimal quantity)
         {
@@ -39,11 +40,6 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Assets
                     Amount = -Amount;
                 }
             }
-        }
-
-        public decimal ToDecimal()
-        {
-            return decimal.Parse(ToString());
         }
 
         public override string ToString()

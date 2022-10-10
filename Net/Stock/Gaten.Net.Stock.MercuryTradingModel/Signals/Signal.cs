@@ -1,4 +1,6 @@
-﻿using Gaten.Net.Stock.MercuryTradingModel.Charts;
+﻿using Gaten.Net.Extensions;
+using Gaten.Net.Stock.MercuryTradingModel.Assets;
+using Gaten.Net.Stock.MercuryTradingModel.Charts;
 using Gaten.Net.Stock.MercuryTradingModel.Enums;
 using Gaten.Net.Stock.MercuryTradingModel.Formulae;
 using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
@@ -19,15 +21,15 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Signals
             Formula = formula;
         }
 
-        public virtual bool IsFlare(ChartInfo chart) => Formula switch
+        public virtual bool IsFlare(Asset asset, ChartInfo chart) => Formula switch
         {
-            ComparisonFormula x => IsFlare(x, chart),
-            AndFormula x => IsFlare(x.Formula1, chart) && IsFlare(x.Formula2, chart),
-            OrFormula x => IsFlare(x.Formula1, chart) || IsFlare(x.Formula2, chart),
+            ComparisonFormula x => IsFlare(x, asset, chart),
+            AndFormula x => IsFlare(x.Formula1, asset, chart) && IsFlare(x.Formula2, asset, chart),
+            OrFormula x => IsFlare(x.Formula1, asset, chart) || IsFlare(x.Formula2, asset, chart),
             _ => false
         };
 
-        private bool IsFlare(IFormula formula, ChartInfo chart)
+        private bool IsFlare(IFormula? formula, Asset asset, ChartInfo chart)
         {
             if (chart.RSI == null)
             {
@@ -39,6 +41,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Signals
                 return false;
             }
 
+            var position = asset.Position.Value.Convert<double>();
             var rsi = chart.RSI.Rsi;
             var ri = chart.RI.Ri;
 
@@ -46,6 +49,16 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Signals
             {
                 ComparisonFormula x => x.ChartElement switch
                 {
+                    ChartElement.position => x.Comparison switch
+                    {
+                        Comparison.Equal => position == x.Value,
+                        Comparison.NotEqual => position != x.Value,
+                        Comparison.LessThan => position < x.Value,
+                        Comparison.LessThanOrEqual => position <= x.Value,
+                        Comparison.GreaterThan => position > x.Value,
+                        Comparison.GreaterThanOrEqual => position >= x.Value,
+                        _ => false
+                    },
                     ChartElement.rsi => x.Comparison switch
                     {
                         Comparison.Equal => rsi == x.Value,
@@ -54,7 +67,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Signals
                         Comparison.LessThanOrEqual => rsi <= x.Value,
                         Comparison.GreaterThan => rsi > x.Value,
                         Comparison.GreaterThanOrEqual => rsi >= x.Value,
-                        _ => false,
+                        _ => false
                     },
                     ChartElement.ri => x.Comparison switch
                     {
@@ -64,7 +77,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Signals
                         Comparison.LessThanOrEqual => ri <= x.Value,
                         Comparison.GreaterThan => ri > x.Value,
                         Comparison.GreaterThanOrEqual => ri >= x.Value,
-                        _ => false,
+                        _ => false
                     },
                     _ => false
                 },

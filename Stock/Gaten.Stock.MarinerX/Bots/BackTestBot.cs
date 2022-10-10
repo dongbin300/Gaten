@@ -48,7 +48,7 @@ namespace Gaten.Stock.MarinerX.Bots
                 {
                     foreach (var strategy in scenario.Strategies)
                     {
-                        if (strategy.Signal.IsFlare(info))
+                        if (strategy.Signal.IsFlare(asset, info))
                         {
                             TradeLog.Append(strategy.Order.Run(asset, info));
                             TradeLog.Append(" by " + strategy.Name + " : ");
