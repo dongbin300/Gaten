@@ -1,4 +1,5 @@
 ﻿using Gaten.Net.Wpf;
+using Gaten.Stock.MercuryEditor.Enums;
 
 using System;
 using System.Windows;
@@ -68,11 +69,25 @@ namespace Gaten.Stock.MercuryEditor.View
                     SettingsThemeLightMenuItem.IsChecked = true;
                     break;
 
+                default:
                 case Themes.Dark:
                     SettingsThemeDarkMenuItem.IsChecked = true;
                     break;
+            }
 
+            switch (Delegater.CurrentLanguage)
+            {
                 default:
+                case LanguageType.En:
+                    SettingsLanguageEnMenuItem.IsChecked = true;
+                    break;
+
+                case LanguageType.Ko:
+                    SettingsLanguageKoMenuItem.IsChecked = true;
+                    break;
+
+                case LanguageType.Ja:
+                    SettingsLanguageJaMenuItem.IsChecked = true;
                     break;
             }
 
@@ -369,11 +384,6 @@ namespace Gaten.Stock.MercuryEditor.View
             mainWindow.Inspection();
         }
 
-        private void ModelAddScenarioMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void ModelAddStrategyMenuItem_Click(object sender, RoutedEventArgs e)
         {
 
@@ -389,6 +399,27 @@ namespace Gaten.Stock.MercuryEditor.View
         private void SettingsNumberMenuItem_Click(object sender, RoutedEventArgs e)
         {
             mainWindow.SetEnableLineNumber(SettingsNumberMenuItem.IsChecked);
+        }
+
+        private void SettingsLanguageEnMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsLanguageKoMenuItem.IsChecked = false;
+            SettingsLanguageJaMenuItem.IsChecked = false;
+            Delegater.SetLanguage(LanguageType.En);
+        }
+
+        private void SettingsLanguageKoMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsLanguageEnMenuItem.IsChecked = false;
+            SettingsLanguageJaMenuItem.IsChecked = false;
+            Delegater.SetLanguage(LanguageType.Ko);
+        }
+
+        private void SettingsLanguageJaMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsLanguageKoMenuItem.IsChecked = false;
+            SettingsLanguageEnMenuItem.IsChecked = false;
+            Delegater.SetLanguage(LanguageType.Ja);
         }
 
         private void SettingsThemeLightMenuItem_Click(object sender, RoutedEventArgs e)
@@ -408,13 +439,8 @@ namespace Gaten.Stock.MercuryEditor.View
                 Delegater.ChangeTheme();
             }
         }
-
         #endregion
 
         #endregion
-
-        
-
-        
     }
 }

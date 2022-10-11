@@ -20,7 +20,7 @@ namespace Gaten.Stock.MercuryEditor.IO
             {
                 SaveFileDialog dialog = new()
                 {
-                    Title = "트레이딩 모델 파일 저장",
+                    Title = Delegater.CurrentLanguageDictionary["TmFileSave"].ToString(),
                     Filter = "trading model files (*.tm)|*.tm"
                 };
 
@@ -42,7 +42,7 @@ namespace Gaten.Stock.MercuryEditor.IO
         {
             SaveFileDialog dialog = new()
             {
-                Title = "트레이딩 모델 파일 저장",
+                Title = Delegater.CurrentLanguageDictionary["TmFileSaveAs"].ToString(),
                 Filter = "trading model files (*.tm)|*.tm"
             };
 
@@ -58,7 +58,7 @@ namespace Gaten.Stock.MercuryEditor.IO
         {
             OpenFileDialog dialog = new()
             {
-                Title = "트레이딩 모델 파일 불러오기",
+                Title = Delegater.CurrentLanguageDictionary["TmFileOpen"].ToString(),
                 Filter = "trading model files (*.tm)|*.tm"
             };
 

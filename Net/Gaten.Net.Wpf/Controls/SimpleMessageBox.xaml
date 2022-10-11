@@ -26,34 +26,36 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="40"/>
-        </Grid.RowDefinitions>
+    <Border BorderThickness="1" BorderBrush="Black">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" Margin="25">
-            <TextBlock x:Name="MessageText" TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
-        </Border>
-
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Border x:Name="CopyButton" Grid.Column="0" Padding="10" Background="Transparent" MouseLeftButtonDown="CopyButton_MouseLeftButtonDown" ToolTip="복사">
-                <Canvas Style="{StaticResource TaskIconButtonCanvas}">
-                    <Path Width="20" Height="20" Stretch="Uniform" Fill="Black" Data="M19 21 H8 V7 H19 M19 5 H8 A2 2 0 0 0 6 7 V21 A2 2 0 0 0 8 23 H19 A2 2 0 0 0 21 21 V7 A2 2 0 0 0 19 5 M16 1 H4 A2 2 0 0 0 2 3 V17 H4 V3 H16 V1Z"/>
-                </Canvas>
+            <Border Grid.Row="0" Margin="25">
+                <TextBlock x:Name="MessageText" TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
             </Border>
-            
-            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="8">
-                <Button x:Name="Button1" Content=" " Click="Button_Click"/>
-                <Button x:Name="Button2" Content=" " Click="Button_Click"/>
-                <Button x:Name="Button3" Content=" " Click="Button_Click"/>
-            </StackPanel>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border x:Name="CopyButton" Grid.Column="0" Padding="10" Background="Transparent" MouseLeftButtonDown="CopyButton_MouseLeftButtonDown" ToolTip="복사">
+                    <Canvas Style="{StaticResource TaskIconButtonCanvas}">
+                        <Path Width="20" Height="20" Stretch="Uniform" Fill="Black" Data="M19 21 H8 V7 H19 M19 5 H8 A2 2 0 0 0 6 7 V21 A2 2 0 0 0 8 23 H19 A2 2 0 0 0 21 21 V7 A2 2 0 0 0 19 5 M16 1 H4 A2 2 0 0 0 2 3 V17 H4 V3 H16 V1Z"/>
+                    </Canvas>
+                </Border>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="8">
+                    <Button x:Name="Button1" Content=" " Click="Button_Click"/>
+                    <Button x:Name="Button2" Content=" " Click="Button_Click"/>
+                    <Button x:Name="Button3" Content=" " Click="Button_Click"/>
+                </StackPanel>
+            </Grid>
+
         </Grid>
-        
-    </Grid>
+    </Border>
 </Window>

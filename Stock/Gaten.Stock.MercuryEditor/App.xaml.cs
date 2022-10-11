@@ -1,4 +1,5 @@
 ﻿using Gaten.Stock.MercuryEditor.Editor;
+using Gaten.Stock.MercuryEditor.Enums;
 
 using System;
 using System.Windows;
@@ -22,6 +23,7 @@ namespace Gaten.Stock.MercuryEditor
         {
             MercuryEditorEntire.Init();
             Delegater.ChangeTheme = ChangeTheme;
+            Delegater.SetLanguage = SetLanguage;
 
             mainWindow = new MainWindow();
             InitSettings();
@@ -35,14 +37,36 @@ namespace Gaten.Stock.MercuryEditor
                 case "Light":
                     Delegater.CurrentTheme = Themes.Light;
                     mainWindow.textEditor.SyntaxHighlighting = MercuryEditorEntire.MercuryLightHighlighting;
-                    Resources.MergedDictionaries.Clear();
-                    AddResourceDictionary("Resources/Themes/LightTheme.xaml");
+                    Resources.MergedDictionaries.Remove(DarkThemeResource);
+                    LightThemeResource = AddResourceDictionary("Resources/Themes/LightTheme.xaml");
                     break;
                 case "Dark":
                     Delegater.CurrentTheme = Themes.Dark;
                     mainWindow.textEditor.SyntaxHighlighting = MercuryEditorEntire.MercuryDarkHighlighting;
-                    Resources.MergedDictionaries.Clear();
-                    AddResourceDictionary("Resources/Themes/DarkTheme.xaml");
+                    Resources.MergedDictionaries.Remove(LightThemeResource);
+                    DarkThemeResource = AddResourceDictionary("Resources/Themes/DarkTheme.xaml");
+                    break;
+            }
+
+            switch (Settings.Default.Language)
+            {
+                default:
+                case "En":
+                    Resources.MergedDictionaries.Remove(KoLanguageResource);
+                    Resources.MergedDictionaries.Remove(JaLanguageResource);
+                    EnLanguageResource = AddResourceDictionary("Resources/Languages/Language-en.xaml");
+                    break;
+
+                case "Ko":
+                    Resources.MergedDictionaries.Remove(EnLanguageResource);
+                    Resources.MergedDictionaries.Remove(JaLanguageResource);
+                    KoLanguageResource = AddResourceDictionary("Resources/Languages/Language-ko.xaml");
+                    break;
+
+                case "Ja":
+                    Resources.MergedDictionaries.Remove(EnLanguageResource);
+                    Resources.MergedDictionaries.Remove(KoLanguageResource);
+                    JaLanguageResource = AddResourceDictionary("Resources/Languages/Language-ja.xaml");
                     break;
             }
 
@@ -50,6 +74,8 @@ namespace Gaten.Stock.MercuryEditor
             mainWindow.textEditor.ShowLineNumbers = mainWindow.TitleBar.SettingsNumberMenuItem.IsChecked = Settings.Default.LineNumber;
         }
 
+        ResourceDictionary LightThemeResource = new();
+        ResourceDictionary DarkThemeResource = new();
         public void ChangeTheme()
         {
             switch (Delegater.CurrentTheme)
@@ -57,23 +83,52 @@ namespace Gaten.Stock.MercuryEditor
                 case Themes.Light:
                     Delegater.CurrentTheme = Themes.Dark;
                     mainWindow.textEditor.SyntaxHighlighting = MercuryEditorEntire.MercuryDarkHighlighting;
-                    Resources.MergedDictionaries.Clear();
-                    AddResourceDictionary("Resources/Themes/DarkTheme.xaml");
+                    Resources.MergedDictionaries.Remove(LightThemeResource);
+                    DarkThemeResource = AddResourceDictionary("Resources/Themes/DarkTheme.xaml");
                     break;
                 default:
                 case Themes.Dark:
                     Delegater.CurrentTheme = Themes.Light;
                     mainWindow.textEditor.SyntaxHighlighting = MercuryEditorEntire.MercuryLightHighlighting;
-                    Resources.MergedDictionaries.Clear();
-                    AddResourceDictionary("Resources/Themes/LightTheme.xaml");
+                    Resources.MergedDictionaries.Remove(DarkThemeResource);
+                    LightThemeResource = AddResourceDictionary("Resources/Themes/LightTheme.xaml");
                     break;
             }
         }
 
-        void AddResourceDictionary(string source)
+        ResourceDictionary EnLanguageResource = new();
+        ResourceDictionary KoLanguageResource = new();
+        ResourceDictionary JaLanguageResource = new();
+        public void SetLanguage(LanguageType type)
+        {
+            switch (type)
+            {
+                default:
+                case LanguageType.En:
+                    Resources.MergedDictionaries.Remove(KoLanguageResource);
+                    Resources.MergedDictionaries.Remove(JaLanguageResource);
+                    EnLanguageResource = AddResourceDictionary("Resources/Languages/Language-en.xaml");
+                    break;
+
+                case LanguageType.Ko:
+                    Resources.MergedDictionaries.Remove(EnLanguageResource);
+                    Resources.MergedDictionaries.Remove(JaLanguageResource);
+                    KoLanguageResource = AddResourceDictionary("Resources/Languages/Language-ko.xaml");
+                    break;
+
+                case LanguageType.Ja:
+                    Resources.MergedDictionaries.Remove(EnLanguageResource);
+                    Resources.MergedDictionaries.Remove(KoLanguageResource);
+                    JaLanguageResource = AddResourceDictionary("Resources/Languages/Language-ja.xaml");
+                    break;
+            }
+        }
+
+        ResourceDictionary AddResourceDictionary(string source)
         {
             ResourceDictionary resourceDictionary = (ResourceDictionary)LoadComponent(new Uri(source, UriKind.Relative));
             Resources.MergedDictionaries.Add(resourceDictionary);
+            return resourceDictionary;
         }
     }
 }

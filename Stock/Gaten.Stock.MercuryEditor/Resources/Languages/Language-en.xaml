@@ -1,0 +1,61 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:s="clr-namespace:System;assembly=mscorlib">
+    <s:String x:Key="LanguageResourceDictionary">_</s:String>
+
+    <s:String x:Key="UnknownSystemCode">Unknown System Code.</s:String>
+
+    <s:String x:Key="Restore">Restore</s:String>
+    <s:String x:Key="Move">Move</s:String>
+    <s:String x:Key="Minimize">Minimize</s:String>
+    <s:String x:Key="Maximize">Maximize</s:String>
+    <s:String x:Key="Close">Close</s:String>
+    <s:String x:Key="File">File</s:String>
+    <s:String x:Key="FileNew">New</s:String>
+    <s:String x:Key="FileOpen">Open</s:String>
+    <s:String x:Key="FileClose">Close</s:String>
+    <s:String x:Key="FileSave">Save</s:String>
+    <s:String x:Key="FileSaveAs">Save As...</s:String>
+    <s:String x:Key="FileEscape">Exit</s:String>
+    <s:String x:Key="Edit">Edit</s:String>
+    <s:String x:Key="EditFindReplace">Find/Replace</s:String>
+    <s:String x:Key="EditUndo">Undo</s:String>
+    <s:String x:Key="EditRedo">Redo</s:String>
+    <s:String x:Key="EditCut">Cut</s:String>
+    <s:String x:Key="EditCopy">Copy</s:String>
+    <s:String x:Key="EditPaste">Paste</s:String>
+    <s:String x:Key="EditDuplicate">Duplicate</s:String>
+    <s:String x:Key="EditDelete">Delete</s:String>
+    <s:String x:Key="EditAllSelect">Select All</s:String>
+    <s:String x:Key="EditComment">Comment Selection</s:String>
+    <s:String x:Key="EditDecomment">Uncomment Selection</s:String>
+    <s:String x:Key="View">View</s:String>
+    <s:String x:Key="ViewModelExplorer">Model Explorer</s:String>
+    <s:String x:Key="ViewPropertyWindow">Properties</s:String>
+    <s:String x:Key="ViewFullScreen">Full Screen</s:String>
+    <s:String x:Key="Model">Model</s:String>
+    <s:String x:Key="ModelInspection">Inspection</s:String>
+    <s:String x:Key="ModelAddStrategy">Add Strategy</s:String>
+    <s:String x:Key="ModelSettings">Model Settings</s:String>
+    <s:String x:Key="Settings">Settings</s:String>
+    <s:String x:Key="SettingsWrap">Word Wrap</s:String>
+    <s:String x:Key="SettingsNumber">Line Numbers</s:String>
+    <s:String x:Key="SettingsLanguage">Language</s:String>
+    <s:String x:Key="SettingsTheme">Theme</s:String>
+    <s:String x:Key="SettingsThemeChange">Change Theme</s:String>
+    <s:String x:Key="SettingsThemeLight">Light</s:String>
+    <s:String x:Key="SettingsThemeDark">Dark</s:String>
+    <s:String x:Key="SettingsFont">Font</s:String>
+    <s:String x:Key="Help">Help</s:String>
+    <s:String x:Key="HelpView">View Help</s:String>
+    <s:String x:Key="HelpFeedback">Send Feedback</s:String>
+    <s:String x:Key="HelpUpdate">Check For Updates</s:String>
+    <s:String x:Key="HelpInfo">About...</s:String>
+    <s:String x:Key="HelpDonate">Donate</s:String>
+
+    <s:String x:Key="TmFileOpen">Open Trading Model File</s:String>
+    <s:String x:Key="TmFileSave">Save Trading Model File</s:String>
+    <s:String x:Key="TmFileSaveAs">Save Trading Model File As</s:String>
+    <s:String x:Key="TmFileCheckSave">Do you want to save the current file?</s:String>
+    <s:String x:Key="InspectionComplete">Inspection completed.</s:String>
+</ResourceDictionary>

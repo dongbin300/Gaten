@@ -59,4 +59,15 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Resources\Languages\Language-ja.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Languages\Language-en.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
 </Project>

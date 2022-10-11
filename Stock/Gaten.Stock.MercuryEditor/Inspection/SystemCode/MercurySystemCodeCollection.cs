@@ -31,7 +31,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.SystemCode
 
                     if (temp == null)
                     {
-                        return new MercurySystemCodeParseResult($"존재하지 않는 시스템 코드입니다. :: {t}");
+                        return new MercurySystemCodeParseResult($"{Delegater.CurrentLanguageDictionary["UnknownSystemCode"]} :: {t}");
                     }
 
                     switch (temp.CodeType)

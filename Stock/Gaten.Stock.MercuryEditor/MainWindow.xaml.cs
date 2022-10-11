@@ -2,6 +2,7 @@
 using Gaten.Net.Wpf.Controls;
 using Gaten.Stock.MercuryEditor.Commands;
 using Gaten.Stock.MercuryEditor.Editor;
+using Gaten.Stock.MercuryEditor.Enums;
 using Gaten.Stock.MercuryEditor.Inspection;
 using Gaten.Stock.MercuryEditor.IO;
 
@@ -86,12 +87,14 @@ namespace Gaten.Stock.MercuryEditor
         private void SettingTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
             Settings.Default.Theme = Delegater.CurrentTheme.ToString();
+            Settings.Default.Language = Delegater.CurrentLanguage.ToString();
             Settings.Default.Save();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Settings.Default.Theme = Delegater.CurrentTheme.ToString();
+            Settings.Default.Language = Delegater.CurrentLanguage.ToString();
             Settings.Default.Save();
         }
         #endregion
@@ -101,7 +104,7 @@ namespace Gaten.Stock.MercuryEditor
         {
             if (!TmFile.IsSaved)
             {
-                var message = new SimpleMessageBox("현재 파일을 저장하시겠습니까?", this, SimpleMessageBoxType.YesNoCancel);
+                var message = new SimpleMessageBox(Delegater.CurrentLanguageDictionary["TmFileCheckSave"].ToString(), this, SimpleMessageBoxType.YesNoCancel);
                 switch (message.ShowDialog())
                 {
                     case SimpleMessageBoxResult.Yes:
@@ -252,23 +255,28 @@ namespace Gaten.Stock.MercuryEditor
                 return;
             }
 
-            EditorStatusText.Text = "검사 완료.";
+            EditorStatusText.Text = Delegater.CurrentLanguageDictionary["InspectionComplete"].ToString();
         }
 
-        public void InspectionRun()
+        //public void InspectionRun()
+        //{
+        //    var inspector = new MercuryInspector();
+        //    var result = inspector.Run(textEditor.Text);
+
+        //    if (!result.IsOk)
+        //    {
+        //        EditorStatusText.Text = result.ErrorMessage;
+        //        return;
+        //    }
+
+        //    EditorStatusText.Text = "검사 완료. 실행합니다.";
+
+        //    //BackTest
+        //}
+
+        public void AddStrategy()
         {
-            var inspector = new MercuryInspector();
-            var result = inspector.Run(textEditor.Text);
-
-            if (!result.IsOk)
-            {
-                EditorStatusText.Text = result.ErrorMessage;
-                return;
-            }
-
-            EditorStatusText.Text = "검사 완료. 실행합니다.";
-
-            //BackTest
+            textEditor.Document.Insert(textEditor.CaretOffset, "scenario1.strategy1.signal = ");
         }
         #endregion
 
@@ -299,6 +307,14 @@ namespace Gaten.Stock.MercuryEditor
             textEditor.ShowLineNumbers = !textEditor.ShowLineNumbers;
             Settings.Default.LineNumber = textEditor.ShowLineNumbers;
             Settings.Default.Save();
+        }
+
+        public void SetLanguage(LanguageType type)
+        {
+            switch (type)
+            {
+
+            }
         }
         #endregion
 

@@ -28,7 +28,7 @@ namespace Gaten.Net.Wpf.Controls
     {
         private SimpleMessageBoxResult result;
 
-        public SimpleMessageBox(string text, Window? owner = null, SimpleMessageBoxType type = SimpleMessageBoxType.Ok)
+        public SimpleMessageBox(string? text, Window? owner = null, SimpleMessageBoxType type = SimpleMessageBoxType.Ok)
         {
             InitializeComponent();
             MessageText.Text = text;
