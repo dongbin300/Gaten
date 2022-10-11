@@ -78,12 +78,12 @@ namespace Gaten.Stock.MercuryEditor.View
 
         private void WrapButton_Click(object sender, MouseButtonEventArgs e)
         {
-
+            mainWindow.ChangeWrap();
         }
 
         private void NumberButton_Click(object sender, MouseButtonEventArgs e)
         {
-
+            mainWindow.ChangeEnableLineNumber();
         }
 
         private void InspectionButton_Click(object sender, MouseButtonEventArgs e)
@@ -103,12 +103,12 @@ namespace Gaten.Stock.MercuryEditor.View
 
         private void CommentButton_Click(object sender, MouseButtonEventArgs e)
         {
-
+            mainWindow.Comment();
         }
 
         private void DecommentButton_Click(object sender, MouseButtonEventArgs e)
         {
-
+            mainWindow.Decomment();
         }
 
         private void ThemeButton_Click(object sender, MouseButtonEventArgs e)

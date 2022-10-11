@@ -280,10 +280,24 @@ namespace Gaten.Stock.MercuryEditor
             Settings.Default.Save();
         }
 
+        public void ChangeWrap()
+        {
+            textEditor.WordWrap = !textEditor.WordWrap;
+            Settings.Default.TextWrap = textEditor.WordWrap;
+            Settings.Default.Save();
+        }
+
         public void SetEnableLineNumber(bool enable)
         {
             textEditor.ShowLineNumbers = enable;
             Settings.Default.LineNumber = enable;
+            Settings.Default.Save();
+        }
+
+        public void ChangeEnableLineNumber()
+        {
+            textEditor.ShowLineNumbers = !textEditor.ShowLineNumbers;
+            Settings.Default.LineNumber = textEditor.ShowLineNumbers;
             Settings.Default.Save();
         }
         #endregion
