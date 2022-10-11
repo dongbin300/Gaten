@@ -12,6 +12,8 @@ using Gaten.Stock.MarinerX.Bots;
 using Gaten.Stock.MarinerX.Charts;
 using Gaten.Stock.MarinerX.Indicators;
 
+using MySqlX.XDevAPI.Common;
+
 using Newtonsoft.Json;
 
 using System;
@@ -178,6 +180,7 @@ namespace Gaten.Stock.MarinerX
 
         public static void BackTestBotRun(Worker worker, object? obj)
         {
+            BackTestBot? bot = default!;
             try
             {
                 if(obj is not MercuryBackTestTradingModel model)
@@ -189,7 +192,7 @@ namespace Gaten.Stock.MarinerX
                     return;
                 }
 
-                var bot = new BackTestBot(model, worker);
+                bot = new BackTestBot(model, worker);
                 var result = bot.Run();
                 DispatcherService.Invoke(() =>
                 {
@@ -209,6 +212,11 @@ namespace Gaten.Stock.MarinerX
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+
+                var path = GPath.Desktop.Down("MarinerX", $"BackTest_Error_{DateTime.Now.ToStandardFileName()}.txt");
+                GFile.Write(path, bot.TradeLog.ToString());
+
+                GProcess.Start(path);
             }
         }
 

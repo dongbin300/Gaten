@@ -197,8 +197,9 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                     {
                         continue;
                     }
-                    var key = scenarioCode.Text.Split('=')[0].Trim();
-                    var value = scenarioCode.Text.Split('=')[1].Trim();
+                    var equalIndex = scenarioCode.Text.IndexOf('=');
+                    var key = scenarioCode.Text[..equalIndex].Trim();
+                    var value = scenarioCode.Text[(equalIndex + 1)..].Trim();
 
                     var strategyResult = ParseStrategy(key, value);
                     if (!string.IsNullOrEmpty(strategyResult))
