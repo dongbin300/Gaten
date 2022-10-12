@@ -93,7 +93,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             }
             catch
             {
-                return $"asset 형식의 오류입니다. :: {assetCode}";
+                return $"{Delegater.CurrentLanguageDictionary["AssetTypeError"]} :: {assetCode}";
             }
         }
 
@@ -135,7 +135,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             }
             catch
             {
-                return $"period 형식의 오류입니다. :: {periodCode}";
+                return $"{Delegater.CurrentLanguageDictionary["PeriodTypeError"]} :: {periodCode}";
             }
         }
 
@@ -158,7 +158,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             }
             catch
             {
-                return $"interval 형식의 오류입니다. :: {intervalCode}";
+                return $"{Delegater.CurrentLanguageDictionary["IntervalTypeError"]} :: {intervalCode}";
             }
         }
 
@@ -181,7 +181,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             }
             catch
             {
-                return $"target 형식의 오류입니다. :: {targetCode}";
+                return $"{Delegater.CurrentLanguageDictionary["TargetTypeError"]} :: {targetCode}";
             }
         }
 
@@ -211,7 +211,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             }
             catch
             {
-                return $"scenario 형식의 오류입니다. :: {scenarioCode}";
+                return $"{Delegater.CurrentLanguageDictionary["ScenarioTypeError"]} :: {scenarioCode}";
             }
         }
 
@@ -226,7 +226,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                         var formula = ParseFormula(value);
                         if (formula == null)
                         {
-                            return $"signal formula 형식의 오류입니다. :: ";
+                            return $"{Delegater.CurrentLanguageDictionary["SignalFormulaTypeError"]} :: ";
                         }
                         var signal = new Signal(formula);
                         TradingModel.AddSignal(keySegments[0], keySegments[1], signal);
@@ -235,18 +235,18 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                         var order = ParseOrder(value);
                         if (order == null)
                         {
-                            return $"order 형식의 오류입니다. :: ";
+                            return $"{Delegater.CurrentLanguageDictionary["OrderTypeError"]} :: ";
                         }
                         TradingModel.AddOrder(keySegments[0], keySegments[1], order);
                         break;
                     default:
-                        return $"scenario key 형식의 오류입니다. :: ";
+                        return $"{Delegater.CurrentLanguageDictionary["ScenarioKeyTypeError"]} :: ";
                 }
                 return string.Empty;
             }
             catch
             {
-                return $"strategy 형식의 오류입니다. :: ";
+                return $"{Delegater.CurrentLanguageDictionary["StrategyTypeError"]} :: ";
             }
         }
 

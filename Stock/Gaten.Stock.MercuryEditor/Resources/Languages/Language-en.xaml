@@ -3,7 +3,26 @@
                     xmlns:s="clr-namespace:System;assembly=mscorlib">
     <s:String x:Key="LanguageResourceDictionary">_</s:String>
 
-    <s:String x:Key="UnknownSystemCode">Unknown System Code.</s:String>
+    <s:String x:Key="UnknownSystemCode">Unknown system code.</s:String>
+    <s:String x:Key="UnknownCodeVersion">Unknown code version.</s:String>
+    <s:String x:Key="UnknownMarketPlatform">Unknown market platform.</s:String>
+    <s:String x:Key="UnknownModelType">Unknown model type.</s:String>
+    <s:String x:Key="OverlapCodeVersion">The code versions overlaps.</s:String>
+    <s:String x:Key="OverlapMarketPlatform">The market platform overlaps.</s:String>
+    <s:String x:Key="OverlapModelType">The model type overlaps.</s:String>
+    <s:String x:Key="AvailableHigherVersion">Available in higher versions.</s:String>
+    <s:String x:Key="SystemError">System error.</s:String>
+    <s:String x:Key="SystemDataNotEnough">Insufficient system data.</s:String>
+    <s:String x:Key="AssetTypeError">Error in asset type.</s:String>
+    <s:String x:Key="PeriodTypeError">Error in period type.</s:String>
+    <s:String x:Key="IntervalTypeError">Error in interval type.</s:String>
+    <s:String x:Key="TargetTypeError">Error in target type.</s:String>
+    <s:String x:Key="ScenarioTypeError">Error in scenario type.</s:String>
+    <s:String x:Key="ScenarioKeyTypeError">Error in scenario key type.</s:String>
+    <s:String x:Key="StrategyTypeError">Error in strategy type.</s:String>
+    <s:String x:Key="SignalFormulaTypeError">Error in signal formula type.</s:String>
+    <s:String x:Key="OrderTypeError">Error in order type.</s:String>
+    
 
     <s:String x:Key="Restore">Restore</s:String>
     <s:String x:Key="Move">Move</s:String>

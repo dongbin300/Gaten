@@ -72,17 +72,17 @@ namespace Gaten.Stock.MercuryEditor.Inspection
                                         break;
 
                                     default:
-                                        throw new Exception("알 수 없는 Model Type입니다.");
+                                        throw new Exception(Delegater.CurrentLanguageDictionary["UnknownModelType"].ToString());
                                 }
                                 break;
 
                             default:
-                                throw new Exception("알 수 없는 Market Platform입니다.");
+                                throw new Exception(Delegater.CurrentLanguageDictionary["UnknownMarketPlatform"].ToString());
                         }
                         break;
 
                     default:
-                        throw new Exception("알 수 없는 Code Version입니다.");
+                        throw new Exception(Delegater.CurrentLanguageDictionary["UnknownCodeVersion"].ToString());
                 }
 
                 return new MercuryInspectionResult();
@@ -107,7 +107,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection
 
             if (systemCodeParseResult.SystemCode == null)
             {
-                throw new SystemException("시스템 오류입니다.");
+                throw new SystemException(Delegater.CurrentLanguageDictionary["SystemError"].ToString());
             }
 
             return systemCodeParseResult.SystemCode;

@@ -258,22 +258,9 @@ namespace Gaten.Stock.MercuryEditor
             EditorStatusText.Text = Delegater.CurrentLanguageDictionary["InspectionComplete"].ToString();
         }
 
-        //public void InspectionRun()
-        //{
-        //    var inspector = new MercuryInspector();
-        //    var result = inspector.Run(textEditor.Text);
-
-        //    if (!result.IsOk)
-        //    {
-        //        EditorStatusText.Text = result.ErrorMessage;
-        //        return;
-        //    }
-
-        //    EditorStatusText.Text = "검사 완료. 실행합니다.";
-
-        //    //BackTest
-        //}
-
+        /// <summary>
+        /// TODO
+        /// </summary>
         public void AddStrategy()
         {
             textEditor.Document.Insert(textEditor.CaretOffset, "scenario1.strategy1.signal = ");

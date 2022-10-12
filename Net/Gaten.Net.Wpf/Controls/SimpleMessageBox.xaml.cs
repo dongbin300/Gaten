@@ -41,21 +41,21 @@ namespace Gaten.Net.Wpf.Controls
             {
                 default:
                 case SimpleMessageBoxType.Ok:
-                    Button1.Content = "확인";
+                    Button1.Content = "OK";
                     Button2.Visibility = Visibility.Collapsed;
                     Button3.Visibility = Visibility.Collapsed;
                     break;
 
                 case SimpleMessageBoxType.OkCancel:
-                    Button1.Content = "확인";
-                    Button2.Content = "취소";
+                    Button1.Content = "OK";
+                    Button2.Content = "Cancel";
                     Button3.Visibility = Visibility.Collapsed;
                     break;
 
                 case SimpleMessageBoxType.YesNoCancel:
-                    Button1.Content = "예";
-                    Button2.Content = "아니오";
-                    Button3.Content = "취소";
+                    Button1.Content = "Yes";
+                    Button2.Content = "No";
+                    Button3.Content = "Cancel";
                     break;
             }
 
@@ -83,10 +83,10 @@ namespace Gaten.Net.Wpf.Controls
 
             result = button.Content switch
             {
-                "확인" => SimpleMessageBoxResult.Ok,
-                "취소" => SimpleMessageBoxResult.Cancel,
-                "예" => SimpleMessageBoxResult.Yes,
-                "아니오" => SimpleMessageBoxResult.No,
+                "OK" => SimpleMessageBoxResult.Ok,
+                "Cancel" => SimpleMessageBoxResult.Cancel,
+                "Yes" => SimpleMessageBoxResult.Yes,
+                "No" => SimpleMessageBoxResult.No,
                 _ => SimpleMessageBoxResult.None
             };
 

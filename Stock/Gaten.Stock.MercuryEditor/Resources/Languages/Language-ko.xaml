@@ -4,7 +4,25 @@
     <s:String x:Key="LanguageResourceDictionary">_</s:String>
 
     <s:String x:Key="UnknownSystemCode">존재하지 않는 시스템 코드입니다.</s:String>
-
+    <s:String x:Key="UnknownCodeVersion">알 수 없는 Code Version입니다.</s:String>
+    <s:String x:Key="UnknownMarketPlatform">알 수 없는 Market Platform입니다.</s:String>
+    <s:String x:Key="UnknownModelType">알 수 없는 Model Type입니다.</s:String>
+    <s:String x:Key="OverlapCodeVersion">Code Version이 중복됩니다.</s:String>
+    <s:String x:Key="OverlapMarketPlatform">Market Platform이 중복됩니다.</s:String>
+    <s:String x:Key="OverlapModelType">Model Type이 중복됩니다.</s:String>
+    <s:String x:Key="AvailableHigherVersion">더 높은 버전에서 사용할 수 있습니다.</s:String>
+    <s:String x:Key="SystemError">시스템 오류입니다.</s:String>
+    <s:String x:Key="SystemDataNotEnough">시스템 데이터가 부족합니다.</s:String>
+    <s:String x:Key="AssetTypeError">Asset 형식의 오류입니다.</s:String>
+    <s:String x:Key="PeriodTypeError">Period 형식의 오류입니다.</s:String>
+    <s:String x:Key="IntervalTypeError">Interval 형식의 오류입니다.</s:String>
+    <s:String x:Key="TargetTypeError">Target 형식의 오류입니다.</s:String>
+    <s:String x:Key="ScenarioTypeError">Scenario 형식의 오류입니다.</s:String>
+    <s:String x:Key="ScenarioKeyTypeError">Scenario Key 형식의 오류입니다.</s:String>
+    <s:String x:Key="StrategyTypeError">Strategy 형식의 오류입니다.</s:String>
+    <s:String x:Key="SignalFormulaTypeError">Signal Formula 형식의 오류입니다.</s:String>
+    <s:String x:Key="OrderTypeError">Order 형식의 오류입니다.</s:String>
+    
     <s:String x:Key="Restore">이전 크기로</s:String>
     <s:String x:Key="Move">이동</s:String>
     <s:String x:Key="Minimize">최소화</s:String>

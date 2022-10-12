@@ -39,40 +39,40 @@ namespace Gaten.Stock.MercuryEditor.Inspection.SystemCode
                         case 1:
                             if (systemCodeCollection.CodeVersion != 0)
                             {
-                                return new MercurySystemCodeParseResult($"Code Version이 중복됩니다. :: {t}");
+                                return new MercurySystemCodeParseResult($"{Delegater.CurrentLanguageDictionary["OverlapCodeVersion"]} :: {t}");
                             }
                             systemCodeCollection.CodeVersion = temp.SupportedMinimumVersion;
                             break;
                         case 2:
                             if (systemCodeCollection.MarketPlatform != MarketPlatform.None)
                             {
-                                return new MercurySystemCodeParseResult($"Market Platform이 중복됩니다. :: {t}");
+                                return new MercurySystemCodeParseResult($"{Delegater.CurrentLanguageDictionary["OverlapMarketPlatform"]} :: {t}");
                             }
                             if (systemCodeCollection.CodeVersion < temp.SupportedMinimumVersion)
                             {
-                                return new MercurySystemCodeParseResult($"더 높은 버전에서 사용할 수 있습니다. :: {t}");
+                                return new MercurySystemCodeParseResult($"{Delegater.CurrentLanguageDictionary["AvailableHigherVersion"]} :: {t}");
                             }
                             systemCodeCollection.MarketPlatform = (MarketPlatform)Enum.Parse(typeof(MarketPlatform), temp.Keyword);
                             break;
                         case 3:
                             if (systemCodeCollection.ModelType != ModelType.None)
                             {
-                                return new MercurySystemCodeParseResult($"Model Type이 중복됩니다. :: {t}");
+                                return new MercurySystemCodeParseResult($"{Delegater.CurrentLanguageDictionary["OverlapModelType"]} :: {t}");
                             }
                             if (systemCodeCollection.CodeVersion < temp.SupportedMinimumVersion)
                             {
-                                return new MercurySystemCodeParseResult($"더 높은 버전에서 사용할 수 있습니다. :: {t}");
+                                return new MercurySystemCodeParseResult($"{Delegater.CurrentLanguageDictionary["AvailableHigherVersion"]} :: {t}");
                             }
                             systemCodeCollection.ModelType = (ModelType)Enum.Parse(typeof(ModelType), temp.Keyword);
                             break;
                         default:
-                            throw new SystemException($"시스템 오류입니다. :: {t}");
+                            throw new SystemException($"{Delegater.CurrentLanguageDictionary["SystemError"]} :: {t}");
                     }
                 }
 
                 if (systemCodeCollection.CodeVersion < 1 || systemCodeCollection.MarketPlatform == MarketPlatform.None || systemCodeCollection.ModelType == ModelType.None)
                 {
-                    return new MercurySystemCodeParseResult("시스템 데이터가 부족합니다.");
+                    return new MercurySystemCodeParseResult($"{Delegater.CurrentLanguageDictionary["SystemDataNotEnough"]}");
                 }
 
                 return new MercurySystemCodeParseResult
@@ -83,7 +83,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.SystemCode
             catch (Exception ex)
             {
                 GLogger.Log(nameof(MercurySystemCodeCollection), MethodBase.GetCurrentMethod()?.Name, ex);
-                return new MercurySystemCodeParseResult($"시스템 오류입니다.");
+                return new MercurySystemCodeParseResult($"{Delegater.CurrentLanguageDictionary["SystemError"]}");
             }
         }
     }
