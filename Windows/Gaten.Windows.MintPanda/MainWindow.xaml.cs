@@ -7,12 +7,15 @@ using Gaten.Net.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text.Json.Nodes;
 using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
+using Clipboard = System.Windows.Clipboard;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 
@@ -23,6 +26,8 @@ namespace Gaten.Windows.MintPanda
     /// </summary>
     public partial class MainWindow : Window
     {
+        DispatcherTimer timer = new();
+        string memory = string.Empty;
         UserActivityHook2 hook = new();
         Thread worker = default!;
         //BillboardWindow billboardWindow = new();
@@ -52,10 +57,50 @@ namespace Gaten.Windows.MintPanda
                 init = new();
                 monitor = new(RefreshInfoText);
                 backup = new();
+
+                timer.Interval = new TimeSpan(1000);
+                timer.Tick += Timer_Tick;
+                timer.Start();
             }
             catch (Exception ex)
             {
                 GLogger.Log(nameof(MainWindow), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
+        }
+
+        private void Timer_Tick(object? sender, EventArgs e)
+        {
+            try
+            {
+                var text = Clipboard.GetText();
+                if (memory == text)
+                {
+                    return;
+                }
+                memory = text;
+
+                try
+                {
+                    var node = JsonNode.Parse(text);
+
+                    GProcess.Start("JsonViewer.exe", text
+                        .Replace(' ', '醵')
+                        .Replace('\"', '蹃')
+                        .Replace('\'', '略')
+                        );
+                }
+                catch (FormatException)
+                {
+
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+            catch (Exception)
+            {
+
             }
         }
 

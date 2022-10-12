@@ -16,6 +16,18 @@ namespace Gaten.Net.Diagnostics
             return Process.Start(info);
         }
 
+        public static Process? Start(string path, string argument)
+        {
+            ProcessStartInfo info = new()
+            {
+                FileName = path,
+                UseShellExecute = true,
+                Arguments = argument
+            };
+
+            return Process.Start(info);
+        }
+
         public static Process? Start(string path, ProcessStartInfo info)
         {
             info.FileName = path;

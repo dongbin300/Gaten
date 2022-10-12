@@ -326,6 +326,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Stock.MarinerX", "Sto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Stock.MercuryEditor", "Stock\Gaten.Stock.MercuryEditor\Gaten.Stock.MercuryEditor.csproj", "{78E70E49-04F4-4CBD-A981-F03D10173737}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.Data.JsonViewer", "Data\Gaten.Data.JsonViewer\Gaten.Data.JsonViewer.csproj", "{1E181426-4D24-4BE1-B031-4F587646A9AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1908,6 +1910,18 @@ Global
 		{78E70E49-04F4-4CBD-A981-F03D10173737}.Release|x64.Build.0 = Release|Any CPU
 		{78E70E49-04F4-4CBD-A981-F03D10173737}.Release|x86.ActiveCfg = Release|Any CPU
 		{78E70E49-04F4-4CBD-A981-F03D10173737}.Release|x86.Build.0 = Release|Any CPU
+		{1E181426-4D24-4BE1-B031-4F587646A9AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E181426-4D24-4BE1-B031-4F587646A9AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E181426-4D24-4BE1-B031-4F587646A9AC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1E181426-4D24-4BE1-B031-4F587646A9AC}.Debug|x64.Build.0 = Debug|Any CPU
+		{1E181426-4D24-4BE1-B031-4F587646A9AC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1E181426-4D24-4BE1-B031-4F587646A9AC}.Debug|x86.Build.0 = Debug|Any CPU
+		{1E181426-4D24-4BE1-B031-4F587646A9AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E181426-4D24-4BE1-B031-4F587646A9AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E181426-4D24-4BE1-B031-4F587646A9AC}.Release|x64.ActiveCfg = Release|Any CPU
+		{1E181426-4D24-4BE1-B031-4F587646A9AC}.Release|x64.Build.0 = Release|Any CPU
+		{1E181426-4D24-4BE1-B031-4F587646A9AC}.Release|x86.ActiveCfg = Release|Any CPU
+		{1E181426-4D24-4BE1-B031-4F587646A9AC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2058,6 +2072,7 @@ Global
 		{89706C89-D9F3-4257-8FA3-591D9EAC6007} = {1651B9F0-835F-4308-974A-657AEDE416BE}
 		{266ADDAA-9001-4208-9B4B-ED64D212EFA5} = {52D9C7E1-3FAB-4B6A-B5A6-BEB99AC028F3}
 		{78E70E49-04F4-4CBD-A981-F03D10173737} = {52D9C7E1-3FAB-4B6A-B5A6-BEB99AC028F3}
+		{1E181426-4D24-4BE1-B031-4F587646A9AC} = {44B9C0C8-29C0-4C88-83CC-B9B8F54B2000}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9E22E9A6-DD7D-4809-95DD-888B759F780F}
