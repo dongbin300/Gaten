@@ -65,7 +65,7 @@ namespace Gaten.Stock.MarinerX.Apis
             usdFuturesSymbolData.Wait();
 
             return usdFuturesSymbolData.Result.Data.Symbols
-                .Where(s => s.Name.EndsWith("USDT") && !s.Name.Equals("LINKUSDT"))
+                .Where(s => s.Name.EndsWith("USDT") && !s.Name.Equals("LINKUSDT") && !s.Name.StartsWith("1"))
                 .Select(s => s.Name)
                 .ToList();
         }
@@ -80,7 +80,7 @@ namespace Gaten.Stock.MarinerX.Apis
             usdFuturesSymbolData.Wait();
 
             return usdFuturesSymbolData.Result.Data.Symbols
-                .Where(s => s.Name.EndsWith("USDT") && !s.Name.Equals("LINKUSDT"))
+                .Where(s => s.Name.EndsWith("USDT") && !s.Name.Equals("LINKUSDT") && !s.Name.StartsWith("1"))
                 .Select(s => new FuturesSymbol(s.Name, s.LiquidationFee, s.ListingDate, s.PriceFilter.MaxPrice, s.PriceFilter.MinPrice, s.PriceFilter.TickSize, s.LotSizeFilter.MaxQuantity, s.LotSizeFilter.MinQuantity, s.LotSizeFilter.StepSize, s.PricePrecision, s.QuantityPrecision, s.UnderlyingType))
                 .ToList();
         }
