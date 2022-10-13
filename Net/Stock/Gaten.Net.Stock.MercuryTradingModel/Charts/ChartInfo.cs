@@ -1,4 +1,5 @@
-﻿using Gaten.Net.Stock.MercuryTradingModel.Indicators;
+﻿using Gaten.Net.Stock.MercuryTradingModel.Elements;
+using Gaten.Net.Stock.MercuryTradingModel.Indicators;
 
 using Skender.Stock.Indicators;
 
@@ -13,17 +14,21 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Charts
         public Quote Quote { get; set; }
 
         // Indicator Info
-        public IList<SmaResult> MA { get; set; } = new List<SmaResult>();
-        public IList<EmaResult> EMA { get; set; } = new List<EmaResult>();
-        public IList<RsiResult> RSI { get; set; } = new List<RsiResult>();
-        public IList<MacdResult> MACD { get; set; } = new List<MacdResult>();
-        public IList<BollingerBandsResult> BollingerBands { get; set; } = new List<BollingerBandsResult>();
-        public IList<RiResult> RI { get; set; } = new List<RiResult>();
+        public SmaResult MA { get; set; } = default!;
+        public EmaResult EMA { get; set; } = default!;
+        public RsiResult RSI { get; set; } = default!;
+        public MacdResult MACD { get; set; } = default!;
+        public BollingerBandsResult BollingerBands { get; set; } = default!;
+        public RiResult RI { get; set; } = default!;
+        public IList<NamedElementResult> NamedElements { get; set; } = new List<NamedElementResult>();
 
         public ChartInfo(string symbol, Quote quote)
         {
             Symbol = symbol;
             Quote = quote;
         }
+
+        public NamedElementResult? GetNamedElementResult(string name) => NamedElements.FirstOrDefault(x => x != null && x.Name.Equals(name), null);
+        public double? GetNamedElementValue(string name) => GetNamedElementResult(name)?.Value;
     }
 }

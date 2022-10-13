@@ -1,6 +1,8 @@
 ﻿using Binance.Net.Enums;
 
 using Gaten.Net.Stock.MercuryTradingModel.Charts;
+using Gaten.Net.Stock.MercuryTradingModel.Elements;
+using Gaten.Net.Stock.MercuryTradingModel.Enums;
 using Gaten.Net.Stock.MercuryTradingModel.Indicators;
 
 using Skender.Stock.Indicators;
@@ -82,12 +84,11 @@ namespace Gaten.Stock.MarinerX.Charts
         public void CalculateIndicators()
         {
             var quotes = Charts.Select(x => x.Quote);
-            var sma = quotes.GetSma(112).ToList();
-            var ema = quotes.GetEma(112).ToList();
+            var sma = quotes.GetSma(120).ToList();
+            var ema = quotes.GetEma(120).ToList();
             var rsi = quotes.GetRsi(14).ToList();
-            var macd = quotes.GetMacd(12,26,9).ToList();
-            var bb1 = quotes.GetBollingerBands(20,3).ToList();
-            var bb2 = quotes.GetBollingerBands(20,0.5).ToList();
+            var macd = quotes.GetMacd(12, 26, 9).ToList();
+            var bb = quotes.GetBollingerBands(20, 2).ToList();
             var ri = quotes.GetRi(14).ToList();
 
             for (int i = 0; i < Charts.Count; i++)
@@ -97,9 +98,37 @@ namespace Gaten.Stock.MarinerX.Charts
                 chart.EMA = ema[i];
                 chart.RSI = rsi[i];
                 chart.MACD = macd[i];
-                chart.BollingerBands = bb1[i];
-                chart.BollingerBands2 = bb2[i];
+                chart.BollingerBands = bb[i];
                 chart.RI = ri[i];
+            }
+        }
+
+        public void CalculateCustomIndicators(IList<NamedElement> namedElements)
+        {
+            var quotes = Charts.Select(x => x.Quote);
+            var results = new List<List<NamedElementResult>>();
+            foreach (var namedElement in namedElements)
+            {
+                switch (namedElement.Element)
+                {
+                    case ChartElement.ma:
+                        results.Add(quotes.GetSma((int)namedElement.Parameters[0]).Select(x => new NamedElementResult(namedElement.Name, x.Sma)).ToList());
+                        break;
+
+                    case ChartElement.ema:
+                        results.Add(quotes.GetEma((int)namedElement.Parameters[0]).Select(x => new NamedElementResult(namedElement.Name, x.Ema)).ToList());
+                        break;
+                }
+
+            }
+
+            for (int j = 0; j < Charts.Count; j++)
+            {
+                for (int i = 0; i < results.Count; i++)
+                {
+                    var chart = Charts[j];
+                    chart.NamedElements.Add(results[i][j]);
+                }
             }
         }
 
@@ -113,25 +142,25 @@ namespace Gaten.Stock.MarinerX.Charts
             return CurrentChart = GetChart(time);
         }
 
-        public ChartInfo Next() => 
+        public ChartInfo Next() =>
             CurrentChart == null ?
             CurrentChart = default! :
             CurrentChart = GetChart(Interval switch
-                {
-                    KlineInterval.OneMinute => CurrentChart.DateTime.AddMinutes(1),
-                    KlineInterval.ThreeMinutes => CurrentChart.DateTime.AddMinutes(3),
-                    KlineInterval.FiveMinutes => CurrentChart.DateTime.AddMinutes(5),
-                    KlineInterval.FifteenMinutes => CurrentChart.DateTime.AddMinutes(15),
-                    KlineInterval.ThirtyMinutes => CurrentChart.DateTime.AddMinutes(30),
-                    KlineInterval.OneHour => CurrentChart.DateTime.AddHours(1),
-                    KlineInterval.TwoHour => CurrentChart.DateTime.AddHours(2),
-                    KlineInterval.FourHour => CurrentChart.DateTime.AddHours(4),
-                    KlineInterval.SixHour => CurrentChart.DateTime.AddHours(6),
-                    KlineInterval.EightHour => CurrentChart.DateTime.AddHours(8),
-                    KlineInterval.TwelveHour => CurrentChart.DateTime.AddHours(12),
-                    KlineInterval.OneDay => CurrentChart.DateTime.AddDays(1),
-                    _ => CurrentChart.DateTime.AddMinutes(1)
-                });
+            {
+                KlineInterval.OneMinute => CurrentChart.DateTime.AddMinutes(1),
+                KlineInterval.ThreeMinutes => CurrentChart.DateTime.AddMinutes(3),
+                KlineInterval.FiveMinutes => CurrentChart.DateTime.AddMinutes(5),
+                KlineInterval.FifteenMinutes => CurrentChart.DateTime.AddMinutes(15),
+                KlineInterval.ThirtyMinutes => CurrentChart.DateTime.AddMinutes(30),
+                KlineInterval.OneHour => CurrentChart.DateTime.AddHours(1),
+                KlineInterval.TwoHour => CurrentChart.DateTime.AddHours(2),
+                KlineInterval.FourHour => CurrentChart.DateTime.AddHours(4),
+                KlineInterval.SixHour => CurrentChart.DateTime.AddHours(6),
+                KlineInterval.EightHour => CurrentChart.DateTime.AddHours(8),
+                KlineInterval.TwelveHour => CurrentChart.DateTime.AddHours(12),
+                KlineInterval.OneDay => CurrentChart.DateTime.AddDays(1),
+                _ => CurrentChart.DateTime.AddMinutes(1)
+            });
 
         public ChartInfo GetChart(DateTime dateTime) => Charts.First(x => x.DateTime.Equals(dateTime));
     }

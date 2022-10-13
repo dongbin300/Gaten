@@ -1,6 +1,5 @@
 ﻿using Gaten.Net.Extensions;
 using Gaten.Net.Stock.MercuryTradingModel.Charts;
-
 using Skender.Stock.Indicators;
 
 namespace Gaten.Net.Stock.MercuryTradingModel.Indicators

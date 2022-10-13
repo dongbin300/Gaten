@@ -24,16 +24,19 @@ namespace Gaten.Stock.MarinerX.Bots
 
         public string Run()
         {
-            // 자산 초기화
+            // Asset Init
             Asset asset = new BackTestAsset(TradingModel.Asset, new Position());
 
             var tickCount = (int)(TradingModel.Period / TradingModel.Interval.ToTimeSpan()) + 1;
-            var charts = ChartLoader.GetChartPack(TradingModel.Targets[0], TradingModel.Interval); // 현재 타겟은 1개만 지원됨
+            var charts = ChartLoader.GetChartPack(TradingModel.Targets[0], TradingModel.Interval); // support only one target now
 
             if (charts == null)
             {
                 return "차트 정보가 없습니다.";
             }
+
+            // Named Element Init
+            charts.CalculateCustomIndicators(TradingModel.NamedElements);
 
             charts.Select(TradingModel.StartTime);
             Worker.SetProgressBar(1, tickCount);

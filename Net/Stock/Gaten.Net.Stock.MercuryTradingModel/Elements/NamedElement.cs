@@ -1,12 +1,23 @@
 ﻿using Gaten.Net.Stock.MercuryTradingModel.Enums;
 
+using Newtonsoft.Json;
+
+using Skender.Stock.Indicators;
+
 namespace Gaten.Net.Stock.MercuryTradingModel.Elements
 {
     public class NamedElement
     {
         public string Name { get; set; } = string.Empty;
-        public ChartElement Element { get; set; }
+        public ChartElement Element { get; set; } = ChartElement.None;
         public decimal[] Parameters { get; set; } = new decimal[4];
+        [JsonIgnore]
+        public ResultBase Result { get; set; } = default!;
+
+        public NamedElement()
+        {
+
+        }
 
         public NamedElement(string name, ChartElement element, decimal[] parameters)
         {

@@ -31,8 +31,25 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Signals
 
         private bool IsFlare(IFormula? formula, Asset asset, ChartInfo chart)
         {
+            if(formula is ComparisonFormula formula2)
+            {
+                if(formula2.ElementName != null)
+                {
+                    return formula2.Comparison switch
+                    {
+                        Comparison.Equal => chart.GetNamedElementValue(formula2.ElementName) == formula2.Value,
+                        Comparison.NotEqual => chart.GetNamedElementValue(formula2.ElementName) != formula2.Value,
+                        Comparison.LessThan => chart.GetNamedElementValue(formula2.ElementName) < formula2.Value,
+                        Comparison.LessThanOrEqual => chart.GetNamedElementValue(formula2.ElementName) <= formula2.Value,
+                        Comparison.GreaterThan => chart.GetNamedElementValue(formula2.ElementName) > formula2.Value,
+                        Comparison.GreaterThanOrEqual => chart.GetNamedElementValue(formula2.ElementName) >= formula2.Value,
+                        _ => false
+                    };
+                }
+            }
+
             var position = asset.Position.Value.Convert<double>();
-            var rsi = chart.RSI.;
+            var rsi = chart.RSI.Rsi;
             var ri = chart.RI.Ri;
 
             return formula switch

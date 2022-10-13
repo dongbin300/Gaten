@@ -5,31 +5,31 @@
         /// <summary>
         /// <
         /// </summary>
-        LessThan,
+        LessThan = 23,
 
         /// <summary>
         /// >
         /// </summary>
-        GreaterThan,
+        GreaterThan = 32,
 
         /// <summary>
         /// <=
         /// </summary>
-        LessThanOrEqual,
+        LessThanOrEqual = 22,
 
         /// <summary>
         /// >=
         /// </summary>
-        GreaterThanOrEqual,
+        GreaterThanOrEqual = 33,
 
         /// <summary>
         /// =
         /// </summary>
-        Equal,
+        Equal = 11,
 
         /// <summary>
         /// !=
         /// </summary>
-        NotEqual,
+        NotEqual = 10,
     }
 }

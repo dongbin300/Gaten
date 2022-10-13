@@ -15,9 +15,6 @@ using System.Linq;
 
 namespace Gaten.Stock.MercuryEditor.Inspection.V1
 {
-    /// <summary>
-    /// 10k->10000
-    /// </summary>
     internal class MercuryBinanceFuturesBackTestInspector
     {
         private int lineNumber = 0;
@@ -125,7 +122,8 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                 periodCode = code.Find(x => x.Text.StartsWith("period"));
                 if (periodCode == null)
                 {
-                    TradingModel.StartTime = DateTime.Now.AddDays(-7);
+                    var temp = DateTime.Now.AddDays(-7);
+                    TradingModel.StartTime = new DateTime(temp.Year, temp.Month, temp.Day, temp.Hour, 0, 0);
                     TradingModel.Period = new TimeSpan(7, 0, 0, 0);
                     return string.Empty;
                 }
@@ -317,15 +315,40 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                             {
                                 return null;
                             }
-                            var chartElement = (ChartElement)Enum.Parse(typeof(ChartElement), segments2[0]);
-                            var comparison = FormulaUtil.ToComparison(segments2[1]);
-                            var value = double.Parse(segments2[2]);
-                            return new ComparisonFormula(chartElement, comparison, value);
+
+                            if (Enum.TryParse(typeof(ChartElement), segments2[0], out object? result))
+                            {
+                                var comparison = FormulaUtil.ToComparison(segments2[1]);
+                                var value = double.Parse(segments2[2]);
+                                return new ComparisonFormula((ChartElement)result, comparison, value);
+                            }
+
+                            var namedElement = TradingModel.NamedElements.FirstOrDefault(x => x.Name.Equals(segments2[0]));
+                            if (namedElement != null)
+                            {
+                                var comparison = FormulaUtil.ToComparison(segments2[1]);
+                                var value = double.Parse(segments2[2]);
+                                return new ComparisonFormula(namedElement.Name, comparison, value);
+                            }
+
+                            return null;
                         }
-                        var chartElement2 = (ChartElement)Enum.Parse(typeof(ChartElement), segments1[0]);
-                        var comparison2 = FormulaUtil.ToComparison(segments1[1]);
-                        var value2 = double.Parse(segments1[2]);
-                        return new ComparisonFormula(chartElement2, comparison2, value2);
+                        if (Enum.TryParse(typeof(ChartElement), segments1[0], out object? result2))
+                        {
+                            var comparison = FormulaUtil.ToComparison(segments1[1]);
+                            var value = double.Parse(segments1[2]);
+                            return new ComparisonFormula((ChartElement)result2, comparison, value);
+                        }
+
+                        var namedElement2 = TradingModel.NamedElements.FirstOrDefault(x => x.Name.Equals(segments1[0]));
+                        if (namedElement2 != null)
+                        {
+                            var comparison = FormulaUtil.ToComparison(segments1[1]);
+                            var value = double.Parse(segments1[2]);
+                            return new ComparisonFormula(namedElement2.Name, comparison, value);
+                        }
+
+                        return null;
                     }
                     return new OrFormula(ParseFormula(logicSegments2[0]), ParseFormula(logicSegments2[1]));
                 }
