@@ -31,18 +31,8 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Signals
 
         private bool IsFlare(IFormula? formula, Asset asset, ChartInfo chart)
         {
-            if (chart.RSI == null)
-            {
-                return false;
-            }
-
-            if (chart.RI == null)
-            {
-                return false;
-            }
-
             var position = asset.Position.Value.Convert<double>();
-            var rsi = chart.RSI.Rsi;
+            var rsi = chart.RSI.;
             var ri = chart.RI.Ri;
 
             return formula switch

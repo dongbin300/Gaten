@@ -1,5 +1,6 @@
 ﻿using Binance.Net.Enums;
 
+using Gaten.Net.Stock.MercuryTradingModel.Elements;
 using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
 using Gaten.Net.Stock.MercuryTradingModel.Scenarios;
 using Gaten.Net.Stock.MercuryTradingModel.Strategies;
@@ -14,6 +15,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.TradingModels
         public KlineInterval Interval { get; set; }
         public IList<string> Targets { get; set; } = new List<string>();
         public IList<IScenario> Scenarios { get; set; } = new List<IScenario>();
+        public IList<NamedElement> NamedElements { get; set; } = new List<NamedElement>();
 
         public MercuryBackTestTradingModel()
         {
@@ -62,6 +64,17 @@ namespace Gaten.Net.Stock.MercuryTradingModel.TradingModels
             }
 
             strategy.Order = order;
+        }
+
+        public string AddNamedElement(string name, string parameterString)
+        {
+            if (NamedElements.Any(x => x.Name.Equals(name)))
+            {
+                return "이미 존재하는 이름입니다.";
+            }
+
+            NamedElements.Add(new NamedElement(name, parameterString));
+            return string.Empty;
         }
     }
 }

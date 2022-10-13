@@ -60,6 +60,12 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                     return targetResult;
                 }
 
+                var namedElementResult = ParseNamedElement(code);
+                if (namedElementResult != string.Empty)
+                {
+                    return namedElementResult;
+                }
+
                 var scenarioResult = ParseScenario(code);
                 if (scenarioResult != string.Empty)
                 {
@@ -182,6 +188,35 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             catch
             {
                 return $"{Delegater.CurrentLanguageDictionary["TargetTypeError"]} :: {targetCode}";
+            }
+        }
+
+        public string ParseNamedElement(List<TextLine> code)
+        {
+            IList<TextLine>? namedElementCodes = null;
+            try
+            {
+                namedElementCodes = code.FindAll(x => x.Text.Contains('@'));
+                if (namedElementCodes == null)
+                {
+                    return string.Empty;
+                }
+                foreach (var namedElementCode in namedElementCodes)
+                {
+                    lineNumber = namedElementCode.LineNumber;
+                    var name = namedElementCode.Text.Split('@')[0].Trim();
+                    var parameterString = namedElementCode.Text.Split('@')[1].Trim();
+                    var result = TradingModel.AddNamedElement(name, parameterString);
+                    if (!string.IsNullOrEmpty(result))
+                    {
+                        throw new Exception(result);
+                    }
+                }
+                return string.Empty;
+            }
+            catch (Exception ex)
+            {
+                return $"{Delegater.CurrentLanguageDictionary["NamedElementTypeError"]} :: {ex.Message}";
             }
         }
 

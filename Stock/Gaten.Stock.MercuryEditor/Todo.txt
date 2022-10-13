@@ -5,3 +5,6 @@ keyword Description
 
 Folding
 Indentation
+
+EMA112 @ ema,112
+MA224 @ ma,224

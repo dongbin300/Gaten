@@ -71,9 +71,9 @@
     <s:String x:Key="HelpInfo">Mercury Editor 情報</s:String>
     <s:String x:Key="HelpDonate">寄付</s:String>
 
-    <s:String x:Key="TmFileOpen">トレーディング モデル ファイルを読み込む</s:String>
-    <s:String x:Key="TmFileSave">トレーディング モデル ファイルを保存</s:String>
-    <s:String x:Key="TmFileSaveAs">トレーディング モデル ファイルを名前を付けて保存</s:String>
+    <s:String x:Key="TmFileOpen">トレーディングモデルファイルを読み込む</s:String>
+    <s:String x:Key="TmFileSave">トレーディングモデルファイルを保存</s:String>
+    <s:String x:Key="TmFileSaveAs">トレーディングモデルファイルを名前を付けて保存</s:String>
     <s:String x:Key="TmFileCheckSave">現在のファイルを保存しますか?</s:String>
     <s:String x:Key="InspectionComplete">検査完了。</s:String>
 </ResourceDictionary>
