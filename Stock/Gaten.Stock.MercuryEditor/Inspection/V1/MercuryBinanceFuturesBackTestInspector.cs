@@ -93,7 +93,21 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                 }
                 lineNumber = assetCode.LineNumber;
                 var assetValue = assetCode.Text.Split('=')[1].Trim();
-                var asset = decimal.Parse(assetValue);
+                decimal asset = 0m;
+                if (assetValue.EndsWith('k'))
+                {
+                    var assetValue2 = assetValue[..^1];
+                    asset = decimal.Parse(assetValue2) * 1000;
+                }
+                else if (assetValue.EndsWith('m'))
+                {
+                    var assetValue2 = assetValue[..^1];
+                    asset = decimal.Parse(assetValue2) * 1000000;
+                }
+                else
+                {
+                    asset = decimal.Parse(assetValue);
+                }
                 TradingModel.Asset = asset;
                 return string.Empty;
             }
