@@ -296,18 +296,28 @@ namespace Gaten.Stock.MarinerX
             }
         }
 
-        record ChartDataType(string symbol, KlineInterval interval);
+        record ChartDataType(string symbol, KlineInterval interval, bool isExternal);
 
-        public static void LoadChartDataEvent(object? sender, EventArgs e, string symbol, KlineInterval interval)
+        public static void LoadChartDataEvent(object? sender, EventArgs e, string symbol, KlineInterval interval, bool external = false)
         {
-            progressView.Show();
+            if (!external)
+            {
+                progressView.Show();
+            }
             var worker = new Worker()
             {
                 ProgressBar = progressView.ProgressBar,
                 Action = LoadChartData,
-                Arguments = new ChartDataType(symbol, interval)
+                Arguments = new ChartDataType(symbol, interval, external)
             };
-            worker.Start();
+            if (external)
+            {
+                worker.Start().Wait();
+            }
+            else
+            {
+                worker.Start();
+            }
         }
 
         public static void LoadChartData(Worker worker, object? obj)
@@ -319,10 +329,13 @@ namespace Gaten.Stock.MarinerX
                     return;
                 }
                 ChartLoader.Init(chartDataType.symbol, chartDataType.interval, worker);
-                DispatcherService.Invoke(() =>
+                if (!chartDataType.isExternal)
                 {
-                    progressView.Hide();
-                });
+                    DispatcherService.Invoke(() =>
+                    {
+                        progressView.Hide();
+                    });
+                }
             }
             catch (Exception ex)
             {

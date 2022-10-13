@@ -30,9 +30,11 @@ namespace Gaten.Stock.MarinerX.Bots
             var tickCount = (int)(TradingModel.Period / TradingModel.Interval.ToTimeSpan()) + 1;
             var charts = ChartLoader.GetChartPack(TradingModel.Targets[0], TradingModel.Interval); // support only one target now
 
+            // If you did not load the target chart data yet, at first, load the chart data.
             if (charts == null)
             {
-                return "차트 정보가 없습니다.";
+                TrayMenu.LoadChartDataEvent(null, new EventArgs(), TradingModel.Targets[0], TradingModel.Interval, true);
+                charts = ChartLoader.GetChartPack(TradingModel.Targets[0], TradingModel.Interval);
             }
 
             // Named Element Init
