@@ -73,7 +73,7 @@ namespace Gaten.Stock.MarinerX
 
         private void RefreshTmFile()
         {
-            tmBackTestFiles = Directory.GetFiles(TradingModelPath.InspectedBackTestDirectory).Select(x=> new BackTestTmFile(x)).ToList();
+            tmBackTestFiles = Directory.GetFiles(TradingModelPath.InspectedBackTestDirectory).Select(x => new BackTestTmFile(x)).ToList();
             tmMockTradeFileNames = Directory.GetFiles(TradingModelPath.InspectedMockTradeDirectory).ToList();
             tmRealTradeFileNames = Directory.GetFiles(TradingModelPath.InspectedRealTradeDirectory).ToList();
         }
@@ -83,45 +83,41 @@ namespace Gaten.Stock.MarinerX
             menuStrip = new ContextMenuStrip();
             menuStrip.Items.Add(new ToolStripMenuItem("MarinerX By Gaten", iconImage));
             menuStrip.Items.Add(new ToolStripSeparator());
-            menuStrip.Items.Add(new ToolStripMenuItem("Binance 심볼 데이터 수집", null, new EventHandler(GetBinanceSymbolDataEvent)));
-            menuStrip.Items.Add(new ToolStripMenuItem("Binance 1분봉 데이터 수집", null, new EventHandler(GetBinanceCandleDataEvent)));
+            var menu1 = new ToolStripMenuItem("데이터 수집");
+            menu1.DropDownItems.Add("Binance 심볼 데이터 수집", null, new EventHandler(GetBinanceSymbolDataEvent));
+            menu1.DropDownItems.Add("Binance 1분봉 데이터 수집", null, new EventHandler(GetBinanceCandleDataEvent));
+            menu1.DropDownItems.Add("Binance 1일봉 데이터 추출", null, new EventHandler(Extract1DCandleEvent));
+            menuStrip.Items.Add(menu1);
             menuStrip.Items.Add(new ToolStripSeparator());
-            menuStrip.Items.Add(new ToolStripMenuItem("Binance 1일봉 데이터 추출", null, new EventHandler(Extract1DCandleEvent)));
-            menuStrip.Items.Add(new ToolStripSeparator());
-            var symbolNames = LocalStorageApi.GetSymbolNames();
-            var symbols = LocalStorageApi.GetSymbols();
-            var accountInfo = BinanceClientApi.GetFuturesAccountInfo();
-            var positionInformation = BinanceClientApi.GetPositionInformation();
-            var balance = BinanceClientApi.GetBalance();
-            BinanceClientApi.ChangeInitialLeverage("BTCUSDT", 5);
-            //BinanceClientApi.Order("BTCUSDT", Binance.Net.Enums.OrderSide.Buy, Binance.Net.Enums.FuturesOrderType.Market, (decimal)0.002);
-            var majorSymbols = new string[]
-            {
+            var menu2 = new ToolStripMenuItem("1분봉 데이터 로드");
+            var menu3 = new ToolStripMenuItem("5분봉 데이터 로드");
+            foreach (var symbol in new string[] {
                 "BTCUSDT",
                 "ETHUSDT",
                 "BNBUSDT",
                 "XRPUSDT",
                 "ADAUSDT",
                 "SOLUSDT"
-            };
-            foreach (var symbol in majorSymbols)
+            })
             {
-                menuStrip.Items.Add(new ToolStripMenuItem(symbol + " 1분봉 데이터 로드", null, new EventHandler((sender, e) => LoadChartDataEvent(sender, e, symbol, KlineInterval.OneMinute))));
+                menu2.DropDownItems.Add(new ToolStripMenuItem(symbol, null, new EventHandler((sender, e) => LoadChartDataEvent(sender, e, symbol, KlineInterval.OneMinute))));
+                menu3.DropDownItems.Add(new ToolStripMenuItem(symbol, null, new EventHandler((sender, e) => LoadChartDataEvent(sender, e, symbol, KlineInterval.FiveMinutes))));
             }
-            menuStrip.Items.Add(new ToolStripSeparator());
-            foreach (var symbol in majorSymbols)
-            {
-                menuStrip.Items.Add(new ToolStripMenuItem(symbol + " 5분봉 데이터 로드", null, new EventHandler((sender, e) => LoadChartDataEvent(sender, e, symbol, KlineInterval.FiveMinutes))));
-            }
+            menuStrip.Items.Add(menu2);
+            menuStrip.Items.Add(menu3);
             menuStrip.Items.Add(new ToolStripSeparator());
             menuStrip.Items.Add(new ToolStripMenuItem("Mercury Editor 열기", null, MercuryEditorOpenEvent));
             menuStrip.Items.Add(new ToolStripSeparator());
-            foreach(var file in tmBackTestFiles)
+            var menu4 = new ToolStripMenuItem("백테스트");
+            foreach (var file in tmBackTestFiles)
             {
-                menuStrip.Items.Add(new ToolStripMenuItem(file.MenuString, null, BackTestBotRunEvent, file.ToString()));
+                menu4.DropDownItems.Add(new ToolStripMenuItem(file.MenuString, null, BackTestBotRunEvent, file.ToString()));
             }
+            menuStrip.Items.Add(menu4);
             menuStrip.Items.Add(new ToolStripSeparator());
-            menuStrip.Items.Add(new ToolStripMenuItem("RI Histogram", null, RiHistogramEvent));
+            var menu5 = new ToolStripMenuItem("테스트");
+            menu5.DropDownItems.Add(new ToolStripMenuItem("RI Histogram", null, RiHistogramEvent));
+            menuStrip.Items.Add(menu5);
             menuStrip.Items.Add(new ToolStripSeparator());
             menuStrip.Items.Add(new ToolStripMenuItem("종료", null, Exit));
 
@@ -155,7 +151,7 @@ namespace Gaten.Stock.MarinerX
 
         private void BackTestBotRunEvent(object? sender, EventArgs e)
         {
-            if(sender is not ToolStripMenuItem menuItem)
+            if (sender is not ToolStripMenuItem menuItem)
             {
                 return;
             }
@@ -183,7 +179,7 @@ namespace Gaten.Stock.MarinerX
             BackTestBot? bot = default!;
             try
             {
-                if(obj is not MercuryBackTestTradingModel model)
+                if (obj is not MercuryBackTestTradingModel model)
                 {
                     DispatcherService.Invoke(() =>
                     {
@@ -199,7 +195,7 @@ namespace Gaten.Stock.MarinerX
                     progressView.Hide();
                 });
 
-                if(result.Length < 32)
+                if (result.Length < 32)
                 {
                     throw new Exception(result);
                 }
