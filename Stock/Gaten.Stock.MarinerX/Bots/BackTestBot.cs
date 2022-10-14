@@ -40,14 +40,10 @@ namespace Gaten.Stock.MarinerX.Bots
             // Named Element Init
             charts.CalculateCustomIndicators(TradingModel.NamedElements);
 
+            // Back test start!
             charts.Select(TradingModel.StartTime);
-            Worker.SetProgressBar(1, tickCount);
-            int p = 0;
-            for (int i = 0; i < tickCount; i++)
+            Worker.For(0, tickCount, 1, (i) =>
             {
-                Worker.Progress(++p);
-                Worker.ProgressText($"{p} / {tickCount}");
-
                 var info = charts.Next();
                 foreach (var scenario in TradingModel.Scenarios)
                 {
@@ -61,7 +57,7 @@ namespace Gaten.Stock.MarinerX.Bots
                         }
                     }
                 }
-            }
+            }, ProgressBarDisplayOptions.Count | ProgressBarDisplayOptions.Percent | ProgressBarDisplayOptions.TimeRemaining);
 
             return TradeLog.ToString();
         }

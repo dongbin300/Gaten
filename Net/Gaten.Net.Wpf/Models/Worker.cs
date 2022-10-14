@@ -2,10 +2,19 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading;
 
 namespace Gaten.Net.Wpf.Models
 {
+    [Flags]
+    public enum ProgressBarDisplayOptions
+    {
+        Count = 0x01,
+        Percent = 0x02,
+        TimeRemaining = 0x04
+    }
+
     public class Worker
     {
         BackgroundWorker worker;
@@ -14,6 +23,7 @@ namespace Gaten.Net.Wpf.Models
         public bool IsRunning { get; set; }
         public bool IsWaiting { get; set; }
         public object? Arguments { get; set; }
+        private Stopwatch stopwatch { get; set; }
 
         public Worker()
         {
@@ -78,14 +88,25 @@ namespace Gaten.Net.Wpf.Models
             ProgressBar.SetText(text);
         }
 
-        public void For(int from, int to, int unit, Action<int> action)
+        public void For(int from, int to, int unit, Action<int> action, ProgressBarDisplayOptions options)
         {
             var jobCount = System.Math.Abs(to - from);
             SetProgressBar(from, to - 1);
-            for(int i = from; i < to; i+= unit)
+            stopwatch = new Stopwatch();
+            stopwatch.Start();
+            for (int i = from; i < to; i += unit)
             {
+                var elapsedMs = stopwatch.ElapsedMilliseconds;
+                var estimatedTimeRemainingSeconds = (int)System.Math.Round(((elapsedMs * (double)to / i) - elapsedMs) / 1000, 0);
+                var estimatedTimeRemainingString =
+                    (estimatedTimeRemainingSeconds / 3600 > 0 ? estimatedTimeRemainingSeconds / 3600 + "h " : "") +
+                    (estimatedTimeRemainingSeconds % 3600 / 60 > 0 ? estimatedTimeRemainingSeconds % 3600 / 60 + "m " : "") +
+                    estimatedTimeRemainingSeconds % 60 + "s";
                 Progress(i);
-                ProgressText($"{i - from + 1} / {jobCount}");
+                ProgressText(
+                    $"{(options.HasFlag(ProgressBarDisplayOptions.Count) ? $"{i - from + 1} / {jobCount}" : "")}" +
+                    $"{(options.HasFlag(ProgressBarDisplayOptions.Percent) ? $" ({System.Math.Round((i - from + 1) / (double)jobCount, 4):P})" : "")}" +
+                    $"{(options.HasFlag(ProgressBarDisplayOptions.TimeRemaining) ? $" {estimatedTimeRemainingString}" : "")}");
                 action(i);
             }
         }

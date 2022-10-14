@@ -69,7 +69,7 @@ namespace Gaten.Stock.MarinerX.Charts
                                 };
                                 chartPack.AddChart(new ChartInfo(symbol, quote));
                             }
-                        });
+                        }, ProgressBarDisplayOptions.Count | ProgressBarDisplayOptions.Percent | ProgressBarDisplayOptions.TimeRemaining);
                         break;
 
                     case KlineInterval.OneDay:
