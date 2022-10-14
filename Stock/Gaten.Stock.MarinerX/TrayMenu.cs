@@ -12,8 +12,6 @@ using Gaten.Stock.MarinerX.Bots;
 using Gaten.Stock.MarinerX.Charts;
 using Gaten.Stock.MarinerX.Indicators;
 
-using MySqlX.XDevAPI.Common;
-
 using Newtonsoft.Json;
 
 using System;
@@ -21,7 +19,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 using System.Windows.Forms;
 
 namespace Gaten.Stock.MarinerX
@@ -69,6 +66,7 @@ namespace Gaten.Stock.MarinerX
         private void OnChanged(object source, FileSystemEventArgs e)
         {
             RefreshTmFile();
+            RefreshMenu();
         }
 
         private void RefreshTmFile()

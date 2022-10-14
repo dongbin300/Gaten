@@ -3,9 +3,9 @@
     public class NamedElementResult
     {
         public string Name { get; set; }
-        public double? Value { get; set; }
+        public decimal? Value { get; set; }
 
-        public NamedElementResult(string name, double? value)
+        public NamedElementResult(string name, decimal? value)
         {
             Name = name;
             Value = value;

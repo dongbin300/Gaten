@@ -53,7 +53,7 @@ namespace Gaten.Net.Extensions
                 foreach (var property in properties)
                 {
                     var value = type.GetProperty(property.Name)?.GetValue(data, null);
-                    values.Add(value.ToString().Replace(',', alternativeColonChar));
+                    values.Add(value?.ToString()?.Replace(',', alternativeColonChar) ?? default!);
                 }
                 contents.Add(string.Join(',', values.ToArray()));
             }

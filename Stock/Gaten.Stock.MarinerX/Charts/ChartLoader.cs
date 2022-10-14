@@ -100,7 +100,6 @@ namespace Gaten.Stock.MarinerX.Charts
                 }
 
                 chartPack.ConvertCandle();
-                chartPack.CalculateIndicators();
 
                 Charts.Add(chartPack);
             }

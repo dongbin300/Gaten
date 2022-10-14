@@ -9,7 +9,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Orders
     {
         public OrderType Type { get; set; } = OrderType.None;
         public PositionSide Side { get; set; } = PositionSide.None;
-        public OrderAmount Amount { get; set; }
+        public OrderAmount Amount { get; set; } = new OrderAmount(OrderAmountType.None, 0);
         public decimal? Price { get; set; } = null;
         public decimal MakerFee => 0.00075m; // use BNB(0.075%)
         public decimal TakerFee => 0.00075m; // use BNB(0.075%)

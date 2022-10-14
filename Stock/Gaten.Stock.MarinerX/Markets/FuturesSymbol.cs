@@ -9,17 +9,17 @@ namespace Gaten.Stock.MarinerX.Markets
         public string Name { get; set; }
         public decimal LiquidationFee { get; set; }
         public DateTime ListingDate { get; set; }
-        public decimal MaxPrice { get; set; }
-        public decimal MinPrice { get; set; }
-        public decimal TickSize { get; set; }
-        public decimal MaxQuantity { get; set; }
-        public decimal MinQuantity { get; set; }
-        public decimal StepSize { get; set; }
+        public decimal? MaxPrice { get; set; }
+        public decimal? MinPrice { get; set; }
+        public decimal? TickSize { get; set; }
+        public decimal? MaxQuantity { get; set; }
+        public decimal? MinQuantity { get; set; }
+        public decimal? StepSize { get; set; }
         public int PricePrecision { get; set; }
         public int QuantityPrecision { get; set; }
         public UnderlyingType UnderlyingType { get; set; }
 
-        public FuturesSymbol(string name, decimal liquidationFee, DateTime listingDate, decimal maxPrice, decimal minPrice, decimal tickSize, decimal maxQuantity, decimal minQuantity, decimal stepSize, int pricePrecision, int quantityPrecision, UnderlyingType underlyingType)
+        public FuturesSymbol(string name, decimal liquidationFee, DateTime listingDate, decimal? maxPrice, decimal? minPrice, decimal? tickSize, decimal? maxQuantity, decimal? minQuantity, decimal? stepSize, int pricePrecision, int quantityPrecision, UnderlyingType underlyingType)
         {
             Name = name;
             LiquidationFee = liquidationFee;

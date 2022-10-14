@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Gaten.Stock.MercuryEditor.Editor
 {
@@ -33,6 +32,11 @@ namespace Gaten.Stock.MercuryEditor.Editor
             "balancesymbol",
             "open",
             "close",
+            "candle",
+            "hist",
+            "upper",
+            "lower",
+            "sma",
 
             "BTCUSDT",
             "ETHUSDT",

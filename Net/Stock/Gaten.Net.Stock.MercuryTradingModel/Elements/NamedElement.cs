@@ -1,4 +1,5 @@
 ﻿using Gaten.Net.Stock.MercuryTradingModel.Enums;
+using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
 
 using Newtonsoft.Json;
 
@@ -6,23 +7,21 @@ using Skender.Stock.Indicators;
 
 namespace Gaten.Net.Stock.MercuryTradingModel.Elements
 {
-    public class NamedElement
+    public class NamedElement : IElement
     {
         public string Name { get; set; } = string.Empty;
-        public ChartElement Element { get; set; } = ChartElement.None;
+        public ChartElementType ElementType { get; set; } = ChartElementType.None;
         public decimal[] Parameters { get; set; } = new decimal[4];
-        [JsonIgnore]
-        public ResultBase Result { get; set; } = default!;
 
         public NamedElement()
         {
 
         }
 
-        public NamedElement(string name, ChartElement element, decimal[] parameters)
+        public NamedElement(string name, ChartElementType element, decimal[] parameters)
         {
             Name = name;
-            Element = element;
+            ElementType = element;
             Parameters = parameters;
         }
 
@@ -32,49 +31,47 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Elements
             {
                 Name = name;
                 var segments = parameterString.Split(',').Select(x => x.Trim()).ToArray();
+                segments[0] = segments[0].Replace('.', '_');
                 switch (segments[0])
                 {
                     case "ma":
-                        Element = ChartElement.ma;
-                        Parameters[0] = decimal.Parse(segments[1]);
-                        break;
-
                     case "ema":
-                        Element = ChartElement.ema;
-                        Parameters[0] = decimal.Parse(segments[1]);
-                        break;
-
                     case "ri":
-                        Element = ChartElement.ri;
-                        Parameters[0] = decimal.Parse(segments[1]);
-                        break;
-
                     case "rsi":
-                        Element = ChartElement.rsi;
+                        ElementType = (ChartElementType)Enum.Parse(typeof(ChartElementType), segments[0]);
                         Parameters[0] = decimal.Parse(segments[1]);
                         break;
 
-                    case "bb":
-                        Element = ChartElement.bb;
+                    case "bb_sma":
+                    case "bb_upper":
+                    case "bb_lower":
+                        ElementType = (ChartElementType)Enum.Parse(typeof(ChartElementType), segments[0]);
                         Parameters[0] = decimal.Parse(segments[1]);
                         Parameters[1] = decimal.Parse(segments[2]);
                         break;
 
-                    case "macd":
-                        Element = ChartElement.macd;
+                    case "macd_macd":
+                    case "macd_signal":
+                    case "macd_hist":
+                        ElementType = (ChartElementType)Enum.Parse(typeof(ChartElementType), segments[0]);
                         Parameters[0] = decimal.Parse(segments[1]);
                         Parameters[1] = decimal.Parse(segments[2]);
                         Parameters[2] = decimal.Parse(segments[3]);
                         break;
 
                     default:
-                        Element = ChartElement.None;
+                        ElementType = ChartElementType.None;
                         break;
                 }
             }
             catch
             {
             }
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

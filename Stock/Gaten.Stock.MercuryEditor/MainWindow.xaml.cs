@@ -295,14 +295,6 @@ namespace Gaten.Stock.MercuryEditor
             Settings.Default.LineNumber = textEditor.ShowLineNumbers;
             Settings.Default.Save();
         }
-
-        public void SetLanguage(LanguageType type)
-        {
-            switch (type)
-            {
-
-            }
-        }
         #endregion
 
         #region Text Editor

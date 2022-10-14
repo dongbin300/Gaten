@@ -60,7 +60,6 @@ namespace Gaten.Stock.MercuryEditor.Inspection
                                              TypeNameHandling = TypeNameHandling.Auto,
                                              Formatting = Formatting.Indented
                                         });
-                                        //var jsonString = JsonSerializer.Serialize<object>(inspector.TradingModel);
                                         InspectedPath = TradingModelPath.InspectedBackTestDirectory.Down(TmFile.TmName + ".json");
                                         GFile.Write(InspectedPath, jsonString);
                                         break;

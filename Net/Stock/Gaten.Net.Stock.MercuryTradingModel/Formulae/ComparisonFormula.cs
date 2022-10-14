@@ -1,37 +1,29 @@
 ﻿using Gaten.Net.Stock.MercuryTradingModel.Enums;
+using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
 
 namespace Gaten.Net.Stock.MercuryTradingModel.Formulae
 {
     public class ComparisonFormula : Formula
     {
-        public ChartElement ChartElement { get; set; }
-        public string? ElementName { get; set; } = null;
-        public Comparison Comparison { get; set; }
-        public double Value { get; set; }
+        public IElement Element1 { get; set; } = default!;
+        public Comparison Comparison { get; set; } = Comparison.None;
+        public IElement Element2 { get; set; } = default!;
 
         public ComparisonFormula()
         {
 
         }
 
-        public ComparisonFormula(ChartElement chartElement, Comparison comparison, double value)
+        public ComparisonFormula(IElement element1, Comparison comparison, IElement element2)
         {
-            ChartElement = chartElement;
+            Element1 = element1;
             Comparison = comparison;
-            Value = value;
-        }
-
-        public ComparisonFormula(string? elementName, Comparison comparison, double value)
-        {
-            ElementName = elementName;
-            Comparison = comparison;
-            Value = value;
+            Element2 = element2;
         }
 
         public override string ToString()
         {
-            var elementString = ElementName ?? ChartElement.ToString();
-            return elementString + FormulaUtil.ComparisonToString(Comparison) + Value.ToString();
+            return Element1.ToString() + FormulaUtil.ComparisonToString(Comparison) + Element2.ToString();
         }
     }
 }

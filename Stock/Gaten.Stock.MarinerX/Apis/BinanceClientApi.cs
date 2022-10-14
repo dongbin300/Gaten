@@ -3,6 +3,7 @@ using Binance.Net.Enums;
 using Binance.Net.Objects;
 
 using CryptoExchange.Net.Authentication;
+using CryptoExchange.Net.CommonObjects;
 
 using Gaten.Net.Extensions;
 using Gaten.Net.IO;
@@ -81,7 +82,7 @@ namespace Gaten.Stock.MarinerX.Apis
 
             return usdFuturesSymbolData.Result.Data.Symbols
                 .Where(s => s.Name.EndsWith("USDT") && !s.Name.Equals("LINKUSDT") && !s.Name.StartsWith("1"))
-                .Select(s => new FuturesSymbol(s.Name, s.LiquidationFee, s.ListingDate, s.PriceFilter.MaxPrice, s.PriceFilter.MinPrice, s.PriceFilter.TickSize, s.LotSizeFilter.MaxQuantity, s.LotSizeFilter.MinQuantity, s.LotSizeFilter.StepSize, s.PricePrecision, s.QuantityPrecision, s.UnderlyingType))
+                .Select(s => new FuturesSymbol(s.Name, s.LiquidationFee, s.ListingDate, s.PriceFilter?.MaxPrice, s.PriceFilter?.MinPrice, s.PriceFilter?.TickSize, s.LotSizeFilter?.MaxQuantity, s.LotSizeFilter?.MinQuantity, s.LotSizeFilter?.StepSize, s.PricePrecision, s.QuantityPrecision, s.UnderlyingType))
                 .ToList();
         }
         #endregion
@@ -175,15 +176,14 @@ namespace Gaten.Stock.MarinerX.Apis
 
             var info = accountInfo.Result.Data;
 
-            return new FuturesAccount
-            {
-                Assets = info.Assets.Where(x => x.WalletBalance > 0).ToList(),
-                Positions = info.Positions.Where(x => x.Symbol.EndsWith("USDT") && !x.Symbol.Equals("LINKUSDT")).ToList(),
-                AvailableBalance = info.AvailableBalance,
-                TotalMarginBalance = info.TotalMarginBalance,
-                TotalUnrealizedProfit = info.TotalUnrealizedProfit,
-                TotalWalletBalance = info.TotalWalletBalance
-            };
+            return new FuturesAccount(
+                info.Assets.Where(x => x.WalletBalance > 0).ToList(),
+                info.Positions.Where(x => x.Symbol.EndsWith("USDT") && !x.Symbol.Equals("LINKUSDT")).ToList(),
+                info.AvailableBalance,
+                info.TotalMarginBalance,
+                info.TotalUnrealizedProfit,
+                info.TotalWalletBalance
+                );
         }
 
         /// <summary>
@@ -226,18 +226,17 @@ namespace Gaten.Stock.MarinerX.Apis
 
             return positionInformation.Result.Data
                 .Where(x => x.Symbol.EndsWith("USDT") && !x.Symbol.Equals("LINKUSDT"))
-                .Select(x=> new FuturesPosition
-                {
-                    Symbol = x.Symbol,
-                    MarginType = x.MarginType,
-                    Leverage = x.Leverage,
-                    PositionSide = x.PositionSide,
-                    Quantity = x.Quantity,
-                    EntryPrice = x.EntryPrice,
-                    MarkPrice = x.MarkPrice,
-                    UnrealizedPnl = x.UnrealizedPnl,
-                    LiquidationPrice = x.LiquidationPrice
-                })
+                .Select(x => new FuturesPosition(
+                    x.Symbol,
+                    x.MarginType,
+                    x.Leverage,
+                    x.PositionSide,
+                    x.Quantity,
+                    x.EntryPrice,
+                    x.MarkPrice,
+                    x.UnrealizedPnl,
+                    x.LiquidationPrice
+                    ))
                 .ToList();
         }
 
@@ -252,18 +251,17 @@ namespace Gaten.Stock.MarinerX.Apis
             positionInformation.Wait();
 
             return positionInformation.Result.Data.Where(x => x.Symbol.EndsWith("USDT") && !x.Symbol.Equals("LINKUSDT") && x.Quantity != 0)
-                .Select(x => new FuturesPosition
-                {
-                    Symbol = x.Symbol,
-                    MarginType = x.MarginType,
-                    Leverage = x.Leverage,
-                    PositionSide = x.PositionSide,
-                    Quantity = x.Quantity,
-                    EntryPrice = x.EntryPrice,
-                    MarkPrice = x.MarkPrice,
-                    UnrealizedPnl = x.UnrealizedPnl,
-                    LiquidationPrice = x.LiquidationPrice
-                })
+                .Select(x => new FuturesPosition(
+                    x.Symbol,
+                    x.MarginType,
+                    x.Leverage,
+                    x.PositionSide,
+                    x.Quantity,
+                    x.EntryPrice,
+                    x.MarkPrice,
+                    x.UnrealizedPnl,
+                    x.LiquidationPrice
+                    ))
                 .ToList();
         }
 
@@ -277,13 +275,12 @@ namespace Gaten.Stock.MarinerX.Apis
             balance.Wait();
 
             return balance.Result.Data.Where(x => x.Asset.Equals("USDT") || x.Asset.Equals("BNB"))
-                .Select(x => new FuturesBalance
-                {
-                    AssetName = x.Asset,
-                    Wallet = x.WalletBalance,
-                    Available = x.AvailableBalance,
-                    UnrealizedPnl = x.CrossUnrealizedPnl
-                })
+                .Select(x => new FuturesBalance(
+                     x.Asset,
+                     x.WalletBalance,
+                     x.AvailableBalance,
+                     x.CrossUnrealizedPnl
+                    ))
                 .ToList();
         }
         #endregion

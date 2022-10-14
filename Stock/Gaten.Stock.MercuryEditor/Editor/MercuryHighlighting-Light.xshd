@@ -48,6 +48,11 @@
 			<Word>open</Word>
 			<Word>close</Word>
 			<Word>position</Word>
+			<Word>candle</Word>
+			<Word>hist</Word>
+			<Word>upper</Word>
+			<Word>lower</Word>
+			<Word>sma</Word>
 
 			<Word>BTCUSDT</Word>
 			<Word>ETHUSDT</Word>

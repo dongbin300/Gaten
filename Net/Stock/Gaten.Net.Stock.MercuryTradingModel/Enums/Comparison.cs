@@ -2,6 +2,8 @@
 {
     public enum Comparison
     {
+        None = 0,
+
         /// <summary>
         /// <
         /// </summary>

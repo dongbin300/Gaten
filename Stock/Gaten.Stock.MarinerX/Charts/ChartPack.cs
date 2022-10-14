@@ -1,5 +1,6 @@
 ﻿using Binance.Net.Enums;
 
+using Gaten.Net.Extensions;
 using Gaten.Net.Stock.MercuryTradingModel.Charts;
 using Gaten.Net.Stock.MercuryTradingModel.Elements;
 using Gaten.Net.Stock.MercuryTradingModel.Enums;
@@ -81,53 +82,65 @@ namespace Gaten.Stock.MarinerX.Charts
             Charts = newChart;
         }
 
-        public void CalculateIndicators()
+        public void CalculateIndicators(IList<ChartElement> chartElements, IList<NamedElement> namedElements)
         {
             var quotes = Charts.Select(x => x.Quote);
-            var sma = quotes.GetSma(120).ToList();
-            var ema = quotes.GetEma(120).ToList();
-            var rsi = quotes.GetRsi(14).ToList();
-            var macd = quotes.GetMacd(12, 26, 9).ToList();
-            var bb = quotes.GetBollingerBands(20, 2).ToList();
-            var ri = quotes.GetRi(14).ToList();
 
-            for (int i = 0; i < Charts.Count; i++)
+            // calculate chart elements
+            var chartElementResults = new List<List<ChartElementResult>>();
+            foreach(var chartElement in chartElements)
             {
-                var chart = Charts[i];
-                chart.MA = sma[i];
-                chart.EMA = ema[i];
-                chart.RSI = rsi[i];
-                chart.MACD = macd[i];
-                chart.BollingerBands = bb[i];
-                chart.RI = ri[i];
-            }
-        }
-
-        public void CalculateCustomIndicators(IList<NamedElement> namedElements)
-        {
-            var quotes = Charts.Select(x => x.Quote);
-            var results = new List<List<NamedElementResult>>();
-            foreach (var namedElement in namedElements)
-            {
-                switch (namedElement.Element)
+                IEnumerable<ChartElementResult> result = chartElement.ElementType switch
                 {
-                    case ChartElement.ma:
-                        results.Add(quotes.GetSma((int)namedElement.Parameters[0]).Select(x => new NamedElementResult(namedElement.Name, x.Sma)).ToList());
-                        break;
-
-                    case ChartElement.ema:
-                        results.Add(quotes.GetEma((int)namedElement.Parameters[0]).Select(x => new NamedElementResult(namedElement.Name, x.Ema)).ToList());
-                        break;
-                }
-
+                    ChartElementType.ma => quotes.GetSma((int)chartElement.Parameters[0]).Select(x=> new ChartElementResult(chartElement.ElementType, x.Sma.Convert<decimal>())),
+                    ChartElementType.ema => quotes.GetEma((int)chartElement.Parameters[0]).Select(x=> new ChartElementResult(chartElement.ElementType, x.Ema.Convert<decimal>())),
+                    ChartElementType.ri => quotes.GetRi((int)chartElement.Parameters[0]).Select(x => new ChartElementResult(chartElement.ElementType, x.Ri.Convert<decimal>())),
+                    ChartElementType.rsi => quotes.GetRsi((int)chartElement.Parameters[0]).Select(x => new ChartElementResult(chartElement.ElementType, x.Rsi.Convert<decimal>())),
+                    ChartElementType.macd_macd => quotes.GetMacd((int)chartElement.Parameters[0]).Select(x => new ChartElementResult(chartElement.ElementType, x.Macd.Convert<decimal>())),
+                    ChartElementType.macd_signal => quotes.GetMacd((int)chartElement.Parameters[0]).Select(x => new ChartElementResult(chartElement.ElementType, x.Signal.Convert<decimal>())),
+                    ChartElementType.macd_hist => quotes.GetMacd((int)chartElement.Parameters[0]).Select(x => new ChartElementResult(chartElement.ElementType, x.Histogram.Convert<decimal>())),
+                    ChartElementType.bb_sma => quotes.GetBollingerBands((int)chartElement.Parameters[0]).Select(x => new ChartElementResult(chartElement.ElementType, x.Sma.Convert<decimal>())),
+                    ChartElementType.bb_upper => quotes.GetBollingerBands((int)chartElement.Parameters[0]).Select(x => new ChartElementResult(chartElement.ElementType, x.UpperBand.Convert<decimal>())),
+                    ChartElementType.bb_lower => quotes.GetBollingerBands((int)chartElement.Parameters[0]).Select(x => new ChartElementResult(chartElement.ElementType, x.LowerBand.Convert<decimal>())),
+                    _ => default!
+                };
+                chartElementResults.Add(result.ToList());
             }
-
-            for (int j = 0; j < Charts.Count; j++)
+            for(int j = 0; j < Charts.Count; j++)
             {
-                for (int i = 0; i < results.Count; i++)
+                for(int i = 0; i < chartElementResults.Count; i++)
                 {
                     var chart = Charts[j];
-                    chart.NamedElements.Add(results[i][j]);
+                    chart.ChartElements.Add(chartElementResults[i][j]);
+                }
+            }
+
+            // calculate named elements
+            var namedElementResults = new List<List<NamedElementResult>>();
+            foreach (var namedElement in namedElements)
+            {
+                IEnumerable<NamedElementResult> result = namedElement.ElementType switch
+                {
+                    ChartElementType.ma => quotes.GetSma((int)namedElement.Parameters[0]).Select(x => new NamedElementResult(namedElement.Name, x.Sma.Convert<decimal>())),
+                    ChartElementType.ema => quotes.GetEma((int)namedElement.Parameters[0]).Select(x => new NamedElementResult(namedElement.Name, x.Ema.Convert<decimal>())),
+                    ChartElementType.ri => quotes.GetRi((int)namedElement.Parameters[0]).Select(x => new NamedElementResult(namedElement.Name, x.Ri.Convert<decimal>())),
+                    ChartElementType.rsi => quotes.GetRsi((int)namedElement.Parameters[0]).Select(x => new NamedElementResult(namedElement.Name, x.Rsi.Convert<decimal>())),
+                    ChartElementType.macd_macd => quotes.GetMacd((int)namedElement.Parameters[0], (int)namedElement.Parameters[1], (int)namedElement.Parameters[2]).Select(x => new NamedElementResult(namedElement.Name, x.Macd.Convert<decimal>())),
+                    ChartElementType.macd_signal => quotes.GetMacd((int)namedElement.Parameters[0], (int)namedElement.Parameters[1], (int)namedElement.Parameters[2]).Select(x => new NamedElementResult(namedElement.Name, x.Signal.Convert<decimal>())),
+                    ChartElementType.macd_hist => quotes.GetMacd((int)namedElement.Parameters[0], (int)namedElement.Parameters[1], (int)namedElement.Parameters[2]).Select(x => new NamedElementResult(namedElement.Name, x.Histogram.Convert<decimal>())),
+                    ChartElementType.bb_sma => quotes.GetBollingerBands((int)namedElement.Parameters[0], (double)namedElement.Parameters[1]).Select(x => new NamedElementResult(namedElement.Name, x.Sma.Convert<decimal>())),
+                    ChartElementType.bb_upper => quotes.GetBollingerBands((int)namedElement.Parameters[0], (double)namedElement.Parameters[1]).Select(x => new NamedElementResult(namedElement.Name, x.UpperBand.Convert<decimal>())),
+                    ChartElementType.bb_lower => quotes.GetBollingerBands((int)namedElement.Parameters[0], (double)namedElement.Parameters[1]).Select(x => new NamedElementResult(namedElement.Name, x.LowerBand.Convert<decimal>())),
+                    _ => default!
+                };
+                namedElementResults.Add(result.ToList());
+            }
+            for (int j = 0; j < Charts.Count; j++)
+            {
+                for (int i = 0; i < namedElementResults.Count; i++)
+                {
+                    var chart = Charts[j];
+                    chart.NamedElements.Add(namedElementResults[i][j]);
                 }
             }
         }

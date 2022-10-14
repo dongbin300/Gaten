@@ -1,5 +1,6 @@
 ﻿using Gaten.Net.Extensions;
 using Gaten.Net.Stock.MercuryTradingModel.Assets;
+using Gaten.Net.Stock.MercuryTradingModel.Elements;
 using Gaten.Net.Stock.MercuryTradingModel.Enums;
 using Gaten.Net.Stock.MercuryTradingModel.Formulae;
 using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
@@ -77,7 +78,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             }
         }
 
-        public string ParseAsset(List<TextLine> code)
+        private string ParseAsset(List<TextLine> code)
         {
             TextLine? assetCode = null;
             try
@@ -114,7 +115,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             }
         }
 
-        public string ParsePeriod(List<TextLine> code)
+        private string ParsePeriod(List<TextLine> code)
         {
             TextLine? periodCode = null;
             try
@@ -157,7 +158,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             }
         }
 
-        public string ParseInterval(List<TextLine> code)
+        private string ParseInterval(List<TextLine> code)
         {
             TextLine? intervalCode = null;
             try
@@ -180,7 +181,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             }
         }
 
-        public string ParseTarget(List<TextLine> code)
+        private string ParseTarget(List<TextLine> code)
         {
             TextLine? targetCode = null;
             try
@@ -203,7 +204,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             }
         }
 
-        public string ParseNamedElement(List<TextLine> code)
+        private string ParseNamedElement(List<TextLine> code)
         {
             IList<TextLine>? namedElementCodes = null;
             try
@@ -232,7 +233,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             }
         }
 
-        public string ParseScenario(List<TextLine> code)
+        private string ParseScenario(List<TextLine> code)
         {
             TextLine? scenarioCode = null;
             try
@@ -262,7 +263,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             }
         }
 
-        public string ParseStrategy(string key, string value)
+        private string ParseStrategy(string key, string value)
         {
             try
             {
@@ -297,7 +298,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             }
         }
 
-        public IFormula? ParseFormula(string signalValue)
+        private IFormula? ParseFormula(string signalValue)
         {
             try
             {
@@ -316,39 +317,9 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                                 return null;
                             }
 
-                            if (Enum.TryParse(typeof(ChartElement), segments2[0], out object? result))
-                            {
-                                var comparison = FormulaUtil.ToComparison(segments2[1]);
-                                var value = double.Parse(segments2[2]);
-                                return new ComparisonFormula((ChartElement)result, comparison, value);
-                            }
-
-                            var namedElement = TradingModel.NamedElements.FirstOrDefault(x => x.Name.Equals(segments2[0]));
-                            if (namedElement != null)
-                            {
-                                var comparison = FormulaUtil.ToComparison(segments2[1]);
-                                var value = double.Parse(segments2[2]);
-                                return new ComparisonFormula(namedElement.Name, comparison, value);
-                            }
-
-                            return null;
+                            return ParseComparisonFormula(segments2);
                         }
-                        if (Enum.TryParse(typeof(ChartElement), segments1[0], out object? result2))
-                        {
-                            var comparison = FormulaUtil.ToComparison(segments1[1]);
-                            var value = double.Parse(segments1[2]);
-                            return new ComparisonFormula((ChartElement)result2, comparison, value);
-                        }
-
-                        var namedElement2 = TradingModel.NamedElements.FirstOrDefault(x => x.Name.Equals(segments1[0]));
-                        if (namedElement2 != null)
-                        {
-                            var comparison = FormulaUtil.ToComparison(segments1[1]);
-                            var value = double.Parse(segments1[2]);
-                            return new ComparisonFormula(namedElement2.Name, comparison, value);
-                        }
-
-                        return null;
+                        return ParseComparisonFormula(segments1);
                     }
                     return new OrFormula(ParseFormula(logicSegments2[0]), ParseFormula(logicSegments2[1]));
                 }
@@ -357,6 +328,71 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             catch
             {
                 return null;
+            }
+        }
+
+        private IFormula? ParseComparisonFormula(string[] formulaSegments)
+        {
+            try
+            {
+                var element1 = ParseElement(formulaSegments[0]);
+                var comparison = FormulaUtil.ToComparison(formulaSegments[1]);
+                var element2 = ParseElement(formulaSegments[2]);
+
+                return new ComparisonFormula(element1, comparison, element2);
+
+                //if (Enum.TryParse(typeof(ChartElementType), formulaSegments[0], out object? result))
+                //{
+                //    if (result == null)
+                //    {
+                //        return null;
+                //    }
+
+                //    var value = double.Parse(formulaSegments[2]);
+                //    return new ComparisonFormula((ChartElementType)result, comparison, value);
+                //}
+
+                //var namedElement = TradingModel.NamedElements.FirstOrDefault(x => x.Name.Equals(formulaSegments[0]));
+                //if (namedElement != null)
+                //{
+                //    var comparison = FormulaUtil.ToComparison(formulaSegments[1]);
+                //    var value = double.Parse(formulaSegments[2]);
+                //    return new ComparisonFormula(namedElement.Name, comparison, value);
+                //}
+
+                //return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private IElement ParseElement(string segment)
+        {
+            try
+            {
+                if(decimal.TryParse(segment, out decimal value))
+                {
+                    return new ValueElement(value);
+                }
+                else if(TradingModel.AnyNamedElement(segment))
+                {
+                    return TradingModel.GetNamedElement(segment) ?? default!;
+                }
+                else
+                {
+                    var chartElement = new ChartElement(segment);
+                    if (chartElement.IsDefaultElement)
+                    {
+                        TradingModel.ChartElements.Add(chartElement);
+                    }
+                    return chartElement;
+                }
+            }
+            catch
+            {
+                return default!;
             }
         }
 
@@ -373,7 +409,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
         /// </summary>
         /// <param name="orderValue"></param>
         /// <returns></returns>
-        public BackTestOrder? ParseOrder(string orderValue)
+        private BackTestOrder? ParseOrder(string orderValue)
         {
             try
             {

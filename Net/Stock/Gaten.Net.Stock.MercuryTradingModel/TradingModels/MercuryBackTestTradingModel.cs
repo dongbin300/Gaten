@@ -15,6 +15,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.TradingModels
         public KlineInterval Interval { get; set; }
         public IList<string> Targets { get; set; } = new List<string>();
         public IList<IScenario> Scenarios { get; set; } = new List<IScenario>();
+        public IList<ChartElement> ChartElements { get; set; } = new List<ChartElement>();
         public IList<NamedElement> NamedElements { get; set; } = new List<NamedElement>();
 
         public MercuryBackTestTradingModel()
@@ -76,5 +77,8 @@ namespace Gaten.Net.Stock.MercuryTradingModel.TradingModels
             NamedElements.Add(new NamedElement(name, parameterString));
             return string.Empty;
         }
+
+        public bool AnyNamedElement(string name) => NamedElements.Any(x => x.Name.Equals(name));
+        public NamedElement? GetNamedElement(string name) => NamedElements.FirstOrDefault(x => x.Name.Equals(name));
     }
 }

@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gaten.Net.Extensions
+﻿namespace Gaten.Net.Extensions
 {
     public static class DataTypeExtension
     {
-        public static T Cast<T>(this object input)
+        public static T? Cast<T>(this object? input)
         {
-            return (T)input;
+            return (T)(input ?? default!);
         }
 
-        public static T Convert<T>(this object input)
+        public static T? Convert<T>(this object? input)
         {
+            if (input == null)
+            {
+                return default;
+            }
+
             Type type = typeof(T);
 
             if (type.BaseType?.FullName?.Equals("System.Enum") ?? true)

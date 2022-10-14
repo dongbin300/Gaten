@@ -17,13 +17,14 @@ namespace Gaten.Net.Wpf.Models
 
     public class Worker
     {
-        BackgroundWorker worker;
         public TextProgressBar ProgressBar { get; set; } = default!;
         public Action<Worker, object?> Action { get; set; } = default!;
         public bool IsRunning { get; set; }
-        public bool IsWaiting { get; set; }
         public object? Arguments { get; set; }
-        private Stopwatch stopwatch { get; set; }
+
+        BackgroundWorker worker;
+        Stopwatch stopwatch;
+        bool IsWaiting;
 
         public Worker()
         {
@@ -35,6 +36,7 @@ namespace Gaten.Net.Wpf.Models
             worker.DoWork += Worker_DoWork;
             worker.ProgressChanged += Worker_ProgressChanged;
             worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+            stopwatch = new Stopwatch();
         }
 
         public Worker(TextProgressBar progressBar) : this()
@@ -92,12 +94,11 @@ namespace Gaten.Net.Wpf.Models
         {
             var jobCount = System.Math.Abs(to - from);
             SetProgressBar(from, to - 1);
-            stopwatch = new Stopwatch();
             stopwatch.Start();
             for (int i = from; i < to; i += unit)
             {
                 var elapsedMs = stopwatch.ElapsedMilliseconds;
-                var estimatedTimeRemainingSeconds = (int)System.Math.Round(((elapsedMs * (double)to / i) - elapsedMs) / 1000, 0);
+                var estimatedTimeRemainingSeconds = (int)System.Math.Round(((elapsedMs * (double)to / i) - elapsedMs) / 1000, 0) + 1;
                 var estimatedTimeRemainingString =
                     (estimatedTimeRemainingSeconds / 3600 > 0 ? estimatedTimeRemainingSeconds / 3600 + "h " : "") +
                     (estimatedTimeRemainingSeconds % 3600 / 60 > 0 ? estimatedTimeRemainingSeconds % 3600 / 60 + "m " : "") +

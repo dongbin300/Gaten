@@ -1,6 +1,6 @@
-﻿using Gaten.Net.Extensions;
-using Gaten.Net.Stock.MercuryTradingModel.Assets;
+﻿using Gaten.Net.Stock.MercuryTradingModel.Assets;
 using Gaten.Net.Stock.MercuryTradingModel.Charts;
+using Gaten.Net.Stock.MercuryTradingModel.Elements;
 using Gaten.Net.Stock.MercuryTradingModel.Enums;
 using Gaten.Net.Stock.MercuryTradingModel.Formulae;
 using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
@@ -21,6 +21,17 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Signals
             Formula = formula;
         }
 
+        private decimal? GetElementValue(IElement element, ChartInfo chart)
+        {
+            return element switch
+            {
+                ChartElement x => chart.GetChartElementValue(x.ElementType),
+                NamedElement x => chart.GetNamedElementValue(x.Name),
+                ValueElement x => x.Value,
+                _ => null
+            };
+        }
+
         public virtual bool IsFlare(Asset asset, ChartInfo chart) => Formula switch
         {
             ComparisonFormula x => IsFlare(x, asset, chart),
@@ -31,65 +42,63 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Signals
 
         private bool IsFlare(IFormula? formula, Asset asset, ChartInfo chart)
         {
-            if(formula is ComparisonFormula formula2)
-            {
-                if(formula2.ElementName != null)
-                {
-                    return formula2.Comparison switch
-                    {
-                        Comparison.Equal => chart.GetNamedElementValue(formula2.ElementName) == formula2.Value,
-                        Comparison.NotEqual => chart.GetNamedElementValue(formula2.ElementName) != formula2.Value,
-                        Comparison.LessThan => chart.GetNamedElementValue(formula2.ElementName) < formula2.Value,
-                        Comparison.LessThanOrEqual => chart.GetNamedElementValue(formula2.ElementName) <= formula2.Value,
-                        Comparison.GreaterThan => chart.GetNamedElementValue(formula2.ElementName) > formula2.Value,
-                        Comparison.GreaterThanOrEqual => chart.GetNamedElementValue(formula2.ElementName) >= formula2.Value,
-                        _ => false
-                    };
-                }
-            }
-
-            var position = asset.Position.Value.Convert<double>();
-            var rsi = chart.RSI.Rsi;
-            var ri = chart.RI.Ri;
-
             return formula switch
             {
-                ComparisonFormula x => x.ChartElement switch
+                ComparisonFormula x => x.Comparison switch
                 {
-                    ChartElement.position => x.Comparison switch
-                    {
-                        Comparison.Equal => position == x.Value,
-                        Comparison.NotEqual => position != x.Value,
-                        Comparison.LessThan => position < x.Value,
-                        Comparison.LessThanOrEqual => position <= x.Value,
-                        Comparison.GreaterThan => position > x.Value,
-                        Comparison.GreaterThanOrEqual => position >= x.Value,
-                        _ => false
-                    },
-                    ChartElement.rsi => x.Comparison switch
-                    {
-                        Comparison.Equal => rsi == x.Value,
-                        Comparison.NotEqual => rsi != x.Value,
-                        Comparison.LessThan => rsi < x.Value,
-                        Comparison.LessThanOrEqual => rsi <= x.Value,
-                        Comparison.GreaterThan => rsi > x.Value,
-                        Comparison.GreaterThanOrEqual => rsi >= x.Value,
-                        _ => false
-                    },
-                    ChartElement.ri => x.Comparison switch
-                    {
-                        Comparison.Equal => ri == x.Value,
-                        Comparison.NotEqual => ri != x.Value,
-                        Comparison.LessThan => ri < x.Value,
-                        Comparison.LessThanOrEqual => ri <= x.Value,
-                        Comparison.GreaterThan => ri > x.Value,
-                        Comparison.GreaterThanOrEqual => ri >= x.Value,
-                        _ => false
-                    },
+                    Comparison.Equal => GetElementValue(x.Element1, chart) == GetElementValue(x.Element2, chart),
+                    Comparison.NotEqual => GetElementValue(x.Element1, chart) != GetElementValue(x.Element2, chart),
+                    Comparison.LessThan => GetElementValue(x.Element1, chart) < GetElementValue(x.Element2, chart),
+                    Comparison.LessThanOrEqual => GetElementValue(x.Element1, chart) <= GetElementValue(x.Element2, chart),
+                    Comparison.GreaterThan => GetElementValue(x.Element1, chart) > GetElementValue(x.Element2, chart),
+                    Comparison.GreaterThanOrEqual => GetElementValue(x.Element1, chart) >= GetElementValue(x.Element2, chart),
                     _ => false
                 },
                 _ => false
             };
+
+            //var position = asset.Position.Value.Convert<double>();
+            //var rsi = chart.RSI.Rsi;
+            //var ri = chart.RI.Ri;
+
+            //return formula switch
+            //{
+            //    ComparisonFormula x => x.Element1 switch
+            //    {
+            //        ChartElementType.position => x.Comparison switch
+            //        {
+            //            Comparison.Equal => position == x.Element2,
+            //            Comparison.NotEqual => position != x.Element2,
+            //            Comparison.LessThan => position < x.Element2,
+            //            Comparison.LessThanOrEqual => position <= x.Element2,
+            //            Comparison.GreaterThan => position > x.Element2,
+            //            Comparison.GreaterThanOrEqual => position >= x.Element2,
+            //            _ => false
+            //        },
+            //        ChartElementType.rsi => x.Comparison switch
+            //        {
+            //            Comparison.Equal => rsi == x.Element2,
+            //            Comparison.NotEqual => rsi != x.Element2,
+            //            Comparison.LessThan => rsi < x.Element2,
+            //            Comparison.LessThanOrEqual => rsi <= x.Element2,
+            //            Comparison.GreaterThan => rsi > x.Element2,
+            //            Comparison.GreaterThanOrEqual => rsi >= x.Element2,
+            //            _ => false
+            //        },
+            //        ChartElementType.ri => x.Comparison switch
+            //        {
+            //            Comparison.Equal => ri == x.Element2,
+            //            Comparison.NotEqual => ri != x.Element2,
+            //            Comparison.LessThan => ri < x.Element2,
+            //            Comparison.LessThanOrEqual => ri <= x.Element2,
+            //            Comparison.GreaterThan => ri > x.Element2,
+            //            Comparison.GreaterThanOrEqual => ri >= x.Element2,
+            //            _ => false
+            //        },
+            //        _ => false
+            //    },
+            //    _ => false
+            //};
         }
     }
 }

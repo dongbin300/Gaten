@@ -38,7 +38,7 @@ namespace Gaten.Stock.MarinerX.Bots
             }
 
             // Named Element Init
-            charts.CalculateCustomIndicators(TradingModel.NamedElements);
+            charts.CalculateIndicators(TradingModel.ChartElements, TradingModel.NamedElements);
 
             // Back test start!
             charts.Select(TradingModel.StartTime);
