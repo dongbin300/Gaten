@@ -18,6 +18,8 @@ namespace Gaten.Stock.MercuryEditor
     public partial class App : Application
     {
         MainWindow mainWindow = default!;
+        SimpleMainWindow simpleMainWindow = default!;
+        bool isSimpleMode = false;
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
@@ -25,6 +27,17 @@ namespace Gaten.Stock.MercuryEditor
             Delegater.ChangeTheme = ChangeTheme;
             Delegater.SetLanguage = SetLanguage;
 
+            if (e.Args.Length > 0)
+            {
+                if (e.Args[0] == "simple")
+                {
+                    isSimpleMode = true;
+                    simpleMainWindow = new SimpleMainWindow();
+                    InitSettings();
+                    simpleMainWindow.Show();
+                    return;
+                }
+            }
             mainWindow = new MainWindow();
             InitSettings();
             mainWindow.Show();
@@ -36,13 +49,27 @@ namespace Gaten.Stock.MercuryEditor
             {
                 case "Light":
                     Delegater.CurrentTheme = Themes.Light;
-                    mainWindow.textEditor.SyntaxHighlighting = MercuryEditorEntire.MercuryLightHighlighting;
+                    if (isSimpleMode)
+                    {
+                        simpleMainWindow.textEditor.SyntaxHighlighting = MercuryEditorEntire.MercuryLightHighlighting;
+                    }
+                    else
+                    {
+                        mainWindow.textEditor.SyntaxHighlighting = MercuryEditorEntire.MercuryLightHighlighting;
+                    }
                     Resources.MergedDictionaries.Remove(DarkThemeResource);
                     LightThemeResource = AddResourceDictionary("Resources/Themes/LightTheme.xaml");
                     break;
                 case "Dark":
                     Delegater.CurrentTheme = Themes.Dark;
-                    mainWindow.textEditor.SyntaxHighlighting = MercuryEditorEntire.MercuryDarkHighlighting;
+                    if (isSimpleMode)
+                    {
+                        simpleMainWindow.textEditor.SyntaxHighlighting = MercuryEditorEntire.MercuryDarkHighlighting;
+                    }
+                    else
+                    {
+                        mainWindow.textEditor.SyntaxHighlighting = MercuryEditorEntire.MercuryDarkHighlighting;
+                    }
                     Resources.MergedDictionaries.Remove(LightThemeResource);
                     DarkThemeResource = AddResourceDictionary("Resources/Themes/DarkTheme.xaml");
                     break;
@@ -70,8 +97,16 @@ namespace Gaten.Stock.MercuryEditor
                     break;
             }
 
-            mainWindow.textEditor.WordWrap = mainWindow.TitleBar.SettingsWrapMenuItem.IsChecked = Settings.Default.TextWrap;
-            mainWindow.textEditor.ShowLineNumbers = mainWindow.TitleBar.SettingsNumberMenuItem.IsChecked = Settings.Default.LineNumber;
+            if (isSimpleMode)
+            {
+                simpleMainWindow.textEditor.WordWrap = true;
+                simpleMainWindow.textEditor.ShowLineNumbers = true;
+            }
+            else
+            {
+                mainWindow.textEditor.WordWrap = mainWindow.TitleBar.SettingsWrapMenuItem.IsChecked = Settings.Default.TextWrap;
+                mainWindow.textEditor.ShowLineNumbers = mainWindow.TitleBar.SettingsNumberMenuItem.IsChecked = Settings.Default.LineNumber;
+            }
         }
 
         ResourceDictionary LightThemeResource = new();
@@ -82,14 +117,28 @@ namespace Gaten.Stock.MercuryEditor
             {
                 case Themes.Light:
                     Delegater.CurrentTheme = Themes.Dark;
-                    mainWindow.textEditor.SyntaxHighlighting = MercuryEditorEntire.MercuryDarkHighlighting;
+                    if (isSimpleMode)
+                    {
+                        simpleMainWindow.textEditor.SyntaxHighlighting = MercuryEditorEntire.MercuryDarkHighlighting;
+                    }
+                    else
+                    {
+                        mainWindow.textEditor.SyntaxHighlighting = MercuryEditorEntire.MercuryDarkHighlighting;
+                    }
                     Resources.MergedDictionaries.Remove(LightThemeResource);
                     DarkThemeResource = AddResourceDictionary("Resources/Themes/DarkTheme.xaml");
                     break;
                 default:
                 case Themes.Dark:
                     Delegater.CurrentTheme = Themes.Light;
-                    mainWindow.textEditor.SyntaxHighlighting = MercuryEditorEntire.MercuryLightHighlighting;
+                    if (isSimpleMode)
+                    {
+                        simpleMainWindow.textEditor.SyntaxHighlighting = MercuryEditorEntire.MercuryLightHighlighting;
+                    }
+                    else
+                    {
+                        mainWindow.textEditor.SyntaxHighlighting = MercuryEditorEntire.MercuryLightHighlighting;
+                    }
                     Resources.MergedDictionaries.Remove(DarkThemeResource);
                     LightThemeResource = AddResourceDictionary("Resources/Themes/LightTheme.xaml");
                     break;

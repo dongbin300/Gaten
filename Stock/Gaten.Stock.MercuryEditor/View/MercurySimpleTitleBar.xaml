@@ -1,0 +1,237 @@
+﻿<UserControl x:Class="Gaten.Stock.MercuryEditor.View.MercurySimpleTitleBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             MouseDown="UserControl_MouseDown"
+             MouseDoubleClick="UserControl_MouseDoubleClick"
+             Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Canvas}" x:Key="ButtonCanvas">
+            <Setter Property="Width" Value="40" />
+            <Setter Property="Height" Value="28" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource TitleBarMouseOver}" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="Background" Value="Transparent" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type Path}">
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Stroke" Value="{DynamicResource IconStroke}" />
+            <Setter Property="Margin" Value="12,6" />
+        </Style>
+
+        <Pen x:Key="MenuIconPen" Thickness="2" Brush="{DynamicResource IconStroke}" />
+        <SolidColorBrush x:Key="MenuIconBrush" Color="{DynamicResource MenuIconColor}" />
+    </UserControl.Resources>
+
+    <Grid Background="{DynamicResource TitleBarBackground}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="100" MinWidth="100"/>
+            <ColumnDefinition Width="20" MinWidth="20"/>
+            <ColumnDefinition Width="40" MinWidth="40" MaxWidth="40"/>
+            <ColumnDefinition Width="40" MinWidth="40" MaxWidth="40"/>
+            <ColumnDefinition Width="40" MinWidth="40" MaxWidth="40"/>
+        </Grid.ColumnDefinitions>
+
+        <WrapPanel Orientation="Horizontal" Margin="5,0" Grid.Column="0">
+            <Menu Background="{DynamicResource TitleBarBackground}">
+                <MenuItem Header="{DynamicResource File}" Style="{DynamicResource MainMenuItem}" Height="30">
+                    <MenuItem x:Name="FileNewMenuItem" Style="{DynamicResource SubMenuItem}" Header="{DynamicResource FileNew}" Height="28" Click="FileNewMenuItem_Click"
+                              InputGestureText="Ctrl+N">
+                        <MenuItem.Icon>
+                            <Image>
+                                <Image.Source>
+                                    <DrawingImage>
+                                        <DrawingImage.Drawing>
+                                            <GeometryDrawing Brush="{StaticResource MenuIconBrush}">
+                                                <GeometryDrawing.Geometry>
+                                                    M14 2 H6 A2 2 0 0 0 4 4 V20 A2 2 0 0 0 6 22 H18 A2 2 0 0 0 20 20 V8 L14 2 M18 20 H6 V4 H13 V9 H18 V20Z
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                        </DrawingImage.Drawing>
+                                    </DrawingImage>
+                                </Image.Source>
+                            </Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="FileOpenMenuItem" Style="{DynamicResource SubMenuItem}" Header="{DynamicResource FileOpen}" Height="28" Click="FileOpenMenuItem_Click"
+                              InputGestureText="Ctrl+O">
+                        <MenuItem.Icon>
+                            <Image>
+                                <Image.Source>
+                                    <DrawingImage>
+                                        <DrawingImage.Drawing>
+                                            <GeometryDrawing>
+                                                <GeometryDrawing.Geometry>
+                                                    M6.1 10 L4 18 V8 H21 A2 2 0 0 0 19 6 H12 L10 4 H4 A2 2 0 0 0 2 6 V18 A2 2 0 0 0 4 20 H19 C19.9 20 20.7 19.4 20.9 18.5 L23.2 10 H6.1 M19 18 H6 L7.6 12 H20.6 L19 18Z
+                                                </GeometryDrawing.Geometry>
+                                                <GeometryDrawing.Brush>
+                                                    <SolidColorBrush Color="#FFE39E"/>
+                                                </GeometryDrawing.Brush>
+                                            </GeometryDrawing>
+                                        </DrawingImage.Drawing>
+                                    </DrawingImage>
+                                </Image.Source>
+                            </Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator Style="{DynamicResource SubMenuSeparator}" />
+                    <MenuItem x:Name="FileCloseMenuItem" Style="{DynamicResource SubMenuItem}" Header="{DynamicResource FileClose}" Height="28" Click="FileCloseMenuItem_Click"/>
+                    <Separator Style="{DynamicResource SubMenuSeparator}" />
+                    <MenuItem x:Name="FileSaveMenuItem" Style="{DynamicResource SubMenuItem}" Header="{DynamicResource FileSave}" Height="28" Click="FileSaveMenuItem_Click"
+                                  InputGestureText="Ctrl+S">
+                        <MenuItem.Icon>
+                            <Image>
+                                <Image.Source>
+                                    <DrawingImage>
+                                        <DrawingImage.Drawing>
+                                            <GeometryDrawing>
+                                                <GeometryDrawing.Geometry>
+                                                    M15 9 H5 V5 H15 M12 19 A3 3 0 0 1 9 16 A3 3 0 0 1 12 13 A3 3 0 0 1 15 16 A3 3 0 0 1 12 19 M17 3 H5 C3.89 3 3 3.9 3 5 V19 A2 2 0 0 0 5 21 H19 A2 2 0 0 0 21 19 V7 L17 3Z
+                                                </GeometryDrawing.Geometry>
+                                                <GeometryDrawing.Brush>
+                                                    <SolidColorBrush Color="#55AAFF"/>
+                                                </GeometryDrawing.Brush>
+                                            </GeometryDrawing>
+                                        </DrawingImage.Drawing>
+                                    </DrawingImage>
+                                </Image.Source>
+                            </Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="FileSaveAsMenuItem" Style="{DynamicResource SubMenuItem}" Header="{DynamicResource FileSaveAs}" Height="28" Click="FileSaveAsMenuItem_Click"
+                              InputGestureText="Ctrl+Alt+S">
+                        <MenuItem.Icon>
+                            <Image>
+                                <Image.Source>
+                                    <DrawingImage>
+                                        <DrawingImage.Drawing>
+                                            <GeometryDrawing>
+                                                <GeometryDrawing.Geometry>
+                                                    M17 3 H5 C3.89 3 3 3.9 3 5 V19 C3 20.11 3.9 21 5 21 H12.81 C12.45 20.38 12.2 19.7 12.08 19 L12 19 C10.34 19 9 17.66 9 16 S10.34 13 12 13 C12.68 13 13.34 13.23 13.87 13.65 C15 12.59 16.46 12 18 12 C19.05 12 20.09 12.28 21 12.81 V7 L17 3 M15 9 H5 V5 H15 V9 M17 14 V17 H14 V19 H17 V22 H19 V19 H22 V17 H19 V14 H17Z
+                                                </GeometryDrawing.Geometry>
+                                                <GeometryDrawing.Brush>
+                                                    <SolidColorBrush Color="#55AAFF"/>
+                                                </GeometryDrawing.Brush>
+                                            </GeometryDrawing>
+                                        </DrawingImage.Drawing>
+                                    </DrawingImage>
+                                </Image.Source>
+                            </Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator Style="{DynamicResource SubMenuSeparator}" />
+                    <MenuItem x:Name="FileEscapeMenuItem" Style="{DynamicResource SubMenuItem}" Header="{DynamicResource FileEscape}" Height="28" Click="FileEscapeMenuItem_Click"
+                                  InputGestureText="Alt+F4">
+                        <MenuItem.Icon>
+                            <Image>
+                                <Image.Source>
+                                    <DrawingImage>
+                                        <DrawingImage.Drawing>
+                                            <GeometryDrawing>
+                                                <GeometryDrawing.Geometry>
+                                                    M13 13 L27 27 M27 13 L13 27
+                                                </GeometryDrawing.Geometry>
+                                                <GeometryDrawing.Pen>
+                                                    <Pen Brush="Red" Thickness="3"/>
+                                                </GeometryDrawing.Pen>
+                                            </GeometryDrawing>
+                                        </DrawingImage.Drawing>
+                                    </DrawingImage>
+                                </Image.Source>
+                            </Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+
+                <MenuItem x:Name="ModelInspectionMenuItem" Style="{DynamicResource MainMenuItem}" Header="{DynamicResource ModelInspection}" Height="28" Click="ModelInspectionMenuItem_Click"
+                              InputGestureText="F5"/>
+                <MenuItem x:Name="ModelAddStrategyMenuItem" Style="{DynamicResource MainMenuItem}" Header="{DynamicResource ModelAddStrategy}" Height="28" Click="ModelAddStrategyMenuItem_Click"
+                              InputGestureText="F3"/>
+                <MenuItem Header="{DynamicResource Settings}" Style="{DynamicResource MainMenuItem}" Height="30">
+                    <MenuItem x:Name="SettingsLanguageMenuItem" Style="{DynamicResource SubMenuItem}" Header="{DynamicResource SettingsLanguage}" Height="28">
+                        <MenuItem x:Name="SettingsLanguageEnMenuItem" Style="{DynamicResource SubMenuItem}" Header="English" Height="28" IsCheckable="True" Click="SettingsLanguageEnMenuItem_Click"/>
+                        <MenuItem x:Name="SettingsLanguageKoMenuItem" Style="{DynamicResource SubMenuItem}" Header="한국어" Height="28" IsCheckable="True" Click="SettingsLanguageKoMenuItem_Click"/>
+                        <MenuItem x:Name="SettingsLanguageJaMenuItem" Style="{DynamicResource SubMenuItem}" Header="日本語" Height="28" IsCheckable="True" Click="SettingsLanguageJaMenuItem_Click"/>
+                    </MenuItem>
+                    <MenuItem x:Name="SettingsThemeMenuItem" Style="{DynamicResource SubMenuItem}" Header="{DynamicResource SettingsTheme}" Height="28">
+                        <MenuItem x:Name="SettingsThemeLightMenuItem" Style="{DynamicResource SubMenuItem}" Header="{DynamicResource SettingsThemeLight}" Height="28" IsCheckable="True" Click="SettingsThemeLightMenuItem_Click"/>
+                        <MenuItem x:Name="SettingsThemeDarkMenuItem" Style="{DynamicResource SubMenuItem}" Header="{DynamicResource SettingsThemeDark}" Height="28" IsCheckable="True" Click="SettingsThemeDarkMenuItem_Click"/>
+                        <MenuItem.Icon>
+                            <Image>
+                                <Image.Source>
+                                    <DrawingImage>
+                                        <DrawingImage.Drawing>
+                                            <GeometryDrawing Brush="{StaticResource MenuIconBrush}">
+                                                <GeometryDrawing.Geometry>
+                                                    M12 20 C9.79 20 7.79 19.1 6.34 17.66 L17.66 6.34 C19.1 7.79 20 9.79 20 12 A8 8 0 0 1 12 20 M12 2 A10 10 0 0 0 2 12 A10 10 0 0 0 12 22 A10 10 0 0 0 22 12 A10 10 0 0 0 12 2Z
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                        </DrawingImage.Drawing>
+                                    </DrawingImage>
+                                </Image.Source>
+                            </Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="SettingsFontMenuItem" Style="{DynamicResource SubMenuItem}" Header="{DynamicResource SettingsFont}" Height="28">
+                        <MenuItem.Icon>
+                            <Image>
+                                <Image.Source>
+                                    <DrawingImage>
+                                        <DrawingImage.Drawing>
+                                            <GeometryDrawing Brush="{StaticResource MenuIconBrush}">
+                                                <GeometryDrawing.Geometry>
+                                                    M5.46 13.71 H9.53 L7.5 8.29 L5.46 13.71 M6.64 6 H8.36 L13.07 18 H11.14 L10.17 15.43 H4.82 L3.86 18 H1.93 L6.64 6Z
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                        </DrawingImage.Drawing>
+                                    </DrawingImage>
+                                </Image.Source>
+                            </Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator Style="{StaticResource SubMenuSeparator}"/>
+                    <MenuItem x:Name="ViewFullScreenMenuItem" Style="{DynamicResource SubMenuItem}" Header="{DynamicResource ViewFullScreen}" Height="28" Click="ViewFullScreenMenuItem_Click" 
+                              InputGestureText="F11">
+                        <MenuItem.Icon>
+                            <Image>
+                                <Image.Source>
+                                    <DrawingImage>
+                                        <DrawingImage.Drawing>
+                                            <GeometryDrawing Brush="{StaticResource MenuIconBrush}">
+                                                <GeometryDrawing.Geometry>
+                                                    M5 5 H10 V7 H7 V10 H5 V5 M14 5 H19 V10 H17 V7 H14 V5 M17 14 H19 V19 H14 V17 H17 V14 M10 17 V19 H5 V14 H7 V17 H10Z
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                        </DrawingImage.Drawing>
+                                    </DrawingImage>
+                                </Image.Source>
+                            </Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+        </WrapPanel>
+        <TextBlock x:Name="FileNameText" Grid.Column="1" Foreground="{DynamicResource ModelNameForeground}" Background="{DynamicResource ModelNameBackground}" FontSize="14" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="12,4"/>
+        <Border Grid.Column="3" Background="Transparent" MouseLeftButtonDown="MinimizeButton_Click">
+            <Canvas Style="{StaticResource ButtonCanvas}">
+                <Path Stretch="None" Data="M2 8 H14" StrokeThickness="1"/>
+            </Canvas>
+        </Border>
+        <Border Grid.Column="4" Background="Transparent" MouseLeftButtonDown="MaximizeButton_Click" >
+            <Canvas Style="{StaticResource ButtonCanvas}">
+                <Path x:Name="MaximizePath" StrokeThickness="1.5" />
+            </Canvas>
+        </Border>
+        <Border Grid.Column="5" Background="Transparent" MouseLeftButtonDown="CloseButton_Click">
+            <Canvas Style="{StaticResource ButtonCanvas}">
+                <Path Data="M4 4 L12 12 M12 4 L4 12" StrokeThickness="1"/>
+            </Canvas>
+        </Border>
+    </Grid>
+</UserControl>

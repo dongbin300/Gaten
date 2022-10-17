@@ -105,6 +105,7 @@ namespace Gaten.Stock.MarinerX
             menuStrip.Items.Add(menu3);
             menuStrip.Items.Add(new ToolStripSeparator());
             menuStrip.Items.Add(new ToolStripMenuItem("Mercury Editor 열기", null, MercuryEditorOpenEvent));
+            menuStrip.Items.Add(new ToolStripMenuItem("Mercury Simple Editor 열기", null, MercurySimpleEditorOpenEvent));
             menuStrip.Items.Add(new ToolStripSeparator());
             var menu4 = new ToolStripMenuItem("백테스트");
             foreach (var file in tmBackTestFiles)
@@ -140,6 +141,18 @@ namespace Gaten.Stock.MarinerX
             try
             {
                 GProcess.Start("MercuryEditor.exe");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void MercurySimpleEditorOpenEvent(object? sender, EventArgs e)
+        {
+            try
+            {
+                GProcess.Start("MercuryEditor.exe", "simple");
             }
             catch (Exception ex)
             {
