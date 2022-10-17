@@ -62,6 +62,7 @@ namespace Gaten.Stock.MercuryEditor.Editor
             textEditor.InputBindings.Add(new InputBinding(new SaveCommand(textEditor), new KeyGesture(Key.S, ModifierKeys.Control)));
             textEditor.InputBindings.Add(new InputBinding(new SaveAsCommand(textEditor), new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Alt)));
             textEditor.InputBindings.Add(new InputBinding(new FullScreenCommand(), new KeyGesture(Key.F11)));
+            textEditor.InputBindings.Add(new InputBinding(new InspectionCommand(textEditor), new KeyGesture(Key.F5)));
         }
 
         public static void InitStrategy(TextEditor textEditor)

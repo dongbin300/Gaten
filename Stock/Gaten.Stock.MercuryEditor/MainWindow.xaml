@@ -17,15 +17,13 @@
         <Grid.RowDefinitions>
             <RowDefinition x:Name="TitleBarRow" Height="30" />
             <RowDefinition Height="30"/>
-            <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <view:MercuryTitleBar x:Name="TitleBar" Grid.Row="0"/>
         <view:MercuryTaskBar Grid.Row="1"/>
-        <Border Grid.Row="2" Background="{DynamicResource StatusBackground}">
-            <TextBlock x:Name="EditorStatusText" TextAlignment="Left" VerticalAlignment="Center" Margin="8,0" Foreground="{DynamicResource StatusForeground}"/>
-        </Border>
-        <Grid Grid.Row="3">
+        
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -36,6 +34,10 @@
                       ShowLineNumbers="True"
                       />
         </Grid>
-        
+
+        <Border Grid.Row="3" Background="{DynamicResource StatusBackground}">
+            <TextBlock x:Name="EditorStatusText" TextAlignment="Left" VerticalAlignment="Center" Margin="8,0" FontSize="14" Foreground="{DynamicResource StatusForeground}"/>
+        </Border>
+
     </Grid>
 </Window>

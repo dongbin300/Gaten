@@ -34,7 +34,7 @@
         </Grid>
         
         <Border Grid.Row="2" Background="{DynamicResource StatusBackground}">
-            <TextBlock x:Name="EditorStatusText" TextAlignment="Left" VerticalAlignment="Center" Margin="8,0" Foreground="{DynamicResource StatusForeground}"/>
+            <TextBlock x:Name="EditorStatusText" TextAlignment="Left" VerticalAlignment="Center" Margin="8,0" FontSize="14" Foreground="{DynamicResource StatusForeground}"/>
         </Border>
     </Grid>
 </Window>

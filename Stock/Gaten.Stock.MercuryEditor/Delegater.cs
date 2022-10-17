@@ -18,5 +18,6 @@ namespace Gaten.Stock.MercuryEditor
         public static Func<bool> CheckSave = default!;
         public static Action<string> SetEditorText = default!;
         public static Action SetFullScreen = default!;
+        public static Action<string?> SetEditorStatusText = default!;
     }
 }

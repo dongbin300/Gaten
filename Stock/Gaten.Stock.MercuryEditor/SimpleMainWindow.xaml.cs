@@ -28,6 +28,7 @@ namespace Gaten.Stock.MercuryEditor
         ICommand closeCommand;
         ICommand duplicateCommand;
         ICommand fullScreenCommand;
+        ICommand inspectionCommand;
 
         #region Window
         public SimpleMainWindow()
@@ -56,6 +57,7 @@ namespace Gaten.Stock.MercuryEditor
                     TitleBar.DefaultScreen();
                 }
             };
+            Delegater.SetEditorStatusText = (text) => EditorStatusText.Text = text;
             newCommand = new NewCommand(textEditor);
             openCommand = new OpenCommand(textEditor);
             saveCommand = new SaveCommand(textEditor);
@@ -63,6 +65,7 @@ namespace Gaten.Stock.MercuryEditor
             closeCommand = new CloseCommand(textEditor);
             duplicateCommand = new DuplicateCommand(textEditor);
             fullScreenCommand = new FullScreenCommand();
+            inspectionCommand = new InspectionCommand(textEditor);
         }
 
         private void SettingTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
@@ -148,18 +151,7 @@ namespace Gaten.Stock.MercuryEditor
         #region Model
         public void Inspection()
         {
-            Save();
-
-            var inspector = new MercuryInspector();
-            var result = inspector.Run(textEditor.Text);
-
-            if (!result.IsOk)
-            {
-                EditorStatusText.Text = result.ErrorMessage;
-                return;
-            }
-
-            EditorStatusText.Text = Delegater.CurrentLanguageDictionary["InspectionComplete"].ToString();
+            inspectionCommand.Execute(null);
         }
 
         /// <summary>
