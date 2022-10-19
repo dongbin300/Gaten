@@ -1,5 +1,6 @@
 ﻿using Gaten.Net.Extensions;
 using Gaten.Net.Stock.MercuryTradingModel.Assets;
+using Gaten.Net.Stock.MercuryTradingModel.Cues;
 using Gaten.Net.Stock.MercuryTradingModel.Elements;
 using Gaten.Net.Stock.MercuryTradingModel.Enums;
 using Gaten.Net.Stock.MercuryTradingModel.Formulae;
@@ -217,8 +218,8 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                 foreach (var namedElementCode in namedElementCodes)
                 {
                     lineNumber = namedElementCode.LineNumber;
-                    var name = namedElementCode.Text.Split('@')[0].Trim();
-                    var parameterString = namedElementCode.Text.Split('@')[1].Trim();
+                    var parameterString = namedElementCode.Text.Split('@')[0].Trim();
+                    var name = namedElementCode.Text.Split('@')[1].Trim();
                     var result = TradingModel.AddNamedElement(name, parameterString);
                     if (!string.IsNullOrEmpty(result))
                     {
@@ -270,6 +271,15 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                 var keySegments = key.Split('.');
                 switch (keySegments[2])
                 {
+                    case "cue":
+                        var cue = ParseCue(value);
+                        if (cue == null)
+                        {
+                            return $"{Delegater.CurrentLanguageDictionary["CueTypeError"]} :: ";
+                        }
+                        TradingModel.AddCue(keySegments[0], keySegments[1], cue);
+                        break;
+
                     case "signal":
                         var formula = ParseFormula(value);
                         if (formula == null)
@@ -279,6 +289,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                         var signal = new Signal(formula);
                         TradingModel.AddSignal(keySegments[0], keySegments[1], signal);
                         break;
+
                     case "order":
                         var order = ParseOrder(value);
                         if (order == null)
@@ -287,6 +298,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                         }
                         TradingModel.AddOrder(keySegments[0], keySegments[1], order);
                         break;
+
                     default:
                         return $"{Delegater.CurrentLanguageDictionary["ScenarioKeyTypeError"]} :: ";
                 }
@@ -298,6 +310,43 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             }
         }
 
+        /// <summary>
+        /// Formula, Life
+        /// rsi>70, 20
+        /// </summary>
+        /// <param name="cueValue"></param>
+        /// <returns></returns>
+        private ICue? ParseCue(string cueValue)
+        {
+            try
+            {
+                var segments = cueValue.Split(',').Select(x => x.Trim()).ToArray();
+                if (segments.Length == 2)
+                {
+                    var formula = ParseFormula(segments[0]);
+                    var life = int.Parse(segments[1]);
+
+                    return formula switch
+                    {
+                        null => null,
+                        _ => new Cue(formula, life)
+                    };
+                }
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// rsi>70 (Comparison Formula)
+        /// rsi<30 | rsi>70 (Or Formula)
+        /// candle.close>bb.upper & rsi>75 (And Formula)
+        /// </summary>
+        /// <param name="signalValue"></param>
+        /// <returns></returns>
         private IFormula? ParseFormula(string signalValue)
         {
             try
@@ -340,27 +389,6 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                 var element2 = ParseElement(formulaSegments[2]);
 
                 return new ComparisonFormula(element1, comparison, element2);
-
-                //if (Enum.TryParse(typeof(ChartElementType), formulaSegments[0], out object? result))
-                //{
-                //    if (result == null)
-                //    {
-                //        return null;
-                //    }
-
-                //    var value = double.Parse(formulaSegments[2]);
-                //    return new ComparisonFormula((ChartElementType)result, comparison, value);
-                //}
-
-                //var namedElement = TradingModel.NamedElements.FirstOrDefault(x => x.Name.Equals(formulaSegments[0]));
-                //if (namedElement != null)
-                //{
-                //    var comparison = FormulaUtil.ToComparison(formulaSegments[1]);
-                //    var value = double.Parse(formulaSegments[2]);
-                //    return new ComparisonFormula(namedElement.Name, comparison, value);
-                //}
-
-                //return null;
             }
             catch
             {
@@ -368,15 +396,24 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             }
         }
 
+        /// <summary>
+        /// rsi,21 (Chart Element)
+        /// rsi,24 @ myrsi (Named Element)
+        /// 3.6 (Value Element)
+        /// 1~3 (Range Element)
+        /// roe (Trade Element)
+        /// </summary>
+        /// <param name="segment"></param>
+        /// <returns></returns>
         private IElement ParseElement(string segment)
         {
             try
             {
-                if(decimal.TryParse(segment, out decimal value))
+                if (decimal.TryParse(segment, out decimal value))
                 {
                     return new ValueElement(value);
                 }
-                else if(TradingModel.AnyNamedElement(segment))
+                else if (TradingModel.AnyNamedElement(segment))
                 {
                     return TradingModel.GetNamedElement(segment) ?? default!;
                 }

@@ -13,6 +13,11 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Elements
             EndValue = endValue;
         }
 
+        public bool IsValid(decimal num)
+        {
+            return num >= StartValue && num <= EndValue;
+        }
+
         public override string ToString()
         {
             return StartValue.ToString() + "~" + EndValue.ToString();

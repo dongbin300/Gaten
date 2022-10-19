@@ -20,6 +20,7 @@
     <s:String x:Key="ScenarioTypeError">Scenario 형식의 오류입니다.</s:String>
     <s:String x:Key="ScenarioKeyTypeError">Scenario Key 형식의 오류입니다.</s:String>
     <s:String x:Key="StrategyTypeError">Strategy 형식의 오류입니다.</s:String>
+    <s:String x:Key="CueTypeError">Cue 형식의 오류입니다.</s:String>
     <s:String x:Key="SignalFormulaTypeError">Signal Formula 형식의 오류입니다.</s:String>
     <s:String x:Key="OrderTypeError">Order 형식의 오류입니다.</s:String>
     

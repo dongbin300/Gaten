@@ -6,38 +6,53 @@ namespace Gaten.Stock.MercuryEditor.Editor
     {
         public static string[] Data =
         {
+            // Basic Keyword
             "asset",
             "period",
             "interval",
             "target",
-            "model",
+
+            // Trading Model
             "scenario",
             "strategy",
+            "cue",
             "signal",
             "order",
+
+            // Order
             "long",
             "short",
+            "open",
+            "close",
             "limit",
             "market",
+
+            // Trade & Position
             "roe",
+            "seed",
+            "balance",
+            "balancesymbol",
+            "position",
+
+            // Indicator
             "ma",
             "ema",
             "bb",
             "ri",
             "rsi",
             "macd",
-            "seed",
-            "balance",
-            "asset",
-            "balancesymbol",
-            "open",
-            "close",
-            "candle",
             "hist",
             "upper",
             "lower",
             "sma",
 
+            // Candle
+            "candle",
+            "high",
+            "low",
+            "volume",
+
+            // Symbol
             "BTCUSDT",
             "ETHUSDT",
             "BCHUSDT",

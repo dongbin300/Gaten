@@ -3,6 +3,7 @@
 using Gaten.Net.Stock.MercuryTradingModel.Elements;
 using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
 using Gaten.Net.Stock.MercuryTradingModel.Scenarios;
+using Gaten.Net.Stock.MercuryTradingModel.Signals;
 using Gaten.Net.Stock.MercuryTradingModel.Strategies;
 
 namespace Gaten.Net.Stock.MercuryTradingModel.TradingModels
@@ -14,13 +15,35 @@ namespace Gaten.Net.Stock.MercuryTradingModel.TradingModels
         public TimeSpan Period { get; set; }
         public KlineInterval Interval { get; set; }
         public IList<string> Targets { get; set; } = new List<string>();
-        public IList<IScenario> Scenarios { get; set; } = new List<IScenario>();
         public IList<ChartElement> ChartElements { get; set; } = new List<ChartElement>();
         public IList<NamedElement> NamedElements { get; set; } = new List<NamedElement>();
+        public IList<IScenario> Scenarios { get; set; } = new List<IScenario>();
 
         public MercuryBackTestTradingModel()
         {
 
+        }
+
+        public void AddCue(string scenarioName, string strategyName, ICue cue)
+        {
+            var scenario = Scenarios.FirstOrDefault(s => s.Name.Equals(scenarioName));
+            if (scenario == null)
+            {
+                Scenarios.Add(
+                new Scenario(scenarioName)
+                    .AddStrategy(new Strategy(strategyName, cue))
+                    );
+                return;
+            }
+
+            var strategy = scenario.Strategies.FirstOrDefault(s => s.Name.Equals(strategyName));
+            if (strategy == null)
+            {
+                scenario.AddStrategy(new Strategy(strategyName, cue));
+                return;
+            }
+
+            strategy.Cue = cue;
         }
 
         public void AddSignal(string scenarioName, string strategyName, ISignal signal)

@@ -21,39 +21,53 @@
 		<Span color="System" begin="#" />
 
 		<Keywords fontWeight="bold" foreground="Blue">
+			<!-- Basic Keyword -->
 			<Word>asset</Word>
 			<Word>period</Word>
 			<Word>interval</Word>
 			<Word>target</Word>
-			<Word>model</Word>
+
+			<!-- Trading Model -->
 			<Word>scenario</Word>
 			<Word>strategy</Word>
+			<Word>cue</Word>
 			<Word>signal</Word>
 			<Word>order</Word>
+
+			<!-- Order -->
 			<Word>long</Word>
 			<Word>short</Word>
+			<Word>open</Word>
+			<Word>close</Word>
 			<Word>limit</Word>
 			<Word>market</Word>
+
+			<!-- Trade & Position -->
 			<Word>roe</Word>
+			<Word>seed</Word>
+			<Word>balance</Word>
+			<Word>balancesymbol</Word>
+			<Word>position</Word>
+
+			<!-- Indicator -->
 			<Word>ma</Word>
 			<Word>ema</Word>
 			<Word>bb</Word>
 			<Word>ri</Word>
 			<Word>rsi</Word>
 			<Word>macd</Word>
-			<Word>seed</Word>
-			<Word>balance</Word>
-			<Word>asset</Word>
-			<Word>balancesymbol</Word>
-			<Word>open</Word>
-			<Word>close</Word>
-			<Word>position</Word>
-			<Word>candle</Word>
 			<Word>hist</Word>
 			<Word>upper</Word>
 			<Word>lower</Word>
 			<Word>sma</Word>
 
+			<!-- Candle -->
+			<Word>candle</Word>
+			<Word>high</Word>
+			<Word>low</Word>
+			<Word>volume</Word>
+
+			<!-- Symbol -->
 			<Word>BTCUSDT</Word>
 			<Word>ETHUSDT</Word>
 			<Word>BCHUSDT</Word>

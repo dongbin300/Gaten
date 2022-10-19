@@ -56,49 +56,6 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Signals
                 },
                 _ => false
             };
-
-            //var position = asset.Position.Value.Convert<double>();
-            //var rsi = chart.RSI.Rsi;
-            //var ri = chart.RI.Ri;
-
-            //return formula switch
-            //{
-            //    ComparisonFormula x => x.Element1 switch
-            //    {
-            //        ChartElementType.position => x.Comparison switch
-            //        {
-            //            Comparison.Equal => position == x.Element2,
-            //            Comparison.NotEqual => position != x.Element2,
-            //            Comparison.LessThan => position < x.Element2,
-            //            Comparison.LessThanOrEqual => position <= x.Element2,
-            //            Comparison.GreaterThan => position > x.Element2,
-            //            Comparison.GreaterThanOrEqual => position >= x.Element2,
-            //            _ => false
-            //        },
-            //        ChartElementType.rsi => x.Comparison switch
-            //        {
-            //            Comparison.Equal => rsi == x.Element2,
-            //            Comparison.NotEqual => rsi != x.Element2,
-            //            Comparison.LessThan => rsi < x.Element2,
-            //            Comparison.LessThanOrEqual => rsi <= x.Element2,
-            //            Comparison.GreaterThan => rsi > x.Element2,
-            //            Comparison.GreaterThanOrEqual => rsi >= x.Element2,
-            //            _ => false
-            //        },
-            //        ChartElementType.ri => x.Comparison switch
-            //        {
-            //            Comparison.Equal => ri == x.Element2,
-            //            Comparison.NotEqual => ri != x.Element2,
-            //            Comparison.LessThan => ri < x.Element2,
-            //            Comparison.LessThanOrEqual => ri <= x.Element2,
-            //            Comparison.GreaterThan => ri > x.Element2,
-            //            Comparison.GreaterThanOrEqual => ri >= x.Element2,
-            //            _ => false
-            //        },
-            //        _ => false
-            //    },
-            //    _ => false
-            //};
         }
     }
 }

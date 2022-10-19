@@ -20,9 +20,9 @@
     <s:String x:Key="ScenarioTypeError">Error in scenario type.</s:String>
     <s:String x:Key="ScenarioKeyTypeError">Error in scenario key type.</s:String>
     <s:String x:Key="StrategyTypeError">Error in strategy type.</s:String>
+    <s:String x:Key="CueTypeError">Error in cue type.</s:String>
     <s:String x:Key="SignalFormulaTypeError">Error in signal formula type.</s:String>
     <s:String x:Key="OrderTypeError">Error in order type.</s:String>
-    
 
     <s:String x:Key="Restore">Restore</s:String>
     <s:String x:Key="Move">Move</s:String>

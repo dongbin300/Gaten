@@ -49,11 +49,31 @@ namespace Gaten.Stock.MarinerX.Bots
                 {
                     foreach (var strategy in scenario.Strategies)
                     {
-                        if (strategy.Signal.IsFlare(asset, info))
+                        // No cue, just check signal
+                        if (strategy.Cue == null)
                         {
-                            TradeLog.Append(strategy.Order.Run(asset, info));
-                            TradeLog.Append(" by " + strategy.Name + " : ");
-                            TradeLog.Append(strategy.Signal.Formula.ToString() + Environment.NewLine);
+                            if (strategy.Signal.IsFlare(asset, info))
+                            {
+                                TradeLog.Append(strategy.Order.Run(asset, info));
+                                TradeLog.Append(" by " + strategy.Name + " : ");
+                                TradeLog.Append(strategy.Signal.Formula.ToString() + Environment.NewLine);
+                            }
+                        }
+                        // At first, check cue and then check signal.
+                        // If the signal is not raised in time, the life is consumed and the cue flare disappears.
+                        else
+                        {
+                            if (strategy.Cue.CheckFlare(asset, info))
+                            {
+                                TradeLog.Append(strategy.Cue.ToString() + Environment.NewLine);
+                                if (strategy.Signal.IsFlare(asset, info))
+                                {
+                                    TradeLog.Append(strategy.Order.Run(asset, info));
+                                    TradeLog.Append(" by " + strategy.Name + " : ");
+                                    TradeLog.Append(strategy.Signal.Formula.ToString() + Environment.NewLine);
+                                    strategy.Cue.Expire();
+                                }
+                            }
                         }
                     }
                 }

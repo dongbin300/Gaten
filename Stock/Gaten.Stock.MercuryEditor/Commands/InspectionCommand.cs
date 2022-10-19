@@ -38,15 +38,6 @@ namespace Gaten.Stock.MercuryEditor.Commands
             }
 
             Delegater.SetEditorStatusText(Delegater.CurrentLanguageDictionary["InspectionComplete"].ToString());
-
-            if (!Delegater.CheckSave())
-            {
-                return;
-            }
-            editor.Clear();
-            TmFile.CurrentFilePath = string.Empty;
-            TmFile.IsSaved = true;
-            Delegater.RefreshFileName();
         }
     }
 }

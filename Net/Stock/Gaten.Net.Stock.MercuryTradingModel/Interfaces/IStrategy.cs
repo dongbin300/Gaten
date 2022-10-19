@@ -1,10 +1,9 @@
-﻿using Newtonsoft.Json;
-
-namespace Gaten.Net.Stock.MercuryTradingModel.Interfaces
+﻿namespace Gaten.Net.Stock.MercuryTradingModel.Interfaces
 {
     public interface IStrategy
     {
         public string Name { get; set; }
+        public ICue? Cue { get; set; }
         public ISignal Signal { get; set; }
         public IOrder Order { get; set; }
     }
