@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
-using System;
 
 namespace Gaten.Net.Extensions
 {
@@ -185,6 +184,17 @@ namespace Gaten.Net.Extensions
         {
             string[] data = GetOnlyFileName(path).Split('[');
             return data[0].Trim();
+        }
+
+        /// <summary>
+        /// Venom
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string GetLowestDirectory(this string path)
+        {
+            string[] data = path.Split('\\');
+            return data[^2];
         }
 
         /// <summary>

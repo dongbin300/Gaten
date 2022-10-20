@@ -1,0 +1,22 @@
+﻿<Window x:Class="Gaten.Windows.MintPanda.Contents.NetPack"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gaten.Windows.MintPanda.Contents"
+        mc:Ignorable="d"
+        Title="NetPack" Height="700" Width="600"
+        Style="{StaticResource ContentWindow}" WindowStartupLocation="CenterScreen" MouseDown="Window_MouseDown">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="400"/>
+        </Grid.RowDefinitions>
+            <TextBox Grid.Row="0" x:Name="SearchTextBox" TextChanged="SearchTextBox_TextChanged" />
+            <ListBox Grid.Row="1" x:Name="ProjectListBox" DisplayMemberPath="Name" SelectedValuePath="Path" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                     MouseDoubleClick="ProjectListBox_MouseDoubleClick"/>
+            <TextBox Grid.Row="3" x:Name="ResultTextBox" Height="Auto" IsReadOnly="True" TextWrapping="Wrap" VerticalContentAlignment="Top" VerticalScrollBarVisibility="Auto"/>
+    </Grid>
+</Window>

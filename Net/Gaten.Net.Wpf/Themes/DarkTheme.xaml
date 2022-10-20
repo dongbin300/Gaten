@@ -482,7 +482,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="#121315" />
+                            <Setter TargetName="border" Property="Background" Value="#3D3D3D" />
                         </Trigger>
                         <!--<DataTrigger Binding="{Binding IsEnabled}" Value="True">
                             <Setter TargetName="text" Property="Opacity" Value="1.0"/>

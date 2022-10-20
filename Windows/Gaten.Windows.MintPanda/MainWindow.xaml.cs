@@ -3,6 +3,7 @@ using Gaten.Net.Network;
 using Gaten.Net.Windows;
 using Gaten.Net.Windows.Forms;
 using Gaten.Net.Wpf;
+using Gaten.Windows.MintPanda.Utils;
 
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,9 @@ namespace Gaten.Windows.MintPanda
             try
             {
                 InitializeComponent();
+
+                MintPandaPathManager.Init();
+
                 Boot.RegisterStartProgram("MintPanda", Environment.ProcessPath ?? "");
                 systemMonitorWindow.Show();
 

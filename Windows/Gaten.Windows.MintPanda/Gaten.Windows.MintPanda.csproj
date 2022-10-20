@@ -76,6 +76,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="Cake.Powershell" Version="2.0.0" />
 	  <PackageReference Include="System.Management" Version="6.0.0" />
 	</ItemGroup>
 

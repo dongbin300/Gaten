@@ -113,6 +113,7 @@ namespace Gaten.Windows.MintPanda
                     case "209": WindowUtil.ToggleWindow<WinSplit>(WinSplitButton); break;
                     case "210": WindowUtil.ToggleWindow<ColorPick>(ColorPickButton); break;
                     case "211": WindowUtil.ToggleWindow<Dictionary>(DictionaryButton); break;
+                    case "212": WindowUtil.ToggleWindow<NetPack>(NetPackButton); break;
                 }
             }
             catch (Exception ex)

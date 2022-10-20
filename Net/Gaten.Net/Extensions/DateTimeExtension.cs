@@ -21,5 +21,15 @@
         {
             return dateTime.ToString("yyyy_MM_dd_HH_mm_ss");
         }
+
+        /// <summary>
+        /// yyyyMMddHHmmss
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static string ToSimpleFileName(this DateTime dateTime)
+        {
+            return dateTime.ToString("yyyyMMddHHmmss");
+        }
     }
 }
