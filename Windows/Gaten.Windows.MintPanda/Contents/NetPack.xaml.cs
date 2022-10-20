@@ -82,14 +82,17 @@ namespace Gaten.Windows.MintPanda.Contents
         {
             try
             {
+                // Release using PowerShell
                 var projectFullName = ProjectListBox.SelectedValue.ToString();
                 string projectDirectory = projectFullName?.GetDirectory() ?? string.Empty;
                 var result = PowerShellUtil.Run(@$"dotnet publish {projectFullName} -c Release");
+                var outputPath = result.Split("->")[^1].Trim();
                 ResultTextBox.Text = result;
 
-                var releaseDirectories = Directory.GetDirectories(projectDirectory.Down("bin/Release"));
-                var files = Directory.GetFiles(releaseDirectories[0].Down("publish"), string.Empty, SearchOption.AllDirectories);
+                // Collect released files
+                var files = Directory.GetFiles(outputPath, string.Empty, SearchOption.AllDirectories);
 
+                // Zipping
                 var zipPath = GPath.Desktop.Down($"{projectFullName?.GetOnlyFileName()}_{DateTime.Now.ToSimpleFileName()}.zip");
                 using var fileStream = new FileStream(zipPath, FileMode.Create, FileAccess.ReadWrite);
                 using var zipArchive = new ZipArchive(fileStream, ZipArchiveMode.Create);
