@@ -1,0 +1,21 @@
+﻿<Window x:Class="Gaten.Game.InferTranslation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gaten.Game.InferTranslation"
+        mc:Ignorable="d"
+        Title="가튼맨의 번역게임" Height="600" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <ListBox x:Name="TextListBox" ScrollViewer.CanContentScroll="False">
+            
+        </ListBox>
+
+        <TextBox Grid.Row="1" x:Name="InputTextBox" KeyDown="InputTextBox_KeyDown" />
+    </Grid>
+</Window>

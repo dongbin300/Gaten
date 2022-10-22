@@ -26,10 +26,10 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Cues
             Life = life;
         }
 
-        public virtual bool CheckFlare(Asset asset, ChartInfo chart)
+        public virtual bool CheckFlare(Asset asset, ChartInfo chart, ChartInfo prevChart)
         {
             var formula = new Signal(Formula);
-            if (formula.IsFlare(asset, chart))
+            if (formula.IsFlare(asset, chart, prevChart))
             {
                 CurrentLife = Life;
                 return true;

@@ -12,7 +12,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Formulae
             ">=" => Comparison.GreaterThanOrEqual,
             "=" => Comparison.Equal,
             "!=" => Comparison.NotEqual,
-            _ => Comparison.NotEqual
+            _ => Comparison.None
         };
 
         public static string ComparisonToString(Comparison comparison) => comparison switch
@@ -23,7 +23,21 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Formulae
             Comparison.GreaterThanOrEqual => ">=",
             Comparison.Equal => "=",
             Comparison.NotEqual => "!=",
-            _ => "!=",
+            _ => "",
+        };
+
+        public static Cross ToCross(string data) => data switch
+        {
+            "++" => Cross.GoldenCross,
+            "--" => Cross.DeadCross,
+            _ => Cross.None
+        };
+
+        public static string CrossToString(Cross cross) => cross switch
+        {
+            Cross.GoldenCross => "++",
+            Cross.DeadCross => "--",
+            _ => ""
         };
     }
 }

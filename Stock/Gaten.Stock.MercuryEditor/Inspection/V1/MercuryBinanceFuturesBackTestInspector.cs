@@ -357,18 +357,27 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                     var logicSegments2 = signalValue.Split('|').Select(x => x.Trim()).ToArray();
                     if (logicSegments2.Length == 1)
                     {
-                        var segments1 = signalValue.SplitKeep(new string[] { ">=", "<=", "!=" }).Select(x => x.Trim()).ToArray();
-                        if (segments1.Length == 1)
+                        var crossSegments1 = signalValue.Split("++").Select(x => x.Trim()).ToArray();
+                        if(crossSegments1.Length == 1)
                         {
-                            var segments2 = signalValue.SplitKeep(new string[] { ">", "<", "=" }).Select(x => x.Trim()).ToArray();
-                            if (segments2.Length == 1)
+                            var crossSegments2 = signalValue.Split("--").Select(x => x.Trim()).ToArray();
+                            if (crossSegments2.Length == 1)
                             {
-                                return null;
+                                var segments1 = signalValue.SplitKeep(new string[] { ">=", "<=", "!=" }).Select(x => x.Trim()).ToArray();
+                                if (segments1.Length == 1)
+                                {
+                                    var segments2 = signalValue.SplitKeep(new string[] { ">", "<", "=" }).Select(x => x.Trim()).ToArray();
+                                    if (segments2.Length == 1)
+                                    {
+                                        return null;
+                                    }
+                                    return ParseComparisonFormula(segments2);
+                                }
+                                return ParseComparisonFormula(segments1);
                             }
-
-                            return ParseComparisonFormula(segments2);
+                            return ParseDeadCrossFormula(crossSegments2);
                         }
-                        return ParseComparisonFormula(segments1);
+                        return ParseGoldenCrossFormula(crossSegments1);
                     }
                     return new OrFormula(ParseFormula(logicSegments2[0]), ParseFormula(logicSegments2[1]));
                 }
@@ -389,6 +398,48 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                 var element2 = ParseElement(formulaSegments[2]);
 
                 return new ComparisonFormula(element1, comparison, element2);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// candle.close ++ ema,60
+        /// ema,60 ++ ema,120
+        /// </summary>
+        /// <param name="crossSegments"></param>
+        /// <returns></returns>
+        private IFormula? ParseGoldenCrossFormula(string[] crossSegments)
+        {
+            try
+            {
+                var element1 = ParseElement(crossSegments[0]);
+                var element2 = ParseElement(crossSegments[1]);
+
+                return new CrossFormula(element1, Cross.GoldenCross, element2);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// candle.close -- ema,60
+        /// ema,60 -- ema,120
+        /// </summary>
+        /// <param name="crossSegments"></param>
+        /// <returns></returns>
+        private IFormula? ParseDeadCrossFormula(string[] crossSegments)
+        {
+            try
+            {
+                var element1 = ParseElement(crossSegments[0]);
+                var element2 = ParseElement(crossSegments[1]);
+
+                return new CrossFormula(element1, Cross.DeadCross, element2);
             }
             catch
             {
@@ -420,7 +471,7 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                 else
                 {
                     var chartElement = new ChartElement(segment);
-                    if (chartElement.IsDefaultElement)
+                    if (chartElement.IsBaseElement)
                     {
                         TradingModel.ChartElements.Add(chartElement);
                     }

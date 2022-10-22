@@ -6,6 +6,6 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Interfaces
     public interface ISignal
     {
         public IFormula Formula { get; set; }
-        public abstract bool IsFlare(Asset asset, ChartInfo chart);
+        public abstract bool IsFlare(Asset asset, ChartInfo chart, ChartInfo prevChart);
     }
 }

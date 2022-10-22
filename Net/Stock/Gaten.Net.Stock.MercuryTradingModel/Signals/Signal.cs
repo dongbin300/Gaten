@@ -32,15 +32,16 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Signals
             };
         }
 
-        public virtual bool IsFlare(Asset asset, ChartInfo chart) => Formula switch
+        public virtual bool IsFlare(Asset asset, ChartInfo chart, ChartInfo prevChart) => Formula switch
         {
-            ComparisonFormula x => IsFlare(x, asset, chart),
-            AndFormula x => IsFlare(x.Formula1, asset, chart) && IsFlare(x.Formula2, asset, chart),
-            OrFormula x => IsFlare(x.Formula1, asset, chart) || IsFlare(x.Formula2, asset, chart),
+            ComparisonFormula x => IsFlare(x, asset, chart, prevChart),
+            CrossFormula x => IsFlare(x, asset, chart, prevChart),
+            AndFormula x => IsFlare(x.Formula1, asset, chart, prevChart) && IsFlare(x.Formula2, asset, chart, prevChart),
+            OrFormula x => IsFlare(x.Formula1, asset, chart, prevChart) || IsFlare(x.Formula2, asset, chart, prevChart),
             _ => false
         };
 
-        private bool IsFlare(IFormula? formula, Asset asset, ChartInfo chart)
+        private bool IsFlare(IFormula? formula, Asset asset, ChartInfo chart, ChartInfo prevChart)
         {
             return formula switch
             {
@@ -52,6 +53,12 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Signals
                     Comparison.LessThanOrEqual => GetElementValue(x.Element1, chart) <= GetElementValue(x.Element2, chart),
                     Comparison.GreaterThan => GetElementValue(x.Element1, chart) > GetElementValue(x.Element2, chart),
                     Comparison.GreaterThanOrEqual => GetElementValue(x.Element1, chart) >= GetElementValue(x.Element2, chart),
+                    _ => false
+                },
+                CrossFormula x => x.Cross switch
+                {
+                    Cross.GoldenCross => GetElementValue(x.Element1, prevChart) <= GetElementValue(x.Element2, prevChart) && GetElementValue(x.Element1, chart) >= GetElementValue(x.Element2, chart),
+                    Cross.DeadCross => GetElementValue(x.Element1, prevChart) >= GetElementValue(x.Element2, prevChart) && GetElementValue(x.Element1, chart) <= GetElementValue(x.Element2, chart),
                     _ => false
                 },
                 _ => false

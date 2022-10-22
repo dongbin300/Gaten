@@ -3,22 +3,16 @@ using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
 
 using Newtonsoft.Json;
 
+using static Gaten.Net.Stock.MercuryTradingModel.Indicators.IndicatorBaseValue;
+
 namespace Gaten.Net.Stock.MercuryTradingModel.Elements
 {
     public class ChartElement : IElement
     {
-        private static readonly decimal MaPeriodDefault = 60;
-        private static readonly decimal RsiPeriodDefault = 14;
-        private static readonly decimal BollingerBandsPeriodDefault = 20;
-        private static readonly decimal BollingerBandsStandardDeviationDefault = 2.0m;
-        private static readonly decimal MacdFastPeriodDefault = 12;
-        private static readonly decimal MacdSlowPeriodDefault = 26;
-        private static readonly decimal MacdSignalPeriodDefault = 9;
-
         public ChartElementType ElementType { get; set; } = ChartElementType.None;
         public decimal[] Parameters { get; set; } = new decimal[4];
         [JsonIgnore]
-        public bool IsDefaultElement { get; set; }
+        public bool IsBaseElement { get; set; }
 
         public ChartElement()
         {
@@ -39,39 +33,39 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Elements
                 segments[0] = segments[0].Replace('.', '_');
                 ElementType = (ChartElementType)Enum.Parse(typeof(ChartElementType), segments[0]);
 
-                // default element
+                // base element
                 if (segments.Length == 1)
                 {
-                    IsDefaultElement = true;
+                    IsBaseElement = true;
                     switch (ElementType)
                     {
                         case ChartElementType.ma:
                         case ChartElementType.ema:
-                            Parameters[0] = MaPeriodDefault;
+                            Parameters[0] = MaPeriod;
                             return;
 
                         case ChartElementType.ri:
                         case ChartElementType.rsi:
-                            Parameters[0] = RsiPeriodDefault;
+                            Parameters[0] = RsiPeriod;
                             return;
 
                         case ChartElementType.bb_sma:
                         case ChartElementType.bb_upper:
                         case ChartElementType.bb_lower:
-                            Parameters[0] = BollingerBandsPeriodDefault;
-                            Parameters[1] = BollingerBandsStandardDeviationDefault;
+                            Parameters[0] = BollingerBandsPeriod;
+                            Parameters[1] = BollingerBandsStandardDeviation;
                             return;
 
                         case ChartElementType.macd_macd:
                         case ChartElementType.macd_signal:
                         case ChartElementType.macd_hist:
-                            Parameters[0] = MacdFastPeriodDefault;
-                            Parameters[1] = MacdSlowPeriodDefault;
-                            Parameters[2] = MacdSignalPeriodDefault;
+                            Parameters[0] = MacdFastPeriod;
+                            Parameters[1] = MacdSlowPeriod;
+                            Parameters[2] = MacdSignalPeriod;
                             return;
 
                         default:
-                            IsDefaultElement = false;
+                            IsBaseElement = false;
                             return;
                     }
                 }

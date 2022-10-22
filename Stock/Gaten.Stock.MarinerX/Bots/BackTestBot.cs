@@ -1,25 +1,43 @@
-﻿using Gaten.Net.Stock.MercuryTradingModel.Assets;
+﻿using Binance.Net.Enums;
+
+using Gaten.Net.Stock.MercuryTradingModel.Assets;
+using Gaten.Net.Stock.MercuryTradingModel.Charts;
+using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
 using Gaten.Net.Stock.MercuryTradingModel.Intervals;
+using Gaten.Net.Stock.MercuryTradingModel.Strategies;
 using Gaten.Net.Stock.MercuryTradingModel.TradingModels;
+using Gaten.Net.Wpf;
 using Gaten.Net.Wpf.Models;
 using Gaten.Stock.MarinerX.Charts;
 using Gaten.Stock.MarinerX.Interfaces;
+using Gaten.Stock.MarinerX.Views;
 
 using System;
 using System.Text;
 
 namespace Gaten.Stock.MarinerX.Bots
 {
+    public record BackTestTrade(DateTime time, IStrategy strategy, PositionSide side);
     public class BackTestBot : IBot
     {
         public MercuryBackTestTradingModel TradingModel { get; set; } = new();
         public StringBuilder TradeLog { get; set; } = new();
         public Worker Worker { get; set; } = new();
+        public ChartWindow ChartViewer { get; set; } = default!;
+        public bool IsShowChart { get; set; }
 
-        public BackTestBot(MercuryBackTestTradingModel tradingModel, Worker worker)
+        public BackTestBot(MercuryBackTestTradingModel tradingModel, Worker worker, bool isShowChart = false)
         {
             TradingModel = tradingModel;
             Worker = worker;
+            IsShowChart = isShowChart;
+            if (IsShowChart)
+            {
+                DispatcherService.Invoke(() =>
+                {
+                    ChartViewer = new ChartWindow();
+                });
+            }
         }
 
         public string Run()
@@ -41,10 +59,25 @@ namespace Gaten.Stock.MarinerX.Bots
             charts.CalculateIndicators(TradingModel.ChartElements, TradingModel.NamedElements);
 
             // Back test start!
-            charts.Select(TradingModel.StartTime);
+            ChartInfo? info = default!;
+            var info0 = charts.Select(TradingModel.StartTime);
+            bool first = true;
             Worker.For(0, tickCount, 1, (i) =>
             {
-                var info = charts.Next();
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    info0 = info;
+                }
+                info = charts.Next();
+                if (IsShowChart)
+                {
+                    ChartViewer.AddChartInfo(info);
+                }
+
                 foreach (var scenario in TradingModel.Scenarios)
                 {
                     foreach (var strategy in scenario.Strategies)
@@ -52,32 +85,56 @@ namespace Gaten.Stock.MarinerX.Bots
                         // No cue, just check signal
                         if (strategy.Cue == null)
                         {
-                            if (strategy.Signal.IsFlare(asset, info))
+                            if (strategy.Signal.IsFlare(asset, info, info0))
                             {
-                                TradeLog.Append(strategy.Order.Run(asset, info));
+                                var tradeString = strategy.Order.Run(asset, info);
+                                TradeLog.Append(tradeString);
                                 TradeLog.Append(" by " + strategy.Name + " : ");
                                 TradeLog.Append(strategy.Signal.Formula.ToString() + Environment.NewLine);
+
+                                ChartViewer.AddTradeInfo(new BackTestTrade(
+                                    info.DateTime,
+                                    strategy,
+                                    tradeString.Contains("Buy") ? PositionSide.Long :
+                                    tradeString.Contains("Sell") ? PositionSide.Short : PositionSide.Both
+                                    ));
                             }
                         }
                         // At first, check cue and then check signal.
                         // If the signal is not raised in time, the life is consumed and the cue flare disappears.
                         else
                         {
-                            if (strategy.Cue.CheckFlare(asset, info))
+                            if (strategy.Cue.CheckFlare(asset, info, info0))
                             {
                                 TradeLog.Append(strategy.Cue.ToString() + Environment.NewLine);
-                                if (strategy.Signal.IsFlare(asset, info))
+                                if (strategy.Signal.IsFlare(asset, info, info0))
                                 {
-                                    TradeLog.Append(strategy.Order.Run(asset, info));
+                                    var tradeString = strategy.Order.Run(asset, info);
+                                    TradeLog.Append(tradeString);
                                     TradeLog.Append(" by " + strategy.Name + " : ");
                                     TradeLog.Append(strategy.Signal.Formula.ToString() + Environment.NewLine);
                                     strategy.Cue.Expire();
+
+                                    ChartViewer.AddTradeInfo(new BackTestTrade(
+                                    info.DateTime,
+                                    strategy,
+                                    tradeString.Contains("Buy") ? PositionSide.Long :
+                                    tradeString.Contains("Sell") ? PositionSide.Short : PositionSide.Both
+                                    ));
                                 }
                             }
                         }
                     }
                 }
             }, ProgressBarDisplayOptions.Count | ProgressBarDisplayOptions.Percent | ProgressBarDisplayOptions.TimeRemaining);
+
+            if (TradeLog.ToString().Length < 4)
+            {
+                return "-NO TRADING--NO TRADING--NO TRADING--NO TRADING-\n" +
+                    "-NO TRADING--NO TRADING--NO TRADING--NO TRADING-\n" +
+                    "-NO TRADING--NO TRADING--NO TRADING--NO TRADING-\n" +
+                    "-NO TRADING--NO TRADING--NO TRADING--NO TRADING-\n";
+            }
 
             return TradeLog.ToString();
         }

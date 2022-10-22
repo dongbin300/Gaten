@@ -11,6 +11,7 @@ using Gaten.Stock.MarinerX.Apis;
 using Gaten.Stock.MarinerX.Bots;
 using Gaten.Stock.MarinerX.Charts;
 using Gaten.Stock.MarinerX.Indicators;
+using Gaten.Stock.MarinerX.Views;
 
 using Newtonsoft.Json;
 
@@ -110,9 +111,15 @@ namespace Gaten.Stock.MarinerX
             var menu4 = new ToolStripMenuItem("백테스트");
             foreach (var file in tmBackTestFiles)
             {
-                menu4.DropDownItems.Add(new ToolStripMenuItem(file.MenuString, null, BackTestBotRunEvent, file.ToString()));
+                menu4.DropDownItems.Add(new ToolStripMenuItem(file.MenuString, null, BackTestBotRunEvent, file.ToString() + "|+|false"));
+            }
+            var menu41 = new ToolStripMenuItem("백테스트 차트");
+            foreach (var file in tmBackTestFiles)
+            {
+                menu41.DropDownItems.Add(new ToolStripMenuItem(file.MenuString, null, BackTestBotRunEvent, file.ToString() + "|+|true"));
             }
             menuStrip.Items.Add(menu4);
+            menuStrip.Items.Add(menu41);
             menuStrip.Items.Add(new ToolStripSeparator());
             var menu5 = new ToolStripMenuItem("테스트");
             menu5.DropDownItems.Add(new ToolStripMenuItem("RI Histogram", null, RiHistogramEvent));
@@ -124,138 +131,7 @@ namespace Gaten.Stock.MarinerX
             trayIcon.ContextMenuStrip = menuStrip;
         }
 
-        private void RiHistogramEvent(object? sender, EventArgs e)
-        {
-            try
-            {
-                IndicatorHistogram.GetRiHistogram("BTCUSDT", KlineInterval.FiveMinutes);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void MercuryEditorOpenEvent(object? sender, EventArgs e)
-        {
-            try
-            {
-                GProcess.Start("MercuryEditor.exe");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void MercurySimpleEditorOpenEvent(object? sender, EventArgs e)
-        {
-            try
-            {
-                GProcess.Start("MercuryEditor.exe", "simple");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void BackTestBotRunEvent(object? sender, EventArgs e)
-        {
-            if (sender is not ToolStripMenuItem menuItem)
-            {
-                return;
-            }
-
-            var menuNameSegments = menuItem.Name.Split("|+|");
-            var jsonString = GFile.Read(menuNameSegments[0]);
-            var result = JsonConvert.DeserializeObject<MercuryBackTestTradingModel>(jsonString, new JsonSerializerSettings
-            {
-                TypeNameHandling = TypeNameHandling.Auto,
-                NullValueHandling = NullValueHandling.Ignore
-            });
-
-            progressView.Show();
-            var worker = new Worker()
-            {
-                ProgressBar = progressView.ProgressBar,
-                Action = BackTestBotRun,
-                Arguments = result
-            };
-            worker.Start();
-        }
-
-        public static void BackTestBotRun(Worker worker, object? obj)
-        {
-            BackTestBot? bot = default!;
-            try
-            {
-                if (obj is not MercuryBackTestTradingModel model)
-                {
-                    DispatcherService.Invoke(() =>
-                    {
-                        progressView.Hide();
-                    });
-                    return;
-                }
-
-                bot = new BackTestBot(model, worker);
-                var result = bot.Run();
-                DispatcherService.Invoke(() =>
-                {
-                    progressView.Hide();
-                });
-
-                if (result.Length < 32)
-                {
-                    throw new Exception(result);
-                }
-
-                var path = GPath.Desktop.Down("MarinerX", $"BackTest_{DateTime.Now.ToStandardFileName()}.txt");
-                GFile.Write(path, result);
-
-                GProcess.Start(path);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-
-                var path = GPath.Desktop.Down("MarinerX", $"BackTest_Error_{DateTime.Now.ToStandardFileName()}.txt");
-                GFile.Write(path, bot.TradeLog.ToString());
-
-                GProcess.Start(path);
-            }
-        }
-
-        public static void Extract1DCandleEvent(object? sender, EventArgs e)
-        {
-            progressView.Show();
-            var worker = new Worker()
-            {
-                ProgressBar = progressView.ProgressBar,
-                Action = Extract1DCandle
-            };
-            worker.Start();
-        }
-
-        public static void Extract1DCandle(Worker worker, object? obj)
-        {
-            try
-            {
-                ChartLoader.ExtractCandle(KlineInterval.OneDay, worker);
-                DispatcherService.Invoke(() =>
-                {
-                    progressView.Hide();
-                });
-
-                MessageBox.Show("바이낸스 1일봉 데이터 추출 완료");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
+        #region 데이터 수집
         public static void GetBinanceSymbolDataEvent(object? sender, EventArgs e)
         {
             try
@@ -307,6 +183,37 @@ namespace Gaten.Stock.MarinerX
             }
         }
 
+        public static void Extract1DCandleEvent(object? sender, EventArgs e)
+        {
+            progressView.Show();
+            var worker = new Worker()
+            {
+                ProgressBar = progressView.ProgressBar,
+                Action = Extract1DCandle
+            };
+            worker.Start();
+        }
+
+        public static void Extract1DCandle(Worker worker, object? obj)
+        {
+            try
+            {
+                ChartLoader.ExtractCandle(KlineInterval.OneDay, worker);
+                DispatcherService.Invoke(() =>
+                {
+                    progressView.Hide();
+                });
+
+                MessageBox.Show("바이낸스 1일봉 데이터 추출 완료");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        #endregion
+
+        #region 데이터 로드
         record ChartDataType(string symbol, KlineInterval interval, bool isExternal);
 
         public static void LoadChartDataEvent(object? sender, EventArgs e, string symbol, KlineInterval interval, bool external = false)
@@ -353,10 +260,140 @@ namespace Gaten.Stock.MarinerX
                 MessageBox.Show(ex.Message);
             }
         }
+        #endregion
 
+        #region Mercury Editor
+        private void MercuryEditorOpenEvent(object? sender, EventArgs e)
+        {
+            try
+            {
+                GProcess.Start("MercuryEditor.exe");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void MercurySimpleEditorOpenEvent(object? sender, EventArgs e)
+        {
+            try
+            {
+                GProcess.Start("MercuryEditor.exe", "simple");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        #endregion
+
+        #region 백테스트
+        record BackTestParameter(MercuryBackTestTradingModel? model, bool isShowChart);
+
+        private void BackTestBotRunEvent(object? sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem menuItem)
+            {
+                return;
+            }
+
+            var menuNameSegments = menuItem.Name.Split("|+|");
+            var jsonString = GFile.Read(menuNameSegments[0]);
+            var isShowChart = bool.Parse(menuNameSegments[3]);
+            var result = JsonConvert.DeserializeObject<MercuryBackTestTradingModel>(jsonString, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto,
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
+            progressView.Show();
+            var worker = new Worker()
+            {
+                ProgressBar = progressView.ProgressBar,
+                Action = BackTestBotRun,
+                Arguments = new BackTestParameter(result, isShowChart)
+            };
+            worker.Start();
+        }
+
+        public static void BackTestBotRun(Worker worker, object? obj)
+        {
+            BackTestBot? bot = default!;
+            try
+            {
+                if (obj is not BackTestParameter param)
+                {
+                    DispatcherService.Invoke(() =>
+                    {
+                        progressView.Hide();
+                    });
+                    return;
+                }
+
+                if (param.model == null)
+                {
+                    throw new Exception("BackTest Trading Model Null");
+                }
+
+                bot = new BackTestBot(param.model, worker, param.isShowChart);
+                var result = bot.Run();
+                DispatcherService.Invoke(() =>
+                {
+                    progressView.Hide();
+                });
+
+                if (result.Length < 32)
+                {
+                    throw new Exception(result);
+                }
+
+                var path = GPath.Desktop.Down("MarinerX", $"BackTest_{DateTime.Now.ToStandardFileName()}.txt");
+                GFile.Write(path, result);
+
+                if (param.isShowChart)
+                {
+                    DispatcherService.Invoke(() =>
+                    {
+                        bot.ChartViewer.Show();
+                    });
+                }
+                else
+                {
+                    GProcess.Start(path);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+                var path = GPath.Desktop.Down("MarinerX", $"BackTest_Error_{DateTime.Now.ToStandardFileName()}.txt");
+                GFile.Write(path, bot.TradeLog.ToString());
+
+                GProcess.Start(path);
+            }
+        }
+        #endregion
+
+        #region 테스트
+        private void RiHistogramEvent(object? sender, EventArgs e)
+        {
+            try
+            {
+                IndicatorHistogram.GetRiHistogram("BTCUSDT", KlineInterval.FiveMinutes);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        #endregion
+
+        #region Exit
         private void Exit(object? sender, EventArgs e)
         {
             Environment.Exit(0);
         }
+        #endregion
     }
 }
