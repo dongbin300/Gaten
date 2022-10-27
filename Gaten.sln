@@ -332,7 +332,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Study.GaussianProcess
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Study.InferNet", "Study\Gaten.Study.InferNet\Gaten.Study.InferNet.csproj", "{6B17B688-13CD-4590-94F0-DEB4A82E100D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.Game.InferTranslation", "Game\Gaten.Game.InferTranslation\Gaten.Game.InferTranslation.csproj", "{96AA4E8D-5BB1-4E63-B7AE-C3F987063B47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Game.InferTranslation", "Game\Gaten.Game.InferTranslation\Gaten.Game.InferTranslation.csproj", "{96AA4E8D-5BB1-4E63-B7AE-C3F987063B47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.NetFramework.Init", "NetFramework\Gaten.NetFramework.Init\Gaten.NetFramework.Init.csproj", "{775FBC8F-D141-4F9E-8D85-4799A470D932}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1964,6 +1966,18 @@ Global
 		{96AA4E8D-5BB1-4E63-B7AE-C3F987063B47}.Release|x64.Build.0 = Release|Any CPU
 		{96AA4E8D-5BB1-4E63-B7AE-C3F987063B47}.Release|x86.ActiveCfg = Release|Any CPU
 		{96AA4E8D-5BB1-4E63-B7AE-C3F987063B47}.Release|x86.Build.0 = Release|Any CPU
+		{775FBC8F-D141-4F9E-8D85-4799A470D932}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{775FBC8F-D141-4F9E-8D85-4799A470D932}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{775FBC8F-D141-4F9E-8D85-4799A470D932}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{775FBC8F-D141-4F9E-8D85-4799A470D932}.Debug|x64.Build.0 = Debug|Any CPU
+		{775FBC8F-D141-4F9E-8D85-4799A470D932}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{775FBC8F-D141-4F9E-8D85-4799A470D932}.Debug|x86.Build.0 = Debug|Any CPU
+		{775FBC8F-D141-4F9E-8D85-4799A470D932}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{775FBC8F-D141-4F9E-8D85-4799A470D932}.Release|Any CPU.Build.0 = Release|Any CPU
+		{775FBC8F-D141-4F9E-8D85-4799A470D932}.Release|x64.ActiveCfg = Release|Any CPU
+		{775FBC8F-D141-4F9E-8D85-4799A470D932}.Release|x64.Build.0 = Release|Any CPU
+		{775FBC8F-D141-4F9E-8D85-4799A470D932}.Release|x86.ActiveCfg = Release|Any CPU
+		{775FBC8F-D141-4F9E-8D85-4799A470D932}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2118,6 +2132,7 @@ Global
 		{542154F1-B27A-4302-95E3-A0567AC90C10} = {41776F7A-DFC6-4386-B5B0-7EE49458C378}
 		{6B17B688-13CD-4590-94F0-DEB4A82E100D} = {41776F7A-DFC6-4386-B5B0-7EE49458C378}
 		{96AA4E8D-5BB1-4E63-B7AE-C3F987063B47} = {1651B9F0-835F-4308-974A-657AEDE416BE}
+		{775FBC8F-D141-4F9E-8D85-4799A470D932} = {93C85291-1ADC-4C49-9F83-1FD507DB93B4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9E22E9A6-DD7D-4809-95DD-888B759F780F}
