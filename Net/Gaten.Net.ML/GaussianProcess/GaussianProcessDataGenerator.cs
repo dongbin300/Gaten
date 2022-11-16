@@ -1,19 +1,17 @@
-﻿using Microsoft.ML.Probabilistic.Models;
-using Microsoft.ML.Probabilistic.Math;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+// https://github.com/dotnet/infer/tree/main/src/Examples/RobustGaussianProcess
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Distributions.Kernels;
-using System;
-using System.Linq;
+using Microsoft.ML.Probabilistic.Math;
+using Microsoft.ML.Probabilistic.Models;
 
-namespace RobustGaussianProcess
+using Vector = Microsoft.ML.Probabilistic.Math.Vector;
+
+namespace Gaten.Net.ML.GaussianProcess
 {
-    /// <summary>
-    /// Class to generate synthetic data
-    /// 1) randomly sample a 1D function from a GP;
-    /// 2) pick a random subset of 'numData' points;
-    /// 3) pick a further random proportion 'propCorrupt' of 'numData' to corrupt according to a uniform distribution with a range of -1 to 1
-    /// </summary>
-    class GaussianProcessDataGenerator
+    public class GaussianProcessDataGenerator
     {
         public static (Vector[] dataX, double[] dataY) GenerateRandomData(int numData, double proportionCorrupt)
         {
@@ -22,21 +20,21 @@ namespace RobustGaussianProcess
             Random rng = new Random(randomSeed);
             Rand.Restart(randomSeed);
 
-            InferenceEngine engine = Util.GetInferenceEngine();
+            InferenceEngine engine = Utils.GetInferenceEngine();
 
             // The points to evaluate
-            Vector[] randomInputs = Util.VectorRange(0, 1, numData, null);
+            Vector[] randomInputs = Utils.VectorRange(0, 1, numData, null);
 
             var gaussianProcessGenerator = new GaussianProcessRegressor(randomInputs);
 
             // The basis
-            Vector[] basis = Util.VectorRange(0, 1, 6, rng);
+            Vector[] basis = Utils.VectorRange(0, 1, 6, rng);
 
             // The kernel
             var kf = new SummationKernel(new SquaredExponential(-1)) + new WhiteNoise();
 
             // Fill in the sparse GP prior
-            GaussianProcess gp = new GaussianProcess(new ConstantFunction(0), kf);
+            Microsoft.ML.Probabilistic.Distributions.GaussianProcess gp = new Microsoft.ML.Probabilistic.Distributions.GaussianProcess(new ConstantFunction(0), kf);
             gaussianProcessGenerator.Prior.ObservedValue = new SparseGP(new SparseGPFixed(gp, basis));
 
             // Infer the posterior Sparse GP, and sample a random function from it
@@ -56,7 +54,7 @@ namespace RobustGaussianProcess
                 {
                     double sign = rng.NextDouble() > 0.5 ? 1 : -1;
                     double distance = rng.NextDouble() * 1;
-                    post = (sign * distance) + post;
+                    post = sign * distance + post;
                 }
 
                 randomOutputs[i] = post;

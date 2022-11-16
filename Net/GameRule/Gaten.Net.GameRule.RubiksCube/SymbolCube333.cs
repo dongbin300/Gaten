@@ -1,9 +1,6 @@
 ﻿namespace Gaten.Net.GameRule.RubiksCube
 {
-    /// <summary>
-    /// 3*3*3 큐브
-    /// </summary>
-    public class RubiksCube333
+    public class SymbolCube333
     {
         private const int SideCount = 6;
         /// <summary>
@@ -14,13 +11,19 @@
         /// 4 - B
         /// 5 - D
         /// </summary>
-        public List<RubiksCube333Side> Sides;
+        public SymbolCube333Side[] Sides;
 
-        public RubiksCube333()
+        public SymbolCube333()
         {
-            Sides = new List<RubiksCube333Side>(SideCount);
-            for (int i = 0; i < SideCount; i++)
-                Sides.Add(new RubiksCube333Side((PieceColor)(i + 1)));
+            Sides = new SymbolCube333Side[]
+            {
+                new SymbolCube333Side('U'),
+                new SymbolCube333Side('L'),
+                new SymbolCube333Side('F'),
+                new SymbolCube333Side('R'),
+                new SymbolCube333Side('B'),
+                new SymbolCube333Side('D')
+            };
         }
 
         public void Scramble(int length)
@@ -30,7 +33,7 @@
 
         public string GenerateScrambleCode(int length)
         {
-            Random r = new Random();
+            var r = new Random();
             string code = string.Empty;
             string codeNum = "RLUDFB";
             int c1 = -1, c2;
@@ -132,11 +135,9 @@
             switch (faceRotation)
             {
                 case FaceRotation.Right:
-                    General.PieceColorRotate(RotateDirection.Left, this, 2, 2, 5, 2, 4, 6, 0, 2);
-                    General.PieceColorRotate(RotateDirection.Left, this, 2, 5, 5, 5, 4, 3, 0, 5);
-                    General.PieceColorRotate(RotateDirection.Left, this, 2, 8, 5, 8, 4, 0, 0, 8);
-                    General.PieceColorRotate(RotateDirection.Left, this, 3, 0, 3, 6, 3, 8, 3, 2);
-                    General.PieceColorRotate(RotateDirection.Left, this, 3, 3, 3, 7, 3, 5, 3, 1);
+                    General.SymbolRotate(RotateDirection.Left, this, 3, 0, 3, 2, 3, 8, 3, 6);
+                    General.SymbolRotate(RotateDirection.Left, this, 3, 1, 3, 5, 3, 7, 3, 3);
+                    General.SymbolRotate(RotateDirection.Left, this, 0, 8, 4, , 2, 7, 5, 3);
                     break;
                 case FaceRotation.CounterRight:
                     General.PieceColorRotate(RotateDirection.Right, this, 2, 2, 5, 2, 4, 6, 0, 2);
@@ -220,12 +221,24 @@
 
         public void Draw()
         {
-            Sides[0].Draw(20, 2);
-            Sides[1].Draw(14, 5);
-            Sides[2].Draw(20, 5);
-            Sides[3].Draw(26, 5);
-            Sides[4].Draw(32, 5);
-            Sides[5].Draw(20, 8);
+            Console.SetCursorPosition(21, 3);
+            Console.Write("U");
+            Console.SetCursorPosition(27, 3);
+            Console.Write("L");
+            Console.SetCursorPosition(33, 3);
+            Console.Write("F");
+            Console.SetCursorPosition(39, 3);
+            Console.Write("R");
+            Console.SetCursorPosition(45, 3);
+            Console.Write("B");
+            Console.SetCursorPosition(51, 3);
+            Console.Write("D");
+            Sides[0].Draw(20, 5);
+            Sides[1].Draw(26, 5);
+            Sides[2].Draw(32, 5);
+            Sides[3].Draw(38, 5);
+            Sides[4].Draw(44, 5);
+            Sides[5].Draw(50, 5);
             Console.SetCursorPosition(40, 10);
         }
     }

@@ -1,10 +1,14 @@
-﻿using Microsoft.ML.Probabilistic.Distributions;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+// https://github.com/dotnet/infer/tree/main/src/Examples/RobustGaussianProcess
+using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Models;
 
 using Range = Microsoft.ML.Probabilistic.Models.Range;
 
-namespace RobustGaussianProcess
+namespace Gaten.Net.ML.GaussianProcess
 {
     public class GaussianProcessRegressor
     {

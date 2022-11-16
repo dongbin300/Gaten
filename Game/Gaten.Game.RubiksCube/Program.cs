@@ -40,7 +40,8 @@ namespace Gaten.Game.RubiksCube
 
         private static void Refresh()
         {
-            cube.Draw();
+            cube.DrawSymbol();
+            //cube.Draw();
         }
     }
 }

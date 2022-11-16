@@ -1,5 +1,6 @@
 ﻿using Microsoft.ML.Probabilistic.Algorithms;
 using Microsoft.ML.Probabilistic.Distributions;
+using Microsoft.ML.Probabilistic.Distributions.Kernels;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Models;
 
@@ -81,14 +82,52 @@ for (double i = 0; i <= 4; i += 0.1)
 //Console.WriteLine("output=\n" + engine.Infer(ytest));
 
 
-Variable<string> str1 = Variable.StringUniform().Named("str1");
-Variable<string> str2 = Variable.StringUniform().Named("str2");
+//Variable<string> str1 = Variable.StringUniform().Named("str1");
+//Variable<string> str2 = Variable.StringUniform().Named("str2");
 
-Variable<string> text = (str1 + " " + str2).Named("text");
-text.ObservedValue = "DB 초기화 및 인증 관련 서비스";
+//Variable<string> text = (str1 + " " + str2).Named("text");
+//text.ObservedValue = "DB 초기화 및 인증 관련 서비스";
 
-var engine = new InferenceEngine();
+//var engine = new InferenceEngine();
 
-Console.WriteLine("str1: {0}", engine.Infer(str1));
-Console.WriteLine("str2: {0}", engine.Infer(str2));
+//Console.WriteLine("str1: {0}", engine.Infer(str1));
+//Console.WriteLine("str2: {0}", engine.Infer(str2));
 
+
+Vector[] inputs = new Vector[] {
+  Vector.FromArray(new double[2] {0, 0}),
+  Vector.FromArray(new double[2] {0, 1}),
+  Vector.FromArray(new double[2] {1, 0}),
+  Vector.FromArray(new double[2] {0, 0.2}),
+  Vector.FromArray(new double[2] {1.5, 0}),
+};
+bool[] outputs = { false, false, true, false, true };
+
+VariableArray<Vector> x = Variable.Observed(inputs).Named("x");
+Range j = x.Range.Named("j");
+VariableArray<bool> y = Variable.Observed(outputs, j).Named("y");
+Variable<SparseGP> p = Variable.New<SparseGP>().Named("p");
+Variable<IFunction> f = Variable<IFunction>.Random(p).Named("f");
+
+GaussianProcess gp = new GaussianProcess(new ConstantFunction(0), new SquaredExponential(0));
+Vector[] basis = new Vector[] {
+  Vector.FromArray(new double[2] {0.2, 0.2}),
+  Vector.FromArray(new double[2] {0.2, 0.8}),
+  Vector.FromArray(new double[2] {0.8, 0.2}),
+  Vector.FromArray(new double[2] {0.8, 0.8})
+};
+p.ObservedValue = new SparseGP(new SparseGPFixed(gp, basis));
+
+Variable<double> score = Variable.FunctionEvaluate(f, x[j]);
+y[j] = (Variable.GaussianFromMeanAndVariance(score, 0.1) > 0);
+
+InferenceEngine engine = new InferenceEngine(new ExpectationPropagation());
+SparseGP sgp = engine.Infer<SparseGP>(f);
+
+for (int i = 0; i < outputs.Length; i++)
+{
+    Gaussian post = sgp.Marginal(inputs[i]);
+    double postMean = post.GetMean();
+    string comment = (outputs[i] == (postMean > 0.0)) ? "correct" : "incorrect";
+    Console.WriteLine("f({0}) = {1} ({2})", inputs[i], post, comment);
+}

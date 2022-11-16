@@ -7,10 +7,10 @@
         xmlns:wpf="clr-namespace:Gaten.Net.Wpf.Controls;assembly=Gaten.Net.Wpf"
         mc:Ignorable="d"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
-        Title="MainWindow" Height="100" Width="300">
+        Title="MainWindow" Height="430" Width="640">
 
     <StackPanel>
-        <TextBlock x:Name="InfoText" Text="텍스트입니다." Foreground="Yellow"/>
         <Button x:Name="InfoButton" Content="버튼입니다." Foreground="Red" Click="InfoButton_Click"/>
+        <Image x:Name="TopImage" Width="640" Height="360"/>
     </StackPanel>
 </Window>

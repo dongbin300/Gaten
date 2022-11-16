@@ -1,7 +1,10 @@
-﻿using Gaten.Net.Wpf;
-using Gaten.Net.Wpf.Controls;
-
+﻿using System;
+using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 using System.Windows;
+using Gaten.Net.Wpf.Extensions;
 
 namespace Gaten.Study.TestWpf
 {
@@ -10,20 +13,22 @@ namespace Gaten.Study.TestWpf
     /// </summary>
     public partial class MainWindow : Window
     {
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool PrintWindow(IntPtr hwnd, IntPtr hDC, uint nFlags);
+
         public MainWindow()
         {
             InitializeComponent();
-
-            var a1 = WindowsSystem.ScreenWidth;
-            var a2 = WindowsSystem.ScreenHeight;
-            var a3 = WindowsSystem.ScreenNoTaskBarHeight;
-            var a4 = WindowsSystem.TaskBarHeight;
         }
 
         private void InfoButton_Click(object sender, RoutedEventArgs e)
         {
-            var mb = new SimpleMessageBox("123456?", this, SimpleMessageBoxType.YesNoCancel);
-            var bb = mb.ShowDialog();
+            var handle = Process.GetProcessesByName("notepad")[0].MainWindowHandle;
+            var sc = new ScreenCapture();
+            var img = sc.CaptureWindow(handle);
+            TopImage.Source = img.ToImageSource();
+            sc.CaptureWindowToFile(handle, "test.png", ImageFormat.Png);
         }
     }
 }

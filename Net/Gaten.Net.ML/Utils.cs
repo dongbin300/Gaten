@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+// https://github.com/dotnet/infer/tree/main/src/Examples/RobustGaussianProcess
 using Microsoft.ML.Probabilistic.Algorithms;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Models;
@@ -17,9 +18,9 @@ using System.Threading;
 using Microsoft.ML.Probabilistic.Distributions;
 #endif
 
-namespace RobustGaussianProcess
+namespace Gaten.Net.ML
 {
-    class Util
+    public class Utils
     {
         // Train Gaussian Process on the small 'Auto Insurance in Sweden' dataset
         // The insurance.csv file can be found in the Data directory

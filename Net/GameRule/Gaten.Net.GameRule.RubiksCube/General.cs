@@ -64,5 +64,26 @@
                     break;
             }
         }
+
+        public static void SymbolRotate(RotateDirection d, SymbolCube333 cube, int s1, int p1, int s2, int p2, int s3, int p3, int s4, int p4)
+        {
+            switch (d)
+            {
+                case RotateDirection.Left:
+                    var temp1 = cube.Sides[s1].Symbols[p1];
+                    cube.Sides[s1].Symbols[p1] = cube.Sides[s2].Symbols[p2];
+                    cube.Sides[s2].Symbols[p2] = cube.Sides[s3].Symbols[p3];
+                    cube.Sides[s3].Symbols[p3] = cube.Sides[s4].Symbols[p4];
+                    cube.Sides[s4].Symbols[p4] = temp1;
+                    break;
+                case RotateDirection.Right:
+                    var temp2 = cube.Sides[s4].Symbols[p4];
+                    cube.Sides[s4].Symbols[p4] = cube.Sides[s3].Symbols[p3];
+                    cube.Sides[s3].Symbols[p3] = cube.Sides[s2].Symbols[p2];
+                    cube.Sides[s2].Symbols[p2] = cube.Sides[s1].Symbols[p1];
+                    cube.Sides[s1].Symbols[p1] = temp2;
+                    break;
+            }
+        }
     }
 }
