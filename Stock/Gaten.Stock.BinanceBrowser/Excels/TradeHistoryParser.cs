@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Gaten.Stock.BinanceHelper
+namespace Gaten.Stock.BinanceBrowser.Excels
 {
-    internal class TradeHistoryParser
+    public class TradeHistoryParser
     {
         private static readonly string DefaultTargetPath = GPath.Desktop.Down("Export Trade History.xlsx");
         private const string TargetSheetName = "sheet1";
@@ -18,22 +18,20 @@ namespace Gaten.Stock.BinanceHelper
         private static readonly IDictionary<string, List<TradeHistory>> tradeHistoriesDict = new Dictionary<string, List<TradeHistory>>();
 
         private static int lastExcelSheetDataRow;
-        private static string currentTargetPath;
 
-        private void ClearHistory()
+        private static void ClearHistory()
         {
             tradeHistoriesList.Clear();
             tradeHistoriesDict.Clear();
         }
 
-        public void ParseContent(string targetPath = "")
+        public static List<TradeHistoryResult> ParseContent(string targetPath = "")
         {
             ClearHistory();
 
             if (string.IsNullOrEmpty(targetPath))
             {
                 targetPath = DefaultTargetPath;
-                currentTargetPath = DefaultTargetPath;
             }
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -73,51 +71,14 @@ namespace Gaten.Stock.BinanceHelper
                 tradeHistoriesDict[symbol].Add(tradeHistory);
             }
 
-            IEnumerable<TradeHistoryResult>? test = tradeHistoriesList
+            return tradeHistoriesList
                 .GroupBy(x => x.Symbol)
                 .Select(x => new TradeHistoryResult(
                     symbol: x.First().Symbol,
-                    fee: x.Sum(y => y.Fee),
+                    fee: Math.Round(x.Sum(y => y.Fee), Common.DecimalCount),
                     feeCoin: x.First().FeeCoin,
-                    realizedProfit: x.Sum(y => y.RealizedProfit)
-                    ));
-        }
-
-        private class TradeHistory
-        {
-            public string Symbol { get; set; }
-            public double Fee { get; set; }
-            public string FeeCoin { get; set; }
-            public double RealizedProfit { get; set; }
-
-            public TradeHistory(string symbol, double fee, string feeCoin, double realizedProfit)
-            {
-                Symbol = symbol;
-                Fee = fee;
-                FeeCoin = feeCoin;
-                RealizedProfit = realizedProfit;
-            }
-        }
-
-        private class TradeHistoryResult
-        {
-            public string Symbol { get; set; }
-            public double Fee { get; set; }
-            public string FeeCoin { get; set; }
-            public double RealizedProfit { get; set; }
-
-            public TradeHistoryResult(string symbol, double fee, string feeCoin, double realizedProfit)
-            {
-                Symbol = symbol;
-                Fee = fee;
-                FeeCoin = feeCoin;
-                RealizedProfit = realizedProfit;
-            }
-
-            public new string ToString()
-            {
-                return $"[{Symbol}] {RealizedProfit - Fee}{FeeCoin} ({RealizedProfit} - {Fee})";
-            }
-        }
+                    realizedProfit: Math.Round(x.Sum(y => y.RealizedProfit)
+                    , Common.DecimalCount))).ToList();
+        }        
     }
 }

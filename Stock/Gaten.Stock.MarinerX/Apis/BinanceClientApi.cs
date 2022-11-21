@@ -162,6 +162,14 @@ namespace Gaten.Stock.MarinerX.Apis
 
             return quotes;
         }
+
+        public static double GetCurrentBnbPrice()
+        {
+            var result = binanceClient.SpotApi.ExchangeData.GetCurrentAvgPriceAsync("BNBUSDT");
+            result.Wait();
+
+            return result.Result.Data.Price.Convert<double>();
+        }
         #endregion
 
         #region Account API

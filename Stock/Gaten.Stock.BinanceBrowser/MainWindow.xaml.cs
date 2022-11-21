@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Gaten.Net.IO;
+using Gaten.Stock.BinanceBrowser.Excels;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +26,17 @@ namespace Gaten.Stock.BinanceBrowser
         public MainWindow()
         {
             InitializeComponent();
+
+            var bnbText = GFile.ReadToArray(GResource.BinanceFuturesDataPath.Down("BNB.txt"));
+            Common.BnbPrice = double.Parse(bnbText[1]);
+        }
+
+        private void ExcelImportButton_Click(object sender, RoutedEventArgs e)
+        {
+            var result = TradeHistoryParser.ParseContent();
+            ResultDataGrid.ItemsSource = null;
+            ResultDataGrid.ItemsSource = result;
+
         }
     }
 }

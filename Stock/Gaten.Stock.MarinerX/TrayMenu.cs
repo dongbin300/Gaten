@@ -144,6 +144,11 @@ namespace Gaten.Stock.MarinerX
                 var symbolData = BinanceClientApi.GetFuturesSymbols();
                 symbolData.SaveCsvFile(GResource.BinanceFuturesDataPath.Down($"symbol_detail_{DateTime.Now:yyyy-MM-dd}.csv"));
 
+                var bnbPrice = BinanceClientApi.GetCurrentBnbPrice();
+                GFile.WriteByArray(
+                    GResource.BinanceFuturesDataPath.Down("BNB.txt"),
+                    new List<string> { DateTime.Now.ToStandardFileName(), bnbPrice.ToString() });
+
                 MessageBox.Show("바이낸스 심볼 데이터 수집 완료");
 
                 GProcess.Start(GResource.BinanceFuturesDataPath);
