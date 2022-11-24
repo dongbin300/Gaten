@@ -1,5 +1,10 @@
 ﻿using Gaten.Net.IO;
 
+using OpenQA.Selenium.DevTools;
+
+using Org.BouncyCastle.Asn1.X509.Qualified;
+using Org.BouncyCastle.Math.EC.Multiplier;
+
 using System.Data;
 using System.Reflection.Metadata.Ecma335;
 
@@ -60,5 +65,11 @@ namespace Gaten.Net.Extensions
 
             GFile.WriteByArray(path, contents);
         }
+
+        public static double StandardDeviation(this IEnumerable<int> values) => System.Math.Sqrt(values.Average(v => System.Math.Pow(v - values.Average(), 2)));
+        public static double StandardDeviation(this IEnumerable<long> values) => System.Math.Sqrt(values.Average(v => System.Math.Pow(v - values.Average(), 2)));
+        public static double StandardDeviation(this IEnumerable<float> values) => System.Math.Sqrt(values.Average(v => System.Math.Pow(v - values.Average(), 2)));
+        public static double StandardDeviation(this IEnumerable<double> values) => System.Math.Sqrt(values.Average(v => System.Math.Pow(v - values.Average(), 2)));
+        public static double StandardDeviation(this IEnumerable<decimal> values) => System.Math.Sqrt(values.Average(v => System.Math.Pow(decimal.ToDouble(v - values.Average()), 2)));
     }
 }

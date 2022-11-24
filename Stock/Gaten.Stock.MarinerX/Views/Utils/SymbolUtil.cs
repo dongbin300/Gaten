@@ -4,13 +4,13 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace Gaten.Stock.MarinerX.Utils
+namespace Gaten.Stock.MarinerX.Views.Utils
 {
     internal class SymbolUtil
     {
         public static DateTime GetStartDate(string symbol)
         {
-            var fileNames = new DirectoryInfo(GResource.BinanceFuturesDataPath.Down("1m", symbol)).GetFiles("*.csv").OrderBy(x=>x.Name);
+            var fileNames = new DirectoryInfo(GResource.BinanceFuturesDataPath.Down("1m", symbol)).GetFiles("*.csv").OrderBy(x => x.Name);
             return GetDate(fileNames.First().Name);
         }
 

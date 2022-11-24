@@ -26,7 +26,6 @@ namespace Gaten.Stock.MarinerX.Apis
     {
         #region Initialize
         static BinanceClient binanceClient = new();
-        static BinanceClient binanceJsonClient = new();
 
         /// <summary>
         /// 바이낸스 클라이언트 초기화
@@ -40,12 +39,6 @@ namespace Gaten.Stock.MarinerX.Apis
                 binanceClient = new BinanceClient(new BinanceClientOptions
                 {
                     ApiCredentials = new ApiCredentials(data[0], data[1])
-                });
-
-                binanceJsonClient = new BinanceClient(new BinanceClientOptions
-                {
-                    ApiCredentials = new ApiCredentials(data[0], data[1]),
-                    OutputOriginalData = true
                 });
             }
             catch (Exception ex)
@@ -290,6 +283,23 @@ namespace Gaten.Stock.MarinerX.Apis
                      x.CrossUnrealizedPnl
                     ))
                 .ToList();
+        }
+        #endregion
+
+        #region Leverage API
+        public static Dictionary<string, int> GetMaxLeverages()
+        {
+            Dictionary<string, int> results = new Dictionary<string, int>();
+
+            var result = binanceClient.UsdFuturesApi.Account.GetBracketsAsync();
+            result.Wait();
+
+            foreach(var d in result.Result.Data)
+            {
+                results.Add(d.Symbol, d.Brackets.Max(x=>x.InitialLeverage));
+            }
+
+            return results;
         }
         #endregion
 

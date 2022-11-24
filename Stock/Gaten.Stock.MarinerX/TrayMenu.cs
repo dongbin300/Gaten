@@ -82,13 +82,18 @@ namespace Gaten.Stock.MarinerX
             menuStrip = new ContextMenuStrip();
             menuStrip.Items.Add(new ToolStripMenuItem("MarinerX By Gaten", iconImage));
             menuStrip.Items.Add(new ToolStripSeparator());
+
             var menu1 = new ToolStripMenuItem("데이터 수집");
             menu1.DropDownItems.Add("Binance 심볼 데이터 수집", null, new EventHandler(GetBinanceSymbolDataEvent));
             menu1.DropDownItems.Add("Binance 1분봉 데이터 수집", null, new EventHandler(GetBinanceCandleDataEvent));
             menu1.DropDownItems.Add("Binance 1일봉 데이터 추출", null, new EventHandler(Extract1DCandleEvent));
             menuStrip.Items.Add(menu1);
+
             menuStrip.Items.Add(new ToolStripSeparator());
+
             var menu2 = new ToolStripMenuItem("1분봉 데이터 로드");
+            menuStrip.Items.Add(menu2);
+
             var menu3 = new ToolStripMenuItem("5분봉 데이터 로드");
             foreach (var symbol in new string[] {
                 "BTCUSDT",
@@ -102,17 +107,22 @@ namespace Gaten.Stock.MarinerX
                 menu2.DropDownItems.Add(new ToolStripMenuItem(symbol, null, new EventHandler((sender, e) => LoadChartDataEvent(sender, e, symbol, KlineInterval.OneMinute))));
                 menu3.DropDownItems.Add(new ToolStripMenuItem(symbol, null, new EventHandler((sender, e) => LoadChartDataEvent(sender, e, symbol, KlineInterval.FiveMinutes))));
             }
-            menuStrip.Items.Add(menu2);
             menuStrip.Items.Add(menu3);
+
             menuStrip.Items.Add(new ToolStripSeparator());
+
             menuStrip.Items.Add(new ToolStripMenuItem("Mercury Editor 열기", null, MercuryEditorOpenEvent));
+
             menuStrip.Items.Add(new ToolStripMenuItem("Mercury Simple Editor 열기", null, MercurySimpleEditorOpenEvent));
+
             menuStrip.Items.Add(new ToolStripSeparator());
+
             var menu4 = new ToolStripMenuItem("백테스트");
             foreach (var file in tmBackTestFiles)
             {
                 menu4.DropDownItems.Add(new ToolStripMenuItem(file.MenuString, null, BackTestBotRunEvent, file.ToString() + "|+|false"));
             }
+
             var menu41 = new ToolStripMenuItem("백테스트 차트");
             foreach (var file in tmBackTestFiles)
             {
@@ -120,11 +130,17 @@ namespace Gaten.Stock.MarinerX
             }
             menuStrip.Items.Add(menu4);
             menuStrip.Items.Add(menu41);
+
             menuStrip.Items.Add(new ToolStripSeparator());
+
             var menu5 = new ToolStripMenuItem("테스트");
             menu5.DropDownItems.Add(new ToolStripMenuItem("RI Histogram", null, RiHistogramEvent));
+            menu5.DropDownItems.Add(new ToolStripMenuItem("Check Volatility", null, CheckVolatilityEvent));
+            menu5.DropDownItems.Add(new ToolStripMenuItem("Check MarketCap", null, CheckMarketCapEvent));
             menuStrip.Items.Add(menu5);
+
             menuStrip.Items.Add(new ToolStripSeparator());
+
             menuStrip.Items.Add(new ToolStripMenuItem("종료", null, Exit));
 
             menuStrip.Items[0].Enabled = false;
@@ -386,6 +402,38 @@ namespace Gaten.Stock.MarinerX
             try
             {
                 IndicatorHistogram.GetRiHistogram("BTCUSDT", KlineInterval.FiveMinutes);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void CheckMarketCapEvent(object? sender, EventArgs e)
+        {
+            try
+            {
+                BinanceClientApi.GetMaxLeverages();
+                BinanceHttpApi.GetSymbolMarketCap();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void CheckVolatilityEvent(object? sender, EventArgs e)
+        {
+            try
+            {
+                var result = new Dictionary<string, decimal>();
+                var data = LocalStorageApi.GetAllOneDayQuotes();
+
+                foreach (var d in data)
+                {
+                    var list = d.Value.Select(x => Math.Round((x.High - x.Low) / x.Low * 100, 2)).ToList();
+                    result.Add(d.Key, Math.Round(list.Average(), 4));
+                }
             }
             catch (Exception ex)
             {

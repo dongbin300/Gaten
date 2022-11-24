@@ -1,5 +1,7 @@
 ﻿using Binance.Net.Enums;
 
+using CryptoExchange.Net.CommonObjects;
+
 using Gaten.Net.Extensions;
 using Gaten.Net.IO;
 using Gaten.Stock.MarinerX.Markets;
@@ -70,6 +72,57 @@ namespace Gaten.Stock.MarinerX.Apis
                 }
 
                 return quotes;
+            }
+            catch (FileNotFoundException)
+            {
+                throw;
+            }
+        }
+
+        public static List<Quote> GetOneDayQuotes(string symbol)
+        {
+            try
+            {
+                var data = File.ReadAllLines(GResource.BinanceFuturesDataPath.Down("1D", $"{symbol}.csv"));
+
+                var quotes = new List<Quote>();
+
+                foreach (var d in data)
+                {
+                    var e = d.Split(',');
+                    quotes.Add(new Quote
+                    {
+                        Date = DateTime.Parse(e[0]),
+                        Open = decimal.Parse(e[1]),
+                        High = decimal.Parse(e[2]),
+                        Low = decimal.Parse(e[3]),
+                        Close = decimal.Parse(e[4]),
+                        Volume = decimal.Parse(e[5])
+                    });
+                }
+
+                return quotes;
+            }
+            catch (FileNotFoundException)
+            {
+                throw;
+            }
+        }
+
+        public static Dictionary<string, List<Quote>> GetAllOneDayQuotes()
+        {
+            try
+            {
+                var result = new Dictionary<string, List<Quote>>();
+
+                var fileNames = Directory.GetFiles(GResource.BinanceFuturesDataPath.Down("1D"), "*.csv");
+                foreach (var fileName in fileNames)
+                {
+                    string symbol = fileName.GetOnlyFileName();
+                    result.Add(symbol, GetOneDayQuotes(symbol));
+                }
+
+                return result;
             }
             catch (FileNotFoundException)
             {
