@@ -137,6 +137,7 @@ namespace Gaten.Stock.MarinerX
             menu5.DropDownItems.Add(new ToolStripMenuItem("RI Histogram", null, RiHistogramEvent));
             menu5.DropDownItems.Add(new ToolStripMenuItem("Check Volatility", null, CheckVolatilityEvent));
             menu5.DropDownItems.Add(new ToolStripMenuItem("Check MarketCap", null, CheckMarketCapEvent));
+            menu5.DropDownItems.Add(new ToolStripMenuItem("Run Back Test Flask", null, RunBackTestFlaskEvent));
             menuStrip.Items.Add(menu5);
 
             menuStrip.Items.Add(new ToolStripSeparator());
@@ -434,6 +435,55 @@ namespace Gaten.Stock.MarinerX
                     var list = d.Value.Select(x => Math.Round((x.High - x.Low) / x.Low * 100, 2)).ToList();
                     result.Add(d.Key, Math.Round(list.Average(), 4));
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void RunBackTestFlaskEvent(object? sender, EventArgs e)
+        {
+            try
+            {
+                if (sender is not ToolStripMenuItem menuItem)
+                {
+                    return;
+                }
+
+                progressView.Show();
+                var worker = new Worker()
+                {
+                    ProgressBar = progressView.ProgressBar,
+                    Action = BackTestFlaskRun
+                };
+                worker.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public static void BackTestFlaskRun(Worker worker, object? obj)
+        {
+            try
+            {
+                var flask = new BackTestFlask(worker);
+                var result = flask.Run();
+                DispatcherService.Invoke(() =>
+                {
+                    progressView.Hide();
+                });
+
+                if (result.Length < 32)
+                {
+                    throw new Exception(result);
+                }
+
+                var path = GPath.Desktop.Down("MarinerX", $"BackTestFlask_{DateTime.Now.ToStandardFileName()}.txt");
+                GFile.Write(path, result);
+                GProcess.Start(path);
             }
             catch (Exception ex)
             {

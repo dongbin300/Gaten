@@ -5,7 +5,7 @@ using Gaten.Net.Stock.MercuryTradingModel.Charts;
 using Gaten.Net.Stock.MercuryTradingModel.Intervals;
 using Gaten.Net.Wpf.Models;
 using Gaten.Stock.MarinerX.Apis;
-using Gaten.Stock.MarinerX.Views.Utils;
+using Gaten.Stock.MarinerX.Utils;
 using Skender.Stock.Indicators;
 
 using System;

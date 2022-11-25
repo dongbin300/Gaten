@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace Gaten.Stock.MarinerX.Views.Utils
+namespace Gaten.Stock.MarinerX.Utils
 {
     internal class SymbolUtil
     {
