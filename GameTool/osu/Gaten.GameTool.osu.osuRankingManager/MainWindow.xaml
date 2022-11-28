@@ -5,16 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaten.GameTool.osu.osuRankingManager"
         mc:Ignorable="d"
-        Title="osu 랭킹 매니저" Height="230" Width="620" Loaded="Window_Loaded">
+        Title="osu 랭킹 매니저" Height="300" Width="620" Loaded="Window_Loaded">
     <DataGrid x:Name="RankingDataGrid" AutoGenerateColumns="False" IsReadOnly="True">
         <DataGrid.Columns>
-            <DataGridTextColumn Width="50" Header="랭크" Binding="{Binding Rank}"/>
-            <DataGridTextColumn Width="140" Header="닉네임" Binding="{Binding Nickname}"/>
-            <DataGridTextColumn Width="70" Header="플카" Binding="{Binding PlayCount}"/>
-            <DataGridTextColumn Width="100" Header="랭크스코어" Binding="{Binding RankScore}"/>
-            <DataGridTextColumn Width="70" Header="SS" Binding="{Binding SS}"/>
-            <DataGridTextColumn Width="70" Header="S" Binding="{Binding S}"/>
-            <DataGridTextColumn Width="70" Header="A" Binding="{Binding A}"/>
+            <DataGridTextColumn Width="5*" Header="랭크" Binding="{Binding Rank}"/>
+            <DataGridTextColumn Width="14*" Header="닉네임" Binding="{Binding Nickname}"/>
+            <DataGridTextColumn Width="7*" Header="플카" Binding="{Binding PlayCount}"/>
+            <DataGridTextColumn Width="10*" Header="랭크스코어" Binding="{Binding RankScore}"/>
+            <DataGridTextColumn Width="7*" Header="SS" Binding="{Binding SS}"/>
+            <DataGridTextColumn Width="7*" Header="S" Binding="{Binding S}"/>
+            <DataGridTextColumn Width="7*" Header="A" Binding="{Binding A}"/>
         </DataGrid.Columns>
     </DataGrid>
 </Window>

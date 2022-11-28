@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaten.Data.PasswordManager"
         mc:Ignorable="d"
-        Title="패스워드 매니저" Height="520" Width="970" Loaded="Window_Loaded">
+        Title="패스워드 매니저" Height="520" Width="1060" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
@@ -42,12 +42,12 @@
                               ScrollViewer.CanContentScroll="True"
                               ScrollViewer.VerticalScrollBarVisibility="Auto">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="100" Header="플랫폼" Binding="{Binding Platform}"/>
-                            <DataGridTextColumn Width="100" Header="계정설명" Binding="{Binding Description}"/>
-                            <DataGridTextColumn Width="180" Header="아이디" Binding="{Binding Id}"/>
-                            <DataGridTextColumn Width="120" Header="패스워드" Binding="{Binding Password}"/>
-                            <DataGridTextColumn Width="100" Header="2차패스워드" Binding="{Binding SecondPassword}"/>
-                            <DataGridTextColumn Width="150" Header="추가설명" Binding="{Binding AdditionalDescription}"/>
+                            <DataGridTextColumn Width="2*" Header="플랫폼" Binding="{Binding Platform}"/>
+                            <DataGridTextColumn Width="2*" Header="계정설명" Binding="{Binding Description}"/>
+                            <DataGridTextColumn Width="4*" Header="아이디" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Width="2*" Header="패스워드" Binding="{Binding Password}"/>
+                            <DataGridTextColumn Width="2*" Header="2차패스워드" Binding="{Binding SecondPassword}"/>
+                            <DataGridTextColumn Width="3*" Header="추가설명" Binding="{Binding AdditionalDescription}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

@@ -616,34 +616,44 @@
     <Style TargetType="{x:Type DataGridCell}">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Foreground" Value="#F6F6F6" />
-        <Setter Property="Background" Value="#5B5D60" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style TargetType="{x:Type DataGridRow}">
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="Height" Value="32" />
         <Setter Property="Foreground" Value="#F6F6F6" />
-        <Setter Property="Background" Value="#5B5D60" />
+        <Setter Property="Background" Value="#222" />
         <Style.Resources>
-            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#5B5D60" />
             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#00FFFF" />
         </Style.Resources>
     </Style>
 
     <Style TargetType="{x:Type DataGridColumnHeader}">
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="Height" Value="32" />
         <Setter Property="Foreground" Value="#F6F6F6" />
-        <Setter Property="Background" Value="#333" />
+        <Setter Property="Background" Value="#3BCF86" />
     </Style>
 
     <Style TargetType="{x:Type DataGrid}">
-        <Setter Property="Margin" Value="3" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Foreground" Value="#F6F6F6" />
         <Setter Property="Background" Value="#5B5D60" />
-        <Setter Property="HorizontalGridLinesBrush" Value="#F6F6F6" />
-        <Setter Property="VerticalGridLinesBrush" Value="#F6F6F6" />
-        <Setter Property="BorderBrush" Value="#F6F6F6" />
+        <Setter Property="HorizontalGridLinesBrush" Value="#3BCF86" />
+        <Setter Property="BorderBrush" Value="#999" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="GridLinesVisibility" Value="Horizontal" />
         <Setter Property="RowHeaderWidth" Value="0" />
     </Style>
     <!--#endregion-->
