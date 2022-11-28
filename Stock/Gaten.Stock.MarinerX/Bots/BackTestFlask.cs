@@ -7,7 +7,7 @@ using Gaten.Net.Stock.MercuryTradingModel.Elements;
 using Gaten.Net.Stock.MercuryTradingModel.Enums;
 using Gaten.Net.Stock.MercuryTradingModel.Intervals;
 using Gaten.Net.Stock.MercuryTradingModel.Maths;
-using Gaten.Net.Stock.MercuryTradingModel.TradingModels;
+using Gaten.Net.Stock.MercuryTradingModel.Trades;
 using Gaten.Net.Wpf;
 using Gaten.Net.Wpf.Models;
 using Gaten.Stock.MarinerX.Charts;
@@ -48,16 +48,9 @@ namespace Gaten.Stock.MarinerX.Bots
             }
         }
 
-        public string Run()
+        public List<BackTestTradeInfo>? Run(decimal _asset, string _symbol, KlineInterval _interval, DateTime _startTime, TimeSpan _period, double bandwidth, decimal profitRoe)
         {
-            decimal _asset = 100000;
-            string _symbol = "BTCUSDT";
-            KlineInterval _interval = KlineInterval.FiveMinutes;
-            DateTime _startTime = new(2022, 10, 1, 0, 0, 0);
-            TimeSpan _period = TimeSpan.FromDays(3);
-
-            double bandwidth = 1.0;
-            decimal profitRoe = 0.5m;
+            var trades = new List<BackTestTradeInfo>();
 
             Asset asset = new BackTestAsset(_asset, new Position());
             var tickCount = (int)(_period / _interval.ToTimeSpan()) + 1;
@@ -72,10 +65,10 @@ namespace Gaten.Stock.MarinerX.Bots
 
             // Named Element Init
             charts.CalculateIndicators(
-                new List<ChartElement>() { 
-                    new ChartElement("bb.sma"), 
+                new List<ChartElement>() {
+                    new ChartElement("bb.sma"),
                     new ChartElement($"bb.upper,20,{bandwidth}"),
-                    new ChartElement($"bb.lower,20,{bandwidth}") 
+                    new ChartElement($"bb.lower,20,{bandwidth}")
                 },
                 new List<NamedElement>());
 
@@ -107,10 +100,10 @@ namespace Gaten.Stock.MarinerX.Bots
                 info.Quote.Close > info.GetChartElementValue(ChartElementType.bb_sma) &&
                 info.Quote.Close < info.GetChartElementValue(ChartElementType.bb_upper))
                 {
-                    var orderResult = Order(asset, info, PositionSide.Long, OrderAmountType.Fixed, 5000);
-                    TradeLog.Append(orderResult.Item1 + "[Long Entry]" + Environment.NewLine);
+                    var trade = Order(asset, info, PositionSide.Long, OrderAmountType.Fixed, 5000, "Long Entry");
+                    trades.Add(trade);
                     isPositioning = true;
-                    entryPrice = orderResult.Item2.price;
+                    entryPrice = decimal.Parse(trade.Price);
                 }
                 // short signal
                 else if (!isPositioning &&
@@ -118,18 +111,18 @@ namespace Gaten.Stock.MarinerX.Bots
                 info.Quote.Close < info.GetChartElementValue(ChartElementType.bb_sma) &&
                 info.Quote.Close > info.GetChartElementValue(ChartElementType.bb_lower))
                 {
-                    var orderResult = Order(asset, info, PositionSide.Short, OrderAmountType.Fixed, 5000);
-                    TradeLog.Append(orderResult.Item1 + "[Short Entry]" + Environment.NewLine);
+                    var trade = Order(asset, info, PositionSide.Short, OrderAmountType.Fixed, 5000, "Short Entry");
+                    trades.Add(trade);
                     isPositioning = true;
-                    entryPrice = orderResult.Item2.price;
+                    entryPrice = decimal.Parse(trade.Price);
                 }
 
                 // Take profit when long position
-                if(isPositioning && asset.Position.Side == PositionSide.Long &&
+                else if (isPositioning && asset.Position.Side == PositionSide.Long &&
                 StockUtil.Roe(asset.Position.Side, entryPrice, info.Quote.High) >= profitRoe)
                 {
-                    var orderResult2 = Order(asset, info, PositionSide.Short, OrderAmountType.FixedSymbol, asset.Position.Value, true, StockUtil.GetPriceByRoe(asset.Position.Side, entryPrice, profitRoe));
-                    TradeLog.Append(orderResult2.Item1 + "[Take Profit]" + Environment.NewLine);
+                    var trade = Order(asset, info, PositionSide.Short, OrderAmountType.FixedSymbol, asset.Position.Value, "Take Profit", true, StockUtil.GetPriceByRoe(asset.Position.Side, entryPrice, profitRoe));
+                    trades.Add(trade);
                     isPositioning = false;
                     entryPrice = 0;
                 }
@@ -137,18 +130,18 @@ namespace Gaten.Stock.MarinerX.Bots
                 else if (isPositioning && asset.Position.Side == PositionSide.Short &&
                 StockUtil.Roe(asset.Position.Side, entryPrice, info.Quote.Low) >= profitRoe)
                 {
-                    var orderResult2 = Order(asset, info, PositionSide.Long, OrderAmountType.FixedSymbol, asset.Position.Value, true, StockUtil.GetPriceByRoe(asset.Position.Side, entryPrice, profitRoe));
-                    TradeLog.Append(orderResult2.Item1 + "[Take Profit]" + Environment.NewLine);
+                    var trade = Order(asset, info, PositionSide.Long, OrderAmountType.FixedSymbol, -asset.Position.Value, "Take Profit", true, StockUtil.GetPriceByRoe(asset.Position.Side, entryPrice, profitRoe));
+                    trades.Add(trade);
                     isPositioning = false;
                     entryPrice = 0;
                 }
 
                 // Stop loss when long position
-                if (isPositioning && asset.Position.Side == PositionSide.Long &&
+                else if (isPositioning && asset.Position.Side == PositionSide.Long &&
                 info.Quote.Low <= info.GetChartElementValue(ChartElementType.bb_lower))
                 {
-                    var orderResult3 = Order(asset, info, PositionSide.Short, OrderAmountType.FixedSymbol, asset.Position.Value, true, info.GetChartElementValue(ChartElementType.bb_lower).Value);
-                    TradeLog.Append(orderResult3.Item1 + "[Stop Loss]" + Environment.NewLine);
+                    var trade = Order(asset, info, PositionSide.Short, OrderAmountType.FixedSymbol, asset.Position.Value, "Stop Loss", true, info.GetChartElementValue(ChartElementType.bb_lower).Value);
+                    trades.Add(trade);
                     isPositioning = false;
                     entryPrice = 0;
                 }
@@ -156,27 +149,19 @@ namespace Gaten.Stock.MarinerX.Bots
                 else if (isPositioning && asset.Position.Side == PositionSide.Short &&
                 info.Quote.High >= info.GetChartElementValue(ChartElementType.bb_upper))
                 {
-                    var orderResult3 = Order(asset, info, PositionSide.Long, OrderAmountType.FixedSymbol, asset.Position.Value, true, info.GetChartElementValue(ChartElementType.bb_upper).Value);
-                    TradeLog.Append(orderResult3.Item1 + "[Stop Loss]" + Environment.NewLine);
+                    var trade = Order(asset, info, PositionSide.Long, OrderAmountType.FixedSymbol, -asset.Position.Value, "Stop Loss", true, info.GetChartElementValue(ChartElementType.bb_upper).Value);
+                    trades.Add(trade);
                     isPositioning = false;
                     entryPrice = 0;
                 }
             }, ProgressBarDisplayOptions.Count | ProgressBarDisplayOptions.Percent | ProgressBarDisplayOptions.TimeRemaining);
 
-            if (TradeLog.ToString().Length < 4)
-            {
-                return "-NO TRADING--NO TRADING--NO TRADING--NO TRADING-\n" +
-                    "-NO TRADING--NO TRADING--NO TRADING--NO TRADING-\n" +
-                    "-NO TRADING--NO TRADING--NO TRADING--NO TRADING-\n" +
-                    "-NO TRADING--NO TRADING--NO TRADING--NO TRADING-\n";
-            }
-
-            return TradeLog.ToString();
+            return trades;
         }
 
         public record OrderContent(PositionSide side, decimal price, decimal quantity);
 
-        public (string, OrderContent) Order(Asset asset, ChartInfo chart, PositionSide side, OrderAmountType orderType, decimal amount, bool isManualPrice = false, decimal manualPrice = 0)
+        public BackTestTradeInfo Order(Asset asset, ChartInfo chart, PositionSide side, OrderAmountType orderType, decimal amount, string tag = "", bool isManualPrice = false, decimal manualPrice = 0)
         {
             var price = isManualPrice ? manualPrice : chart.Quote.Close;
 
@@ -223,17 +208,15 @@ namespace Gaten.Stock.MarinerX.Bots
                 case PositionSide.Long:
                     var buyFee = Buy(asset, price, quantity);
                     var estimatedAsset = price * asset.Position.Value + asset.Balance;
-                    return ($"{chart.DateTime.ToStandardString()},Buy,{price},{quantity:#.##} (Fee {buyFee:#.##}USDT)" +
-                        $" | {asset.Balance:#.##} USDT, {asset.Position:#.##} {chart.BaseAsset} ({estimatedAsset:#.##}USDT?)", new OrderContent(side, price, quantity));
+                    return new BackTestTradeInfo(chart.Symbol, chart.DateTime.ToStandardString(), "Buy", $"{price:#.####}", $"{quantity:#.####}", $"{buyFee:#.##}", $"{asset.Balance:#.##}", $"{asset.Position:#.####}", chart.BaseAsset, $"{estimatedAsset:#.##} USDT", tag);
 
                 case PositionSide.Short:
                     var sellFee = Sell(asset, price, quantity);
                     var estimatedAsset2 = price * asset.Position.Value + asset.Balance;
-                    return ($"{chart.DateTime.ToStandardString()},Sell,{price},{quantity:#.##} (Fee {sellFee:#.##}USDT)" +
-                        $" | {asset.Balance:#.##} USDT, {asset.Position:#.##} {chart.BaseAsset} ({estimatedAsset2:#.##}USDT?)", new OrderContent(side, price, quantity));
+                    return new BackTestTradeInfo(chart.Symbol, chart.DateTime.ToStandardString(), "Sell", $"{price:#.####}", $"{quantity:#.####}", $"{sellFee:#.##}", $"{asset.Balance:#.##}", $"{asset.Position:#.####}", chart.BaseAsset, $"{estimatedAsset2:#.##} USDT", tag);
             }
 
-            return (string.Empty, new OrderContent(PositionSide.None, 0, 0));
+            return new BackTestTradeInfo("", "", "", "", "", "", "", "", "", "", "");
         }
 
         public decimal Buy(Asset asset, decimal price, decimal quantity)

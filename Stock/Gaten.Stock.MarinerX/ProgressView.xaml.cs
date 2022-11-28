@@ -17,5 +17,14 @@ namespace Gaten.Stock.MarinerX
             Width = WindowsSystem.ScreenWidth;
             Height = 20;
         }
+
+        public ProgressView(int top, int left, int width, int height)
+        {
+            InitializeComponent();
+            Top = top;
+            Left = left;
+            Width = width;
+            Height = height;
+        }
     }
 }

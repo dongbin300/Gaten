@@ -1,0 +1,64 @@
+﻿<Window x:Class="Gaten.Stock.MarinerX.Views.BackTestTradingHistoryView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gaten.Stock.MarinerX.Views"
+        mc:Ignorable="d"
+        Title="Back Test Trading History" Height="600" Width="1200">
+    <Window.Resources>
+        <Style TargetType="{x:Type DataGridCell}">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Foreground" Value="#F6F6F6" />
+            <Setter Property="Background" Value="#222" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <Style TargetType="{x:Type DataGridRow}">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Height" Value="32" />
+            <Setter Property="Foreground" Value="#F6F6F6" />
+            <Setter Property="Background" Value="#5B5D60" />
+            <Style.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#00FFFF" />
+            </Style.Resources>
+        </Style>
+
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Height" Value="26" />
+            <Setter Property="Foreground" Value="#F6F6F6" />
+            <Setter Property="Background" Value="#00B0F0" />
+        </Style>
+
+        <Style TargetType="{x:Type DataGrid}">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Foreground" Value="#F6F6F6" />
+            <Setter Property="Background" Value="#5B5D60" />
+            <Setter Property="HorizontalGridLinesBrush" Value="#F6F6F6" />
+            <Setter Property="VerticalGridLinesBrush" Value="#F6F6F6" />
+            <Setter Property="RowHeaderWidth" Value="0" />
+            <Setter Property="GridLinesVisibility" Value="Horizontal" />
+            <Setter Property="HorizontalGridLinesBrush" Value="#60C5F1" />
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <DataGrid x:Name="HistoryDataGrid" IsReadOnly="True" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" Width="100"/>
+                <DataGridTextColumn Header="Trade Time" Binding="{Binding TradeTime}" Width="150"/>
+                <DataGridTextColumn Header="Side" Binding="{Binding Side}" Width="60"/>
+                <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="1*"/>
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="1*"/>
+                <DataGridTextColumn Header="Fee" Binding="{Binding Fee}" Width="1*"/>
+                <DataGridTextColumn Header="Balance" Binding="{Binding Balance}" Width="1.2*"/>
+                <DataGridTextColumn Header="Position" Binding="{Binding Position}" Width="1*"/>
+                <DataGridTextColumn Header="Base Asset" Binding="{Binding BaseAsset}" Width="1*"/>
+                <DataGridTextColumn Header="Estimated Asset" Binding="{Binding EstimatedAsset}" Width="1.5*"/>
+                <DataGridTextColumn Header="Tag" Binding="{Binding Tag}" Width="2*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

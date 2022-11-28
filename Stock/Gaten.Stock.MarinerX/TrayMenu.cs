@@ -13,6 +13,8 @@ using Gaten.Stock.MarinerX.Charts;
 using Gaten.Stock.MarinerX.Indicators;
 using Gaten.Stock.MarinerX.Views;
 
+using MySqlX.XDevAPI.Common;
+
 using Newtonsoft.Json;
 
 using System;
@@ -20,7 +22,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Forms;
+
+using MessageBox = System.Windows.MessageBox;
 
 namespace Gaten.Stock.MarinerX
 {
@@ -29,11 +34,13 @@ namespace Gaten.Stock.MarinerX
         private NotifyIcon trayIcon;
         private static ContextMenuStrip menuStrip = new();
         private static ProgressView progressView = new();
+        private static ProgressView[] progressViews = new ProgressView[80];
         private string iconFileName = "Resources/Images/chart2.ico";
         private Image iconImage;
         private List<BackTestTmFile> tmBackTestFiles = new();
         private List<string> tmMockTradeFileNames = new();
         private List<string> tmRealTradeFileNames = new();
+        private List<string> backTestResultFileNames = new();
 
         public TrayMenu()
         {
@@ -60,6 +67,12 @@ namespace Gaten.Stock.MarinerX
             progressView = new ProgressView();
             progressView.Hide();
 
+            for (int i = 0; i < progressViews.Length; i++)
+            {
+                progressViews[i] = new ProgressView(i * 15, 0, (int)WindowsSystem.ScreenWidth, 15);
+                progressViews[i].Hide();
+            }
+
             RefreshTmFile();
             RefreshMenu();
         }
@@ -75,6 +88,7 @@ namespace Gaten.Stock.MarinerX
             tmBackTestFiles = Directory.GetFiles(TradingModelPath.InspectedBackTestDirectory).Select(x => new BackTestTmFile(x)).ToList();
             tmMockTradeFileNames = Directory.GetFiles(TradingModelPath.InspectedMockTradeDirectory).ToList();
             tmRealTradeFileNames = Directory.GetFiles(TradingModelPath.InspectedRealTradeDirectory).ToList();
+            backTestResultFileNames = Directory.GetFiles(GPath.Desktop.Down("MarinerX"), "*.csv").ToList();
         }
 
         public void RefreshMenu()
@@ -128,8 +142,16 @@ namespace Gaten.Stock.MarinerX
             {
                 menu41.DropDownItems.Add(new ToolStripMenuItem(file.MenuString, null, BackTestBotRunEvent, file.ToString() + "|+|true"));
             }
+
+            var menu42 = new ToolStripMenuItem("백테스트 결과");
+            foreach (var file in backTestResultFileNames)
+            {
+                menu42.DropDownItems.Add(new ToolStripMenuItem(file, null, BackTestResultViewEvent));
+            }
+
             menuStrip.Items.Add(menu4);
             menuStrip.Items.Add(menu41);
+            menuStrip.Items.Add(menu42);
 
             menuStrip.Items.Add(new ToolStripSeparator());
 
@@ -138,6 +160,7 @@ namespace Gaten.Stock.MarinerX
             menu5.DropDownItems.Add(new ToolStripMenuItem("Check Volatility", null, CheckVolatilityEvent));
             menu5.DropDownItems.Add(new ToolStripMenuItem("Check MarketCap", null, CheckMarketCapEvent));
             menu5.DropDownItems.Add(new ToolStripMenuItem("Run Back Test Flask", null, RunBackTestFlaskEvent));
+            menu5.DropDownItems.Add(new ToolStripMenuItem("Run Back Test Flask Multi", null, RunBackTestFlaskMultiEvent));
             menuStrip.Items.Add(menu5);
 
             menuStrip.Items.Add(new ToolStripSeparator());
@@ -395,6 +418,19 @@ namespace Gaten.Stock.MarinerX
                 GProcess.Start(path);
             }
         }
+
+        public static void BackTestResultViewEvent(object? sender, EventArgs e)
+        {
+            if(sender is not ToolStripMenuItem item)
+            {
+                return;
+            }
+
+            var fileName = item.Text;
+            var historyView = new BackTestTradingHistoryView();
+            historyView.Init(fileName);
+            historyView.Show();
+        }
         #endregion
 
         #region 테스트
@@ -446,11 +482,6 @@ namespace Gaten.Stock.MarinerX
         {
             try
             {
-                if (sender is not ToolStripMenuItem menuItem)
-                {
-                    return;
-                }
-
                 progressView.Show();
                 var worker = new Worker()
                 {
@@ -470,20 +501,97 @@ namespace Gaten.Stock.MarinerX
             try
             {
                 var flask = new BackTestFlask(worker);
-                var result = flask.Run();
+                var result = flask.Run(100000, "BTCUSDT", KlineInterval.FiveMinutes, new DateTime(2022, 10, 1, 0, 0, 0), TimeSpan.FromDays(3), 0.5, 0.5m);
+
                 DispatcherService.Invoke(() =>
                 {
                     progressView.Hide();
                 });
 
-                if (result.Length < 32)
+                if (result == null)
                 {
-                    throw new Exception(result);
+                    throw new Exception("Back Test No Trading!!!");
                 }
 
-                var path = GPath.Desktop.Down("MarinerX", $"BackTestFlask_{DateTime.Now.ToStandardFileName()}.txt");
-                GFile.Write(path, result);
-                GProcess.Start(path);
+                var path = GPath.Desktop.Down("MarinerX", $"BackTestFlask_{DateTime.Now.ToStandardFileName()}.csv");
+                result.SaveCsvFile(path);
+
+                DispatcherService.Invoke(() =>
+                {
+                    var historyView = new BackTestTradingHistoryView();
+                    historyView.Init(result);
+                    historyView.Show();
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void RunBackTestFlaskMultiEvent(object? sender, EventArgs e)
+        {
+            try
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    for(int j = 0; j < 10; j++)
+                    {
+                        var pv = progressViews[i * 10 + j];
+
+                        pv.Show();
+                        var worker = new Worker()
+                        {
+                            ProgressBar = pv.ProgressBar,
+                            Action = BackTestFlaskMultiRun,
+                            Arguments = new _temp_bb(0.3 + 0.1 * i, 0.1m + 0.1m * j)
+                        };
+                        worker.Start();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        record _temp_bb(double bw, decimal pr);
+
+        public static void BackTestFlaskMultiRun(Worker worker, object? obj)
+        {
+            try
+            {
+                if(obj is not _temp_bb tb)
+                {
+                    return;
+                }
+
+                var bandwidth = tb.bw;
+                var profitRoe = tb.pr;
+
+                var flask = new BackTestFlask(worker);
+                var result = flask.Run(100000, "XRPUSDT", KlineInterval.FiveMinutes, new DateTime(2022, 10, 1, 0, 0, 0), TimeSpan.FromDays(30), bandwidth, profitRoe);
+
+                DispatcherService.Invoke(() =>
+                {
+                    Window.GetWindow(worker.ProgressBar).Hide();
+                });
+
+                if (result == null)
+                {
+                    throw new Exception("Back Test No Trading!!!");
+                }
+
+                var path = GPath.Desktop.Down("MarinerX", $"BackTestFlask_{DateTime.Now.ToStandardFileName()}_b{bandwidth}_r{profitRoe}.csv");
+                result.SaveCsvFile(path);
+
+                //DispatcherService.Invoke(() =>
+                //{
+                //    var historyView = new BackTestTradingHistoryView();
+                //    historyView.Init(result);
+                //    historyView.Show();
+                //});
             }
             catch (Exception ex)
             {

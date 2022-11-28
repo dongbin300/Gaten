@@ -88,29 +88,30 @@ namespace Gaten.Stock.MarinerX.Charts
 
             // calculate chart elements
             var chartElementResults = new List<List<ChartElementResult>>();
-            foreach(var chartElement in chartElements)
+            foreach (var chartElement in chartElements)
             {
                 IEnumerable<ChartElementResult> result = chartElement.ElementType switch
                 {
-                    ChartElementType.ma => quotes.GetSma((int)chartElement.Parameters[0]).Select(x=> new ChartElementResult(chartElement.ElementType, x.Sma.Convert<decimal>())),
-                    ChartElementType.ema => quotes.GetEma((int)chartElement.Parameters[0]).Select(x=> new ChartElementResult(chartElement.ElementType, x.Ema.Convert<decimal>())),
+                    ChartElementType.ma => quotes.GetSma((int)chartElement.Parameters[0]).Select(x => new ChartElementResult(chartElement.ElementType, x.Sma.Convert<decimal>())),
+                    ChartElementType.ema => quotes.GetEma((int)chartElement.Parameters[0]).Select(x => new ChartElementResult(chartElement.ElementType, x.Ema.Convert<decimal>())),
                     ChartElementType.ri => quotes.GetRi((int)chartElement.Parameters[0]).Select(x => new ChartElementResult(chartElement.ElementType, x.Ri.Convert<decimal>())),
                     ChartElementType.rsi => quotes.GetRsi((int)chartElement.Parameters[0]).Select(x => new ChartElementResult(chartElement.ElementType, x.Rsi.Convert<decimal>())),
-                    ChartElementType.macd_macd => quotes.GetMacd((int)chartElement.Parameters[0]).Select(x => new ChartElementResult(chartElement.ElementType, x.Macd.Convert<decimal>())),
-                    ChartElementType.macd_signal => quotes.GetMacd((int)chartElement.Parameters[0]).Select(x => new ChartElementResult(chartElement.ElementType, x.Signal.Convert<decimal>())),
-                    ChartElementType.macd_hist => quotes.GetMacd((int)chartElement.Parameters[0]).Select(x => new ChartElementResult(chartElement.ElementType, x.Histogram.Convert<decimal>())),
-                    ChartElementType.bb_sma => quotes.GetBollingerBands((int)chartElement.Parameters[0]).Select(x => new ChartElementResult(chartElement.ElementType, x.Sma.Convert<decimal>())),
-                    ChartElementType.bb_upper => quotes.GetBollingerBands((int)chartElement.Parameters[0]).Select(x => new ChartElementResult(chartElement.ElementType, x.UpperBand.Convert<decimal>())),
-                    ChartElementType.bb_lower => quotes.GetBollingerBands((int)chartElement.Parameters[0]).Select(x => new ChartElementResult(chartElement.ElementType, x.LowerBand.Convert<decimal>())),
+                    ChartElementType.macd_macd => quotes.GetMacd((int)chartElement.Parameters[0], (int)chartElement.Parameters[1], (int)chartElement.Parameters[2]).Select(x => new ChartElementResult(chartElement.ElementType, x.Macd.Convert<decimal>())),
+                    ChartElementType.macd_signal => quotes.GetMacd((int)chartElement.Parameters[0], (int)chartElement.Parameters[1], (int)chartElement.Parameters[2]).Select(x => new ChartElementResult(chartElement.ElementType, x.Signal.Convert<decimal>())),
+                    ChartElementType.macd_hist => quotes.GetMacd((int)chartElement.Parameters[0], (int)chartElement.Parameters[1], (int)chartElement.Parameters[2]).Select(x => new ChartElementResult(chartElement.ElementType, x.Histogram.Convert<decimal>())),
+                    ChartElementType.bb_sma => quotes.GetBollingerBands((int)chartElement.Parameters[0], (double)chartElement.Parameters[1]).Select(x => new ChartElementResult(chartElement.ElementType, x.Sma.Convert<decimal>())),
+                    ChartElementType.bb_upper => quotes.GetBollingerBands((int)chartElement.Parameters[0], (double)chartElement.Parameters[1]).Select(x => new ChartElementResult(chartElement.ElementType, x.UpperBand.Convert<decimal>())),
+                    ChartElementType.bb_lower => quotes.GetBollingerBands((int)chartElement.Parameters[0], (double)chartElement.Parameters[1]).Select(x => new ChartElementResult(chartElement.ElementType, x.LowerBand.Convert<decimal>())),
                     _ => default!
                 };
                 chartElementResults.Add(result.ToList());
             }
-            for(int j = 0; j < Charts.Count; j++)
+            for (int j = 0; j < Charts.Count; j++)
             {
-                for(int i = 0; i < chartElementResults.Count; i++)
+                var chart = Charts[j];
+                chart.ChartElements.Clear();
+                for (int i = 0; i < chartElementResults.Count; i++)
                 {
-                    var chart = Charts[j];
                     chart.ChartElements.Add(chartElementResults[i][j]);
                 }
             }
@@ -137,9 +138,10 @@ namespace Gaten.Stock.MarinerX.Charts
             }
             for (int j = 0; j < Charts.Count; j++)
             {
+                var chart = Charts[j];
+                chart.NamedElements.Clear();
                 for (int i = 0; i < namedElementResults.Count; i++)
                 {
-                    var chart = Charts[j];
                     chart.NamedElements.Add(namedElementResults[i][j]);
                 }
             }

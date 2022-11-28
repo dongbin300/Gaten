@@ -19,7 +19,7 @@ namespace Gaten.Net.Wpf.Models
     {
         public TextProgressBar ProgressBar { get; set; } = default!;
         public Action<Worker, object?> Action { get; set; } = default!;
-        public bool IsRunning { get; set; }
+        public bool IsRunning { get; private set; }
         public object? Arguments { get; set; }
 
         BackgroundWorker worker;
