@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaten.GameTool.osu.osuRankingManager"
         mc:Ignorable="d"
-        Title="osu 랭킹 매니저" Height="300" Width="620" Loaded="Window_Loaded">
+        Title="osu 랭킹 매니저" Height="297" Width="620" Loaded="Window_Loaded">
     <DataGrid x:Name="RankingDataGrid" AutoGenerateColumns="False" IsReadOnly="True">
         <DataGrid.Columns>
             <DataGridTextColumn Width="5*" Header="랭크" Binding="{Binding Rank}"/>

@@ -9,20 +9,11 @@ namespace Gaten.Net.Network
     {
         public static string Source = string.Empty;
 
-        static readonly Encoding DefaultEncoding = Encoding.UTF8;
-        static WebClient client = default!;
+        static HttpClient client = new();
         static HtmlDocument htmlDocument = default!;
 
         public static void Open(string url = "")
         {
-#pragma warning disable SYSLIB0014 // 형식 또는 멤버는 사용되지 않습니다.
-            client = new WebClient
-            {
-                Encoding = DefaultEncoding,
-                UseDefaultCredentials = true,
-                Proxy = new WebProxy { Credentials = CredentialCache.DefaultCredentials, UseDefaultCredentials = true }
-            };
-#pragma warning restore SYSLIB0014 // 형식 또는 멤버는 사용되지 않습니다.
             htmlDocument = new HtmlDocument();
 
             if (!string.IsNullOrEmpty(url))
@@ -38,16 +29,13 @@ namespace Gaten.Net.Network
 
         public static void SetUrl(string url)
         {
-            Source = client.DownloadString(url);
+            Source = Request(url);
             htmlDocument.LoadHtml(Source);
         }
 
         public static void SetHtml(string html)
         {
-            if(htmlDocument == null)
-            {
-                htmlDocument = new HtmlDocument();
-            }
+            htmlDocument ??= new HtmlDocument();
             htmlDocument.LoadHtml(html);
         }
 
@@ -104,7 +92,47 @@ namespace Gaten.Net.Network
         /// <param name="localPath"></param>
         public static void DownloadFile(string url, string localPath)
         {
-            client.DownloadFile(url, localPath);
+            try
+            {
+                var result = client.GetAsync(url);
+                result.Wait();
+
+                var response = result.Result;
+
+                using var stream = new FileStream(localPath, FileMode.CreateNew);
+                var result2 = response.Content.CopyToAsync(stream);
+                result2.Wait();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private static string Request(string url)
+        {
+            try
+            {
+                var result = client.GetAsync(url);
+                result.Wait();
+
+                var response = result.Result.EnsureSuccessStatusCode();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    var result2 = response.Content.ReadAsStringAsync();
+                    result2.Wait();
+
+                    return result2.Result;
+                }
+                else
+                {
+                    return response.ReasonPhrase ?? "";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
     }
 }
