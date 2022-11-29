@@ -10,6 +10,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Strategies
         public ICue? Cue { get; set; } = null;
         public ISignal Signal { get; set; } = new Signal();
         public IOrder Order { get; set; } = new Order();
+        public string Tag { get; set; } = string.Empty;
 
         public Strategy()
         {
@@ -34,6 +35,11 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Strategies
         public Strategy(string name, ICue cue) : this(name)
         {
             Cue = cue;
+        }
+
+        public Strategy(string name, string tag) : this(name)
+        {
+            Tag = tag;
         }
 
         public Strategy(string name, ISignal signal, IOrder order) : this(name)

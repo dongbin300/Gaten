@@ -90,6 +90,28 @@ namespace Gaten.Net.Stock.MercuryTradingModel.TradingModels
             strategy.Order = order;
         }
 
+        public void AddTag(string scenarioName, string strategyName, string tag)
+        {
+            var scenario = Scenarios.FirstOrDefault(s => s.Name.Equals(scenarioName));
+            if (scenario == null)
+            {
+                Scenarios.Add(
+                new Scenario(scenarioName)
+                   .AddStrategy(new Strategy(strategyName, tag))
+                   );
+                return;
+            }
+
+            var strategy = scenario.Strategies.FirstOrDefault(s => s.Name.Equals(strategyName));
+            if (strategy == null)
+            {
+                scenario.AddStrategy(new Strategy(strategyName, tag));
+                return;
+            }
+
+            strategy.Tag = tag;
+        }
+
         public string AddNamedElement(string name, string parameterString)
         {
             if (NamedElements.Any(x => x.Name.Equals(name)))

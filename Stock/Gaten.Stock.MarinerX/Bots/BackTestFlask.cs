@@ -7,6 +7,7 @@ using Gaten.Net.Stock.MercuryTradingModel.Elements;
 using Gaten.Net.Stock.MercuryTradingModel.Enums;
 using Gaten.Net.Stock.MercuryTradingModel.Intervals;
 using Gaten.Net.Stock.MercuryTradingModel.Maths;
+using Gaten.Net.Stock.MercuryTradingModel.Orders;
 using Gaten.Net.Stock.MercuryTradingModel.Trades;
 using Gaten.Net.Wpf;
 using Gaten.Net.Wpf.Models;
@@ -27,8 +28,8 @@ namespace Gaten.Stock.MarinerX.Bots
         public Worker Worker { get; set; } = new();
         public ChartWindow ChartViewer { get; set; } = default!;
         public bool IsShowChart { get; set; }
-        public decimal MakerFee => 0.00075m; // use BNB(0.075%)
-        public decimal TakerFee => 0.00075m; // use BNB(0.075%)
+        public decimal MakerFee => 0.0002m;
+        public decimal TakerFee => 0.0002m;
 
         public BackTestFlask()
         {
@@ -65,12 +66,21 @@ namespace Gaten.Stock.MarinerX.Bots
 
             // Named Element Init
             charts.CalculateIndicators(
-                new List<ChartElement>() {
-                    new ChartElement("bb.sma"),
-                    new ChartElement($"bb.upper,20,{bandwidth}"),
-                    new ChartElement($"bb.lower,20,{bandwidth}")
+                new List<ChartElement>()
+                {
+                    new ChartElement("rsi")
+                    //new ChartElement("bb.sma"),
+                    //new ChartElement($"bb.upper,20,{bandwidth}"),
+                    //new ChartElement($"bb.lower,20,{bandwidth}"),
                 },
-                new List<NamedElement>());
+                new List<NamedElement>()
+                //{
+                //    new NamedElement("sma", "bb.sma,20,2"),
+                //    new NamedElement("long1", "bb.upper,20,0.5"),
+                //    new NamedElement("loss1", "bb.lower,20,0.5"),
+                //    new NamedElement("profit1", "bb.upper,20,2.5"),
+                //}
+                );
 
             // Back test start!
             ChartInfo? info = default!;
@@ -94,6 +104,32 @@ namespace Gaten.Stock.MarinerX.Bots
                     ChartViewer.AddChartInfo(info);
                 }
 
+                //if (!isPositioning &&
+                //info.Quote.Close > info.GetNamedElementValue("sma") &&
+                //info.Quote.Close < info.GetNamedElementValue("long1"))
+                //{
+                //    var trade = Order(asset, info, PositionSide.Long, OrderAmountType.Fixed, 5000, "Long Entry");
+                //    trades.Add(trade);
+                //    isPositioning = true;
+                //}
+                //else if(isPositioning &&
+                //asset.Position.Side == PositionSide.Long &&
+                //info.Quote.High >= info.GetNamedElementValue("profit1"))
+                //{
+                //    var trade = Order(asset, info, PositionSide.Short, OrderAmountType.FixedSymbol, asset.Position.Value, "Take Profit", true, info.GetNamedElementValue("profit1").Value);
+                //    trades.Add(trade);
+                //    isPositioning = false;
+                //}
+                //else if (isPositioning &&
+                //asset.Position.Side == PositionSide.Long &&
+                //info.Quote.Low <= info.GetNamedElementValue("loss1"))
+                //{
+                //    var trade = Order(asset, info, PositionSide.Short, OrderAmountType.FixedSymbol, asset.Position.Value, "Stop Loss", true, info.GetNamedElementValue("loss1").Value);
+                //    trades.Add(trade);
+                //    isPositioning = false;
+                //}
+
+                /*
                 // long signal
                 if (!isPositioning &&
                 info.Quote.Open < info.GetChartElementValue(ChartElementType.bb_sma) &&
@@ -154,6 +190,22 @@ namespace Gaten.Stock.MarinerX.Bots
                     isPositioning = false;
                     entryPrice = 0;
                 }
+                */
+
+                if(info.GetChartElementValue(ChartElementType.rsi) <= 25)
+                {
+                    BackTestOrder order = new BackTestOrder(OrderType.Market, PositionSide.Long, new OrderAmount(OrderAmountType.Fixed, 5000));
+                    order.Run(asset, info);
+
+                    var trade = Order(asset, info, PositionSide.Long, OrderAmountType.Fixed, 5000, "Long");
+                    trades.Add(trade);
+                }
+                else if (info.GetChartElementValue(ChartElementType.rsi) >= 75)
+                {
+                    var trade = Order(asset, info, PositionSide.Short, OrderAmountType.Fixed, 5000, "Short");
+                    trades.Add(trade);
+                }
+                
             }, ProgressBarDisplayOptions.Count | ProgressBarDisplayOptions.Percent | ProgressBarDisplayOptions.TimeRemaining);
 
             return trades;

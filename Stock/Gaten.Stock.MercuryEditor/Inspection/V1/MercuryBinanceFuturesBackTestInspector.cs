@@ -299,6 +299,15 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
                         TradingModel.AddOrder(keySegments[0], keySegments[1], order);
                         break;
 
+                    case "tag":
+                        var tag = ParseTag(value);
+                        if (tag == null)
+                        {
+                            return $"{Delegater.CurrentLanguageDictionary["TagTypeError"]} :: ";
+                        }
+                        TradingModel.AddTag(keySegments[0], keySegments[1], tag);
+                        break;
+
                     default:
                         return $"{Delegater.CurrentLanguageDictionary["ScenarioKeyTypeError"]} :: ";
                 }
@@ -595,6 +604,11 @@ namespace Gaten.Stock.MercuryEditor.Inspection.V1
             {
                 return null;
             }
+        }
+
+        private string? ParseTag(string tagValue)
+        {
+            return tagValue;
         }
     }
 }

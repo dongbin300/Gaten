@@ -3,6 +3,7 @@ using Gaten.Net.Stock.MercuryTradingModel.Assets;
 using Gaten.Net.Stock.MercuryTradingModel.Charts;
 using Gaten.Net.Stock.MercuryTradingModel.Enums;
 using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
+using Gaten.Net.Stock.MercuryTradingModel.Trades;
 
 using Newtonsoft.Json;
 
@@ -29,7 +30,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Orders
             Price = price;
         }
 
-        public string Run(Asset asset, ChartInfo chart)
+        public BackTestTradeInfo Run(Asset asset, ChartInfo chart, string tag = "")
         {
             if (Type == OrderType.Market)
             {
@@ -38,7 +39,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Orders
 
             if (Price == null)
             {
-                return "ERROR!";
+                return new BackTestTradeInfo(chart.Symbol, chart.DateTime.ToStandardString(), "Price Error", "", "", "", "", "", "", "", "");
             }
 
             decimal quantity;
@@ -81,64 +82,60 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Orders
 
             switch (Side)
             {
+                default:
+                case PositionSide.None:
+                    return new BackTestTradeInfo(chart.Symbol, chart.DateTime.ToStandardString(), "Side Error", "", "", "", "", "", "", "", "");
+
                 case PositionSide.Long:
                     var buyFee = Buy(asset, Price.Value, quantity);
                     var estimatedAsset = Price.Value * asset.Position.Value + asset.Balance;
-                    return $"{chart.DateTime.ToStandardString()},Buy,{Price},{quantity:#.##} (Fee {buyFee:#.##}USDT)" +
-                        $" | {asset.Balance:#.##} USDT, {asset.Position:#.##} {chart.BaseAsset} ({estimatedAsset:#.##}USDT?)";
+                    return new BackTestTradeInfo(chart.Symbol, chart.DateTime.ToStandardString(), "Buy", $"{Price:#.####}", $"{quantity:#.####}", $"{buyFee:#.##}", $"{asset.Balance:#.##}", $"{asset.Position:#.####}", chart.BaseAsset, $"{estimatedAsset:#.##} USDT", tag);
 
                 case PositionSide.Short:
                     var sellFee = Sell(asset, Price.Value, quantity);
                     var estimatedAsset2 = Price.Value * asset.Position.Value + asset.Balance;
-                    return $"{chart.DateTime.ToStandardString()},Sell,{Price},{quantity:#.##} (Fee {sellFee:#.##}USDT)" +
-                        $" | {asset.Balance:#.##} USDT, {asset.Position:#.##} {chart.BaseAsset} ({estimatedAsset2:#.##}USDT?)";
+                    return new BackTestTradeInfo(chart.Symbol, chart.DateTime.ToStandardString(), "Sell", $"{Price:#.####}", $"{quantity:#.####}", $"{sellFee:#.##}", $"{asset.Balance:#.##}", $"{asset.Position:#.####}", chart.BaseAsset, $"{estimatedAsset2:#.##} USDT", tag);
 
                 case PositionSide.Open:
                     if(asset.Position.Side == PositionSide.None || asset.Position.Amount < 0.0001m)
                     {
-                        return "";
+                        return new BackTestTradeInfo(chart.Symbol, chart.DateTime.ToStandardString(), "Open Error", "", "", "", "", "", "", "", "");
                     }
                     else if(asset.Position.Side == PositionSide.Long)
                     {
                         quantity = asset.Position.Amount * Amount.Value;
                         var openBuyFee = Buy(asset, Price.Value, quantity);
                         var openEstimatedAsset = Price.Value * asset.Position.Value + asset.Balance;
-                        return $"{chart.DateTime.ToStandardString()},Buy,{Price},{quantity:#.##} (Fee {openBuyFee:#.##}USDT)" +
-                        $" | {asset.Balance:#.##} USDT, {asset.Position:#.##} {chart.BaseAsset} ({openEstimatedAsset:#.##}USDT?)";
+                        return new BackTestTradeInfo(chart.Symbol, chart.DateTime.ToStandardString(), "Buy", $"{Price:#.####}", $"{quantity:#.####}", $"{openBuyFee:#.##}", $"{asset.Balance:#.##}", $"{asset.Position:#.####}", chart.BaseAsset, $"{openEstimatedAsset:#.##} USDT", tag);
                     }
                     else
                     {
                         quantity = asset.Position.Amount * Amount.Value;
                         var openSellFee = Sell(asset, Price.Value, quantity);
                         var openEstimatedAsset2 = Price.Value * asset.Position.Value + asset.Balance;
-                        return $"{chart.DateTime.ToStandardString()},Sell,{Price},{quantity:#.##} (Fee {openSellFee:#.##}USDT)" +
-                        $" | {asset.Balance:#.##} USDT, {asset.Position:#.##} {chart.BaseAsset} ({openEstimatedAsset2:#.##}USDT?)";
+                        return new BackTestTradeInfo(chart.Symbol, chart.DateTime.ToStandardString(), "Sell", $"{Price:#.####}", $"{quantity:#.####}", $"{openSellFee:#.##}", $"{asset.Balance:#.##}", $"{asset.Position:#.####}", chart.BaseAsset, $"{openEstimatedAsset2:#.##} USDT", tag);
                     }
 
                 case PositionSide.Close:
                     if (asset.Position.Side == PositionSide.None || asset.Position.Amount < 0.0001m)
                     {
-                        return "";
+                        return new BackTestTradeInfo(chart.Symbol, chart.DateTime.ToStandardString(), "Close Error", "", "", "", "", "", "", "", "");
                     }
                     else if (asset.Position.Side == PositionSide.Short)
                     {
                         quantity = asset.Position.Amount * Amount.Value;
                         var closeBuyFee = Buy(asset, Price.Value, quantity);
                         var closeEstimatedAsset = Price.Value * asset.Position.Value + asset.Balance;
-                        return $"{chart.DateTime.ToStandardString()},Buy,{Price},{quantity:#.##} (Fee {closeBuyFee:#.##}USDT)" +
-                        $" | {asset.Balance:#.##} USDT, {asset.Position:#.##} {chart.BaseAsset} ({closeEstimatedAsset:#.##}USDT?)";
+                        return new BackTestTradeInfo(chart.Symbol, chart.DateTime.ToStandardString(), "Buy", $"{Price:#.####}", $"{quantity:#.####}", $"{closeBuyFee:#.##}", $"{asset.Balance:#.##}", $"{asset.Position:#.####}", chart.BaseAsset, $"{closeEstimatedAsset:#.##} USDT", tag);
                     }
                     else
                     {
                         quantity = asset.Position.Amount * Amount.Value;
                         var closeSellFee = Sell(asset, Price.Value, quantity);
                         var closeEstimatedAsset2 = Price.Value * asset.Position.Value + asset.Balance;
-                        return $"{chart.DateTime.ToStandardString()},Sell,{Price},{quantity:#.##} (Fee {closeSellFee:#.##}USDT)" +
-                        $" | {asset.Balance:#.##} USDT, {asset.Position:#.##} {chart.BaseAsset} ({closeEstimatedAsset2:#.##}USDT?)";
+                        return new BackTestTradeInfo(chart.Symbol, chart.DateTime.ToStandardString(), "Sell", $"{Price:#.####}", $"{quantity:#.####}", $"{closeSellFee:#.##}", $"{asset.Balance:#.##}", $"{asset.Position:#.####}", chart.BaseAsset, $"{closeEstimatedAsset2:#.##} USDT", tag);
                     }
             }
-
-            return string.Empty;
         }
 
         public decimal Buy(Asset asset, decimal price, decimal quantity)

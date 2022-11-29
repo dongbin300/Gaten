@@ -23,6 +23,7 @@
     <s:String x:Key="CueTypeError">Cue 형식의 오류입니다.</s:String>
     <s:String x:Key="SignalFormulaTypeError">Signal Formula 형식의 오류입니다.</s:String>
     <s:String x:Key="OrderTypeError">Order 형식의 오류입니다.</s:String>
+    <s:String x:Key="TagTypeError">Tag 형식의 오류입니다.</s:String>
     
     <s:String x:Key="Restore">이전 크기로</s:String>
     <s:String x:Key="Move">이동</s:String>

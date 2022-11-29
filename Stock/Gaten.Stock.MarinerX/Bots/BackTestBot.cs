@@ -1,10 +1,9 @@
-﻿using Binance.Net.Enums;
-
-using Gaten.Net.Stock.MercuryTradingModel.Assets;
+﻿using Gaten.Net.Stock.MercuryTradingModel.Assets;
 using Gaten.Net.Stock.MercuryTradingModel.Charts;
+using Gaten.Net.Stock.MercuryTradingModel.Enums;
 using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
 using Gaten.Net.Stock.MercuryTradingModel.Intervals;
-using Gaten.Net.Stock.MercuryTradingModel.Strategies;
+using Gaten.Net.Stock.MercuryTradingModel.Trades;
 using Gaten.Net.Stock.MercuryTradingModel.TradingModels;
 using Gaten.Net.Wpf;
 using Gaten.Net.Wpf.Models;
@@ -13,7 +12,7 @@ using Gaten.Stock.MarinerX.Interfaces;
 using Gaten.Stock.MarinerX.Views;
 
 using System;
-using System.Text;
+using System.Collections.Generic;
 
 namespace Gaten.Stock.MarinerX.Bots
 {
@@ -21,7 +20,6 @@ namespace Gaten.Stock.MarinerX.Bots
     public class BackTestBot : IBot
     {
         public MercuryBackTestTradingModel TradingModel { get; set; } = new();
-        public StringBuilder TradeLog { get; set; } = new();
         public Worker Worker { get; set; } = new();
         public ChartWindow ChartViewer { get; set; } = default!;
         public bool IsShowChart { get; set; }
@@ -31,17 +29,16 @@ namespace Gaten.Stock.MarinerX.Bots
             TradingModel = tradingModel;
             Worker = worker;
             IsShowChart = isShowChart;
-            if (IsShowChart)
+            DispatcherService.Invoke(() =>
             {
-                DispatcherService.Invoke(() =>
-                {
-                    ChartViewer = new ChartWindow();
-                });
-            }
+                ChartViewer = new ChartWindow();
+            });
         }
 
-        public string Run()
+        public List<BackTestTradeInfo> Run()
         {
+            var results = new List<BackTestTradeInfo>();
+
             // Asset Init
             Asset asset = new BackTestAsset(TradingModel.Asset, new Position());
 
@@ -73,10 +70,7 @@ namespace Gaten.Stock.MarinerX.Bots
                     info0 = info;
                 }
                 info = charts.Next();
-                if (IsShowChart)
-                {
-                    ChartViewer.AddChartInfo(info);
-                }
+                ChartViewer.AddChartInfo(info);
 
                 foreach (var scenario in TradingModel.Scenarios)
                 {
@@ -87,16 +81,13 @@ namespace Gaten.Stock.MarinerX.Bots
                         {
                             if (strategy.Signal.IsFlare(asset, info, info0))
                             {
-                                var tradeString = strategy.Order.Run(asset, info);
-                                TradeLog.Append(tradeString);
-                                TradeLog.Append(" by " + strategy.Name + " : ");
-                                TradeLog.Append(strategy.Signal.Formula.ToString() + Environment.NewLine);
+                                var tradeInfo = strategy.Order.Run(asset, info, strategy.Tag);
+                                results.Add(tradeInfo);
 
                                 ChartViewer.AddTradeInfo(new BackTestTrade(
                                     info.DateTime,
                                     strategy,
-                                    tradeString.Contains("Buy") ? PositionSide.Long :
-                                    tradeString.Contains("Sell") ? PositionSide.Short : PositionSide.Both
+                                    tradeInfo.PositionSide
                                     ));
                             }
                         }
@@ -106,20 +97,16 @@ namespace Gaten.Stock.MarinerX.Bots
                         {
                             if (strategy.Cue.CheckFlare(asset, info, info0))
                             {
-                                TradeLog.Append(strategy.Cue.ToString() + Environment.NewLine);
                                 if (strategy.Signal.IsFlare(asset, info, info0))
                                 {
-                                    var tradeString = strategy.Order.Run(asset, info);
-                                    TradeLog.Append(tradeString);
-                                    TradeLog.Append(" by " + strategy.Name + " : ");
-                                    TradeLog.Append(strategy.Signal.Formula.ToString() + Environment.NewLine);
+                                    var tradeInfo = strategy.Order.Run(asset, info, strategy.Tag);
+                                    results.Add(tradeInfo);
                                     strategy.Cue.Expire();
 
                                     ChartViewer.AddTradeInfo(new BackTestTrade(
                                     info.DateTime,
                                     strategy,
-                                    tradeString.Contains("Buy") ? PositionSide.Long :
-                                    tradeString.Contains("Sell") ? PositionSide.Short : PositionSide.Both
+                                    tradeInfo.PositionSide
                                     ));
                                 }
                             }
@@ -128,15 +115,7 @@ namespace Gaten.Stock.MarinerX.Bots
                 }
             }, ProgressBarDisplayOptions.Count | ProgressBarDisplayOptions.Percent | ProgressBarDisplayOptions.TimeRemaining);
 
-            if (TradeLog.ToString().Length < 4)
-            {
-                return "-NO TRADING--NO TRADING--NO TRADING--NO TRADING-\n" +
-                    "-NO TRADING--NO TRADING--NO TRADING--NO TRADING-\n" +
-                    "-NO TRADING--NO TRADING--NO TRADING--NO TRADING-\n" +
-                    "-NO TRADING--NO TRADING--NO TRADING--NO TRADING-\n";
-            }
-
-            return TradeLog.ToString();
+            return results;
         }
     }
 }

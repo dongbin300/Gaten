@@ -23,6 +23,7 @@
     <s:String x:Key="CueTypeError">キュータイプのエラーです。</s:String>
     <s:String x:Key="SignalFormulaTypeError">シグナルフォーミュラタイプのエラーです。</s:String>
     <s:String x:Key="OrderTypeError">オーダータイプのエラーです。</s:String>
+    <s:String x:Key="TagTypeError">タグタイプのエラーです。</s:String>
 
     <s:String x:Key="Restore">戻す</s:String>
     <s:String x:Key="Move">動く</s:String>

@@ -6,5 +6,6 @@
         public ICue? Cue { get; set; }
         public ISignal Signal { get; set; }
         public IOrder Order { get; set; }
+        public string Tag { get; set; }
     }
 }

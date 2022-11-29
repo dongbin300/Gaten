@@ -1,6 +1,7 @@
 ﻿using Gaten.Net.Stock.MercuryTradingModel.Assets;
 using Gaten.Net.Stock.MercuryTradingModel.Charts;
 using Gaten.Net.Stock.MercuryTradingModel.Enums;
+using Gaten.Net.Stock.MercuryTradingModel.Trades;
 
 namespace Gaten.Net.Stock.MercuryTradingModel.Interfaces
 {
@@ -13,6 +14,6 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Interfaces
         public decimal MakerFee { get; }
         public decimal TakerFee { get; }
 
-        public string Run(Asset asset, ChartInfo chart);
+        public BackTestTradeInfo Run(Asset asset, ChartInfo chartm, string tag);
     }
 }

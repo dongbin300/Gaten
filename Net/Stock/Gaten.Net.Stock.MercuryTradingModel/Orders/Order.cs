@@ -2,6 +2,7 @@
 using Gaten.Net.Stock.MercuryTradingModel.Charts;
 using Gaten.Net.Stock.MercuryTradingModel.Enums;
 using Gaten.Net.Stock.MercuryTradingModel.Interfaces;
+using Gaten.Net.Stock.MercuryTradingModel.Trades;
 
 namespace Gaten.Net.Stock.MercuryTradingModel.Orders
 {
@@ -18,9 +19,9 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Orders
         {
         }
 
-        public string Run(Asset asset, ChartInfo chart)
+        public BackTestTradeInfo Run(Asset asset, ChartInfo chart, string tag = "")
         {
-            return string.Empty;
+            return new BackTestTradeInfo("", "", "", "", "", "", "", "", "", "", "");
         }
 
         public Order Position(PositionSide side, OrderAmount amount)

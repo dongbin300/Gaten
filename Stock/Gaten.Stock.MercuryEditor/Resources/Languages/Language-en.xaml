@@ -23,6 +23,7 @@
     <s:String x:Key="CueTypeError">Error in cue type.</s:String>
     <s:String x:Key="SignalFormulaTypeError">Error in signal formula type.</s:String>
     <s:String x:Key="OrderTypeError">Error in order type.</s:String>
+    <s:String x:Key="TagTypeError">Error in tag type.</s:String>
 
     <s:String x:Key="Restore">Restore</s:String>
     <s:String x:Key="Move">Move</s:String>

@@ -388,13 +388,20 @@ namespace Gaten.Stock.MarinerX
                     progressView.Hide();
                 });
 
-                if (result.Length < 32)
+                if (result.Count == 0)
                 {
-                    throw new Exception(result);
+                    throw new Exception("No Trading!!");
                 }
 
-                var path = GPath.Desktop.Down("MarinerX", $"BackTest_{DateTime.Now.ToStandardFileName()}.txt");
-                GFile.Write(path, result);
+                var path = GPath.Desktop.Down("MarinerX", $"BackTest_{DateTime.Now.ToStandardFileName()}.csv");
+                result.SaveCsvFile(path);
+
+                DispatcherService.Invoke(() =>
+                {
+                    var historyView = new BackTestTradingHistoryView();
+                    historyView.Init(result);
+                    historyView.Show();
+                });
 
                 if (param.isShowChart)
                 {
@@ -410,12 +417,6 @@ namespace Gaten.Stock.MarinerX
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
-
-                var path = GPath.Desktop.Down("MarinerX", $"BackTest_Error_{DateTime.Now.ToStandardFileName()}.txt");
-                GFile.Write(path, bot.TradeLog.ToString());
-
-                GProcess.Start(path);
             }
         }
 
@@ -501,7 +502,7 @@ namespace Gaten.Stock.MarinerX
             try
             {
                 var flask = new BackTestFlask(worker);
-                var result = flask.Run(100000, "BTCUSDT", KlineInterval.FiveMinutes, new DateTime(2022, 10, 1, 0, 0, 0), TimeSpan.FromDays(3), 0.5, 0.5m);
+                var result = flask.Run(100000, "BTCUSDT", KlineInterval.FiveMinutes, new DateTime(2022, 11, 22, 0, 0, 0), TimeSpan.FromDays(3), 0.5, 0.5m);
 
                 DispatcherService.Invoke(() =>
                 {

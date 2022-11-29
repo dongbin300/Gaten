@@ -1,5 +1,4 @@
-﻿using Gaten.Net.Stock.MercuryTradingModel.Assets;
-using Gaten.Net.Stock.MercuryTradingModel.Enums;
+﻿using Gaten.Net.Stock.MercuryTradingModel.Enums;
 
 namespace Gaten.Net.Stock.MercuryTradingModel.Trades
 {
@@ -8,6 +7,7 @@ namespace Gaten.Net.Stock.MercuryTradingModel.Trades
         public string Symbol { get; set; }
         public string TradeTime { get; set; }
         public string Side { get; set; }
+        public PositionSide PositionSide => Side == "Buy" ? PositionSide.Long : Side == "Sell" ? PositionSide.Short : PositionSide.None;
         public string Price { get; set; }
         public string Quantity { get; set; }
         public string Fee { get; set; }

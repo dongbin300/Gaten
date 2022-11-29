@@ -1,5 +1,6 @@
 ﻿using CryptoExchange.Net.CommonObjects;
 
+using Gaten.Net.Stock.MercuryTradingModel.Enums;
 using Gaten.Stock.MarinerX.Bots;
 
 using Skender.Stock.Indicators;
@@ -63,7 +64,7 @@ namespace Gaten.Stock.MarinerX.Views.Controls
                 var trade = Trades.Find(x => x.time.Equals(quote.Date));
                 if (trade != null)
                 {
-                    if (trade.side == Binance.Net.Enums.PositionSide.Long)
+                    if (trade.side == PositionSide.Long)
                     {
                         drawingContext.DrawLine(yangPen,
                     new Point(x * (i + 0.5), ActualHeight * (double)(1.0m - (quote.Low - min) / (max - min)) + 24),
