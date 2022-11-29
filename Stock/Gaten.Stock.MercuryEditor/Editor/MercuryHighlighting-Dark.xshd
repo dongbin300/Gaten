@@ -33,6 +33,7 @@
 			<Word>cue</Word>
 			<Word>signal</Word>
 			<Word>order</Word>
+			<Word>tag</Word>
 			
 			<!-- Order -->
 			<Word>long</Word>
@@ -214,6 +215,9 @@
 			<Word>LDOUSDT</Word>
 			<Word>CVXUSDT</Word>
 			<Word>ICPUSDT</Word>
+			<Word>APTUSDT</Word>
+			<Word>QNTUSDT</Word>
+			<Word>BLUEBIRDUSDT</Word>
 		</Keywords>
 		
 		<Keywords fontWeight="bold" fontStyle="italic" foreground="Red">
