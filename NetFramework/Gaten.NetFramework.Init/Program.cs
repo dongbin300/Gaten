@@ -16,12 +16,12 @@ namespace Gaten.NetFramework.Init
             Console.WriteLine("사용자 이름: " + BaseInfo.UserName);
             Console.WriteLine("OS 이름: " + BaseInfo.ProductName);
             Console.WriteLine("OS 버전: " + BaseInfo.ProductVersion);
-            Console.WriteLine(".NET 6을 설치합니다... [Enter]");
+            Console.WriteLine(".NET 7을 설치합니다... [Enter]");
             Console.ReadLine();
             Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "net-temp"));
             var netPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "net-temp", "net.exe");
             var batPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "net-temp", "w10pro.bat");
-            File.WriteAllBytes(netPath, Properties.Resources.windowsdesktop_runtime_6_0_10_win_x64);
+            File.WriteAllBytes(netPath, Properties.Resources.windowsdesktop_runtime_7_0_0_win_x64);
             File.WriteAllText(batPath, Properties.Resources.w10pro);
             Process.Start(netPath)?.WaitForExit();
             //Console.WriteLine("Windows 10 정품 인증을 진행합니다... [Enter]");

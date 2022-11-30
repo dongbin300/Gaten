@@ -45,7 +45,7 @@ namespace Gaten.Stock.MoqTrader.Charts
                         quotes.GetBollingerBands(20, 3).ToList(),
                         quotes.GetBollingerBands(20, 0.5).ToList()
                     ));
-                });
+                }, ProgressBarDisplayOptions.Count);
             }
             catch (FileNotFoundException)
             {

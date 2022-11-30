@@ -81,5 +81,15 @@ namespace Gaten.NetFramework.Init.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static byte[] windowsdesktop_runtime_7_0_0_win_x64 {
+            get {
+                object obj = ResourceManager.GetObject("windowsdesktop_runtime_7_0_0_win_x64", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

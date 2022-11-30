@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\windowsdesktop-runtime-6.0.10-win-x64.exe" />
+    <None Include="Resources\windowsdesktop-runtime-7.0.0-win-x64.exe" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

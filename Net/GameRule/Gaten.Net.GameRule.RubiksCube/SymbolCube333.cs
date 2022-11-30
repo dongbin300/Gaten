@@ -17,12 +17,12 @@
         {
             Sides = new SymbolCube333Side[]
             {
-                new SymbolCube333Side('U'),
-                new SymbolCube333Side('L'),
-                new SymbolCube333Side('F'),
-                new SymbolCube333Side('R'),
-                new SymbolCube333Side('B'),
-                new SymbolCube333Side('D')
+                new SymbolCube333Side("U"),
+                new SymbolCube333Side("L"),
+                new SymbolCube333Side("F"),
+                new SymbolCube333Side("R"),
+                new SymbolCube333Side("B"),
+                new SymbolCube333Side("D")
             };
         }
 
@@ -134,88 +134,88 @@
             List<PieceColor> temps = new List<PieceColor>();
             switch (faceRotation)
             {
-                case FaceRotation.Right:
-                    General.SymbolRotate(RotateDirection.Left, this, 3, 0, 3, 2, 3, 8, 3, 6);
-                    General.SymbolRotate(RotateDirection.Left, this, 3, 1, 3, 5, 3, 7, 3, 3);
-                    General.SymbolRotate(RotateDirection.Left, this, 0, 8, 4, , 2, 7, 5, 3);
-                    break;
-                case FaceRotation.CounterRight:
-                    General.PieceColorRotate(RotateDirection.Right, this, 2, 2, 5, 2, 4, 6, 0, 2);
-                    General.PieceColorRotate(RotateDirection.Right, this, 2, 5, 5, 5, 4, 3, 0, 5);
-                    General.PieceColorRotate(RotateDirection.Right, this, 2, 8, 5, 8, 4, 0, 0, 8);
-                    General.PieceColorRotate(RotateDirection.Right, this, 3, 0, 3, 6, 3, 8, 3, 2);
-                    General.PieceColorRotate(RotateDirection.Right, this, 3, 3, 3, 7, 3, 5, 3, 1);
-                    break;
-                case FaceRotation.Left:
-                    General.PieceColorRotate(RotateDirection.Left, this, 2, 0, 0, 0, 4, 8, 5, 0);
-                    General.PieceColorRotate(RotateDirection.Left, this, 2, 3, 0, 3, 4, 5, 5, 3);
-                    General.PieceColorRotate(RotateDirection.Left, this, 2, 6, 0, 6, 4, 2, 5, 6);
-                    General.PieceColorRotate(RotateDirection.Left, this, 1, 0, 1, 6, 1, 8, 1, 2);
-                    General.PieceColorRotate(RotateDirection.Left, this, 1, 3, 1, 7, 1, 5, 1, 1);
-                    break;
-                case FaceRotation.CounterLeft:
-                    General.PieceColorRotate(RotateDirection.Right, this, 2, 0, 0, 0, 4, 8, 5, 0);
-                    General.PieceColorRotate(RotateDirection.Right, this, 2, 3, 0, 3, 4, 5, 5, 3);
-                    General.PieceColorRotate(RotateDirection.Right, this, 2, 6, 0, 6, 4, 2, 5, 6);
-                    General.PieceColorRotate(RotateDirection.Right, this, 1, 0, 1, 6, 1, 8, 1, 2);
-                    General.PieceColorRotate(RotateDirection.Right, this, 1, 3, 1, 7, 1, 5, 1, 1);
-                    break;
-                case FaceRotation.Up:
-                    General.PieceColorRotate(RotateDirection.Right, this, 0, 6, 3, 0, 5, 2, 1, 8);
-                    General.PieceColorRotate(RotateDirection.Right, this, 0, 7, 3, 3, 5, 1, 1, 5);
-                    General.PieceColorRotate(RotateDirection.Right, this, 0, 8, 3, 6, 5, 0, 1, 2);
-                    General.PieceColorRotate(RotateDirection.Right, this, 2, 0, 2, 2, 2, 8, 2, 6);
-                    General.PieceColorRotate(RotateDirection.Right, this, 2, 1, 2, 5, 2, 7, 2, 3);
-                    break;
-                case FaceRotation.CounterUp:
-                    General.PieceColorRotate(RotateDirection.Left, this, 0, 6, 3, 0, 5, 2, 1, 8);
-                    General.PieceColorRotate(RotateDirection.Left, this, 0, 7, 3, 3, 5, 1, 1, 5);
-                    General.PieceColorRotate(RotateDirection.Left, this, 0, 8, 3, 6, 5, 0, 1, 2);
-                    General.PieceColorRotate(RotateDirection.Left, this, 2, 0, 2, 2, 2, 8, 2, 6);
-                    General.PieceColorRotate(RotateDirection.Left, this, 2, 1, 2, 5, 2, 7, 2, 3);
-                    break;
-                case FaceRotation.Down:
-                    General.PieceColorRotate(RotateDirection.Left, this, 0, 0, 3, 2, 5, 8, 1, 6);
-                    General.PieceColorRotate(RotateDirection.Left, this, 0, 1, 3, 5, 5, 7, 1, 3);
-                    General.PieceColorRotate(RotateDirection.Left, this, 0, 2, 3, 8, 5, 6, 1, 0);
-                    General.PieceColorRotate(RotateDirection.Left, this, 4, 0, 4, 6, 4, 8, 4, 2);
-                    General.PieceColorRotate(RotateDirection.Left, this, 4, 1, 4, 3, 4, 7, 4, 5);
-                    break;
-                case FaceRotation.CounterDown:
-                    General.PieceColorRotate(RotateDirection.Right, this, 0, 0, 3, 2, 5, 8, 1, 6);
-                    General.PieceColorRotate(RotateDirection.Right, this, 0, 1, 3, 5, 5, 7, 1, 3);
-                    General.PieceColorRotate(RotateDirection.Right, this, 0, 2, 3, 8, 5, 6, 1, 0);
-                    General.PieceColorRotate(RotateDirection.Right, this, 4, 0, 4, 6, 4, 8, 4, 2);
-                    General.PieceColorRotate(RotateDirection.Right, this, 4, 1, 4, 3, 4, 7, 4, 5);
-                    break;
-                case FaceRotation.Front:
-                    General.PieceColorRotate(RotateDirection.Right, this, 2, 6, 3, 6, 4, 6, 1, 6);
-                    General.PieceColorRotate(RotateDirection.Right, this, 2, 7, 3, 7, 4, 7, 1, 7);
-                    General.PieceColorRotate(RotateDirection.Right, this, 2, 8, 3, 8, 4, 8, 1, 8);
-                    General.PieceColorRotate(RotateDirection.Right, this, 5, 0, 5, 2, 5, 8, 5, 6);
-                    General.PieceColorRotate(RotateDirection.Right, this, 5, 1, 5, 5, 5, 7, 5, 3);
-                    break;
-                case FaceRotation.CounterFront:
-                    General.PieceColorRotate(RotateDirection.Left, this, 2, 6, 3, 6, 4, 6, 1, 6);
-                    General.PieceColorRotate(RotateDirection.Left, this, 2, 7, 3, 7, 4, 7, 1, 7);
-                    General.PieceColorRotate(RotateDirection.Left, this, 2, 8, 3, 8, 4, 8, 1, 8);
-                    General.PieceColorRotate(RotateDirection.Left, this, 5, 0, 5, 2, 5, 8, 5, 6);
-                    General.PieceColorRotate(RotateDirection.Left, this, 5, 1, 5, 5, 5, 7, 5, 3);
-                    break;
-                case FaceRotation.Back:
-                    General.PieceColorRotate(RotateDirection.Left, this, 2, 0, 3, 0, 4, 0, 1, 0);
-                    General.PieceColorRotate(RotateDirection.Left, this, 2, 1, 3, 1, 4, 1, 1, 1);
-                    General.PieceColorRotate(RotateDirection.Left, this, 2, 2, 3, 2, 4, 2, 1, 2);
-                    General.PieceColorRotate(RotateDirection.Left, this, 0, 0, 0, 6, 0, 8, 0, 2);
-                    General.PieceColorRotate(RotateDirection.Left, this, 0, 1, 0, 3, 0, 7, 0, 5);
-                    break;
-                case FaceRotation.CounterBack:
-                    General.PieceColorRotate(RotateDirection.Right, this, 2, 0, 3, 0, 4, 0, 1, 0);
-                    General.PieceColorRotate(RotateDirection.Right, this, 2, 1, 3, 1, 4, 1, 1, 1);
-                    General.PieceColorRotate(RotateDirection.Right, this, 2, 2, 3, 2, 4, 2, 1, 2);
-                    General.PieceColorRotate(RotateDirection.Right, this, 0, 0, 0, 6, 0, 8, 0, 2);
-                    General.PieceColorRotate(RotateDirection.Right, this, 0, 1, 0, 3, 0, 7, 0, 5);
-                    break;
+                //case FaceRotation.Right:
+                //    General.SymbolRotate(RotateDirection.Left, this, 3, 0, 3, 2, 3, 8, 3, 6);
+                //    General.SymbolRotate(RotateDirection.Left, this, 3, 1, 3, 5, 3, 7, 3, 3);
+                //    General.SymbolRotate(RotateDirection.Left, this, 0, 8, 4, , 2, 7, 5, 3);
+                //    break;
+                //case FaceRotation.CounterRight:
+                //    General.PieceColorRotate(RotateDirection.Right, this, 2, 2, 5, 2, 4, 6, 0, 2);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 2, 5, 5, 5, 4, 3, 0, 5);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 2, 8, 5, 8, 4, 0, 0, 8);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 3, 0, 3, 6, 3, 8, 3, 2);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 3, 3, 3, 7, 3, 5, 3, 1);
+                //    break;
+                //case FaceRotation.Left:
+                //    General.PieceColorRotate(RotateDirection.Left, this, 2, 0, 0, 0, 4, 8, 5, 0);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 2, 3, 0, 3, 4, 5, 5, 3);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 2, 6, 0, 6, 4, 2, 5, 6);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 1, 0, 1, 6, 1, 8, 1, 2);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 1, 3, 1, 7, 1, 5, 1, 1);
+                //    break;
+                //case FaceRotation.CounterLeft:
+                //    General.PieceColorRotate(RotateDirection.Right, this, 2, 0, 0, 0, 4, 8, 5, 0);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 2, 3, 0, 3, 4, 5, 5, 3);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 2, 6, 0, 6, 4, 2, 5, 6);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 1, 0, 1, 6, 1, 8, 1, 2);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 1, 3, 1, 7, 1, 5, 1, 1);
+                //    break;
+                //case FaceRotation.Up:
+                //    General.PieceColorRotate(RotateDirection.Right, this, 0, 6, 3, 0, 5, 2, 1, 8);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 0, 7, 3, 3, 5, 1, 1, 5);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 0, 8, 3, 6, 5, 0, 1, 2);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 2, 0, 2, 2, 2, 8, 2, 6);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 2, 1, 2, 5, 2, 7, 2, 3);
+                //    break;
+                //case FaceRotation.CounterUp:
+                //    General.PieceColorRotate(RotateDirection.Left, this, 0, 6, 3, 0, 5, 2, 1, 8);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 0, 7, 3, 3, 5, 1, 1, 5);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 0, 8, 3, 6, 5, 0, 1, 2);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 2, 0, 2, 2, 2, 8, 2, 6);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 2, 1, 2, 5, 2, 7, 2, 3);
+                //    break;
+                //case FaceRotation.Down:
+                //    General.PieceColorRotate(RotateDirection.Left, this, 0, 0, 3, 2, 5, 8, 1, 6);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 0, 1, 3, 5, 5, 7, 1, 3);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 0, 2, 3, 8, 5, 6, 1, 0);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 4, 0, 4, 6, 4, 8, 4, 2);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 4, 1, 4, 3, 4, 7, 4, 5);
+                //    break;
+                //case FaceRotation.CounterDown:
+                //    General.PieceColorRotate(RotateDirection.Right, this, 0, 0, 3, 2, 5, 8, 1, 6);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 0, 1, 3, 5, 5, 7, 1, 3);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 0, 2, 3, 8, 5, 6, 1, 0);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 4, 0, 4, 6, 4, 8, 4, 2);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 4, 1, 4, 3, 4, 7, 4, 5);
+                //    break;
+                //case FaceRotation.Front:
+                //    General.PieceColorRotate(RotateDirection.Right, this, 2, 6, 3, 6, 4, 6, 1, 6);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 2, 7, 3, 7, 4, 7, 1, 7);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 2, 8, 3, 8, 4, 8, 1, 8);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 5, 0, 5, 2, 5, 8, 5, 6);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 5, 1, 5, 5, 5, 7, 5, 3);
+                //    break;
+                //case FaceRotation.CounterFront:
+                //    General.PieceColorRotate(RotateDirection.Left, this, 2, 6, 3, 6, 4, 6, 1, 6);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 2, 7, 3, 7, 4, 7, 1, 7);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 2, 8, 3, 8, 4, 8, 1, 8);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 5, 0, 5, 2, 5, 8, 5, 6);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 5, 1, 5, 5, 5, 7, 5, 3);
+                //    break;
+                //case FaceRotation.Back:
+                //    General.PieceColorRotate(RotateDirection.Left, this, 2, 0, 3, 0, 4, 0, 1, 0);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 2, 1, 3, 1, 4, 1, 1, 1);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 2, 2, 3, 2, 4, 2, 1, 2);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 0, 0, 0, 6, 0, 8, 0, 2);
+                //    General.PieceColorRotate(RotateDirection.Left, this, 0, 1, 0, 3, 0, 7, 0, 5);
+                //    break;
+                //case FaceRotation.CounterBack:
+                //    General.PieceColorRotate(RotateDirection.Right, this, 2, 0, 3, 0, 4, 0, 1, 0);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 2, 1, 3, 1, 4, 1, 1, 1);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 2, 2, 3, 2, 4, 2, 1, 2);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 0, 0, 0, 6, 0, 8, 0, 2);
+                //    General.PieceColorRotate(RotateDirection.Right, this, 0, 1, 0, 3, 0, 7, 0, 5);
+                //    break;
             }
         }
 

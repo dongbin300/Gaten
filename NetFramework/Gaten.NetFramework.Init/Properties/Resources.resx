@@ -124,4 +124,7 @@
   <data name="windowsdesktop_runtime_6_0_10_win_x64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\windowsdesktop-runtime-6.0.10-win-x64.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="windowsdesktop_runtime_7_0_0_win_x64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\windowsdesktop-runtime-7.0.0-win-x64.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>
