@@ -1,0 +1,132 @@
+﻿<UserControl x:Class="Gaten.GameTool.osu.Mosu_.Controls.RandomBeatmapCreatorControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Gaten.GameTool.osu.Mosu_.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="750">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="20,0" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Width="Auto" x:Name="MusicPathTextBox"/>
+        <Button Grid.Row="0" Grid.Column="5" Content="음악 선택" x:Name="SelectMusicButton" Click="SelectMusicButton_Click"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Distance"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Beat"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Title"/>
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Artist"/>
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Creator"/>
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Version"/>
+        <TextBlock Grid.Row="7" Grid.Column="0" Text="Source"/>
+        <TextBlock Grid.Row="8" Grid.Column="0" Text="Tags"/>
+        <TextBlock Grid.Row="1" Grid.Column="2" Text="HP"/>
+        <TextBlock Grid.Row="2" Grid.Column="2" Text="CS"/>
+        <TextBlock Grid.Row="3" Grid.Column="2" Text="AR"/>
+        <TextBlock Grid.Row="4" Grid.Column="2" Text="OD"/>
+        <TextBlock Grid.Row="5" Grid.Column="2" Text="SM"/>
+        <TextBlock Grid.Row="6" Grid.Column="2" Text="STR"/>
+        <TextBlock Grid.Row="7" Grid.Column="2" Text="Offset"/>
+        <TextBlock Grid.Row="8" Grid.Column="2" Text="BPM"/>
+
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="DistanceTextBox"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" x:Name="BeatComboBox">
+            <ComboBoxItem>2</ComboBoxItem>
+            <ComboBoxItem>3</ComboBoxItem>
+            <ComboBoxItem>4</ComboBoxItem>
+            <ComboBoxItem>6</ComboBoxItem>
+            <ComboBoxItem>8</ComboBoxItem>
+            <ComboBoxItem>12</ComboBoxItem>
+            <ComboBoxItem>16</ComboBoxItem>
+        </ComboBox>
+        <TextBox Grid.Row="3" Grid.Column="1" x:Name="TitleTextBox"/>
+        <TextBox Grid.Row="4" Grid.Column="1" x:Name="ArtistTextBox"/>
+        <TextBox Grid.Row="5" Grid.Column="1" x:Name="CreatorTextBox"/>
+        <TextBox Grid.Row="6" Grid.Column="1" x:Name="VersionTextBox"/>
+        <TextBox Grid.Row="7" Grid.Column="1" x:Name="SourceTextBox"/>
+        <TextBox Grid.Row="8" Grid.Column="1" x:Name="TagsTextBox"/>
+        <ComboBox Grid.Row="1" Grid.Column="3" x:Name="HpComboBox">
+            <ComboBoxItem>0</ComboBoxItem>
+            <ComboBoxItem>1</ComboBoxItem>
+            <ComboBoxItem>2</ComboBoxItem>
+            <ComboBoxItem>3</ComboBoxItem>
+            <ComboBoxItem>4</ComboBoxItem>
+            <ComboBoxItem>5</ComboBoxItem>
+            <ComboBoxItem>6</ComboBoxItem>
+            <ComboBoxItem>7</ComboBoxItem>
+            <ComboBoxItem>8</ComboBoxItem>
+            <ComboBoxItem>9</ComboBoxItem>
+            <ComboBoxItem>10</ComboBoxItem>
+        </ComboBox>
+        <ComboBox Grid.Row="2" Grid.Column="3" x:Name="CsComboBox">
+            <ComboBoxItem>2</ComboBoxItem>
+            <ComboBoxItem>3</ComboBoxItem>
+            <ComboBoxItem>4</ComboBoxItem>
+            <ComboBoxItem>5</ComboBoxItem>
+            <ComboBoxItem>6</ComboBoxItem>
+            <ComboBoxItem>7</ComboBoxItem>
+        </ComboBox>
+        <ComboBox Grid.Row="3" Grid.Column="3" x:Name="ArComboBox">
+            <ComboBoxItem>0</ComboBoxItem>
+            <ComboBoxItem>1</ComboBoxItem>
+            <ComboBoxItem>2</ComboBoxItem>
+            <ComboBoxItem>3</ComboBoxItem>
+            <ComboBoxItem>4</ComboBoxItem>
+            <ComboBoxItem>5</ComboBoxItem>
+            <ComboBoxItem>6</ComboBoxItem>
+            <ComboBoxItem>7</ComboBoxItem>
+            <ComboBoxItem>8</ComboBoxItem>
+            <ComboBoxItem>9</ComboBoxItem>
+            <ComboBoxItem>10</ComboBoxItem>
+        </ComboBox>
+        <ComboBox Grid.Row="4" Grid.Column="3" x:Name="OdComboBox">
+            <ComboBoxItem>0</ComboBoxItem>
+            <ComboBoxItem>1</ComboBoxItem>
+            <ComboBoxItem>2</ComboBoxItem>
+            <ComboBoxItem>3</ComboBoxItem>
+            <ComboBoxItem>4</ComboBoxItem>
+            <ComboBoxItem>5</ComboBoxItem>
+            <ComboBoxItem>6</ComboBoxItem>
+            <ComboBoxItem>7</ComboBoxItem>
+            <ComboBoxItem>8</ComboBoxItem>
+            <ComboBoxItem>9</ComboBoxItem>
+            <ComboBoxItem>10</ComboBoxItem>
+        </ComboBox>
+        <TextBox Grid.Row="5" Grid.Column="3" x:Name="SmTextBox"/>
+        <ComboBox Grid.Row="6" Grid.Column="3" x:Name="StrComboBox">
+            <ComboBoxItem>1</ComboBoxItem>
+            <ComboBoxItem>2</ComboBoxItem>
+            <ComboBoxItem>3</ComboBoxItem>
+            <ComboBoxItem>4</ComboBoxItem>
+        </ComboBox>
+        <TextBox Grid.Row="7" Grid.Column="3" x:Name="OffsetTextBox"/>
+        <TextBox Grid.Row="8" Grid.Column="3" x:Name="BpmTextBox"/>
+        <Button Grid.Row="1" Grid.Column="5" Grid.RowSpan="8" Grid.ColumnSpan="1" Content="생성" x:Name="CreateButton" Click="CreateButton_Click" />
+    </Grid>
+</UserControl>

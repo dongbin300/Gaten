@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="Gaten.GameTool.osu.Mosu_.Controls.RankingManagerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Gaten.GameTool.osu.Mosu_.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="Window_Loaded">
+    <DataGrid x:Name="RankingDataGrid" AutoGenerateColumns="False" IsReadOnly="True">
+        <DataGrid.Columns>
+            <DataGridTextColumn Width="5*" Header="랭크" Binding="{Binding Rank}"/>
+            <DataGridTextColumn Width="14*" Header="닉네임" Binding="{Binding Nickname}"/>
+            <DataGridTextColumn Width="7*" Header="플카" Binding="{Binding PlayCount}"/>
+            <DataGridTextColumn Width="10*" Header="랭크스코어" Binding="{Binding RankScore}"/>
+            <DataGridTextColumn Width="7*" Header="SS" Binding="{Binding SS}"/>
+            <DataGridTextColumn Width="7*" Header="S" Binding="{Binding S}"/>
+            <DataGridTextColumn Width="7*" Header="A" Binding="{Binding A}"/>
+        </DataGrid.Columns>
+    </DataGrid>
+</UserControl>

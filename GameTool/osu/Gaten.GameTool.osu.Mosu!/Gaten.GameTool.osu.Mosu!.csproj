@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<RootNamespace>Gaten.GameTool.osu.Mosu_</RootNamespace>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<UseWindowsForm>true</UseWindowsForm>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\Net\GameRule\Gaten.Net.GameRule.osu\Gaten.Net.GameRule.osu.csproj" />
+		<ProjectReference Include="..\..\..\Net\Gaten.Net.Wpf\Gaten.Net.Wpf.csproj" />
+	</ItemGroup>
+
+</Project>

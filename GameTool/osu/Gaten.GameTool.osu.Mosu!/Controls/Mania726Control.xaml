@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="Gaten.GameTool.osu.Mosu_.Controls.Mania726Control"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Gaten.GameTool.osu.Mosu_.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="비트맵 선택" Padding="20,0,0,0"  FontSize="24" FontWeight="ExtraLight"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <TextBox x:Name="BeatmapPathTextBox" FontSize="14" Width="500" Height="36"/>
+            <Button x:Name="SelectBeatmapButton" Content=". . ." Width="50" Click="SelectBeatmapButton_Click"/>
+            <Button x:Name="ConvertButton" Content="변환" Width="50" Click="ConvertButton_Click"/>
+        </StackPanel>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="제외버튼">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <RadioButton x:Name="Key1Button" Content="1"/>
+                    <RadioButton x:Name="Key2Button" Content="2"/>
+                    <RadioButton x:Name="Key3Button" Content="3"/>
+                    <RadioButton x:Name="Key4Button" Content="4" IsChecked="True"/>
+                    <RadioButton x:Name="Key5Button" Content="5"/>
+                    <RadioButton x:Name="Key6Button" Content="6"/>
+                    <RadioButton x:Name="Key7Button" Content="7"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Grid.Column="1" Header="제외방식">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <RadioButton x:Name="RemoveButton"  Content="제거" IsChecked="True"/>
+                    <RadioButton x:Name="OtherButton" Content="다른 버튼으로 이동"/>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</UserControl>
