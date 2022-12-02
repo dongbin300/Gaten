@@ -9,6 +9,11 @@
             seed = GetCurrentMicroseconds() % 1337;
         }
 
+        public SmartRandom(long seed)
+        {
+            this.seed = seed;
+        }
+
         public int Next()
         {
             long abc = System.Math.Abs(GetCurrentMicroseconds() * seed % 1_000_000_000L / 10);

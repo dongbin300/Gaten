@@ -1,7 +1,6 @@
 ﻿using HtmlAgilityPack;
 
 using System.Net;
-using System.Text;
 
 namespace Gaten.Net.Network
 {

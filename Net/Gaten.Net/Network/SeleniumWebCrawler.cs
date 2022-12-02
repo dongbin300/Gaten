@@ -1,6 +1,4 @@
-﻿using Gaten.Net.IO;
-
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 
@@ -12,8 +10,9 @@ namespace Gaten.Net.Network
         public static string Source => driver.PageSource;
         public static bool CreateNoWindow = false;
 
-        public static void Open(string url = "")
+        public static void Open(string url = "", bool createNoWindow = false)
         {
+            CreateNoWindow = createNoWindow;
             var driverService = ChromeDriverService.CreateDefaultService();
             driverService.HideCommandPromptWindow = CreateNoWindow;
             var options = new ChromeOptions();

@@ -9,7 +9,6 @@ namespace Gaten.Net.IO
     public class GFile
     {
         #region Properties
-        //public static string ArraySeparator { get; set; } = "\r\n";
         public static string DictionarySeparator { get; set; } = ":";
         public static Encoding Encoding { get; set; } = Encoding.UTF8;
         #endregion
@@ -37,7 +36,7 @@ namespace Gaten.Net.IO
 
         public static string[] ReadToArray(string path)
         {
-            return Read(path).Split("\r\n", StringSplitOptions.RemoveEmptyEntries);
+            return SystemFile.ReadAllLines(path);
         }
 
         public static Dictionary<string, string> ReadToDictionary(string path)
@@ -115,14 +114,7 @@ namespace Gaten.Net.IO
 
         public static void WriteByArray(string path, IList<string> contents)
         {
-            StringBuilder builder = new();
-
-            foreach (var content in contents)
-            {
-                builder.AppendLine(content);
-            }
-
-            Write(path, builder.ToString());
+            SystemFile.WriteAllLines(path, contents, Encoding);
         }
 
         public static void WriteByDictionary(string path, IDictionary<string, string> contents)
@@ -169,14 +161,7 @@ namespace Gaten.Net.IO
 
         public static void AppendByArray(string path, IList<string> contents)
         {
-            StringBuilder builder = new();
-
-            foreach (var content in contents)
-            {
-                builder.AppendLine(content);
-            }
-
-            Append(path, builder.ToString());
+            SystemFile.AppendAllLines(path, contents, Encoding);
         }
 
         public static void AppendByDictionary(string path, IDictionary<string, string> contents)
