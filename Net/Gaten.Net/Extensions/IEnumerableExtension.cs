@@ -6,6 +6,7 @@ using Org.BouncyCastle.Asn1.X509.Qualified;
 using Org.BouncyCastle.Math.EC.Multiplier;
 
 using System.Data;
+using System.Reflection;
 using System.Reflection.Metadata.Ecma335;
 
 namespace Gaten.Net.Extensions
@@ -46,18 +47,20 @@ namespace Gaten.Net.Extensions
         {
             var alternativeColonChar = 'ꪪ';
             var type = typeof(T);
-            var properties = type.GetProperties();
+            var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetField);
+            var fieldNames = fields.Select(x => x.Name.Replace(',', alternativeColonChar).Replace("k__BackingField", "").Replace("<", "").Replace(">", "")).ToList();
+
             var contents = new List<string>
             {
-                string.Join(',', properties.Select(x=>x.Name.Replace(',', alternativeColonChar)).ToArray())
+                string.Join(',', fieldNames)
             };
 
             foreach (var data in obj)
             {
                 var values = new List<string>();
-                foreach (var property in properties)
+                for(int i = 0; i < fields.Length; i++)
                 {
-                    var value = type.GetProperty(property.Name)?.GetValue(data, null);
+                    var value = type.GetProperty(fieldNames[i])?.GetValue(data, null);
                     values.Add(value?.ToString()?.Replace(',', alternativeColonChar) ?? default!);
                 }
                 contents.Add(string.Join(',', values.ToArray()));

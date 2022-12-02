@@ -1,6 +1,5 @@
-﻿using Org.BouncyCastle.Utilities;
-
-using System.Data;
+﻿using System.Data;
+using System.Reflection;
 using System.Text;
 
 using SystemFile = System.IO.File;
@@ -9,10 +8,13 @@ namespace Gaten.Net.IO
 {
     public class GFile
     {
+        #region Properties
         //public static string ArraySeparator { get; set; } = "\r\n";
         public static string DictionarySeparator { get; set; } = ":";
-        public static Encoding Encoding { get; set;} = Encoding.UTF8;
+        public static Encoding Encoding { get; set; } = Encoding.UTF8;
+        #endregion
 
+        #region Common
         public static bool Exists(string path)
         {
             return SystemFile.Exists(path);
@@ -25,7 +27,9 @@ namespace Gaten.Net.IO
                 Write(path, string.Empty);
             }
         }
+        #endregion
 
+        #region Read
         public static string Read(string path)
         {
             return SystemFile.ReadAllText(path, Encoding);
@@ -63,12 +67,12 @@ namespace Gaten.Net.IO
         {
             var result = new DataTable();
             var items = ReadToArray(path);
-            var rows = items[0].Split(',', StringSplitOptions.RemoveEmptyEntries);
-            foreach(var row in rows)
+            var columns = items[0].Split(',', StringSplitOptions.RemoveEmptyEntries);
+            foreach (var column in columns)
             {
-                result.Columns.Add(row, typeof(string));
+                result.Columns.Add(column, typeof(string));
             }
-            for(int i = 1; i < items.Length; i++)
+            for (int i = 1; i < items.Length; i++)
             {
                 var data = items[i].Split(',', StringSplitOptions.RemoveEmptyEntries);
                 result.Rows.Add(data);
@@ -76,6 +80,34 @@ namespace Gaten.Net.IO
             return result;
         }
 
+        public static IList<T> ReadCsv<T>(string path)
+        {
+            IList<T> result = new List<T>();
+            var items = ReadToArray(path);
+            var columns = items[0].Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+            Type type = typeof(T);
+            var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetField);
+
+            for (int i = 1; i < items.Length; i++)
+            {
+                object[] defaultParameters = new object[columns.Length];
+                Array.Fill(defaultParameters, default!);
+                T instance = (T)(Activator.CreateInstance(type, defaultParameters) ?? default!);
+                var segments = items[i].Split(",", StringSplitOptions.RemoveEmptyEntries);
+                for (int j = 0; j < segments.Length; j++)
+                {
+                    var field = fields.First(f => f.Name.Equals(columns[j]) || f.Name.Equals($"<{columns[j]}>k__BackingField"));
+                    field.SetValue(instance, segments[j]);
+                }
+                result.Add(instance);
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region Write
         public static void Write(string path, string contents)
         {
             SystemFile.WriteAllText(path, contents, Encoding);
@@ -122,7 +154,9 @@ namespace Gaten.Net.IO
             }
             WriteByArray(path, contents);
         }
+        #endregion
 
+        #region Append
         public static void Append(string path, string contents)
         {
             SystemFile.AppendAllText(path, contents, Encoding);
@@ -162,7 +196,9 @@ namespace Gaten.Net.IO
             using var stream = new FileStream(path, FileMode.Append);
             stream.Write(contents, 0, contents.Length);
         }
+        #endregion
 
+        #region Copy
         public static void CopyDirectory(string sourcePath, string destPath)
         {
             foreach (var dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
@@ -175,5 +211,6 @@ namespace Gaten.Net.IO
                 SystemFile.Copy(newPath, newPath.Replace(sourcePath, destPath), true);
             }
         }
+        #endregion
     }
 }

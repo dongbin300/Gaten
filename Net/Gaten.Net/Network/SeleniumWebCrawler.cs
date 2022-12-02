@@ -14,7 +14,7 @@ namespace Gaten.Net.Network
 
         public static void Open(string url = "")
         {
-            var driverService = ChromeDriverService.CreateDefaultService(GResource.BaseFilePath, "chromedriver.exe");
+            var driverService = ChromeDriverService.CreateDefaultService();
             driverService.HideCommandPromptWindow = CreateNoWindow;
             var options = new ChromeOptions();
             if (CreateNoWindow)
