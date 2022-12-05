@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -9,9 +9,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Net\GameRule\Gaten.Net.GameRule.RubiksCube\Gaten.Net.GameRule.RubiksCube.csproj" />
-    <ProjectReference Include="..\..\Net\Gaten.Net\Gaten.Net.csproj" />
-    <ProjectReference Include="..\..\Net\Language\Gaten.Net.Language.Japanese\Gaten.Net.Language.Japanese.csproj" />
-    <ProjectReference Include="..\Gaten.Study.TestDll\Gaten.Study.TestDll.csproj" />
   </ItemGroup>
 
 </Project>

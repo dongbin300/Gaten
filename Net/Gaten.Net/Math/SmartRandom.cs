@@ -2,7 +2,7 @@
 {
     public class SmartRandom
     {
-        static long seed;
+        long seed;
 
         public SmartRandom()
         {

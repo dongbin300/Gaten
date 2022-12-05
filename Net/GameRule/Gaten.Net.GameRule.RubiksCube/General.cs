@@ -65,23 +65,23 @@
             }
         }
 
-        public static void SymbolRotate(RotateDirection d, SymbolCube333 cube, int s1, int p1, int s2, int p2, int s3, int p3, int s4, int p4)
+        public static void SymbolRotate(RotateDirection d, SymbolCube333 cube, int n1, int n2, int n3, int n4)
         {
             switch (d)
             {
                 case RotateDirection.Left:
-                    var temp1 = cube.Sides[s1].Symbols[p1];
-                    cube.Sides[s1].Symbols[p1] = cube.Sides[s2].Symbols[p2];
-                    cube.Sides[s2].Symbols[p2] = cube.Sides[s3].Symbols[p3];
-                    cube.Sides[s3].Symbols[p3] = cube.Sides[s4].Symbols[p4];
-                    cube.Sides[s4].Symbols[p4] = temp1;
+                    var temp1 = cube.Symbols[n1];
+                    cube.Symbols[n1] = cube.Symbols[n2];
+                    cube.Symbols[n2] = cube.Symbols[n3];
+                    cube.Symbols[n3] = cube.Symbols[n4];
+                    cube.Symbols[n4] = temp1;
                     break;
                 case RotateDirection.Right:
-                    var temp2 = cube.Sides[s4].Symbols[p4];
-                    cube.Sides[s4].Symbols[p4] = cube.Sides[s3].Symbols[p3];
-                    cube.Sides[s3].Symbols[p3] = cube.Sides[s2].Symbols[p2];
-                    cube.Sides[s2].Symbols[p2] = cube.Sides[s1].Symbols[p1];
-                    cube.Sides[s1].Symbols[p1] = temp2;
+                    var temp2 = cube.Symbols[n4];
+                    cube.Symbols[n4] = cube.Symbols[n3];
+                    cube.Symbols[n3] = cube.Symbols[n2];
+                    cube.Symbols[n2] = cube.Symbols[n1];
+                    cube.Symbols[n1] = temp2;
                     break;
             }
         }

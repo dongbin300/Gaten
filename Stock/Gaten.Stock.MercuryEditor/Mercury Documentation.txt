@@ -1,0 +1,30 @@
+0. Basic Concept
+
+
+1. System Code
+#v1
+#binancefutures
+#backtest
+#mocktrade
+#realtrade
+
+2. Backtest
+2-1. Basic Info Section
+Asset
+Period
+Interval
+Target
+
+2-2. Named Element Section
+definition @ name
+
+2-3. Scenario Section
+scenario
+strategy
+-cue(formula, life), signal(formula), order
+formula
+& | ++ -- >= <= != > < =
+element
+-chart element, named element, value element, range element, trade element
+order amount type
+-fixed symbol, fixed, seed, balance, asset, balance symbol, limit, open, close

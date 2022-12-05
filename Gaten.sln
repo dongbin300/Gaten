@@ -322,6 +322,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.Language.ReadKanji", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.Net.Language.Japanese", "Net\Language\Gaten.Net.Language.Japanese\Gaten.Net.Language.Japanese.csproj", "{70818B19-2325-4575-8366-9F4866F55007}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.Game.RubiksCubeAlgorithmCreatorConsole", "Game\Gaten.Game.RubiksCubeAlgorithmCreatorConsole\Gaten.Game.RubiksCubeAlgorithmCreatorConsole.csproj", "{4D9CC271-1298-45EC-952B-F58DE96F8D94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1892,6 +1894,18 @@ Global
 		{70818B19-2325-4575-8366-9F4866F55007}.Release|x64.Build.0 = Release|Any CPU
 		{70818B19-2325-4575-8366-9F4866F55007}.Release|x86.ActiveCfg = Release|Any CPU
 		{70818B19-2325-4575-8366-9F4866F55007}.Release|x86.Build.0 = Release|Any CPU
+		{4D9CC271-1298-45EC-952B-F58DE96F8D94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D9CC271-1298-45EC-952B-F58DE96F8D94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D9CC271-1298-45EC-952B-F58DE96F8D94}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4D9CC271-1298-45EC-952B-F58DE96F8D94}.Debug|x64.Build.0 = Debug|Any CPU
+		{4D9CC271-1298-45EC-952B-F58DE96F8D94}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4D9CC271-1298-45EC-952B-F58DE96F8D94}.Debug|x86.Build.0 = Debug|Any CPU
+		{4D9CC271-1298-45EC-952B-F58DE96F8D94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D9CC271-1298-45EC-952B-F58DE96F8D94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D9CC271-1298-45EC-952B-F58DE96F8D94}.Release|x64.ActiveCfg = Release|Any CPU
+		{4D9CC271-1298-45EC-952B-F58DE96F8D94}.Release|x64.Build.0 = Release|Any CPU
+		{4D9CC271-1298-45EC-952B-F58DE96F8D94}.Release|x86.ActiveCfg = Release|Any CPU
+		{4D9CC271-1298-45EC-952B-F58DE96F8D94}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2039,6 +2053,7 @@ Global
 		{44944E83-FB2E-4107-AC05-2951E727B4C9} = {B59A1183-F580-40F6-943F-FDBFF9AE8075}
 		{CB0E764E-1246-45A4-B86E-C1E19C8ACA63} = {1CAEFC72-FD02-4532-8E1F-FB20FA5649E1}
 		{70818B19-2325-4575-8366-9F4866F55007} = {766311F4-EC62-4550-8274-049958428B32}
+		{4D9CC271-1298-45EC-952B-F58DE96F8D94} = {1651B9F0-835F-4308-974A-657AEDE416BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9E22E9A6-DD7D-4809-95DD-888B759F780F}
