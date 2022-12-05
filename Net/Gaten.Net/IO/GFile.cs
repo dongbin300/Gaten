@@ -79,6 +79,23 @@ namespace Gaten.Net.IO
             return result;
         }
 
+        public static DataTable ReadCsvWithNoHeader(string path)
+        {
+            var result = new DataTable();
+            var items = ReadToArray(path);
+            var columnCount = items[0].Split(',', StringSplitOptions.RemoveEmptyEntries).Length;
+            for (int i = 0; i < columnCount; i++)
+            {
+                result.Columns.Add($"item{i + 1}", typeof(string));
+            }
+            for (int i = 0; i < items.Length; i++)
+            {
+                var data = items[i].Split(',', StringSplitOptions.RemoveEmptyEntries);
+                result.Rows.Add(data);
+            }
+            return result;
+        }
+
         public static IList<T> ReadCsv<T>(string path)
         {
             IList<T> result = new List<T>();

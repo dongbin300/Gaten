@@ -4,7 +4,7 @@
     {
         public static List<CubeSymbol> AllBottom = new
         {
-
+            new CubeSymbol()
         }
 
         public static SymbolCube333 RotateNew(SymbolCube333 cube, FaceRotation faceRotation)

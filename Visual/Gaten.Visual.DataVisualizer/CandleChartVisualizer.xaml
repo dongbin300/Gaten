@@ -7,7 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Background="Transparent"
-             PreviewMouseWheel="UserControl_PreviewMouseWheel">
+             PreviewMouseWheel="UserControl_PreviewMouseWheel"
+             MouseMove="UserControl_MouseMove"
+             MouseLeftButtonDown="UserControl_MouseLeftButtonDown"
+             MouseLeftButtonUp="UserControl_MouseLeftButtonUp">
     <Grid>
             
     </Grid>
