@@ -38,6 +38,7 @@ namespace Gaten.Visual.DataVisualizer
 
             //waveVisualizer.Init(0, 20, 100);
             //Screen.Content = waveVisualizer;
+
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
