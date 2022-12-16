@@ -5,8 +5,91 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaten.Windows.FileExplorer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="파일 탐색기" Height="450" Width="800">
 
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="36" MinHeight="36" MaxHeight="36"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="24" MinHeight="24" MaxHeight="24"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="#191919">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="36"/>
+                <ColumnDefinition Width="36"/>
+                <ColumnDefinition Width="36"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="180"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Background="Transparent" MouseLeftButtonDown="Undo_Click">
+                <Canvas Style="{StaticResource TaskIconButtonCanvas}">
+                    <Path Margin="8,10" Data="M20 11 V13 H8 L13.5 18.5 L12.08 19.92 L4.16 12 L12.08 4.08 L13.5 5.5 L8 11 H20Z "/>
+                    <!--M20 10 V14 H11 L14.5 17.5 L12.08 19.92 L4.16 12 L12.08 4.08 L14.5 6.5 L11 10 H20Z-->
+                </Canvas>
+            </Border>
+            <Border Grid.Column="1" Background="Transparent" MouseLeftButtonDown="Redo_Click">
+                <Canvas Style="{StaticResource TaskIconButtonCanvas}">
+                    <Path Margin="8,10" Data="M4 11 V13 H16 L10.5 18.5 L11.92 19.92 L19.84 12 L11.92 4.08 L10.5 5.5 L16 11 H4Z"/>
+                    <!--M4 10 V14 H13 L9.5 17.5 L11.92 19.92 L19.84 12 L11.92 4.08 L9.5 6.5 L13 10 H4Z-->
+                </Canvas>
+            </Border>
+            <Border Grid.Column="2" Background="Transparent" MouseLeftButtonDown="Top_Click">
+                <Canvas Style="{StaticResource TaskIconButtonCanvas}">
+                    <Path Margin="8,10" Data="M13 20 H11 V8 L5.5 13.5 L4.08 12.08 L12 4.16 L19.92 12.08 L18.5 13.5 L13 8 V20Z"/>
+                    <!--M14 20 H10 V11 L6.5 14.5 L4.08 12.08 L12 4.16 L19.92 12.08 L17.5 14.5 L14 11 V20Z-->
+                </Canvas>
+            </Border>
+            <Border Grid.Column="3" Margin="3" BorderBrush="#535353" BorderThickness="1" Background="#191919" >
+                <StackPanel x:Name="CurrentPathPanel" Orientation="Horizontal">
+                </StackPanel>
+            </Border>
+            <TextBox x:Name="SearchTextBox" Grid.Column="4" Margin="3" Foreground="#F7F7F7" Background="#191919" BorderBrush="#535353" VerticalContentAlignment="Center"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <!--<ColumnDefinition Width="150" MinWidth="50"/>-->
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Background="#191919">
+                <!--<ListBox x:Name="FavoriteListBox" Background="#191919" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="./Resources/explorer.ico"/>
+                                <TextBlock Text="테스트" Foreground="#F7F7F7"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBoxItem>123456</ListBoxItem>
+                </ListBox>-->
+            </Grid>
+
+            <Grid Grid.Column="1" Background="#202020">
+                <DataGrid x:Name="FileListDataGrid" AutoGenerateColumns="False" IsReadOnly="True" Padding="7,0,0,0"
+                          MouseDoubleClick="FileListDataGrid_MouseDoubleClick" SelectionChanged="FileListDataGrid_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="이름" Width="5*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{Binding Icon}"/>
+                                        <TextBlock Text="{Binding Name}" Foreground="#F7F7F7"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="수정한 날짜" Binding="{Binding ModDateString}" Width="1.8*"/>
+                        <DataGridTextColumn Header="크기" Binding="{Binding Size}" Width="1*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2" Background="#333">
+            <TextBlock x:Name="StatusText" Text="{Binding StatusText}" Foreground="#F7F7F7" FontSize="11" Padding="15,4"/>
+        </Grid>
     </Grid>
 </Window>

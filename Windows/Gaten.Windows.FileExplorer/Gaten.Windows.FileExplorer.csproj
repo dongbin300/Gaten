@@ -5,6 +5,25 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <AssemblyName>Explorer</AssemblyName>
+    <ApplicationIcon>Resources\explorer.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\explorer.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Net\Gaten.Net.Wpf\Gaten.Net.Wpf.csproj" />
+    <ProjectReference Include="..\..\Net\Gaten.Net\Gaten.Net.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\folder.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

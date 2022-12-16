@@ -4,6 +4,97 @@
              xmlns:local="clr-namespace:Gaten.Windows.FileExplorer"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="{x:Type Button}" x:Key="PathButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="Border" CornerRadius="3"
+                            Background="{TemplateBinding Background}">
+                            <ContentPresenter x:Name="contentPresenter" Margin="7,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                          Content="{TemplateBinding Content}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#5B5D60" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter Property="Background" Value="Transparent" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style TargetType="{x:Type Canvas}" x:Key="TaskIconButtonCanvas">
+            <Setter Property="Width" Value="30" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#333" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="Background" Value="Transparent" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type Path}">
+            <Setter Property="Fill" Value="#F7F7F7" />
+            <Setter Property="Width" Value="14" />
+            <Setter Property="Height" Value="14" />
+            <Setter Property="Margin" Value="4" />
+            <Setter Property="Stretch" Value="Uniform" />
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type DataGridCell}">
+            <Setter Property="FontFamily" Value="Meiryo UI" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="#F6F6F6" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type DataGridRow}">
+            <Setter Property="Height" Value="20" />
+            <Setter Property="Foreground" Value="Red" />
+            <Setter Property="Background" Value="#202020" />
+            <Style.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#5B5D60" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#5B5D60" Opacity="0.5" />
+            </Style.Resources>
+        </Style>
+
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="FontFamily" Value="Meiryo UI" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Height" Value="32" />
+            <Setter Property="Foreground" Value="#F6F6F6" />
+            <Setter Property="Background" Value="#202020" />
+            <Setter Property="SeparatorVisibility" Value="Visible" />
+            <Setter Property="SeparatorBrush" Value="Red" />
+        </Style>
+
+        <Style TargetType="{x:Type DataGrid}">
+            <Setter Property="Foreground" Value="#F6F6F6" />
+            <Setter Property="Background" Value="#202020" />
+            <Setter Property="BorderBrush" Value="#999" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="GridLinesVisibility" Value="None" />
+            <Setter Property="RowHeaderWidth" Value="0" />
+        </Style>
     </Application.Resources>
 </Application>
