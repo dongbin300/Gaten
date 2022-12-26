@@ -1,0 +1,38 @@
+﻿@page "/"
+@using System.Threading;
+@using Data;
+@using Gaten.Web.Tarinance.Models;
+@using Gaten.Net.Extensions;
+@using System.Security.Cryptography;
+@using System.Text;
+@inject DataAccess _data;
+
+<p>Current count: @count</p>
+
+@code {
+    System.Threading.Timer _timer;
+    int count = 0;
+    List<TestModel> tests;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _data.Initialize();
+
+        var id = "good";
+        var nickname = "굿";
+        var password = "123456";
+        HashAlgorithm sha = SHA256.Create();
+        var result = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
+        var passwordHash = Encoding.UTF8.GetString(result);
+        var registerDate = DateTime.Now.ToStandardString();
+        await _data.Insert<AccountModel>("ACCOUNT", new AccountModel(id, passwordHash, nickname, registerDate, "1000", "123"));
+
+        _timer = new System.Threading.Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(300));
+    }
+
+    async void DoWork(object? state)
+    {
+        count++;
+        await InvokeAsync(StateHasChanged);
+    }
+}
