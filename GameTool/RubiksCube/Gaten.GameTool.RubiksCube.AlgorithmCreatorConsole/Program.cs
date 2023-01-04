@@ -45,9 +45,33 @@ namespace Gaten.GameTool.RubiksCube.AlgorithmCreatorConsole
                 Console.Write("> ");
                 var command = Console.ReadLine() ?? "";
 
+                for (int i = 23; i <= 30; i++)
+                {
+                    Console.SetCursorPosition(0, i);
+                    Console.Write("                             ");
+                }
+                Console.SetCursorPosition(0, 23);
+
                 if (command.ToLower() == "exit")
                 {
                     break;
+                }
+
+                if (command.StartsWith("gen") || command.StartsWith("vgen"))
+                {
+                    var commands= command.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                    var intensity = commands[0] == "gen" ? GeneratingIntensity.All : GeneratingIntensity.Valid;
+                    var maxLength = commands.Length == 1 ? 8 : int.Parse(commands[1]);
+                    var algorithms = AlgorithmGenerator.Generate(beforeCube, afterCube, intensity, maxLength);
+
+                    if (algorithms == null || algorithms.Count == 0)
+                    {
+                        Console.WriteLine("알고리즘이 존재하지 않습니다.");
+                        continue;
+                    }
+
+                    Console.WriteLine(string.Join(Environment.NewLine, algorithms));
+                    continue;
                 }
 
                 switch (command.ToLower())
@@ -55,18 +79,6 @@ namespace Gaten.GameTool.RubiksCube.AlgorithmCreatorConsole
                     case "sw":
                         current = 1 - current;
                         Refresh();
-                        break;
-
-                    case "gen":
-                        var algorithms = AlgorithmGenerator.Generate(beforeCube, afterCube);
-
-                        if(algorithms == null || algorithms.Count == 0)
-                        {
-                            Console.WriteLine("알고리즘이 존재하지 않습니다.");
-                            break;
-                        }
-
-                        Console.WriteLine(string.Join(Environment.NewLine, algorithms));
                         break;
 
                     default:
