@@ -6,14 +6,25 @@
 *@
 <PageTitle>Tarinance</PageTitle>
 
+<style>
+    #footer {
+        position: fixed;
+        background-color: #3BCF86;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 50px;
+    }
+</style>
+
 <div class="page">
     <main>
-        <article class="content px-4">
+        <article>
             @Body
         </article>
     </main>
 
-    <div id="footer" style="position: fixed; background-color:#3BCF86; left: 0; right: 0; bottom: 0; height: 30;">
+    <div id="footer">
         <NavMenu />
     </div>
 </div>

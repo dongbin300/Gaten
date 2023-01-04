@@ -16,15 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Resources\CygUtils.plugin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\MobaXterm.ini">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\MobaXterm_Personal_22.3.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>

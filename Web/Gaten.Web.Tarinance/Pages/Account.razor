@@ -1,0 +1,68 @@
+﻿@page "/account"
+@using Gaten.Web.Tarinance.Data;
+@using Gaten.Web.Tarinance.Models.Web;
+@using Microsoft.AspNetCore.Mvc.RazorPages;
+@inject TarinanceMarket market
+@inject IJSRuntime JsRuntime
+@inject Cookie cookie
+@inject NavigationManager navigationManager
+@inject PageModel pageModel
+
+<PageTitle>Tarinance Account</PageTitle>
+
+<style>
+    #login-id {
+        width: 75%;
+        font-size: 14pt;
+        background: #222;
+        border: 1px solid;
+        padding: 10px;
+        color: #eee;
+    }
+
+    #login {
+        width: 100%;
+        padding: 10px;
+        background: #3BCF86;
+        color: #eee;
+    }
+</style>
+
+@if (string.IsNullOrEmpty(cookie.GetValue("tarinance-id")))
+{
+    <div style="text-align:center; position:relative;">
+        @value
+        <input type="text" id="login-id" @bind="@value" @oninput="@(ui => { value=(string)ui.Value; })" />
+        @functions {
+        string value;
+    }
+    <br />
+    <button id="login" @onclick="Login">로그인</button>
+</div>
+}
+else
+{
+<div style="text-align:center; font-size:14pt;">
+    <span>@cookie.GetValue("tarinance-id") 님 안녕하세요.</span>
+</div>
+}
+
+
+
+@code {
+    private async void Login()
+    {
+        var result = market.Login(value);
+
+        if (result != string.Empty)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", result);
+            return;
+        }
+
+        var cookies = pageModel.HttpContext.Response.Cookies;
+        await cookie.SetValue("tarinance-id", value);
+        navigationManager.NavigateTo("/");
+        navigationManager.NavigateTo("/account");
+    }
+}

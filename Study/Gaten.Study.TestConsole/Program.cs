@@ -1,6 +1,6 @@
 ﻿namespace Gaten.Study.TestConsole
 {
-    public class Program
+    public partial class Program
     {
         public static void Main()
         {

@@ -7,12 +7,14 @@ namespace Gaten.Net.Collections
         private string[] Keys { get; set; }
         private Dictionary<string, object> Values { get; set; }
         private bool IsCaseSensitive;
+        private bool IsUnderscoreIgnore;
 
-        public Match(bool isCaseSensitive = false)
+        public Match(bool isCaseSensitive = false, bool isUnderscoreIgnore = true)
         {
             Keys = Array.Empty<string>();
             Values = new Dictionary<string, object>();
             IsCaseSensitive = isCaseSensitive;
+            IsUnderscoreIgnore = isUnderscoreIgnore;
         }
 
         public void SetKey(params string[] keys)
@@ -22,9 +24,11 @@ namespace Gaten.Net.Collections
 
         public bool SetValue(string key, object value)
         {
+            string[] changedKeys = IsUnderscoreIgnore ? Keys.Select(x => x.Replace("_", "")).ToArray() : Keys;
+
             if (IsCaseSensitive)
             {
-                if (Keys.Contains(key))
+                if (changedKeys.Contains(key))
                 {
                     Values.Add(key, value);
                     return true;
@@ -36,7 +40,7 @@ namespace Gaten.Net.Collections
             }
             else
             {
-                if (Keys.Select(k => k.ToUpper()).Contains(key.ToUpper()))
+                if (changedKeys.Select(k => k.ToUpper()).Contains(key.ToUpper()))
                 {
                     Values.Add(key, value);
                     return true;

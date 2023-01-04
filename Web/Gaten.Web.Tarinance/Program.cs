@@ -1,7 +1,8 @@
 using Gaten.Web.Tarinance.Data;
+using Gaten.Web.Tarinance.Models.Web;
 
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Gaten.Web.Tarinance
 {
@@ -14,8 +15,15 @@ namespace Gaten.Web.Tarinance
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
-            builder.Services.AddSingleton<DataAccess>();
-            //builder.Services.AddSingleton<WeatherForecastService>();
+            builder.Services.AddSingleton<Database>();
+            builder.Services.AddSingleton<TarinanceMarket>();
+            builder.Services.AddScoped<Cookie>();
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromDays(7);
+                options.SlidingExpiration = true;
+                options.AccessDeniedPath = "/Forbidden/";
+            });
 
             var app = builder.Build();
 
@@ -28,8 +36,10 @@ namespace Gaten.Web.Tarinance
             }
 
             app.UseHttpsRedirection();
-
             app.UseStaticFiles();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseRouting();
 

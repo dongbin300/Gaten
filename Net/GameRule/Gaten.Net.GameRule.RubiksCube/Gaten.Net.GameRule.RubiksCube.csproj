@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Gaten.Net\Gaten.Net.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,13 +1,7 @@
 ﻿using Gaten.Net.IO;
 
-using OpenQA.Selenium.DevTools;
-
-using Org.BouncyCastle.Asn1.X509.Qualified;
-using Org.BouncyCastle.Math.EC.Multiplier;
-
 using System.Data;
 using System.Reflection;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Gaten.Net.Extensions
 {
@@ -74,5 +68,22 @@ namespace Gaten.Net.Extensions
         public static double StandardDeviation(this IEnumerable<float> values) => System.Math.Sqrt(values.Average(v => System.Math.Pow(v - values.Average(), 2)));
         public static double StandardDeviation(this IEnumerable<double> values) => System.Math.Sqrt(values.Average(v => System.Math.Pow(v - values.Average(), 2)));
         public static double StandardDeviation(this IEnumerable<decimal> values) => System.Math.Sqrt(values.Average(v => System.Math.Pow(decimal.ToDouble(v - values.Average()), 2)));
+
+        public static IEnumerable<IEnumerable<T>> Combinate<T>(this IEnumerable<T> elements, int k)
+        {
+            return k == 0 ? new[] { Enumerable.Empty<T>() } :
+              elements.SelectMany((e, i) =>
+                elements.Skip(i + 1).Combinate(k - 1).Select(c => (new[] { e }).Concat(c)));
+        }
+
+        public static IEnumerable<T[]> Permutate<T>(this IEnumerable<T> elements)
+        {
+            return permutate(elements, Enumerable.Empty<T>());
+            IEnumerable<T[]> permutate(IEnumerable<T> reminder, IEnumerable<T> prefix) =>
+                !reminder.Any() ? new[] { prefix.ToArray() } :
+                reminder.SelectMany((c, i) => permutate(
+                    reminder.Take(i).Concat(reminder.Skip(i + 1)).ToArray(),
+                    prefix.Append(c)));
+        }
     }
 }

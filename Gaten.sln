@@ -328,7 +328,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{B5A37331-035
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Web.Tools", "Web\Gaten.Web.Tools\Gaten.Web.Tools.csproj", "{B89E0251-5E52-4900-BBCC-B6B0BB9C323F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.Web.Tarinance", "Web\Gaten.Web.Tarinance\Gaten.Web.Tarinance.csproj", "{D1AC32BC-5B04-4F5A-B3C1-AA03AD5E5448}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Web.Tarinance", "Web\Gaten.Web.Tarinance\Gaten.Web.Tarinance.csproj", "{D1AC32BC-5B04-4F5A-B3C1-AA03AD5E5448}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RubiksCube", "RubiksCube", "{459D6A80-9B26-47EA-9EE2-45B8D3B48853}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.GameTool.RubiksCube.AlgorithmCreatorConsole", "GameTool\RubiksCube\Gaten.GameTool.RubiksCube.AlgorithmCreatorConsole\Gaten.GameTool.RubiksCube.AlgorithmCreatorConsole.csproj", "{55EF6A5D-E5A2-490A-B5FA-2383C87454AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1948,6 +1952,18 @@ Global
 		{D1AC32BC-5B04-4F5A-B3C1-AA03AD5E5448}.Release|x64.Build.0 = Release|Any CPU
 		{D1AC32BC-5B04-4F5A-B3C1-AA03AD5E5448}.Release|x86.ActiveCfg = Release|Any CPU
 		{D1AC32BC-5B04-4F5A-B3C1-AA03AD5E5448}.Release|x86.Build.0 = Release|Any CPU
+		{55EF6A5D-E5A2-490A-B5FA-2383C87454AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55EF6A5D-E5A2-490A-B5FA-2383C87454AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55EF6A5D-E5A2-490A-B5FA-2383C87454AA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{55EF6A5D-E5A2-490A-B5FA-2383C87454AA}.Debug|x64.Build.0 = Debug|Any CPU
+		{55EF6A5D-E5A2-490A-B5FA-2383C87454AA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{55EF6A5D-E5A2-490A-B5FA-2383C87454AA}.Debug|x86.Build.0 = Debug|Any CPU
+		{55EF6A5D-E5A2-490A-B5FA-2383C87454AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55EF6A5D-E5A2-490A-B5FA-2383C87454AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55EF6A5D-E5A2-490A-B5FA-2383C87454AA}.Release|x64.ActiveCfg = Release|Any CPU
+		{55EF6A5D-E5A2-490A-B5FA-2383C87454AA}.Release|x64.Build.0 = Release|Any CPU
+		{55EF6A5D-E5A2-490A-B5FA-2383C87454AA}.Release|x86.ActiveCfg = Release|Any CPU
+		{55EF6A5D-E5A2-490A-B5FA-2383C87454AA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2099,6 +2115,8 @@ Global
 		{7E28BCE1-32E2-4A6E-A5E4-E6067DCE3005} = {0D20CAEA-6673-4319-8F89-D093A669596D}
 		{B89E0251-5E52-4900-BBCC-B6B0BB9C323F} = {B5A37331-0354-489F-8712-6D7D18AB8A94}
 		{D1AC32BC-5B04-4F5A-B3C1-AA03AD5E5448} = {B5A37331-0354-489F-8712-6D7D18AB8A94}
+		{459D6A80-9B26-47EA-9EE2-45B8D3B48853} = {6D6BD253-AF6B-41BD-BC2C-BCA5495B120C}
+		{55EF6A5D-E5A2-490A-B5FA-2383C87454AA} = {459D6A80-9B26-47EA-9EE2-45B8D3B48853}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9E22E9A6-DD7D-4809-95DD-888B759F780F}

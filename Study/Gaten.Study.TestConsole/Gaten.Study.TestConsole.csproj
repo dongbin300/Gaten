@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="SSH.NET" Version="2020.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Net\GameRule\Gaten.Net.GameRule.RubiksCube\Gaten.Net.GameRule.RubiksCube.csproj" />
     <ProjectReference Include="..\..\Net\Gaten.Net\Gaten.Net.csproj" />
     <ProjectReference Include="..\..\Net\Language\Gaten.Net.Language.Japanese\Gaten.Net.Language.Japanese.csproj" />

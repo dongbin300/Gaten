@@ -5,34 +5,67 @@
 @using Gaten.Net.Extensions;
 @using System.Security.Cryptography;
 @using System.Text;
-@inject DataAccess _data;
+@using Gaten.Web.Tarinance.Models.Market;
+@using Newtonsoft.Json;
+@inject TarinanceMarket market;
 
-<p>Current count: @count</p>
+<style>
+    .user-box {
+        width: 100%;
+        padding: 30px;
+        border: 2px solid white;
+        color: #eee;
+        background: #333;
+        margin: 0;
+    }
+
+    .coin-box {
+        width: 100%;
+        padding: 20px;
+        border: 0px solid gray;
+        color: #eee;
+        background: #333;
+        margin: 0;
+    }
+</style>
+
+<div class="user-box">
+    @market.Users[0].Nickname 님  @market.Users[0].Balance
+</div>
+
+@foreach (var coin in market.Coins)
+{
+    <div class="coin-box">
+        @coin.Name @coin.Price
+    </div>
+}
+
 
 @code {
     System.Threading.Timer _timer;
-    int count = 0;
-    List<TestModel> tests;
 
     protected override async Task OnInitializedAsync()
     {
-        _data.Initialize();
+        market = new TarinanceMarket();
 
-        var id = "good";
-        var nickname = "굿";
-        var password = "123456";
-        HashAlgorithm sha = SHA256.Create();
-        var result = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
-        var passwordHash = Encoding.UTF8.GetString(result);
-        var registerDate = DateTime.Now.ToStandardString();
-        await _data.Insert<AccountModel>("ACCOUNT", new AccountModel(id, passwordHash, nickname, registerDate, "1000", "123"));
-
-        _timer = new System.Threading.Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(300));
+        _timer = new System.Threading.Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(3000));
     }
 
     async void DoWork(object? state)
     {
-        count++;
         await InvokeAsync(StateHasChanged);
+    }
+
+    async void RegisterUser()
+    {
+        //var id = "good";
+        //var nickname = "굿";
+        //var password = "123456";
+        //HashAlgorithm sha = SHA256.Create();
+        //var result = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
+        //var passwordHash = string.Join("", result.Select(x => $"{x:x2}"));
+        //var registerDate = DateTime.Now.ToStandardString();
+        //var assetData = "[{"Id":"1","Quantity":"2","Amount":"1900"}]";
+        //await _data.Insert<Account>("ACCOUNT", new Account(id, passwordHash, nickname, registerDate, "1000", assetData));
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaten.Web.Tools"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="350" ResizeMode="NoResize">
+        Title="웹 툴 v1.0.1" Height="450" Width="350" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -16,6 +16,7 @@
         <StackPanel Grid.Row="1" Orientation="Vertical" Margin="3, 15">
             <Button x:Name="ContainerRefreshButton" Content="docker 컨테이너 적용" Height="35" Click="ContainerRefreshButton_Click"/>
         </StackPanel>
-        <TextBox Grid.Row="2" x:Name="LogTextBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Height="Auto" FontSize="11" FontFamily="Verdana"/>
+        <TextBox Grid.Row="2" x:Name="LogTextBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Height="Auto" FontSize="11" FontFamily="Verdana"
+                 VerticalContentAlignment="Top"/>
     </Grid>
 </Window>
