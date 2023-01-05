@@ -156,6 +156,13 @@ namespace Gaten.Net.GameRule.RubiksCube.v2
             return Stickers.FindAll(x => Enumerable.SequenceEqual(x.Location.ToString().OrderBy(e => e), locationCode.OrderBy(e => e)));
         }
 
+        public List<RubiksCubeSticker>? GetStickers(string locationCode)
+        {
+            var result = new List<RubiksCubeSticker>();
+
+            return Stickers.FindAll(x => x.Sticker.ToString().StartsWith(locationCode));
+        }
+
         public List<RubiksCubeSticker>? GetMultiBlocks(string locationCode)
         {
             var result = new List<RubiksCubeSticker>();
@@ -182,7 +189,9 @@ namespace Gaten.Net.GameRule.RubiksCube.v2
         /// 6. .{Sticker}+ - This block set to default
         /// 7. .#{Sticker} - This blocks set to unknown
         /// 8. .#{Sticker}+ - This blocks set to default
-        /// 9. @{RotationCode} - Rotate cube
+        /// 9. #{Sticker} - This stickers starts with this sticker set to unknown
+        /// 10. #{Sticker}+ - This stickers starts with this sticker set to default
+        /// 11. @{RotationCode} - Rotate cube
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
@@ -277,6 +286,37 @@ namespace Gaten.Net.GameRule.RubiksCube.v2
                                     }
                                     return true;
                                 }
+                            }
+                        }
+                        else if (commands[0].StartsWith("#"))
+                        {
+                            var command2 = commands[0].Replace("#", "");
+                            if (command2.EndsWith("+"))
+                            {
+                                var command3 = command2.Replace("+", "");
+                                var stickers = GetStickers(command3);
+                                if (stickers == null)
+                                {
+                                    return false;
+                                }
+                                foreach (var sticker in stickers)
+                                {
+                                    sticker.Sticker = GetStickerCode(sticker.Location.ToString()[0].ToString());
+                                }
+                                return true;
+                            }
+                            else
+                            {
+                                var stickers = GetStickers(command2);
+                                if (stickers == null)
+                                {
+                                    return false;
+                                }
+                                foreach (var sticker in stickers)
+                                {
+                                    sticker.Sticker = GetStickerCode(sticker.Location.ToString()[0].ToString());
+                                }
+                                return true;
                             }
                         }
                         else if (commands[0].StartsWith("@"))
@@ -621,7 +661,7 @@ namespace Gaten.Net.GameRule.RubiksCube.v2
 
         public RubiksCube333 Clone()
         {
-            return new RubiksCube333(Stickers.Select(x=>x.Clone()).ToList());
+            return new RubiksCube333(Stickers.Select(x => x.Clone()).ToList());
         }
     }
 }
