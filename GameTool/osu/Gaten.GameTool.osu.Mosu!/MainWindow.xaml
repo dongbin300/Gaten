@@ -64,10 +64,9 @@
             <Button Grid.Row="2" Grid.Column="1" x:Name="Mania726Button" Content="Mania 726" Style="{StaticResource MenuButton}"  Click="Mania726Button_Click"/>
             <Button Grid.Row="0" Grid.Column="1" x:Name="NpNaxiButton" Content="NP 낚시" Style="{StaticResource MenuButton}" Click="NpNaxiButton_Click"/>
             <Button Grid.Row="0" Grid.Column="2" x:Name="ArCalculatorButton" Content="AR 계산기" Style="{StaticResource MenuButton}" Click="ArCalculatorButton_Click"/>
-            <Button Grid.Row="4" Grid.Column="0" x:Name="BeatmapDownloaderButton" Content="비트맵 다운로더" Style="{StaticResource MenuButton}" Click="BeatmapDownloaderButton_Click"/>
             <Button Grid.Row="2" Grid.Column="2" x:Name="BeatmapSpeedChangerButton" Content="비트맵 스피드!" Style="{StaticResource MenuButton}" Click="BeatmapSpeedChangerButton_Click"/>
-            <Button Grid.Row="4" Grid.Column="1" x:Name="FileExtractorButton" Content="파일 추출기" Style="{StaticResource MenuButton}" Click="FileExtractorButton_Click"/>
-            <Button Grid.Row="4" Grid.Column="2" x:Name="RankingManagerButton" Content="랭킹 매니저" Style="{StaticResource MenuButton}" Click="RankingManagerButton_Click"/>
+            <Button Grid.Row="4" Grid.Column="0" x:Name="FileExtractorButton" Content="파일 추출기" Style="{StaticResource MenuButton}" Click="FileExtractorButton_Click"/>
+            <Button Grid.Row="4" Grid.Column="1" x:Name="RankingManagerButton" Content="랭킹 매니저" Style="{StaticResource MenuButton}" Click="RankingManagerButton_Click"/>
             <Button Grid.Row="2" Grid.Column="3" x:Name="RandomBeatmapCreatorButton" Content="랜덤 비트맵 생성기" Style="{StaticResource MenuButton}" Click="RandomBeatmapCreatorButton_Click"/>
             <Rectangle x:Name="CurrentTabRectangle" Grid.Row="1" Grid.Column="0" Fill="HotPink"/>
         </Grid>

@@ -1,16 +1,21 @@
 ﻿<Window x:Class="Gaten.Study.TestWpf.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Gaten.Study.TestWpf"
-        xmlns:wpf="clr-namespace:Gaten.Net.Wpf.Controls;assembly=Gaten.Net.Wpf"
-        mc:Ignorable="d"
-        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
-        Title="MainWindow" Height="430" Width="640">
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:local="clr-namespace:Gaten.Study.TestWpf"
+		xmlns:wpf="clr-namespace:Gaten.Net.Wpf.Controls;assembly=Gaten.Net.Wpf"
+		mc:Ignorable="d"
+		Title="메인" Height="300" Width="400">
 
     <StackPanel>
-        <Button x:Name="InfoButton" Content="버튼입니다." Foreground="Red" Click="InfoButton_Click"/>
-        <Image x:Name="TopImage" Width="640" Height="360"/>
+        <Button Content="버튼"/>
+        <Button>
+            <Button.Content>
+                버튼
+            </Button.Content>
+        </Button>
+        <Button Content="-1" Click="Button2_Click"/>
+        <Button Content="클릭" Click="Button3_Click"/>
     </StackPanel>
 </Window>

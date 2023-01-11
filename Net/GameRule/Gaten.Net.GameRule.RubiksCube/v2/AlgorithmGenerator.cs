@@ -3,7 +3,8 @@
     public enum GeneratingIntensity
     {
         Valid,
-        All
+        All,
+        Special
     }
 
     public class AlgorithmGenerator
@@ -145,6 +146,19 @@
                             cases = cases.Concat(File.ReadAllLines("VRU10.txt")).ToArray();
                             cases = cases.Concat(File.ReadAllLines("VRU11.txt")).ToArray();
                             cases = cases.Concat(File.ReadAllLines("VRU12.txt")).ToArray();
+                            break;
+                    }
+                    break;
+
+                case GeneratingIntensity.Special:
+                    switch (rotationCountLimits)
+                    {
+                        default:
+                        case 13:
+                            cases = File.ReadAllLines("OLLRU13.txt");
+                            break;
+                        case 14:
+                            cases = File.ReadAllLines("OLLRU14.txt");
                             break;
                     }
                     break;

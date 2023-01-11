@@ -16,6 +16,8 @@ namespace Gaten.GameTool.osu.Mosu_
         Mania726Control mania726Control = new();
         NpNaxiControl npNaxiControl = new();
         RankingManagerControl rankingManagerControl = new();
+        RandomBeatmapCreatorControl randomBeatmapCreatorControl = new();
+        BeatmapSpeedControl beatmapSpeedControl = new();
         public MainWindow()
         {
             InitializeComponent();
@@ -33,18 +35,6 @@ namespace Gaten.GameTool.osu.Mosu_
             Set(1, 0);
         }
 
-        private void BeatmapNoiserButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainControl.Content = beatmapNoiserControl;
-            Set(3, 0);
-        }
-
-        private void Mania726Button_Click(object sender, RoutedEventArgs e)
-        {
-            MainControl.Content = mania726Control;
-            Set(3, 1);
-        }
-
         private void NpNaxiButton_Click(object sender, RoutedEventArgs e)
         {
             MainControl.Content = npNaxiControl;
@@ -57,30 +47,39 @@ namespace Gaten.GameTool.osu.Mosu_
             Set(1, 2);
         }
 
-        private void BeatmapDownloaderButton_Click(object sender, RoutedEventArgs e)
+        private void BeatmapNoiserButton_Click(object sender, RoutedEventArgs e)
         {
+            MainControl.Content = beatmapNoiserControl;
+            Set(3, 0);
+        }
 
+        private void Mania726Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainControl.Content = mania726Control;
+            Set(3, 1);
         }
 
         private void BeatmapSpeedChangerButton_Click(object sender, RoutedEventArgs e)
         {
+            MainControl.Content = beatmapSpeedControl;
+            Set(3, 2);
+        }
 
+        private void RandomBeatmapCreatorButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainControl.Content = randomBeatmapCreatorControl;
+            Set(3, 3);
         }
 
         private void FileExtractorButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Set(5, 0);
         }
 
         private void RankingManagerButton_Click(object sender, RoutedEventArgs e)
         {
             MainControl.Content = rankingManagerControl;
-            Set(5, 2);
-        }
-
-        private void RandomBeatmapCreatorButton_Click(object sender, RoutedEventArgs e)
-        {
-
+            Set(5, 1);
         }
     }
 }

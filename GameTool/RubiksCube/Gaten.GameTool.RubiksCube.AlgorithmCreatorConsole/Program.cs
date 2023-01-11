@@ -74,6 +74,21 @@ namespace Gaten.GameTool.RubiksCube.AlgorithmCreatorConsole
                     continue;
                 }
 
+                if (command.StartsWith("sgen"))
+                {
+                    var commands= command.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                    var algorithms = AlgorithmGenerator.Generate(beforeCube, afterCube, GeneratingIntensity.Special, int.Parse(commands[1]));
+
+                    if (algorithms == null || algorithms.Count == 0)
+                    {
+                        Console.WriteLine("알고리즘이 존재하지 않습니다.");
+                        continue;
+                    }
+
+                    Console.WriteLine(string.Join(Environment.NewLine, algorithms));
+                    continue;
+                }
+
                 switch (command.ToLower())
                 {
                     case "sw":

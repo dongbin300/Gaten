@@ -5,11 +5,17 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using System;
 
 namespace Gaten.Net.Wpf.Extensions
 {
     public static class BitmapExtension
     {
+        public static Uri GetUri(this string assemblyName, string resourceName)
+        {
+            return new Uri($"pack://application:,,,/{assemblyName};component/{resourceName}");
+        }
+
         public static BitmapImage ToImageSource(this Bitmap bitmap)
         {
             using var memory = new MemoryStream();
@@ -36,6 +42,11 @@ namespace Gaten.Net.Wpf.Extensions
             bitmapImage.EndInit();
 
             return bitmapImage;
+        }
+
+        public static BitmapImage ToImageSource(this string assemblyName, string resourceName)
+        {
+            return new BitmapImage(GetUri(assemblyName, resourceName));
         }
 
         public static ImageSource ToImageSource(this Icon icon)
