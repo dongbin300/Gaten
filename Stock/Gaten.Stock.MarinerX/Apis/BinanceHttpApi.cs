@@ -9,7 +9,7 @@ namespace Gaten.Stock.MarinerX.Apis
 {
     public class BinanceHttpApi
     {
-        public static void GetSymbolMarketCap()
+        public static List<SymbolMarketCap>? GetSymbolMarketCap()
         {
             string url = "https://www.binance.com/exchange-api/v2/public/asset-service/product/get-products";
 
@@ -18,11 +18,11 @@ namespace Gaten.Stock.MarinerX.Apis
 
             if(obj == null)
             {
-                return;
+                return null;
             }
 
             var usdt = obj.data.Where(x => x.s.EndsWith("USDT") && x.marketCapWon > 100_000_000).ToList();
-            var result = usdt.Select(x => new SymbolMarketCap() { Symbol = x.s, marketCapWon = x.marketCapWon, marketCapWonString = x.marketCapWonString }).ToList();
+            return usdt.Select(x => new SymbolMarketCap() { Symbol = x.s, marketCapWon = x.marketCapWon, marketCapWonString = x.marketCapWonString }).ToList();
         }
 
         public class SymbolMarketCap

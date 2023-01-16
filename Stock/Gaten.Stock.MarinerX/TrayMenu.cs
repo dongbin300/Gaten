@@ -11,6 +11,7 @@ using Gaten.Stock.MarinerX.Apis;
 using Gaten.Stock.MarinerX.Bots;
 using Gaten.Stock.MarinerX.Charts;
 using Gaten.Stock.MarinerX.Indicators;
+using Gaten.Stock.MarinerX.Markets;
 using Gaten.Stock.MarinerX.Views;
 
 using MySqlX.XDevAPI.Common;
@@ -156,6 +157,7 @@ namespace Gaten.Stock.MarinerX
             menuStrip.Items.Add(new ToolStripSeparator());
 
             var menu5 = new ToolStripMenuItem("테스트");
+            menu5.DropDownItems.Add(new ToolStripMenuItem("Symbol Benchmarking", null, SymbolBenchmarkingEvent));
             menu5.DropDownItems.Add(new ToolStripMenuItem("RI Histogram", null, RiHistogramEvent));
             menu5.DropDownItems.Add(new ToolStripMenuItem("Check Volatility", null, CheckVolatilityEvent));
             menu5.DropDownItems.Add(new ToolStripMenuItem("Check MarketCap", null, CheckMarketCapEvent));
@@ -435,6 +437,48 @@ namespace Gaten.Stock.MarinerX
         #endregion
 
         #region 테스트
+        private void SymbolBenchmarkingEvent(object? sender, EventArgs e)
+        {
+            try
+            {
+                var volatilityResult = new Dictionary<string, decimal>();
+                var data = LocalStorageApi.GetAllOneDayQuotes();
+
+                foreach (var d in data)
+                {
+                    var list = d.Value.Select(x => Math.Round((x.High - x.Low) / x.Low * 100, 2)).ToList();
+                    volatilityResult.Add(d.Key, Math.Round(list.Average(), 4));
+                }
+
+                var maxLeverages = BinanceClientApi.GetMaxLeverages();
+                var symbolMarketCap = BinanceHttpApi.GetSymbolMarketCap();
+                if(symbolMarketCap == null)
+                {
+                    return;
+                }
+
+                var benchmarks = new List<SymbolBenchmark>();
+                foreach(var marketCap in symbolMarketCap)
+                {
+                    var key = volatilityResult.Where(x => x.Key.Equals(marketCap.Symbol));
+                    var leverageKey = maxLeverages.Where(x=>x.Key.Equals(marketCap.Symbol));
+                    if(key.Any())
+                    {
+                        var maxLeverage = leverageKey.Any() ? leverageKey.First().Value : 0;
+                        benchmarks.Add(new SymbolBenchmark(marketCap.Symbol, key.First().Value, marketCap.marketCapWon, maxLeverage));
+                    }
+                }
+
+                var benchmarkView = new SymbolBenchmarkingView();
+                benchmarkView.Init(benchmarks);
+                benchmarkView.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void RiHistogramEvent(object? sender, EventArgs e)
         {
             try
@@ -452,7 +496,7 @@ namespace Gaten.Stock.MarinerX
             try
             {
                 BinanceClientApi.GetMaxLeverages();
-                BinanceHttpApi.GetSymbolMarketCap();
+                var symbolMarketCap = BinanceHttpApi.GetSymbolMarketCap();
             }
             catch (Exception ex)
             {
