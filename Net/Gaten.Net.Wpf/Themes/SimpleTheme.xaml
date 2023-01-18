@@ -69,6 +69,33 @@
     </Style>
     <!--#endregion-->
 
+    <!--#region RadioButton -->
+    <Style TargetType="{x:Type RadioButton}" x:Key="MenuButton">
+        <Setter Property="Foreground" Value="#666" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Grid Background="{TemplateBinding Background}">
+                        <TextBlock Text="{TemplateBinding Property=Content}"
+                             Foreground="{TemplateBinding Foreground}"
+                             VerticalAlignment="Center"
+                             FontSize="14"
+                             FontWeight="Bold"
+                             FontFamily="/UiDesign/Fonts/#Nunito"
+                             Margin="12,0,0,0" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Foreground" Value="#eee" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--#endregion-->
+
     <!--#region TextBlock -->
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#EEEEEE" />
@@ -86,6 +113,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="#666" />
         <Setter Property="BorderThickness" Value="0 0 0 1" />
+        <Setter Property="CaretBrush" Value="#05DAC5" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <Trigger Property="TextBox.IsMouseOver" Value="True">

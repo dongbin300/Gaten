@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="Gaten.Stock.BinanceBrowser.Views.PnlAnalysisView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Gaten.Stock.BinanceBrowser.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <GroupBox Header="Excel 첨부">
+            <Button x:Name="ExcelImportButton" Content="파일 불러오기" Click="ExcelImportButton_Click"/>
+        </GroupBox>
+        <GroupBox Header="결과" Grid.Row="1">
+            <DataGrid x:Name="ResultDataGrid" AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Symbol" Width="1*" Binding="{Binding Symbol}"/>
+                    <DataGridTextColumn Header="RPnL" Width="1*" Binding="{Binding RealRealizedProfit}"/>
+                    <DataGridTextColumn Header="PnL" Width="1*" Binding="{Binding RealizedProfit}"/>
+                    <DataGridTextColumn Header="Fee" Width="1*" Binding="{Binding Fee}"/>
+                    <DataGridTextColumn Header="Fee Coin" Width="1*" Binding="{Binding FeeCoin}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+    </Grid>
+</UserControl>

@@ -251,7 +251,8 @@ namespace Gaten.Stock.MarinerX.Apis
             var positionInformation = binanceClient.UsdFuturesApi.Account.GetPositionInformationAsync(symbol);
             positionInformation.Wait();
 
-            return positionInformation.Result.Data.Where(x => x.Symbol.EndsWith("USDT") && !x.Symbol.Equals("LINKUSDT") && x.Quantity != 0)
+            return positionInformation.Result.Data
+                .Where(x => x.Symbol.EndsWith("USDT") && !x.Symbol.Equals("LINKUSDT") && x.Quantity != 0)
                 .Select(x => new FuturesPosition(
                     x.Symbol,
                     x.MarginType,

@@ -19,6 +19,7 @@ namespace Gaten.Visual.DataVisualizer
             InitializeComponent();
 
             entryFileName = Settings.Default.EntryFileName;
+            MessageBox.Show(entryFileName);
 
             if (string.IsNullOrEmpty(entryFileName) || !File.Exists(entryFileName))
             {
