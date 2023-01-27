@@ -31,6 +31,8 @@ namespace Gaten.Stock.BinanceBrowser
             {
                 BinanceManager.Init(Settings.Default.ApiKey, Settings.Default.SecretKey);
             }
+
+            MainContent.Content = monitorSettings;
         }
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)

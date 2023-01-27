@@ -14,6 +14,8 @@ namespace Gaten.Stock.BinanceBrowser.Views
         public MonitorSettingsView()
         {
             InitializeComponent();
+
+            IntervalText.Text = "3";
         }
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
@@ -23,6 +25,7 @@ namespace Gaten.Stock.BinanceBrowser.Views
                 monitorView = new MonitorView();
                 monitorView.Init(SymbolText1.Text + "USDT", int.Parse(IntervalText.Text));
                 monitorView.Show();
+                Window.GetWindow(this).WindowState = WindowState.Minimized;
             }
             catch (Exception ex)
             {

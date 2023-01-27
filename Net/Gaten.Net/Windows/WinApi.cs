@@ -132,6 +132,9 @@ namespace Gaten.Net.Windows
         [DllImport("user32")]
         public static extern bool MoveWindow(IntPtr hWnd, int x, int y, int width, int height, bool repaint);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, uint uFlags);
+
         [DllImport("user32")]
         public static extern bool IsIconic(IntPtr hWnd);
 
