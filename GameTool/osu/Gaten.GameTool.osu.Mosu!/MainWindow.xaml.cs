@@ -18,9 +18,14 @@ namespace Gaten.GameTool.osu.Mosu_
         RankingManagerControl rankingManagerControl = new();
         RandomBeatmapCreatorControl randomBeatmapCreatorControl = new();
         BeatmapSpeedControl beatmapSpeedControl = new();
+        FileExtractor fileExtractorControl = new();
+
         public MainWindow()
         {
             InitializeComponent();
+
+            MainControl.Content = fileExtractorControl;
+            Set(5, 0);
         }
 
         private void Set(int row, int col)
@@ -73,6 +78,7 @@ namespace Gaten.GameTool.osu.Mosu_
 
         private void FileExtractorButton_Click(object sender, RoutedEventArgs e)
         {
+            MainControl.Content = fileExtractorControl;
             Set(5, 0);
         }
 

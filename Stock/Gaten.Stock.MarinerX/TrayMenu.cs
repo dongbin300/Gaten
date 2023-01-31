@@ -14,8 +14,6 @@ using Gaten.Stock.MarinerX.Indicators;
 using Gaten.Stock.MarinerX.Markets;
 using Gaten.Stock.MarinerX.Views;
 
-using MySqlX.XDevAPI.Common;
-
 using Newtonsoft.Json;
 
 using System;

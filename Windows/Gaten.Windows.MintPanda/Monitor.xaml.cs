@@ -396,5 +396,29 @@ namespace Gaten.Windows.MintPanda
                 GLogger.Log(nameof(Monitor), MethodBase.GetCurrentMethod()?.Name, ex);
             }
         }
+
+        private void MosuButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                GProcess.StartExe("mosu!");
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(Monitor), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
+        }
+
+        private void MarinerXButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                GProcess.StartExe("marinerx");
+            }
+            catch (Exception ex)
+            {
+                GLogger.Log(nameof(Monitor), MethodBase.GetCurrentMethod()?.Name, ex);
+            }
+        }
     }
 }

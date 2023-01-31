@@ -17,6 +17,7 @@
 		<None Remove="Resources\Images\aimp.ico" />
 		<None Remove="Resources\Images\bandizip.ico" />
 		<None Remove="Resources\Images\battlenet.png" />
+		<None Remove="Resources\Images\chart2.ico" />
 		<None Remove="Resources\Images\cheat-engine.ico" />
 		<None Remove="Resources\Images\color-pick.png" />
 		<None Remove="Resources\Images\cpu-z.ico" />
@@ -94,6 +95,9 @@
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Images\battlenet.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\Images\chart2.ico">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Resources\Images\cheat-engine.ico">

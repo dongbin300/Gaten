@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaten.GameTool.osu.Mosu_"
         mc:Ignorable="d"
-        Title="M osu!" Height="650" Width="800">
+        Title="M osu!" Height="602" Width="860">
 
     <Window.Resources>
         <Style TargetType="Button" x:Key="MenuButton">

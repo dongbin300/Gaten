@@ -8,6 +8,7 @@
 		<UseWPF>true</UseWPF>
 		<UseWindowsForm>true</UseWindowsForm>
 		<AssemblyName>Mosu!</AssemblyName>
+		<ApplicationIcon>Resources\osu_icon_gray.ico</ApplicationIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -15,9 +16,14 @@
 	  <None Remove="Resources\lame_enc.dll" />
 	  <None Remove="Resources\mp3stretch.bat" />
 	  <None Remove="Resources\osu_icon.png" />
+	  <None Remove="Resources\osu_icon_gray.ico" />
 	  <None Remove="Resources\osu_icon_gray.png" />
 	  <None Remove="Resources\soundstretch.exe" />
 	  <None Remove="Resources\wavstretch.bat" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="Resources\osu_icon_gray.ico" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -41,6 +47,9 @@
 	  </Resource>
 	  <Resource Include="Resources\osu_icon.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Resources\osu_icon_gray.ico">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Resource>
 	  <Resource Include="Resources\osu_icon_gray.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
