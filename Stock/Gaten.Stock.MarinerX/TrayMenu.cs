@@ -40,9 +40,13 @@ namespace Gaten.Stock.MarinerX
         private List<string> tmMockTradeFileNames = new();
         private List<string> tmRealTradeFileNames = new();
         private List<string> backTestResultFileNames = new();
+        private List<string> symbolNames = new();
+        private PositionMonitorView positionMonitorView = new();
 
         public TrayMenu()
         {
+            symbolNames = LocalStorageApi.GetSymbolNames();
+
             iconImage = Image.FromFile(iconFileName);
 
             trayIcon = new NotifyIcon
@@ -101,12 +105,10 @@ namespace Gaten.Stock.MarinerX
             menu1.DropDownItems.Add("Binance 1분봉 데이터 수집", null, new EventHandler(GetBinanceCandleDataEvent));
             menu1.DropDownItems.Add("Binance 1일봉 데이터 추출", null, new EventHandler(Extract1DCandleEvent));
             menuStrip.Items.Add(menu1);
-
             menuStrip.Items.Add(new ToolStripSeparator());
 
             var menu2 = new ToolStripMenuItem("1분봉 데이터 로드");
             menuStrip.Items.Add(menu2);
-
             var menu3 = new ToolStripMenuItem("5분봉 데이터 로드");
             foreach (var symbol in new string[] {
                 "BTCUSDT",
@@ -121,13 +123,10 @@ namespace Gaten.Stock.MarinerX
                 menu3.DropDownItems.Add(new ToolStripMenuItem(symbol, null, new EventHandler((sender, e) => LoadChartDataEvent(sender, e, symbol, KlineInterval.FiveMinutes))));
             }
             menuStrip.Items.Add(menu3);
-
             menuStrip.Items.Add(new ToolStripSeparator());
 
             menuStrip.Items.Add(new ToolStripMenuItem("Mercury Editor 열기", null, MercuryEditorOpenEvent));
-
             menuStrip.Items.Add(new ToolStripMenuItem("Mercury Simple Editor 열기", null, MercurySimpleEditorOpenEvent));
-
             menuStrip.Items.Add(new ToolStripSeparator());
 
             var menu4 = new ToolStripMenuItem("백테스트");
@@ -135,34 +134,43 @@ namespace Gaten.Stock.MarinerX
             {
                 menu4.DropDownItems.Add(new ToolStripMenuItem(file.MenuString, null, BackTestBotRunEvent, file.ToString() + "|+|false"));
             }
-
             var menu41 = new ToolStripMenuItem("백테스트 차트");
             foreach (var file in tmBackTestFiles)
             {
                 menu41.DropDownItems.Add(new ToolStripMenuItem(file.MenuString, null, BackTestBotRunEvent, file.ToString() + "|+|true"));
             }
-
             var menu42 = new ToolStripMenuItem("백테스트 결과");
             foreach (var file in backTestResultFileNames)
             {
                 menu42.DropDownItems.Add(new ToolStripMenuItem(file, null, BackTestResultViewEvent));
             }
-
             menuStrip.Items.Add(menu4);
             menuStrip.Items.Add(menu41);
             menuStrip.Items.Add(menu42);
-
             menuStrip.Items.Add(new ToolStripSeparator());
 
-            var menu5 = new ToolStripMenuItem("테스트");
-            menu5.DropDownItems.Add(new ToolStripMenuItem("Symbol Benchmarking", null, SymbolBenchmarkingEvent));
-            menu5.DropDownItems.Add(new ToolStripMenuItem("RI Histogram", null, RiHistogramEvent));
-            menu5.DropDownItems.Add(new ToolStripMenuItem("Check Volatility", null, CheckVolatilityEvent));
-            menu5.DropDownItems.Add(new ToolStripMenuItem("Check MarketCap", null, CheckMarketCapEvent));
-            menu5.DropDownItems.Add(new ToolStripMenuItem("Run Back Test Flask", null, RunBackTestFlaskEvent));
-            menu5.DropDownItems.Add(new ToolStripMenuItem("Run Back Test Flask Multi", null, RunBackTestFlaskMultiEvent));
+            var menu5 = new ToolStripMenuItem("데이터 분석");
+            menu5.DropDownItems.Add("벤치마킹", null, new EventHandler(SymbolBenchmarkingEvent));
+            menu5.DropDownItems.Add("PNL 분석", null, new EventHandler(PnlAnalysisEvent));
             menuStrip.Items.Add(menu5);
 
+            var menu6 = new ToolStripMenuItem("데이터 모니터링");
+            var menu61 = new ToolStripMenuItem("현재 포지션 모니터링");
+            symbolNames.Sort();
+            foreach (var symbolName in symbolNames)
+            {
+                menu61.DropDownItems.Add(new ToolStripMenuItem(symbolName, null, CurrentPositioningEvent, symbolName));
+            }
+            menu6.DropDownItems.Add(menu61);
+            menu6.DropDownItems.Add("모니터링 종료", null, new EventHandler(CurrentPositioningEndEvent));
+            menuStrip.Items.Add(menu6);
+            menuStrip.Items.Add(new ToolStripSeparator());
+
+            var menu7 = new ToolStripMenuItem("테스트");
+            menu7.DropDownItems.Add(new ToolStripMenuItem("RI Histogram", null, RiHistogramEvent));
+            menu7.DropDownItems.Add(new ToolStripMenuItem("Run Back Test Flask", null, RunBackTestFlaskEvent));
+            menu7.DropDownItems.Add(new ToolStripMenuItem("Run Back Test Flask Multi", null, RunBackTestFlaskMultiEvent));
+            menuStrip.Items.Add(menu7);
             menuStrip.Items.Add(new ToolStripSeparator());
 
             menuStrip.Items.Add(new ToolStripMenuItem("종료", null, Exit));
@@ -434,7 +442,7 @@ namespace Gaten.Stock.MarinerX
         }
         #endregion
 
-        #region 테스트
+        #region 데이터 분석
         private void SymbolBenchmarkingEvent(object? sender, EventArgs e)
         {
             try
@@ -450,17 +458,17 @@ namespace Gaten.Stock.MarinerX
 
                 var maxLeverages = BinanceClientApi.GetMaxLeverages();
                 var symbolMarketCap = BinanceHttpApi.GetSymbolMarketCap();
-                if(symbolMarketCap == null)
+                if (symbolMarketCap == null)
                 {
                     return;
                 }
 
                 var benchmarks = new List<SymbolBenchmark>();
-                foreach(var marketCap in symbolMarketCap)
+                foreach (var marketCap in symbolMarketCap)
                 {
                     var key = volatilityResult.Where(x => x.Key.Equals(marketCap.Symbol));
-                    var leverageKey = maxLeverages.Where(x=>x.Key.Equals(marketCap.Symbol));
-                    if(key.Any())
+                    var leverageKey = maxLeverages.Where(x => x.Key.Equals(marketCap.Symbol));
+                    if (key.Any())
                     {
                         var maxLeverage = leverageKey.Any() ? leverageKey.First().Value : 0;
                         benchmarks.Add(new SymbolBenchmark(marketCap.Symbol, key.First().Value, marketCap.marketCapWon, maxLeverage));
@@ -477,43 +485,61 @@ namespace Gaten.Stock.MarinerX
             }
         }
 
+        private void PnlAnalysisEvent(object? sender, EventArgs e)
+        {
+            try
+            {
+                var pnlAnalysisView = new PnlAnalysisView();
+                pnlAnalysisView.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        #endregion
+
+        #region 데이터 모니터링
+        private void CurrentPositioningEvent(object? sender, EventArgs e)
+        {
+            try
+            {
+                if (sender is not ToolStripMenuItem menuItem)
+                {
+                    return;
+                }
+
+                var symbol = menuItem.Name;
+                var interval = 3;
+
+                positionMonitorView.Init(symbol, interval);
+                positionMonitorView.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void CurrentPositioningEndEvent(object? sender, EventArgs e)
+        {
+            try
+            {
+                positionMonitorView.Hide();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        #endregion
+
+        #region 테스트
         private void RiHistogramEvent(object? sender, EventArgs e)
         {
             try
             {
                 IndicatorHistogram.GetRiHistogram("BTCUSDT", KlineInterval.FiveMinutes);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void CheckMarketCapEvent(object? sender, EventArgs e)
-        {
-            try
-            {
-                BinanceClientApi.GetMaxLeverages();
-                var symbolMarketCap = BinanceHttpApi.GetSymbolMarketCap();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void CheckVolatilityEvent(object? sender, EventArgs e)
-        {
-            try
-            {
-                var result = new Dictionary<string, decimal>();
-                var data = LocalStorageApi.GetAllOneDayQuotes();
-
-                foreach (var d in data)
-                {
-                    var list = d.Value.Select(x => Math.Round((x.High - x.Low) / x.Low * 100, 2)).ToList();
-                    result.Add(d.Key, Math.Round(list.Average(), 4));
-                }
             }
             catch (Exception ex)
             {

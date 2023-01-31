@@ -1,5 +1,6 @@
 ﻿using Gaten.Net.Windows;
 using Gaten.Net.Wpf;
+using Gaten.Stock.MarinerX.Apis;
 
 using System;
 using System.Windows;
@@ -7,18 +8,18 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 
-namespace Gaten.Stock.BinanceBrowser.Views
+namespace Gaten.Stock.MarinerX.Views
 {
     /// <summary>
-    /// MonitorView.xaml에 대한 상호 작용 논리
+    /// PositionMonitorView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class MonitorView : Window
+    public partial class PositionMonitorView : Window
     {
         private string symbol = string.Empty;
         private int interval = 15;
         private System.Timers.Timer timer = new System.Timers.Timer();
 
-        public MonitorView()
+        public PositionMonitorView()
         {
             InitializeComponent();
             Left = 0;
@@ -41,7 +42,7 @@ namespace Gaten.Stock.BinanceBrowser.Views
 
         private void Timer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
-            var info = Models.BinanceManager.GetPositioningInformation(symbol);
+            var info = BinanceClientApi.GetPositioningInformation(symbol);
             foreach (var item in info)
             {
                 var margin = item.EntryPrice * item.Quantity / item.Leverage;
@@ -57,7 +58,7 @@ namespace Gaten.Stock.BinanceBrowser.Views
             }
         }
 
-        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {

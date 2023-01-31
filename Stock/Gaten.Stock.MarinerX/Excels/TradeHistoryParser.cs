@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Gaten.Stock.BinanceBrowser.Excels
+namespace Gaten.Stock.MarinerX.Excels
 {
     public class TradeHistoryParser
     {
@@ -79,6 +79,6 @@ namespace Gaten.Stock.BinanceBrowser.Excels
                     feeCoin: x.First().FeeCoin,
                     realizedProfit: Math.Round(x.Sum(y => y.RealizedProfit)
                     , Common.DecimalCount))).ToList();
-        }        
+        }
     }
 }

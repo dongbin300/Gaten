@@ -1,4 +1,4 @@
-﻿namespace Gaten.Stock.BinanceBrowser.Excels
+﻿namespace Gaten.Stock.MarinerX.Excels
 {
     public class TradeHistory
     {
