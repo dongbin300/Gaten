@@ -25,6 +25,6 @@
                 </Style>
             </ProgressBar.Style>
         </ProgressBar>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontSize="11.5"/>
     </Grid>
 </UserControl>

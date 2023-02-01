@@ -133,7 +133,7 @@ namespace Gaten.Stock.MarinerX.Apis
         /// <param name="endTime"></param>
         /// <param name="limit"></param>
         /// <returns></returns>
-        public static List<Quote> GetQuotes(string symbol, KlineInterval interval, DateTime startTime, DateTime endTime, int limit)
+        public static List<Quote> GetQuotes(string symbol, KlineInterval interval, DateTime? startTime, DateTime? endTime, int limit)
         {
             var result = binanceClient.UsdFuturesApi.ExchangeData.GetKlinesAsync(symbol, interval, startTime, endTime, limit);
             result.Wait();

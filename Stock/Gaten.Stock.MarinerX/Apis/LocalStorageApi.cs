@@ -17,10 +17,12 @@ namespace Gaten.Stock.MarinerX.Apis
 {
     internal class LocalStorageApi
     {
+        public static List<string> SymbolNames = new();
+
         #region Initialize
         public static void Init()
         {
-
+            SymbolNames = GetSymbolNames();
         }
         #endregion
 

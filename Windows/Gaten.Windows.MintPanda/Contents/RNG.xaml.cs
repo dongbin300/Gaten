@@ -68,7 +68,7 @@ namespace Gaten.Windows.MintPanda.Contents
                     DateTime.Now.Millisecond);
 
                 var jsonString = JsonSerializer.Serialize(data);
-                var response = Http.Request("https://api.random.org/json-rpc/4/invoke", jsonString);
+                var response = Http.RequestPost("https://api.random.org/json-rpc/4/invoke", jsonString);
                 var responseObject = JsonSerializer.Deserialize<RNG_response_generateIntegers>(response) ?? default!;
 
                 return responseObject.result.random.data[0].ToString();

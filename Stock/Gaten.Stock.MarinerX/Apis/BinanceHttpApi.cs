@@ -66,9 +66,26 @@ namespace Gaten.Stock.MarinerX.Apis
             public bool rb { get; set; } = default!;
             public bool etf { get; set; } = default!;
 
-            public decimal marketCap => decimal.Parse(c) * decimal.Parse(cs == null ? "0" : cs.ToString());
+            public decimal marketCap => decimal.Parse(c) * GetCs();
             public decimal marketCapWon => marketCap * 1350;
             public string marketCapWonString => $"{marketCap * 1350:#,###}";
+
+            public decimal GetCs()
+            {
+                if(cs == null)
+                {
+                    return 0;
+                }
+
+                var csz = cs.ToString();
+
+                if(csz == null)
+                {
+                    return 0;
+                }
+
+                return decimal.Parse(csz);
+            }
         }
 
         public class GetProducts_Json

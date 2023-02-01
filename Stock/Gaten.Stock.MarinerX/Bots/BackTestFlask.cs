@@ -86,8 +86,8 @@ namespace Gaten.Stock.MarinerX.Bots
             ChartInfo? info = default!;
             var info0 = charts.Select(_startTime);
             bool first = true;
-            bool isPositioning = false;
-            decimal entryPrice = default!;
+            //bool isPositioning = false;
+            //decimal entryPrice = default!;
             Worker.For(0, tickCount, 1, (i) =>
             {
                 if (first)

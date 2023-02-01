@@ -10,6 +10,7 @@ namespace Gaten.Stock.MarinerX.Markets
         public int MaxLeverage { get; set; } = 0;
         public string MaxLeverageString => "X" + MaxLeverage;
         public double BenchmarkScore => CalculateBenchmarkScore();
+        public double ForceBenchmarkScore => CalculateForceBenchmarkScore();
 
         public SymbolBenchmark(string symbol, decimal volatility, decimal marketCapWon, int maxLeverage)
         {
@@ -22,6 +23,11 @@ namespace Gaten.Stock.MarinerX.Markets
         public double CalculateBenchmarkScore()
         {
             return Math.Round(Math.Pow((double)MarketCapWon, 0.25) * (1 / (double)Volatility) * 100);
+        }
+
+        public double CalculateForceBenchmarkScore()
+        {
+            return Math.Round((1_000_000 / (Math.Pow((double)MarketCapWon, 0.25) * (double)Volatility)));
         }
     }
 }

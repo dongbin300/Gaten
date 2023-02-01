@@ -1,4 +1,5 @@
 ﻿using Binance.Net.Clients;
+using Binance.Net.Enums;
 using Binance.Net.Interfaces;
 using Binance.Net.Objects;
 using Binance.Net.Objects.Models.Futures.Socket;
@@ -7,6 +8,8 @@ using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Sockets;
 
 using Gaten.Net.IO;
+using Gaten.Net.Stock.MercuryTradingModel.Charts;
+using Gaten.Stock.MarinerX.Charts;
 
 using System;
 using System.Collections.Generic;
@@ -41,14 +44,14 @@ namespace Gaten.Stock.MarinerX.Apis
         #endregion
 
         #region Market API
-        public static async void GetKlineUpdatesAsync()
+        public static async void GetKlineUpdatesAsync(string symbol, KlineInterval interval)
         {
-            var result = await binanceClient.UsdFuturesStreams.SubscribeToKlineUpdatesAsync("BTCUSDT", Binance.Net.Enums.KlineInterval.OneMinute, KlineUpdatesOnMessage);
+            var result = await binanceClient.UsdFuturesStreams.SubscribeToKlineUpdatesAsync(symbol, interval, KlineUpdatesOnMessage);
         }
 
-        public static async void GetContinuousKlineUpdatesAsync()
+        public static async void GetContinuousKlineUpdatesAsync(string symbol, KlineInterval interval)
         {
-            var result = await binanceClient.UsdFuturesStreams.SubscribeToContinuousContractKlineUpdatesAsync("BTCUSDT", Binance.Net.Enums.ContractType.Perpetual, Binance.Net.Enums.KlineInterval.OneMinute, ContinuousKlineUpdatesOnMessage);
+            var result = await binanceClient.UsdFuturesStreams.SubscribeToContinuousContractKlineUpdatesAsync(symbol, ContractType.Perpetual, interval, ContinuousKlineUpdatesOnMessage);
         }
 
         public static async void GetAllMarketMiniTickersAsync()
@@ -59,19 +62,29 @@ namespace Gaten.Stock.MarinerX.Apis
         private static void AllMarketMiniTickersOnMessage(DataEvent<IEnumerable<IBinanceMiniTick>> obj)
         {
             var data = obj.Data;
-            throw new NotImplementedException();
         }
 
         private static void ContinuousKlineUpdatesOnMessage(DataEvent<BinanceStreamContinuousKlineData> obj)
         {
             var data = obj.Data.Data;
-            throw new NotImplementedException();
         }
 
         private static void KlineUpdatesOnMessage(DataEvent<IBinanceStreamKlineData> obj)
         {
             var data = obj.Data.Data;
-            throw new NotImplementedException();
+            QuoteFactory.UpdateQuote(new RealtimeQuote()
+            {
+                Symbol = obj.Data.Symbol,
+                OpenTime = data.OpenTime,
+                CloseTime = data.CloseTime,
+                Open = data.OpenPrice,
+                High = data.HighPrice,
+                Low = data.LowPrice,
+                Close = data.ClosePrice,
+                Volume = data.Volume,
+                TradeCount = data.TradeCount,
+                TakerBuyBaseVolume = data.TakerBuyBaseVolume
+            });
         }
         #endregion
     }

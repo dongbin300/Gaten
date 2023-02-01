@@ -54,12 +54,12 @@ namespace Gaten.Stock.MarinerX.Excels
 
             for (int row = 2; row <= lastExcelSheetDataRow; row++)
             {
-                string symbol = targetSheet.Cells[row, 2].Value.ToString();
+                var symbol = targetSheet.Cells[row, 2].Value.ToString() ?? "";
                 TradeHistory? tradeHistory = new(
                     symbol,
-                    double.Parse(targetSheet.Cells[row, 7].Value.ToString()),
-                    targetSheet.Cells[row, 8].Value.ToString(),
-                    double.Parse(targetSheet.Cells[row, 9].Value.ToString())
+                    double.Parse(targetSheet.Cells[row, 7].Value.ToString() ?? ""),
+                    targetSheet.Cells[row, 8].Value.ToString() ?? "",
+                    double.Parse(targetSheet.Cells[row, 9].Value.ToString() ?? "")
                 );
 
                 tradeHistoriesList.Add(tradeHistory);

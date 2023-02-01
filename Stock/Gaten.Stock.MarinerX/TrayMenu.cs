@@ -13,6 +13,7 @@ using Gaten.Stock.MarinerX.Charts;
 using Gaten.Stock.MarinerX.Indicators;
 using Gaten.Stock.MarinerX.Markets;
 using Gaten.Stock.MarinerX.Views;
+using Gaten.Stock.MarinerX.Views.Controls;
 
 using Newtonsoft.Json;
 
@@ -42,10 +43,11 @@ namespace Gaten.Stock.MarinerX
         private List<string> backTestResultFileNames = new();
         private List<string> symbolNames = new();
         private PositionMonitorView positionMonitorView = new();
+        private QuoteMonitorView quoteMonitorView = new();
 
         public TrayMenu()
         {
-            symbolNames = LocalStorageApi.GetSymbolNames();
+            symbolNames = LocalStorageApi.SymbolNames;
 
             iconImage = Image.FromFile(iconFileName);
 
@@ -155,13 +157,16 @@ namespace Gaten.Stock.MarinerX
             menuStrip.Items.Add(menu5);
 
             var menu6 = new ToolStripMenuItem("데이터 모니터링");
-            var menu61 = new ToolStripMenuItem("현재 포지션 모니터링");
+            menu6.DropDownItems.Add("검색기", null, new EventHandler(QuoteMonitoringEvent));
+            //var menu61 = new ToolStripMenuItem("검색기");
+            var menu62 = new ToolStripMenuItem("현재 포지션 모니터링");
             symbolNames.Sort();
             foreach (var symbolName in symbolNames)
             {
-                menu61.DropDownItems.Add(new ToolStripMenuItem(symbolName, null, CurrentPositioningEvent, symbolName));
+                menu62.DropDownItems.Add(new ToolStripMenuItem(symbolName, null, CurrentPositioningEvent, symbolName));
             }
-            menu6.DropDownItems.Add(menu61);
+            //menu6.DropDownItems.Add(menu61);
+            menu6.DropDownItems.Add(menu62);
             menu6.DropDownItems.Add("모니터링 종료", null, new EventHandler(CurrentPositioningEndEvent));
             menuStrip.Items.Add(menu6);
             menuStrip.Items.Add(new ToolStripSeparator());
@@ -423,7 +428,7 @@ namespace Gaten.Stock.MarinerX
                     GProcess.Start(path);
                 }
             }
-            catch (Exception ex)
+            catch
             {
             }
         }
@@ -447,36 +452,8 @@ namespace Gaten.Stock.MarinerX
         {
             try
             {
-                var volatilityResult = new Dictionary<string, decimal>();
-                var data = LocalStorageApi.GetAllOneDayQuotes();
-
-                foreach (var d in data)
-                {
-                    var list = d.Value.Select(x => Math.Round((x.High - x.Low) / x.Low * 100, 2)).ToList();
-                    volatilityResult.Add(d.Key, Math.Round(list.Average(), 4));
-                }
-
-                var maxLeverages = BinanceClientApi.GetMaxLeverages();
-                var symbolMarketCap = BinanceHttpApi.GetSymbolMarketCap();
-                if (symbolMarketCap == null)
-                {
-                    return;
-                }
-
-                var benchmarks = new List<SymbolBenchmark>();
-                foreach (var marketCap in symbolMarketCap)
-                {
-                    var key = volatilityResult.Where(x => x.Key.Equals(marketCap.Symbol));
-                    var leverageKey = maxLeverages.Where(x => x.Key.Equals(marketCap.Symbol));
-                    if (key.Any())
-                    {
-                        var maxLeverage = leverageKey.Any() ? leverageKey.First().Value : 0;
-                        benchmarks.Add(new SymbolBenchmark(marketCap.Symbol, key.First().Value, marketCap.marketCapWon, maxLeverage));
-                    }
-                }
-
                 var benchmarkView = new SymbolBenchmarkingView();
-                benchmarkView.Init(benchmarks);
+                benchmarkView.Init(BinanceMarket.Benchmarks);
                 benchmarkView.Show();
             }
             catch (Exception ex)
@@ -500,6 +477,18 @@ namespace Gaten.Stock.MarinerX
         #endregion
 
         #region 데이터 모니터링
+        private void QuoteMonitoringEvent(object? sender, EventArgs e)
+        {
+            try
+            {
+                quoteMonitorView.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void CurrentPositioningEvent(object? sender, EventArgs e)
         {
             try

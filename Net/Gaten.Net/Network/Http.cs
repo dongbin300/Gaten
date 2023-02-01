@@ -5,36 +5,32 @@ namespace Gaten.Net.Network
 {
     public class Http
     {
-        public static string Request(string url, string jsonString)
+        public static string RequestPost(string url, string jsonString)
         {
-            string returnString = string.Empty;
+            string result = string.Empty;
 
-            using (var client = new WebClient())
+            var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+
+            using (var client = new HttpClient())
             {
-                client.Encoding = Encoding.UTF8;
-                client.Headers[HttpRequestHeader.ContentType] = "application/json";
-
                 try
                 {
-                    returnString = client.UploadString(url, jsonString);
+                    var response = client.PostAsync(url, content);
+                    response.Wait();
                 }
                 catch (WebException ex)
                 {
                     // 예외
-                    using (WebResponse response = ex.Response ?? default!)
-                    {
-                        var httpResponse = (HttpWebResponse)(response ?? default!);
+                    using WebResponse response = ex.Response ?? default!;
+                    var httpResponse = (HttpWebResponse)(response ?? default!);
 
-                        using (Stream stream = response?.GetResponseStream() ?? default!)
-                        {
-                            var reader = new StreamReader(stream);
-                            returnString = reader.ReadToEnd();
-                        }
-                    }
+                    using Stream stream = response?.GetResponseStream() ?? default!;
+                    var reader = new StreamReader(stream);
+                    result = reader.ReadToEnd();
                 }
             }
 
-            return returnString;
+            return result;
         }
     }
 }

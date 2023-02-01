@@ -119,7 +119,7 @@ namespace Gaten.Stock.MarinerX.Charts
             {
                 string intervalString = interval.ToIntervalString();
                 var startTimeTemp = interval == KlineInterval.OneDay ? (File.Exists(GResource.BinanceFuturesDataPath.Down("1D", "BTCUSDT.csv")) ? SymbolUtil.GetEndDateOf1D("BTCUSDT") : SymbolUtil.GetStartDate("BTCUSDT")) : SymbolUtil.GetEndDate("BTCUSDT");
-                var symbols = LocalStorageApi.GetSymbolNames();
+                var symbols = LocalStorageApi.SymbolNames;
                 var dayCountTemp = (DateTime.Today - startTimeTemp).Days + 1;
                 var csvFileCount = symbols.Count * dayCountTemp;
                 worker.SetProgressBar(0, csvFileCount);
@@ -197,7 +197,7 @@ namespace Gaten.Stock.MarinerX.Charts
             try
             {
                 var getStartTime = SymbolUtil.GetEndDate("BTCUSDT");
-                var symbols = LocalStorageApi.GetSymbolNames();
+                var symbols = LocalStorageApi.SymbolNames;
                 var csvFileCount = ((DateTime.Today - getStartTime).Days + 1) * symbols.Count;
                 worker.SetProgressBar(0, csvFileCount);
 
