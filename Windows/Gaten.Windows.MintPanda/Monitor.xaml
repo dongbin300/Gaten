@@ -166,5 +166,10 @@
                 <Image Source="Resources/Images/chart2.ico"/>
             </Button.Content>
         </Button>
+        <ToggleButton Tag="220" x:Name="StockMonitorButton" Click="WindowButton_Click">
+            <ToggleButton.Content>
+                <Path Data="M12 2 A10 10 0 0 1 22 12 A10 10 0 0 1 12 22 A10 10 0 0 1 2 12 A10 10 0 0 1 12 2 M12 4 A8 8 0 0 0 4 12 A8 8 0 0 0 12 20 A8 8 0 0 0 20 12 A8 8 0 0 0 12 4 M11 17 V16 H9 V14 H13 V13 H10 A1 1 0 0 1 9 12 V9 A1 1 0 0 1 10 8 H11 V7 H13 V8 H15 V10 H11 V11 H14 A1 1 0 0 1 15 12 V15 A1 1 0 0 1 14 16 H13 V17 H11Z"/>
+            </ToggleButton.Content>
+        </ToggleButton>
     </UniformGrid>
 </UserControl>

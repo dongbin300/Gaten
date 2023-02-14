@@ -5,7 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaten.Data.PasswordManager"
         mc:Ignorable="d"
-        Title="패스워드 매니저" Height="520" Width="1060" Loaded="Window_Loaded">
+        Title="패스워드 매니저" Height="510" Width="1060" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource Description}">
+            
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
@@ -29,7 +34,7 @@
                     <TextBox x:Name="SecondPasswordText" Height="30" />
                     <TextBlock Text="추가 설명"/>
                     <TextBox x:Name="AdditionalDescriptionText" Height="30" />
-                    <Button x:Name="RegisterButton" Background="LimeGreen" Content="등록" Height="30" Click="RegisterButton_Click" />
+                    <Button x:Name="RegisterButton" Content="등록" Height="30" Click="RegisterButton_Click" />
                 </StackPanel>
             </GroupBox>
         </Grid>

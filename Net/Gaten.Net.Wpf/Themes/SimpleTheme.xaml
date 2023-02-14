@@ -133,6 +133,13 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="FontSize" Value="14" />
     </Style>
+
+    <Style TargetType="{x:Type TextBlock}" x:Key="Description">
+        <Setter Property="Foreground" Value="#AAAAAA" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
     <!--#endregion-->
 
     <!--#region TextBox -->

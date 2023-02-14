@@ -1,5 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Automation;
+﻿using Gaten.Net.Windows;
+using Gaten.Net.Wpf;
+
+using System.Windows;
+using System.Windows.Interop;
 
 namespace Gaten.Study.TestWpf
 {
@@ -8,31 +11,21 @@ namespace Gaten.Study.TestWpf
     /// </summary>
     public partial class MainWindow : Window
     {
+        System.Timers.Timer timer = new System.Timers.Timer(200);
+
         public MainWindow()
         {
             InitializeComponent();
 
-            
+            timer.Elapsed += Timer_Elapsed;
+            timer.Start();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Timer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
-            MessageBox.Show("버튼 클릭");
-        }
-
-        private void Button_AccessKeyPressed(object sender, System.Windows.Input.AccessKeyPressedEventArgs e)
-        {
-            MessageBox.Show("버튼 액세스 키 눌러짐");
-        }
-
-        private void Window_AccessKeyPressed(object sender, System.Windows.Input.AccessKeyPressedEventArgs e)
-        {
-            MessageBox.Show("윈도우 액세스 키 눌러짐");
-        }
-
-        private void Button2_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("버튼2 클릭");
+            DispatcherService.Invoke(() => { 
+                WinApi.SetWindowPos(new WindowInteropHelper(this).Handle, HWND.TopMost, 0, 0, 0, 0, SWP.NOSIZE | SWP.NOMOVE);
+            });
         }
     }
 }

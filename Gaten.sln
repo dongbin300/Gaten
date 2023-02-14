@@ -317,6 +317,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.GameTool.RubiksCube.A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Data.Texter", "Data\Gaten.Data.Texter\Gaten.Data.Texter.csproj", "{5BEB0E36-4771-4863-A137-A4463D42313D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.Game.CoinChartSimulator", "Game\Gaten.Game.CoinChartSimulator\Gaten.Game.CoinChartSimulator.csproj", "{6AB4A384-2D46-43AD-A885-1B45A2336FAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1875,6 +1877,18 @@ Global
 		{5BEB0E36-4771-4863-A137-A4463D42313D}.Release|x64.Build.0 = Release|Any CPU
 		{5BEB0E36-4771-4863-A137-A4463D42313D}.Release|x86.ActiveCfg = Release|Any CPU
 		{5BEB0E36-4771-4863-A137-A4463D42313D}.Release|x86.Build.0 = Release|Any CPU
+		{6AB4A384-2D46-43AD-A885-1B45A2336FAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AB4A384-2D46-43AD-A885-1B45A2336FAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AB4A384-2D46-43AD-A885-1B45A2336FAF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6AB4A384-2D46-43AD-A885-1B45A2336FAF}.Debug|x64.Build.0 = Debug|Any CPU
+		{6AB4A384-2D46-43AD-A885-1B45A2336FAF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6AB4A384-2D46-43AD-A885-1B45A2336FAF}.Debug|x86.Build.0 = Debug|Any CPU
+		{6AB4A384-2D46-43AD-A885-1B45A2336FAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AB4A384-2D46-43AD-A885-1B45A2336FAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AB4A384-2D46-43AD-A885-1B45A2336FAF}.Release|x64.ActiveCfg = Release|Any CPU
+		{6AB4A384-2D46-43AD-A885-1B45A2336FAF}.Release|x64.Build.0 = Release|Any CPU
+		{6AB4A384-2D46-43AD-A885-1B45A2336FAF}.Release|x86.ActiveCfg = Release|Any CPU
+		{6AB4A384-2D46-43AD-A885-1B45A2336FAF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2021,6 +2035,7 @@ Global
 		{459D6A80-9B26-47EA-9EE2-45B8D3B48853} = {6D6BD253-AF6B-41BD-BC2C-BCA5495B120C}
 		{55EF6A5D-E5A2-490A-B5FA-2383C87454AA} = {459D6A80-9B26-47EA-9EE2-45B8D3B48853}
 		{5BEB0E36-4771-4863-A137-A4463D42313D} = {44B9C0C8-29C0-4C88-83CC-B9B8F54B2000}
+		{6AB4A384-2D46-43AD-A885-1B45A2336FAF} = {1651B9F0-835F-4308-974A-657AEDE416BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9E22E9A6-DD7D-4809-95DD-888B759F780F}

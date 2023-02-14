@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:Gaten.Data.PasswordManager"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary Source="/Gaten.Net.Wpf;component/Themes/DarkTheme.xaml"/>
+        <ResourceDictionary Source="/Gaten.Net.Wpf;component/Themes/SimpleTheme.xaml"/>
     </Application.Resources>
 </Application>
