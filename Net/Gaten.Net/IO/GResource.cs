@@ -28,7 +28,7 @@
 
         public static string SmartExePath(string keyword)
         {
-            var mainPath = SolutionPath[..(SolutionPath.IndexOf("\\Gaten\\") + 6)];
+            var mainPath = SolutionPath[..(SolutionPath.IndexOf("\\CS\\") + 3)];
             var files = new DirectoryInfo(mainPath).GetFiles($"*{keyword}*.exe", SearchOption.AllDirectories);
 
             return files.Length > 0 ? files[0].FullName : string.Empty;

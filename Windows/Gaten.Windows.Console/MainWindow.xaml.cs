@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Gaten.Net.IO;
+using Gaten.Net.Network;
+
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +25,9 @@ namespace Gaten.Windows.Console
 
             timer.Elapsed += Timer_Elapsed;
             timer.Start();
+
+            WebCrawler.Open();
+            Common.RandomOrgKey = GResource.GetText("randomorg_api.txt");
         }
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)

@@ -317,7 +317,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.GameTool.RubiksCube.A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Data.Texter", "Data\Gaten.Data.Texter\Gaten.Data.Texter.csproj", "{5BEB0E36-4771-4863-A137-A4463D42313D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.Game.CoinChartSimulator", "Game\Gaten.Game.CoinChartSimulator\Gaten.Game.CoinChartSimulator.csproj", "{6AB4A384-2D46-43AD-A885-1B45A2336FAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Game.CoinChartSimulator", "Game\Gaten.Game.CoinChartSimulator\Gaten.Game.CoinChartSimulator.csproj", "{6AB4A384-2D46-43AD-A885-1B45A2336FAF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
