@@ -75,25 +75,28 @@ namespace Gaten.Windows.MintPanda.Contents
                         Foreground = segments[7] == "+" ? new SolidColorBrush(Color.FromRgb(59, 207, 134)) : new SolidColorBrush(Color.FromRgb(237, 49, 97))
                     };
 
-                    TextBlock textBlock3 = new TextBlock
-                    {
-                        FontSize = 11,
-                        FontFamily = new FontFamily("Verdana"),
-                        HorizontalAlignment = HorizontalAlignment.Right,
-                        Text = segments[7] + segments[8] + segments[10],
-                        Foreground = segments[7] == "+" ? new SolidColorBrush(Color.FromRgb(59, 207, 134)) : new SolidColorBrush(Color.FromRgb(237, 49, 97))
-                    };
-
                     textBlock1.SetValue(Grid.RowProperty, i);
                     textBlock2.SetValue(Grid.RowProperty, i);
-                    textBlock3.SetValue(Grid.RowProperty, i);
                     textBlock1.SetValue(Grid.ColumnProperty, 0);
                     textBlock2.SetValue(Grid.ColumnProperty, 1);
-                    textBlock3.SetValue(Grid.ColumnProperty, 2);
 
                     MainGrid.Children.Add(textBlock1);
                     MainGrid.Children.Add(textBlock2);
-                    MainGrid.Children.Add(textBlock3);
+
+                    if (segments.Length > 10)
+                    {
+                        TextBlock textBlock3 = new TextBlock
+                        {
+                            FontSize = 11,
+                            FontFamily = new FontFamily("Verdana"),
+                            HorizontalAlignment = HorizontalAlignment.Right,
+                            Text = segments[7] + segments[8] + segments[10],
+                            Foreground = segments[7] == "+" ? new SolidColorBrush(Color.FromRgb(59, 207, 134)) : new SolidColorBrush(Color.FromRgb(237, 49, 97))
+                        };
+                        textBlock3.SetValue(Grid.RowProperty, i);
+                        textBlock3.SetValue(Grid.ColumnProperty, 2);
+                        MainGrid.Children.Add(textBlock3);
+                    }
                 });
             }
         }

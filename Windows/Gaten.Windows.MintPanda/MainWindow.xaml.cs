@@ -86,12 +86,14 @@ namespace Gaten.Windows.MintPanda
                 try
                 {
                     var node = JsonNode.Parse(text);
-
-                    GProcess.Start("JsonViewer.exe", text
+                    if(node.AsObject().Count > 0 || node.AsArray().Count > 0)
+                    {
+                        GProcess.Start("JsonViewer.exe", text
                         .Replace(' ', '醵')
                         .Replace('\"', '蹃')
                         .Replace('\'', '略')
                         );
+                    }
                 }
                 catch (FormatException)
                 {

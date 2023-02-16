@@ -17,6 +17,7 @@ namespace Gaten.Windows.MintPanda
     public partial class SystemMonitorWindow : Window
     {
         System.Timers.Timer timer = new(500);
+        bool isReboot = false;
 
         public SystemMonitorWindow()
         {
@@ -41,7 +42,7 @@ namespace Gaten.Windows.MintPanda
             try
             {
                 var builder = new StringBuilder();
-                if (DateTime.Now.Minute == 59 && DateTime.Now.Second <= 30)
+                if (isReboot && DateTime.Now.Minute == 59 && DateTime.Now.Second <= 30)
                 {
                     builder.AppendLine($"{29 - DateTime.Now.Second}초 후 재부팅.");
                 }
@@ -54,7 +55,7 @@ namespace Gaten.Windows.MintPanda
 
                 DispatcherService.Invoke(() =>
                 {
-                    if (DateTime.Now.Minute == 59 && DateTime.Now.Second == 30)
+                    if (isReboot && DateTime.Now.Minute == 59 && DateTime.Now.Second == 30)
                     {
                         Application.Current.Shutdown();
                         System.Windows.Forms.Application.Restart();
