@@ -8,7 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Net\Gaten.Net\Gaten.Net.csproj" />
+    <ProjectReference Include="..\..\Net\Gaten.Net.Wpf\Gaten.Net.Wpf.csproj" />
+    <ProjectReference Include="..\..\Visual\Gaten.Visual.DataVisualizer\Gaten.Visual.DataVisualizer.csproj" />
   </ItemGroup>
 
 </Project>

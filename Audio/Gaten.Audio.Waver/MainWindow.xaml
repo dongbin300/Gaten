@@ -1,0 +1,55 @@
+﻿<Window x:Class="Gaten.Audio.Waver.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gaten.Audio.Waver"
+        xmlns:dv="clr-namespace:Gaten.Visual.DataVisualizer;assembly=Gaten.Visual.DataVisualizer"
+        mc:Ignorable="d"
+        Title="Waver" Height="450" Width="800" Background="#111">
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0" Header="Wave Create">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Freq(Hz)"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Duration(s)"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Volume"/>
+
+                    <TextBox Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" x:Name="FreqTextBox"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Center" x:Name="DurationTextBox"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" HorizontalContentAlignment="Center" x:Name="VolumeTextBox"/>
+
+                    <Button Grid.Row="3" Grid.ColumnSpan="2" x:Name="CreateButton" Content="Create Wav File" Click="CreateButton_Click"/>
+                    <Button Grid.Row="4" Grid.ColumnSpan="2" x:Name="DataButton" Content="Create Data File" Click="DataButton_Click"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.Row="1" Header="Wave Read">
+                <Button x:Name="SelectWavFileButton" Content="Select Wav File ... " Click="SelectWavFileButton_Click"/>
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Column="1">
+            <ContentControl x:Name="InnerWaveVisualizer"/>
+        </Grid>
+    </Grid>
+</Window>

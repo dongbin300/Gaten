@@ -17,12 +17,14 @@ namespace Gaten.Visual.DataVisualizer
     /// </summary>
     public partial class WaveVisualizer : UserControl, IWaveVisualizer
     {
-        public int ViewCountMin { get; } = 10;
-        public int ViewCountMax { get; } = 1000;
+        public int ViewCountMin => 10;
+        public int ViewCountMax { get; set; }
         public int TotalCount { get; set; } = 0;
         public int Start { get; set; } = 0;
         public int End { get; set; } = 0;
-        public int ViewCount => End - Start;
+        public int ViewCount => End - Start + 1;
+        public int ZoomInterval => TotalCount / 25;
+        public int MoveInterval => ViewCount / 100;
         public Point CurrentMousePosition { get; set; }
 
 
@@ -47,22 +49,29 @@ namespace Gaten.Visual.DataVisualizer
             {
                 values.Add(double.Parse(d));
             }
-            TotalCount = End = values.Count;
+            ViewCountMax = TotalCount = End = values.Count;
+            InvalidateVisual();
+        }
+
+        public void Init(List<double> values)
+        {
+            this.values = values;
+            ViewCountMax = TotalCount = End = values.Count;
             InvalidateVisual();
         }
 
         public void Init(int min, int max, int count)
         {
             var r = new SmartRandom();
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 values.Add(r.Next(min, max));
             }
-            TotalCount = End = values.Count;
+            ViewCountMax = TotalCount = End = values.Count;
             InvalidateVisual();
         }
 
-        private void UserControl_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        private void UserControl_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (e.Delta > 0) // Zoom-in
             {
@@ -71,8 +80,8 @@ namespace Gaten.Visual.DataVisualizer
                     return;
                 }
 
-                Start = System.Math.Min(TotalCount - ViewCountMin, Start + 1);
-                End = System.Math.Max(ViewCountMin, End - 1);
+                Start = System.Math.Min(TotalCount - ViewCountMin, Start + ZoomInterval);
+                End = System.Math.Max(ViewCountMin, End - ZoomInterval);
             }
             else // Zoom-out
             {
@@ -81,8 +90,8 @@ namespace Gaten.Visual.DataVisualizer
                     return;
                 }
 
-                Start = System.Math.Max(0, Start - 1);
-                End = System.Math.Min(TotalCount, End + 1);
+                Start = System.Math.Max(0, Start - ZoomInterval);
+                End = System.Math.Min(TotalCount, End + ZoomInterval);
             }
 
             InvalidateVisual();
@@ -92,9 +101,14 @@ namespace Gaten.Visual.DataVisualizer
         {
             base.OnRender(drawingContext);
 
-            var itemWidth = ActualWidth / (ViewCount-1);
-            double max = values.Substring(Start, End - Start).Max();
-            double min = values.Substring(Start, End - Start).Min();
+            if (TotalCount == 0)
+            {
+                return;
+            }
+
+            var itemWidth = ActualWidth / ViewCount;
+            double max = values.Substring(Start, ViewCount).Max();
+            double min = values.Substring(Start, ViewCount).Min();
 
             for (int i = Start; i < End - 1; i++)
             {
@@ -112,19 +126,19 @@ namespace Gaten.Visual.DataVisualizer
             {
                 if (diff.X > 0)
                 {
-                    if (Start > 0)
+                    if (Start > MoveInterval)
                     {
-                        Start--;
-                        End--;
+                        Start -= MoveInterval;
+                        End -= MoveInterval;
                         InvalidateVisual();
                     }
                 }
                 else if (diff.X < 0)
                 {
-                    if (End < TotalCount - 1)
+                    if (End < TotalCount - MoveInterval)
                     {
-                        Start++;
-                        End++;
+                        Start += MoveInterval;
+                        End += MoveInterval;
                         InvalidateVisual();
                     }
                 }
