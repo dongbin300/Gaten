@@ -18,13 +18,13 @@ namespace Gaten.Visual.DataVisualizer
     public partial class WaveVisualizer : UserControl, IWaveVisualizer
     {
         public int ViewCountMin => 10;
-        public int ViewCountMax { get; set; }
+        public int ViewCountMax => 5000;
         public int TotalCount { get; set; } = 0;
         public int Start { get; set; } = 0;
         public int End { get; set; } = 0;
         public int ViewCount => End - Start + 1;
-        public int ZoomInterval => TotalCount / 25;
-        public int MoveInterval => ViewCount / 100;
+        public int ZoomInterval => ViewCount / 10;
+        public int MoveInterval => ViewCount / 50;
         public Point CurrentMousePosition { get; set; }
 
 
@@ -49,14 +49,30 @@ namespace Gaten.Visual.DataVisualizer
             {
                 values.Add(double.Parse(d));
             }
-            ViewCountMax = TotalCount = End = values.Count;
+            if(values.Count > ViewCountMax)
+            {
+                End = ViewCountMax;
+                TotalCount = values.Count;
+            }
+            else
+            {
+                TotalCount = End = values.Count;
+            }
             InvalidateVisual();
         }
 
         public void Init(List<double> values)
         {
             this.values = values;
-            ViewCountMax = TotalCount = End = values.Count;
+            if (values.Count > ViewCountMax)
+            {
+                End = ViewCountMax;
+                TotalCount = values.Count;
+            }
+            else
+            {
+                TotalCount = End = values.Count;
+            }
             InvalidateVisual();
         }
 
@@ -67,7 +83,15 @@ namespace Gaten.Visual.DataVisualizer
             {
                 values.Add(r.Next(min, max));
             }
-            ViewCountMax = TotalCount = End = values.Count;
+            if (values.Count > ViewCountMax)
+            {
+                End = ViewCountMax;
+                TotalCount = values.Count;
+            }
+            else
+            {
+                TotalCount = End = values.Count;
+            }
             InvalidateVisual();
         }
 
