@@ -103,6 +103,7 @@ namespace Gaten.GameTool.osu.Mosu_.Controls
             // 음악 재생
             mciSendString("Close MediaFile", null, 0, IntPtr.Zero);
             mciSendString("open \"" + Path.Combine(selectedBeatmapSet.FullDirectory, musicInfo[0].Name) + "\" type mpegvideo alias MediaFile", null, 0, IntPtr.Zero);
+            mciSendString("setaudio MediaFile volume to 75", null, 0, IntPtr.Zero);
             mciSendString("play MediaFile", null, 0, IntPtr.Zero);
 
             // PictureBox에 맞게 사이즈 조정해서 이미지 출력

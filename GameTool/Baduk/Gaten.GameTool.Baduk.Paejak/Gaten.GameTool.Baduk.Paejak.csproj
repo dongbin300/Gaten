@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<UseWindowsForms>true</UseWindowsForms>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\Net\Gaten.Net\Gaten.Net.csproj" />
+		<ProjectReference Include="..\..\..\Net\Windows\Gaten.Net.Windows.Forms\Gaten.Net.Windows.Forms.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -313,7 +313,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Data.Texter", "Data\G
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Game.CoinChartSimulator", "Game\Gaten.Game.CoinChartSimulator\Gaten.Game.CoinChartSimulator.csproj", "{6AB4A384-2D46-43AD-A885-1B45A2336FAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.Audio.Waver", "Audio\Gaten.Audio.Waver\Gaten.Audio.Waver.csproj", "{0BD4D7C2-4E22-4FFE-B93B-0ADC44FD3B9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Audio.Waver", "Audio\Gaten.Audio.Waver\Gaten.Audio.Waver.csproj", "{0BD4D7C2-4E22-4FFE-B93B-0ADC44FD3B9D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Baduk", "Baduk", "{0771322A-8996-461B-BB46-F46F306F53D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.GameTool.Baduk.Paejak", "GameTool\Baduk\Gaten.GameTool.Baduk.Paejak\Gaten.GameTool.Baduk.Paejak.csproj", "{77B18A40-4216-45F7-A371-F83841F2D97E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1861,6 +1865,18 @@ Global
 		{0BD4D7C2-4E22-4FFE-B93B-0ADC44FD3B9D}.Release|x64.Build.0 = Release|Any CPU
 		{0BD4D7C2-4E22-4FFE-B93B-0ADC44FD3B9D}.Release|x86.ActiveCfg = Release|Any CPU
 		{0BD4D7C2-4E22-4FFE-B93B-0ADC44FD3B9D}.Release|x86.Build.0 = Release|Any CPU
+		{77B18A40-4216-45F7-A371-F83841F2D97E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77B18A40-4216-45F7-A371-F83841F2D97E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77B18A40-4216-45F7-A371-F83841F2D97E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{77B18A40-4216-45F7-A371-F83841F2D97E}.Debug|x64.Build.0 = Debug|Any CPU
+		{77B18A40-4216-45F7-A371-F83841F2D97E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{77B18A40-4216-45F7-A371-F83841F2D97E}.Debug|x86.Build.0 = Debug|Any CPU
+		{77B18A40-4216-45F7-A371-F83841F2D97E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77B18A40-4216-45F7-A371-F83841F2D97E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77B18A40-4216-45F7-A371-F83841F2D97E}.Release|x64.ActiveCfg = Release|Any CPU
+		{77B18A40-4216-45F7-A371-F83841F2D97E}.Release|x64.Build.0 = Release|Any CPU
+		{77B18A40-4216-45F7-A371-F83841F2D97E}.Release|x86.ActiveCfg = Release|Any CPU
+		{77B18A40-4216-45F7-A371-F83841F2D97E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2006,6 +2022,8 @@ Global
 		{5BEB0E36-4771-4863-A137-A4463D42313D} = {44B9C0C8-29C0-4C88-83CC-B9B8F54B2000}
 		{6AB4A384-2D46-43AD-A885-1B45A2336FAF} = {1651B9F0-835F-4308-974A-657AEDE416BE}
 		{0BD4D7C2-4E22-4FFE-B93B-0ADC44FD3B9D} = {AA3B5BDC-7270-476E-B8F4-AE537152484B}
+		{0771322A-8996-461B-BB46-F46F306F53D2} = {6D6BD253-AF6B-41BD-BC2C-BCA5495B120C}
+		{77B18A40-4216-45F7-A371-F83841F2D97E} = {0771322A-8996-461B-BB46-F46F306F53D2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9E22E9A6-DD7D-4809-95DD-888B759F780F}

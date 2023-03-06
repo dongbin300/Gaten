@@ -5,6 +5,8 @@ namespace Gaten.Net.Windows
 {
     public class InputSimulator
     {
+        public static int MouseActivityInterval = 0;
+        public static int KeyboardActivityInterval = 0;
         private static readonly KeyboardSimulator keyboardSimulator = new();
         private static readonly MouseSimulator mouseSimulator = new();
 
@@ -13,18 +15,21 @@ namespace Gaten.Net.Windows
         public static void MouseClick(int x, int y)
         {
             MouseMove(x, y);
+            Thread.Sleep(MouseActivityInterval);
             mouseSimulator.LeftButtonClick();
         }
         public static void MouseDoubleClick() => mouseSimulator.LeftButtonDoubleClick();
         public static void MouseDoubleClick(int x, int y)
         {
             MouseMove(x, y);
+            Thread.Sleep(MouseActivityInterval);
             mouseSimulator.LeftButtonDoubleClick();
         }
         public static void MouseRightClick() => mouseSimulator.RightButtonClick();
         public static void MouseRightClick(int x, int y)
         {
             MouseMove(x, y);
+            Thread.Sleep(MouseActivityInterval);
             mouseSimulator.RightButtonClick();
         }
         public static void KeyPress(VirtualKeyCode keyCode) => keyboardSimulator.KeyPress(keyCode);
@@ -46,7 +51,9 @@ namespace Gaten.Net.Windows
             {
                 keyboardSimulator.KeyDown(VirtualKeyCode.LWIN);
             }
+            Thread.Sleep(KeyboardActivityInterval);
             keyboardSimulator.KeyPress(keyCode);
+            Thread.Sleep(KeyboardActivityInterval);
             if (modifiers.HasFlag(Modifiers.Ctrl))
             {
                 keyboardSimulator.KeyUp(VirtualKeyCode.CONTROL);
