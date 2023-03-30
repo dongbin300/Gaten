@@ -317,7 +317,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.Audio.Waver", "Audio\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Baduk", "Baduk", "{0771322A-8996-461B-BB46-F46F306F53D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.GameTool.Baduk.Paejak", "GameTool\Baduk\Gaten.GameTool.Baduk.Paejak\Gaten.GameTool.Baduk.Paejak.csproj", "{77B18A40-4216-45F7-A371-F83841F2D97E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gaten.GameTool.Baduk.Paejak", "GameTool\Baduk\Gaten.GameTool.Baduk.Paejak\Gaten.GameTool.Baduk.Paejak.csproj", "{77B18A40-4216-45F7-A371-F83841F2D97E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaten.Windows.MintPandaLinux", "Windows\Gaten.Windows.MintPandaLinux\Gaten.Windows.MintPandaLinux.csproj", "{D3300DA8-6E9E-4D33-9666-EAEF72CDA2A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1877,6 +1879,18 @@ Global
 		{77B18A40-4216-45F7-A371-F83841F2D97E}.Release|x64.Build.0 = Release|Any CPU
 		{77B18A40-4216-45F7-A371-F83841F2D97E}.Release|x86.ActiveCfg = Release|Any CPU
 		{77B18A40-4216-45F7-A371-F83841F2D97E}.Release|x86.Build.0 = Release|Any CPU
+		{D3300DA8-6E9E-4D33-9666-EAEF72CDA2A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3300DA8-6E9E-4D33-9666-EAEF72CDA2A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3300DA8-6E9E-4D33-9666-EAEF72CDA2A8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D3300DA8-6E9E-4D33-9666-EAEF72CDA2A8}.Debug|x64.Build.0 = Debug|Any CPU
+		{D3300DA8-6E9E-4D33-9666-EAEF72CDA2A8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D3300DA8-6E9E-4D33-9666-EAEF72CDA2A8}.Debug|x86.Build.0 = Debug|Any CPU
+		{D3300DA8-6E9E-4D33-9666-EAEF72CDA2A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3300DA8-6E9E-4D33-9666-EAEF72CDA2A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3300DA8-6E9E-4D33-9666-EAEF72CDA2A8}.Release|x64.ActiveCfg = Release|Any CPU
+		{D3300DA8-6E9E-4D33-9666-EAEF72CDA2A8}.Release|x64.Build.0 = Release|Any CPU
+		{D3300DA8-6E9E-4D33-9666-EAEF72CDA2A8}.Release|x86.ActiveCfg = Release|Any CPU
+		{D3300DA8-6E9E-4D33-9666-EAEF72CDA2A8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2024,6 +2038,7 @@ Global
 		{0BD4D7C2-4E22-4FFE-B93B-0ADC44FD3B9D} = {AA3B5BDC-7270-476E-B8F4-AE537152484B}
 		{0771322A-8996-461B-BB46-F46F306F53D2} = {6D6BD253-AF6B-41BD-BC2C-BCA5495B120C}
 		{77B18A40-4216-45F7-A371-F83841F2D97E} = {0771322A-8996-461B-BB46-F46F306F53D2}
+		{D3300DA8-6E9E-4D33-9666-EAEF72CDA2A8} = {0D20CAEA-6673-4319-8F89-D093A669596D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9E22E9A6-DD7D-4809-95DD-888B759F780F}

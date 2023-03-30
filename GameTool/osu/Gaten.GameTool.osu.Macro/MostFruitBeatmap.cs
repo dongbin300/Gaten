@@ -4,11 +4,11 @@ namespace Gaten.GameTool.osu.Macro
 {
     internal class MostFruitBeatmap
     {
-        static string beatmapDirectory = "비트맵 디렉토리";
-        static string filterDirectory = "필터된 디렉토리";
+        static string beatmapDirectory = "C:\\Users\\Gaten\\AppData\\Local\\osu!\\Songs";
+        static string filterDirectory = "C:\\Users\\Gaten\\AppData\\Local\\osu!\\Filter";
         static List<BeatmapSet> bs = new List<BeatmapSet>();
         static List<BeatmapSet> filter = new List<BeatmapSet>();
-        static int Threshold = 1300;
+        static int Threshold = 1500;
 
         public MostFruitBeatmap()
         {

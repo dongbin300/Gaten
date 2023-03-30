@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Net\Gaten.Net.Wpf\Gaten.Net.Wpf.csproj" />
-    <ProjectReference Include="..\..\Visual\Gaten.Visual.DataVisualizer\Gaten.Visual.DataVisualizer.csproj" />
+    <PackageReference Include="Binance.Net" Version="8.4.3" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
   </ItemGroup>
 
 </Project>

@@ -67,8 +67,8 @@ namespace Gaten.Visual.DataVisualizer
                     return;
                 }
 
-                Start = System.Math.Min(TotalCount - ViewCountMin, Start + 1);
-                End = System.Math.Max(ViewCountMin, End - 1);
+                Start = Math.Min(TotalCount - ViewCountMin, Start + 1);
+                End = Math.Max(ViewCountMin, End - 1);
             }
             else // Zoom-out
             {
@@ -77,8 +77,8 @@ namespace Gaten.Visual.DataVisualizer
                     return;
                 }
 
-                Start = System.Math.Max(0, Start - 1);
-                End = System.Math.Min(TotalCount, End + 1);
+                Start = Math.Max(0, Start - 1);
+                End = Math.Min(TotalCount, End + 1);
             }
 
             InvalidateVisual();
