@@ -2,7 +2,9 @@
 using Gaten.Net.Wpf;
 using Gaten.Visual.DataVisualizer;
 
+using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Data;
 
 namespace Gaten.Study.TestWpf
 {
@@ -15,9 +17,14 @@ namespace Gaten.Study.TestWpf
         {
             InitializeComponent();
 
-            CandleChartVisualizer visualizer = new CandleChartVisualizer();
-            visualizer.Init(GResource.BinanceFuturesDataPath.Down("1m", "BATUSDT", "BATUSDT_2023-03-01.csv"));
-            chart.Content = visualizer;
+            List<Model> models = new List<Model>();
+            var test = new CollectionView(models);
+        }
+
+        public class Model
+        {
+            public string Name { get; set; }
+            public string Description { get; set; }
         }
     }
 }

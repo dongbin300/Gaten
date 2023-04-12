@@ -26,36 +26,43 @@ namespace Gaten.Windows.MintPandaLinux
 
         public MainWindow()
         {
-            InitializeComponent();
-            mainTimer.Elapsed += MainTimer_Elapsed;
-            mainTimer.Start();
-            WebCrawler.Open();
-            CheckListManager.Init();
-            BinanceManager.Init();
-            RefreshCheckList();
+            try
+            {
+                InitializeComponent();
+                mainTimer.Elapsed += MainTimer_Elapsed;
+                mainTimer.Start();
+                WebCrawler.Open();
+                CheckListManager.Init();
+                BinanceManager.Init();
+                RefreshCheckList();
 
-            IdComboBox.Items.Clear();
-            _ = IdComboBox.Items.Add("gaten");
-            _ = IdComboBox.Items.Add("dongbin30");
-            _ = IdComboBox.Items.Add("dongbin300");
-            _ = IdComboBox.Items.Add("dongbin30@naver.com");
-            _ = IdComboBox.Items.Add("dongbin30@hanmail.net");
-            _ = IdComboBox.Items.Add("dongbin300@gmail.com");
+                IdComboBox.Items.Clear();
+                _ = IdComboBox.Items.Add("gaten");
+                _ = IdComboBox.Items.Add("dongbin30");
+                _ = IdComboBox.Items.Add("dongbin300");
+                _ = IdComboBox.Items.Add("dongbin30@naver.com");
+                _ = IdComboBox.Items.Add("dongbin30@hanmail.net");
+                _ = IdComboBox.Items.Add("dongbin300@gmail.com");
 
-            PasswordComboBox.Items.Clear();
-            _ = PasswordComboBox.Items.Add("n.d.d0n'b|n");
-            _ = PasswordComboBox.Items.Add("d0n'b|n1011");
-            _ = PasswordComboBox.Items.Add("d0n'b|n101!");
-            _ = PasswordComboBox.Items.Add("d0n'b|n10!!");
-            _ = PasswordComboBox.Items.Add("D0n'b|n1011");
-            _ = PasswordComboBox.Items.Add("D0n'b|n10!!");
-            _ = PasswordComboBox.Items.Add("d0n'b|n1194619");
-            _ = PasswordComboBox.Items.Add("||q|l|l");
-            _ = PasswordComboBox.Items.Add("||q|l|ls.m-_k");
+                PasswordComboBox.Items.Clear();
+                _ = PasswordComboBox.Items.Add("n.d.d0n'b|n");
+                _ = PasswordComboBox.Items.Add("d0n'b|n1011");
+                _ = PasswordComboBox.Items.Add("d0n'b|n101!");
+                _ = PasswordComboBox.Items.Add("d0n'b|n10!!");
+                _ = PasswordComboBox.Items.Add("D0n'b|n1011");
+                _ = PasswordComboBox.Items.Add("D0n'b|n10!!");
+                _ = PasswordComboBox.Items.Add("d0n'b|n1194619");
+                _ = PasswordComboBox.Items.Add("||q|l|l");
+                _ = PasswordComboBox.Items.Add("||q|l|ls.m-_k");
 
-            LoadPasswordData();
-            WeatherText.Text = GetWeather();
-            UnseText.Text = GetUnse();
+                LoadPasswordData();
+                WeatherText.Text = GetWeather();
+                UnseText.Text = GetUnse();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
         }
 
         private void MainTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
@@ -120,26 +127,40 @@ namespace Gaten.Windows.MintPandaLinux
         #region Check List
         private void RefreshCheckList()
         {
-            CheckListDataGrid.Items.Clear();
-            var checkList = CheckListManager.GetTodayCheckLists();
-            foreach (var item in checkList)
+            try
             {
-                CheckListDataGrid.Items.Add(item);
+                CheckListDataGrid.Items.Clear();
+                var checkList = CheckListManager.GetTodayCheckLists();
+                foreach (var item in checkList)
+                {
+                    CheckListDataGrid.Items.Add(item);
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
             }
         }
 
         private void CompleteButton_Click(object sender, RoutedEventArgs e)
         {
-            int index = CheckListDataGrid.SelectedIndex;
-            var selectedCheckList = CheckListDataGrid.Items[index] as CheckListModel;
-
-            if (selectedCheckList == null)
+            try
             {
-                return;
-            }
+                int index = CheckListDataGrid.SelectedIndex;
+                var selectedCheckList = CheckListDataGrid.Items[index] as CheckListModel;
 
-            selectedCheckList.IsNotComplete = false;
-            RefreshCheckList();
+                if (selectedCheckList == null)
+                {
+                    return;
+                }
+
+                selectedCheckList.IsNotComplete = false;
+                RefreshCheckList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
         #endregion
 
