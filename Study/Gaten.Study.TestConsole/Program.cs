@@ -1,25 +1,28 @@
-﻿using Gaten.Net.Extensions;
-using Gaten.Net.IO;
+﻿using System.Diagnostics;
 
 namespace Gaten.Study.TestConsole
 {
     public class Program
     {
-        public class Model
+        static void Main()
         {
-            public string Id { get; set; }
-            public string Name { get; set; }
-        }
+            try
+            {
+                PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
 
-        public static void Main()
-        {
-            var result = Request<Model>();
-            var test = new collectionview
-        }
+                for (int i = 0; i < 50; i++)
+                {
+                    Thread.Sleep(0);
+                    var value = cpuCounter.NextValue();
+                    Console.WriteLine(value);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred: " + ex.Message);
+            }
 
-        public static T Request<T>()
-        {
-            return default!;
+            Console.ReadLine();
         }
     }
 }

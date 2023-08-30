@@ -55,9 +55,9 @@ namespace Gaten.Windows.FileExplorer.Models
 
             var segments = currentPath.Split('\\', System.StringSplitOptions.None);
             result.Add(new FileModel(FileType.Directory, string.Empty, segments[0]));
-            for(int i = 0; i < segments.Length - 1; i++)
+            for (int i = 0; i < segments.Length - 1; i++)
             {
-                var block = new FileModel(FileType.Directory, string.Join('\\', segments[..i]), segments[i + 1]);
+                var block = new FileModel(FileType.Directory, string.Join('\\', segments[..(i + 1)]), segments[i + 1]);
                 result.Add(block);
             }
 

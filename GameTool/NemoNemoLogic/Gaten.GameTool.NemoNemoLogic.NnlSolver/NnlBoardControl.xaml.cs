@@ -43,20 +43,20 @@ namespace Gaten.GameTool.NemoNemoLogic.NnlSolver
 
                 for (int i = 0; i < columnCount; i++)
                 {
-                    int lineThickness = i % 5 == 4 ? 2 : 1;
+                    var lineThickness = i % 5 == 4 ? 1 : 0.5;
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(lineThickness), MinWidth = lineThickness });
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(lineThickness), MaxWidth = lineThickness, MinWidth = lineThickness });
                 }
                 for (int i = 0; i < rowCount; i++)
                 {
-                    int lineThickness = i % 5 == 4 ? 2 : 1;
+                    var lineThickness = i % 5 == 4 ? 1 : 0.5;
                     grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-                    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(lineThickness), MinHeight = lineThickness });
+                    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(lineThickness), MaxHeight = lineThickness, MinHeight = lineThickness });
                 }
 
                 for (int i = 1; i < columnCount * 2; i += 2)
                 {
-                    Color color = i % 10 == 9 ? Color.FromRgb(178, 16, 22) : Colors.Black;
+                    Color color = i % 10 == 9 ? Colors.Black : Colors.Silver;
                     Rectangle r = new()
                     {
                         Fill = new SolidColorBrush(color)
@@ -67,7 +67,7 @@ namespace Gaten.GameTool.NemoNemoLogic.NnlSolver
                 }
                 for (int i = 1; i < rowCount * 2; i += 2)
                 {
-                    Color color = i % 10 == 9 ? Color.FromRgb(178, 16, 22) : Colors.Black;
+                    Color color = i % 10 == 9 ? Colors.Black : Colors.Silver;
                     Rectangle r = new()
                     {
                         Fill = new SolidColorBrush(color)
@@ -85,7 +85,7 @@ namespace Gaten.GameTool.NemoNemoLogic.NnlSolver
                         {
                             Rectangle r = new()
                             {
-                                Fill = new SolidColorBrush(Colors.Black)
+                                Fill = new SolidColorBrush(Colors.DimGray)
                             };
                             Grid.SetColumn(r, i * 2);
                             Grid.SetRow(r, j * 2);

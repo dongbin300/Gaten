@@ -67,11 +67,13 @@ namespace Gaten.Windows.FileExplorer
                 var button = new Button
                 {
                     Content = block.Name,
+                    Tag = block.FullName,
                     Background = new SolidColorBrush(Colors.Transparent),
                     Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0xF7, 0xF7, 0xF7)),
                     BorderThickness = new Thickness(0),
-                    Style = (Style)FindResource("PathButton")
+                    Style = (Style)FindResource("PathButton"),
                 };
+                button.Click += PathTextButton_Click;
                 CurrentPathPanel.Children.Add(button);
             }
 
@@ -88,6 +90,23 @@ namespace Gaten.Windows.FileExplorer
             {
                 fileExplorer.Files.Add(new FileModel(FileType.Directory, directory.Parent.FullName, directory.Name));
             }
+        }
+
+        private void PathTextButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is not Button button)
+            {
+                return;
+            }
+
+            var fullPath = button.Tag.ToString();
+            if (fullPath == null)
+            {
+                return;
+            }
+
+            fileExplorer.CurrentPath = fullPath;
+            CurrentPathChanged();
         }
 
         private void Undo_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -113,6 +132,10 @@ namespace Gaten.Windows.FileExplorer
             }
 
             var selectedFile = FileListDataGrid.SelectedItem as FileModel;
+            if (selectedFile == null)
+            {
+                return;
+            }
 
             if (selectedFile.Type == FileType.Directory)
             {

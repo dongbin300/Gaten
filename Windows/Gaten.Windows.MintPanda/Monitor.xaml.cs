@@ -29,6 +29,7 @@ namespace Gaten.Windows.MintPanda
         string DiskDriveText = string.Empty;
         string StockText = string.Empty;
         string UnseText = string.Empty;
+        string NaverUnseText = string.Empty;
         #endregion
 
         #region Initialize
@@ -81,6 +82,7 @@ namespace Gaten.Windows.MintPanda
                 //hardwarePrice.SearchHardwarePrice();
                 //checkList.RefreshCheckList();
                 UnseText = Unse.Get();
+                NaverUnseText = NaverUnse.Get();
                 DiskDriveText = DiskDrive.Get();
                 //randomHanja.Refresh();
                 //randomWord.Refresh();

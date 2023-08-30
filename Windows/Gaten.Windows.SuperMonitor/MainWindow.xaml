@@ -1,0 +1,36 @@
+﻿<Window x:Class="Gaten.Windows.SuperMonitor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="210" Width="270" Background="Transparent" AllowsTransparency="True"
+        WindowStyle="None" Margin="0" Padding="0" ResizeMode="NoResize"
+        >
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Meiryo UI" />
+            <Setter Property="FontSize" Value="24" />
+        </Style>
+    </Window.Resources>
+    
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1.5*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" x:Name="BtcusdtChangeText"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <TextBlock FontSize="22" x:Name="PositionLongText" Foreground="#3BCF86" />
+            <TextBlock FontSize="22" x:Name="PositionShortText" Foreground="#ED3161" />
+        </StackPanel>
+        <TextBlock Grid.Row="2" x:Name="TodayProfitText" FontWeight="Bold"/>
+        <TextBlock Grid.Row="3" x:Name="TotalBalanceText" Foreground="Goldenrod"/>
+        <TextBlock Grid.Row="4" x:Name="AvailableBalanceText" Foreground="Aqua"/>
+        <TextBlock Grid.Row="5" x:Name="ClockText" Foreground="#6BFFB6" FontSize="36" FontWeight="Bold"/>
+    </Grid>
+</Window>

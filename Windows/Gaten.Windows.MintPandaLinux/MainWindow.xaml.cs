@@ -440,6 +440,22 @@ namespace Gaten.Windows.MintPandaLinux
                 return "운세 가져오기 실패";
             }
         }
+
+        public string GetUnseV2()
+        {
+            try
+            {
+                WebCrawler.SetUrl($"https://www.fortune82.com/view.html?gc=10&ic=1001");
+
+                var node = WebCrawler.SelectNodes("div", "class", "entry-content");
+
+                return "";
+            }
+            catch
+            {
+                return "운세2 가져오기 실패";
+            }
+        }
         #endregion
 
         #region Weather

@@ -73,6 +73,7 @@ namespace Gaten.Windows.MintKakao
                     {
                         "Chosung" => "초성퀴즈",
                         "StockGame" => "주식게임",
+                        "Hol" => "홀짝게임",
                         _ => "에러"
                     };
                     MainBorder.BorderBrush = new SolidColorBrush(Colors.White);
@@ -90,7 +91,20 @@ namespace Gaten.Windows.MintKakao
                     window = windows[0];
                     window.MyNickname = MyNicknameTextBox.Text;
                     window.BotMode = (BotMode)Enum.Parse(typeof(BotMode), tag);
-                    KakaoTalkChatBot.Init(window);
+                    switch (button.Tag)
+                    {
+                        case "Chosung":
+                            KakaoTalkChatBot.InitChosung(window);
+                            break;
+
+                        case "StockGame":
+                            KakaoTalkChatBot.InitStock(window);
+                            break;
+
+                        case "Hol":
+                            KakaoTalkChatBot.InitHol(window);
+                            break;
+                    }
                     KakaoTalkChatBot.Start();
                     button.Content = "중지";
                     MainBorder.BorderBrush = new SolidColorBrush(Colors.Red);

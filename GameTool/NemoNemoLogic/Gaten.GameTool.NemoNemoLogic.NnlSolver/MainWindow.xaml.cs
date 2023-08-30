@@ -3,7 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Gaten.GameTool.NemoNemoLogic.NnlSolver
 {
@@ -20,33 +22,52 @@ namespace Gaten.GameTool.NemoNemoLogic.NnlSolver
             InitializeComponent();
         }
 
+        private NnlBoard ToNnlBoard(PixelStateEnum[,] pixel)
+        {
+            var result = new NnlBoard(pixel.GetLength(0), pixel.GetLength(1));
+
+            for (int i = 0; i < pixel.GetLength(0); i++)
+            {
+                for (int j = 0; j < pixel.GetLength(1); j++)
+                {
+                    result.Data[i, j] = pixel[i, j] switch
+                    {
+                        PixelStateEnum.ON => true,
+                        _ => false,
+                    };
+                }
+            }
+
+            return result;
+        }
+
         private void SolveTestButton_Click(object sender, RoutedEventArgs e)
         {
-            var completionText =
-                "0000011" +
-                "1100010" +
-                "0101010" +
-                "0111101" +
-                "0000010" +
-                "1101010" +
-                "0001111";
+            var questionText =
+                "1 1\n" +
+                "1 1 1\n" +
+                "1 1\n" +
+                "1 1\n" +
+                "1\n" +
+                "\n" +
+                "2\n" +
+                "1 1\n" +
+                "1 1\n" +
+                "1 1\n" +
+                "2\n";
 
-            var problem = NnlProblemMaker.Make(completionText, 7, 7);
-            var tealProblem = problem.ToTealNnlProblem();
+            var question = new NnlQuestion(questionText);
+            var solver = new NnlSolver();
+            solver.Solve(question);
 
-            //var result = problem.Solve();
+            var nnlBoard = ToNnlBoard(solver.pixelStates);
+            var nnlBoards = new List<NnlBoard>() { nnlBoard };
 
-            //if (result == null || result.Answer.Count == 0)
-            //{
-            //    MessageBox.Show("정답을 찾지 못했습니다.");
-            //    return;
-            //}
-
-            //BoardControl.Boards = result.Answer;
-            //currentIndex = 0;
-            //maxIndex = result.Answer.Count - 1;
-            //PageText.Text = (currentIndex + 1) + " / " + (maxIndex + 1);
-            //BoardControl.Refresh(currentIndex);
+            BoardControl.Boards = nnlBoards;
+            currentIndex = 0;
+            maxIndex = 0;
+            PageText.Text = "1 / 1";
+            BoardControl.Refresh(currentIndex);
         }
 
         private void SolveTealButton_Click(object sender, RoutedEventArgs e)
@@ -62,23 +83,19 @@ namespace Gaten.GameTool.NemoNemoLogic.NnlSolver
 
         private void SolveButton_Click(object sender, RoutedEventArgs e)
         {
-            var problem = GetProblemFromWebSite();
-            if(problem == null)
+            var solver = new NnlSolver();
+            var question = GetQuestionFromWebSite();
+            if (question == null)
             {
                 return;
             }
-            var result = problem.Solve();
+            solver.Solve(question);
+            var nnlBoards = new List<NnlBoard>() { ToNnlBoard(solver.pixelStates) };
 
-            if (result == null || result.Answer.Count == 0)
-            {
-                MessageBox.Show("정답을 찾지 못했습니다.");
-                return;
-            }
-
-            BoardControl.Boards = result.Answer;
+            BoardControl.Boards = nnlBoards;
             currentIndex = 0;
-            maxIndex = result.Answer.Count - 1;
-            PageText.Text = (currentIndex + 1) + " / " + (maxIndex + 1);
+            maxIndex = 0;
+            PageText.Text = "1 / 1";
             BoardControl.Refresh(currentIndex);
         }
 
@@ -86,7 +103,7 @@ namespace Gaten.GameTool.NemoNemoLogic.NnlSolver
         {
             if (QuidTextBox.Text.Length < 1)
             {
-                if(HtmlTextBox.Text.Length < 1)
+                if (HtmlTextBox.Text.Length < 1)
                 {
                     MessageBox.Show("Quid를 넣어 주세요.");
                     return null;
@@ -126,8 +143,7 @@ namespace Gaten.GameTool.NemoNemoLogic.NnlSolver
             }
 
             string url = $"http://nemonemologic.com/play_logic.php?quid={QuidTextBox.Text}";
-            SeleniumWebCrawler.CreateNoWindow = true;
-            SeleniumWebCrawler.Open(url);
+            SeleniumWebCrawler.Open(url, true);
             var vnode = SeleniumWebCrawler.SelectNode("tr", "class", "nemo-v-hint");
             var hnodes = SeleniumWebCrawler.SelectNodes("td", "class", "nemo-h-hint", true);
 
@@ -158,6 +174,90 @@ namespace Gaten.GameTool.NemoNemoLogic.NnlSolver
             return new NnlProblem(vertical.Count, horizontal.Count, horizontal, vertical);
         }
 
+        private NnlQuestion? GetQuestionFromWebSite()
+        {
+            if (QuidTextBox.Text.Length < 1)
+            {
+                if (HtmlTextBox.Text.Length < 1)
+                {
+                    MessageBox.Show("Quid를 넣어 주세요.");
+                    return null;
+                }
+                else
+                {
+                    WebCrawler.SetHtml(HtmlTextBox.Text);
+                    var vnode2 = WebCrawler.SelectNode("tr", "class", "nemo-v-hint");
+                    var hnodes2 = WebCrawler.SelectNodes("td", "class", "nemo-h-hint", true);
+
+                    if (vnode2 == null)
+                    {
+                        MessageBox.Show("vnode null");
+                        return null;
+                    }
+
+                    if (hnodes2 == null)
+                    {
+                        MessageBox.Show("hnodes null");
+                        return null;
+                    }
+
+                    var vertical2 = new List<NnlLine>();
+                    var horizontal2 = new List<NnlLine>();
+                    var hints2 = vnode2.InnerText.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                    vertical2.AddRange(hints2.Select(hint => new NnlLine
+                    {
+                        Hint = hint.Split("\r\n", StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x)).ToList()
+                    }));
+                    horizontal2.AddRange(hnodes2.Select(node => new NnlLine
+                    {
+                        Hint = node.InnerText.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x)).ToList()
+                    }));
+
+                    var builder2 = new StringBuilder();
+                    builder2.AppendLine(string.Join(Environment.NewLine, horizontal2.Select(x => x.ToString())));
+                    builder2.Append(string.Join(Environment.NewLine, vertical2.Select(x => x.ToString())));
+
+                    return new NnlQuestion(builder2.ToString());
+                }
+            }
+
+            string url = $"http://nemonemologic.com/play_logic.php?quid={QuidTextBox.Text}";
+            SeleniumWebCrawler.Open(url, true);
+            var vnode = SeleniumWebCrawler.SelectNode("tr", "class", "nemo-v-hint");
+            var hnodes = SeleniumWebCrawler.SelectNodes("td", "class", "nemo-h-hint", true);
+
+            if (vnode == null)
+            {
+                MessageBox.Show("vnode null");
+                return null;
+            }
+
+            if (hnodes == null)
+            {
+                MessageBox.Show("hnodes null");
+                return null;
+            }
+
+            var vertical = new List<NnlLine>();
+            var horizontal = new List<NnlLine>();
+            var hints = vnode.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            vertical.AddRange(hints.Select(hint => new NnlLine
+            {
+                Hint = hint.Split("\r\n", StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x)).ToList()
+            }));
+            horizontal.AddRange(hnodes.Select(node => new NnlLine
+            {
+                Hint = node.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x)).ToList()
+            }));
+
+            var builder = new StringBuilder();
+            builder.AppendLine(string.Join(Environment.NewLine, horizontal.Select(x => x.ToString())));
+            builder.AppendLine();
+            builder.AppendLine(string.Join(Environment.NewLine, vertical.Select(x => x.ToString())));
+
+            return new NnlQuestion(builder.ToString());
+        }
+
         private void PrevButton_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (currentIndex > 0)
@@ -176,6 +276,36 @@ namespace Gaten.GameTool.NemoNemoLogic.NnlSolver
                 PageText.Text = (currentIndex + 1) + " / " + (maxIndex + 1);
                 BoardControl.Refresh(currentIndex);
             }
+        }
+
+        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                DragMove();
+            }
+        }
+
+        private void SolveCaseButton_Click(object sender, RoutedEventArgs e)
+        {
+            var problem = GetProblemFromWebSite();
+            if (problem == null)
+            {
+                return;
+            }
+            var result = problem.Solve();
+
+            if (result == null || result.Answer.Count == 0)
+            {
+                MessageBox.Show("정답을 찾지 못했습니다.");
+                return;
+            }
+
+            BoardControl.Boards = result.Answer;
+            currentIndex = 0;
+            maxIndex = result.Answer.Count - 1;
+            PageText.Text = "1 / " + (maxIndex + 1);
+            BoardControl.Refresh(0);
         }
     }
 }

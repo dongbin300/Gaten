@@ -12,6 +12,14 @@
                     DisassemblyHelper.SetDisassemblyString("ADD BYTE PTR DS:[EAX], AL");
                     break;
 
+                case "08":
+                    DisassemblyHelper.SetDisassemblyString("ADD BYTE PTR DS:[EAX], CL");
+                    break;
+
+                case "10":
+                    DisassemblyHelper.SetDisassemblyString("ADD BYTE PTR DS:[EAX], DL");
+                    break;
+
                 case "18":
                     DisassemblyHelper.SetDisassemblyString("ADD BYTE PTR DS:[EAX], BL");
                     break;

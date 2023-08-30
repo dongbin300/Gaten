@@ -5,6 +5,7 @@ using Gaten.Net.Windows.KakaoTalk.Game.StockGame;
 using Gaten.Net.Windows.KakaoTalk.Quiz;
 
 using System.Drawing;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.Versioning;
 using System.Text;
 
@@ -33,6 +34,8 @@ namespace Gaten.Net.Windows.KakaoTalk.Chat
         private static bool IsStockGameRefreshed;
         private static bool IsStockGameRewarded;
 
+        private static Dictionary<string, int> HolAccounts = new();
+
         private static int ChatHeightMultiLine(int lineCount) => ChatHeight + (lineCount - 1) * 18;
 
         public static Bitmap ChatRoomImage { get; set; } = default!;
@@ -45,6 +48,27 @@ namespace Gaten.Net.Windows.KakaoTalk.Chat
         public static void Init(KakaoTalkChatWindow window)
         {
             ChosungQuiz.Init();
+            KakaoTalkChatApi.SendChatMessage(window, StockGameEngine.Init());
+            worker = new Thread(new ThreadStart(DoWork));
+            Window = window;
+        }
+
+        public static void InitChosung(KakaoTalkChatWindow window)
+        {
+            ChosungQuiz.Init();
+            worker = new Thread(new ThreadStart(DoWork));
+            Window = window;
+        }
+
+        public static void InitHol(KakaoTalkChatWindow window)
+        {
+            KakaoTalkChatApi.SendChatMessage(window, "홀짝게임\r\n홀 100, 짝 200 과 같이 채팅을 치면 게임을 플레이 할 수 있습니다.");
+            worker = new Thread(new ThreadStart(DoWork));
+            Window = window;
+        }
+
+        public static void InitStock(KakaoTalkChatWindow window)
+        {
             KakaoTalkChatApi.SendChatMessage(window, StockGameEngine.Init());
             worker = new Thread(new ThreadStart(DoWork));
             Window = window;
@@ -109,6 +133,11 @@ namespace Gaten.Net.Windows.KakaoTalk.Chat
                         case BotMode.StockGame:
                             PlayStockGame();
                             break;
+
+                        case BotMode.Hol:
+                            PlayHol();
+                            break;
+
                     }
 
                     Thread.Sleep(WorkInterval);
@@ -516,11 +545,62 @@ namespace Gaten.Net.Windows.KakaoTalk.Chat
                     var message = Messages[i];
                     if (message.Type == MessageType.Talk)
                     {
+                        var nickname = message.UserName;
+                        if (message.Content.Equals("패스"))
+                        {
+                            var userScore = ChosungQuiz.GetUserScore(nickname);
+                            if (userScore <= 0)
+                            {
+                                KakaoTalkChatApi.SendChatMessage(Window, $"{nickname}님의 골드가 부족합니다.");
+                                continue;
+                            }
+
+                            var score = 0;
+                            var passUser = ChosungQuiz.PassUsers.Find(x => x.Nickname.Equals(nickname));
+                            if (passUser == null) // 첫 패스자
+                            {
+                                ChosungQuiz.PassUsers.Add(new PassUser(nickname, -25, DateTime.Now));
+                                score = -25;
+                            }
+                            else // 이전 패스기록이 있는 패스자
+                            {
+                                if ((DateTime.Now - passUser.Time).TotalSeconds < 10) // 10초 이내에 재패스 시 추가 패널티
+                                {
+                                    passUser.Penalty -= 0;
+                                    passUser.Time = DateTime.Now;
+                                    score = passUser.Penalty;
+                                }
+                                else // 정상적인 패스자
+                                {
+                                    passUser.Time = DateTime.Now;
+                                    score = -25;
+                                }
+                            }
+
+                            quizzing = false;
+                            var resultScore = ChosungQuiz.UpdateScore(message.UserName, score);
+                            KakaoTalkChatApi.SendChatMessage(Window, $"[패스] 정답: {ChosungQuiz.CurrentQuiz.Answer}, 패스자: {nickname}, 골드: {resultScore}({score})");
+                            continue;
+                        }
+
+                        if (message.Content.Equals("랭킹"))
+                        {
+                            var rankingInfo = ChosungQuiz.GetScoreInfo();
+                            KakaoTalkChatApi.SendChatMessage(Window, rankingInfo);
+                            continue;
+                        }
+
                         (var result, var answer) = ChosungQuiz.TryAnswer(message.Content);
                         if (result)
                         {
                             quizzing = false;
-                            KakaoTalkChatApi.SendChatMessage(Window, $"정답자: {message.UserName}, 정답: {answer}");
+                            var score = (30 + 10 * answer.Trim().Replace(" ", "").Length) * (ChosungQuiz.IsRandomTitle ? 5 : 1);
+                            if (answer.Trim().Length == 1)
+                            {
+                                score = 250 * (ChosungQuiz.IsRandomTitle ? 5 : 1);
+                            }
+                            var resultScore = ChosungQuiz.UpdateScore(nickname, score);
+                            KakaoTalkChatApi.SendChatMessage(Window, $"정답: {answer}, 정답자: {nickname}, 골드: {resultScore}(+{score})");
                         }
                     }
                     Thread.Sleep(10);
@@ -530,6 +610,53 @@ namespace Gaten.Net.Windows.KakaoTalk.Chat
             {
                 quizzing = true;
                 KakaoTalkChatApi.SendChatMessage(Window, $"{ChosungQuiz.GetQuestion()}");
+            }
+        }
+
+        public static void PlayHol()
+        {
+            for (int i = pointerIndex; i < Messages.Count; i++, pointerIndex++)
+            {
+                if (i <= InitMessasgeCount)
+                {
+                    continue;
+                }
+                var message = Messages[i];
+                if (message.Type == MessageType.Talk)
+                {
+                    var seg = message.Content.Split(' ');
+                    if (seg.Length == 2)
+                    {
+                        if ((seg[0] == "홀" || seg[0] == "짝") && int.TryParse(seg[1], out var bet))
+                        {
+                            if (!HolAccounts.ContainsKey(message.UserName)) // 신입
+                            {
+                                HolAccounts.Add(message.UserName, 1000);
+                                KakaoTalkChatApi.SendChatMessage(Window, $"{message.UserName}님 등록 완료. 1,000원 지급.");
+                                continue;
+                            }
+
+                            if (HolAccounts[message.UserName] < bet)
+                            {
+                                KakaoTalkChatApi.SendChatMessage(Window, $"{message.UserName}님 남은 돈 {HolAccounts[message.UserName]:#,###}");
+                                continue;
+                            }
+
+                            var answer = r.Next(2) == 0 ? "홀" : "짝";
+                            if (seg[0].Equals(answer)) // 정답
+                            {
+                                HolAccounts[message.UserName] += bet;
+                                KakaoTalkChatApi.SendChatMessage(Window, $"{answer}!! {message.UserName}님 돈 {HolAccounts[message.UserName]:#,###}(+{bet:#,###})");
+                            }
+                            else // 오답
+                            {
+                                HolAccounts[message.UserName] -= bet;
+                                KakaoTalkChatApi.SendChatMessage(Window, $"{answer};; {message.UserName}님 돈 {HolAccounts[message.UserName]:#,###}(-{bet:#,###})");
+                            }
+                        }
+                    }
+                }
+                Thread.Sleep(10);
             }
         }
 

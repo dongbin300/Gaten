@@ -4,6 +4,7 @@
     {
         Empty,
         Object,
+        SByte,
         Byte,
         ByteArray,
         Int16,
@@ -30,6 +31,7 @@
 
             return input.GetType().Name switch
             {
+                "sbyte" or "SByte" => ExtensionTypeCode.SByte,
                 "byte" or "Byte" => ExtensionTypeCode.Byte,
                 "byte[]" or "Byte[]" => ExtensionTypeCode.ByteArray,
                 "short" or "Int16" => ExtensionTypeCode.Int16,
@@ -56,6 +58,7 @@
 
             return input.GetTypeCode() switch
             {
+                ExtensionTypeCode.SByte => 1,
                 ExtensionTypeCode.Byte => 1,
                 ExtensionTypeCode.ByteArray => ((byte[])input).Length,
                 ExtensionTypeCode.Int16 => 2,
@@ -77,6 +80,7 @@
 
             var result = input.GetTypeCode() switch
             {
+                ExtensionTypeCode.SByte => new byte[] { (byte)((sbyte)input & 0xFF) },
                 ExtensionTypeCode.Byte => new byte[] { (byte)input },
                 ExtensionTypeCode.ByteArray => (byte[])input,
                 ExtensionTypeCode.Int16 => BitConverter.GetBytes((short)input),

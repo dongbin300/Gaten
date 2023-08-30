@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Gaten.Net.Windows
@@ -97,7 +96,10 @@ namespace Gaten.Net.Windows
 
         // Keyboard & Mouse
         [DllImport("user32")]
-        public static extern bool GetCursorPos(ref Windows.Point lpPoint);
+        public static extern short GetAsyncKeyState(int vKey);
+
+        [DllImport("user32")]
+        public static extern bool GetCursorPos(ref Point lpPoint);
 
         [DllImport("user32")]
         public static extern bool SetCursorPos(int x, int y);

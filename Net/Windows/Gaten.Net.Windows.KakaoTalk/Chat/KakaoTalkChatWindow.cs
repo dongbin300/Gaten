@@ -24,6 +24,7 @@
         KoreanName,
         Test,
         Chosung,
-        StockGame
+        StockGame,
+        Hol
     }
 }

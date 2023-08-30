@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gaten.Windows.MintKakao"
         mc:Ignorable="d"
-        Title="민트 카카오 봇" Height="300" Width="600" Closing="Window_Closing">
+        Title="민트 카카오 봇" Height="340" Width="600" Closing="Window_Closing">
     <Window.Resources>
         <Style TargetType="GroupBox" BasedOn="{StaticResource MintGroupBox}"/>
     </Window.Resources>
@@ -42,9 +42,10 @@
                         <TextBlock Text="모니터링 주기(ms)"/>
                         <TextBox x:Name="MonitorIntervalTextBox" Text=""/>
                     </UniformGrid>
-                    <UniformGrid Grid.Row="1" Rows="1" Columns="2">
+                    <UniformGrid Grid.Row="1" Rows="2" Columns="2">
                         <Button x:Name="BotStartButton1" Tag="Chosung" Content="초성퀴즈" Click="BotStartButton_Click"/>
                         <Button x:Name="BotStartButton2" Tag="StockGame" Content="주식게임" Click="BotStartButton_Click"/>
+                        <Button x:Name="BotStartButton3" Tag="Hol" Content="홀짝게임" Click="BotStartButton_Click"/>
                     </UniformGrid>
                 </Grid>
             </GroupBox>

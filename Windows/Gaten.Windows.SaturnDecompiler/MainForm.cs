@@ -12,7 +12,7 @@ namespace Gaten.Windows.SaturnDecompiler
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            LoadDisassembly("test3.exe");
+            LoadDisassembly("test4.exe");
 
             TopMost = true;
 

@@ -25,7 +25,7 @@ namespace Gaten.Windows.MintPanda.Contents
         {
             InitializeComponent();
             Left = 1700;
-            Top = 900;
+            Top = 960;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -47,7 +47,7 @@ namespace Gaten.Windows.MintPanda.Contents
             {
                 MainGrid.Children.Clear();
             });
-            timer.Interval = 60000;
+            timer.Interval = 10000;
             for (int i = 0; i < stocks.Count; i++)
             {
                 WebCrawler.Open($"https://finance.naver.com/item/main.naver?code={stocks[i]}");
@@ -59,7 +59,7 @@ namespace Gaten.Windows.MintPanda.Contents
                 {
                     TextBlock textBlock1 = new TextBlock
                     {
-                        FontSize = 11,
+                        FontSize = 14,
                         FontFamily = new FontFamily("Verdana"),
                         HorizontalAlignment = HorizontalAlignment.Left,
                         FontWeight = FontWeights.Bold,
@@ -68,7 +68,7 @@ namespace Gaten.Windows.MintPanda.Contents
 
                     TextBlock textBlock2 = new TextBlock
                     {
-                        FontSize = 11,
+                        FontSize = 14,
                         FontFamily = new FontFamily("Verdana"),
                         HorizontalAlignment = HorizontalAlignment.Center,
                         Text = segments[0],
@@ -87,7 +87,7 @@ namespace Gaten.Windows.MintPanda.Contents
                     {
                         TextBlock textBlock3 = new TextBlock
                         {
-                            FontSize = 11,
+                            FontSize = 14,
                             FontFamily = new FontFamily("Verdana"),
                             HorizontalAlignment = HorizontalAlignment.Right,
                             Text = segments[7] + segments[8] + segments[10],

@@ -5,7 +5,12 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bithumb.Net" Version="1.0.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Net\Gaten.Net.Wpf\Gaten.Net.Wpf.csproj" />

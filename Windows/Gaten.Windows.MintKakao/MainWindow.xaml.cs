@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
+
 using static Gaten.Net.Windows.WinApi;
 
 namespace Gaten.Windows.MintKakao
@@ -133,6 +135,7 @@ namespace Gaten.Windows.MintKakao
                         "Encrypt" => "랜덤",
                         "KoreanName" => "이름",
                         "Test" => "테스트",
+                        "Hol" => "홀짝게임",
                         _ => "에러"
                     };
                     MainBorder.BorderBrush = new SolidColorBrush(Colors.White);
@@ -158,7 +161,21 @@ namespace Gaten.Windows.MintKakao
                         AdminTextBox5.Text
                     };
                     window.BotMode = (BotMode)Enum.Parse(typeof(BotMode), tag);
-                    KakaoTalkChatBot.Init(window);
+                    switch (window.BotMode)
+                    {
+                        case BotMode.Hol:
+                            KakaoTalkChatBot.InitHol(window);
+                            break;
+                        case BotMode.Chosung:
+                            KakaoTalkChatBot.InitChosung(window);
+                            break;
+                        case BotMode.StockGame:
+                            KakaoTalkChatBot.InitStock(window);
+                            break;
+                        default:
+                            KakaoTalkChatBot.Init(window);
+                            break;
+                    }
                     KakaoTalkChatBot.Start();
                     button.Content = "중지";
                     MainBorder.BorderBrush = new SolidColorBrush(Colors.Red);

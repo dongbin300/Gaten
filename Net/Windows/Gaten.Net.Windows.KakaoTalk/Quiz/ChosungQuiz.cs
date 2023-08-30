@@ -1,6 +1,8 @@
 ﻿using Gaten.Net.IO;
 using Gaten.Net.Math;
 
+using System.Text;
+
 namespace Gaten.Net.Windows.KakaoTalk.Quiz
 {
     public class ChosungTitle
@@ -20,6 +22,13 @@ namespace Gaten.Net.Windows.KakaoTalk.Quiz
             "Nearby" => "주변사물",
             "Plant" => "식물",
             "Ramen" => "라면이름",
+            "Brand" => "브랜드",
+            "Fruit" => "과일",
+            "Job" => "직업",
+            "Snack" => "과자",
+            "Icecream" => "아이스크림",
+            "Color" => "색",
+            "Gemstone" => "보석",
             _ => "기타"
         };
 
@@ -38,11 +47,28 @@ namespace Gaten.Net.Windows.KakaoTalk.Quiz
         }
     }
 
+    public class PassUser
+    {
+        public string Nickname { get; set; }
+        public int Penalty { get; set; }
+        public DateTime Time { get; set; }
+
+        public PassUser(string nickname, int penalty, DateTime time)
+        {
+            Nickname = nickname;
+            Penalty = penalty;
+            Time = time;
+        }
+    }
+
     public class ChosungQuiz
     {
         private static SmartRandom r = new();
         public static List<ChosungTitle> ChosungTitles = new();
         public static Quiz CurrentQuiz = new("", "");
+        public static string ScorePath = GPath.Desktop.Down("quiz", "score.txt");
+        public static bool IsRandomTitle = false;
+        public static List<PassUser> PassUsers = new();
 
         public static void Init()
         {
@@ -70,7 +96,16 @@ namespace Gaten.Net.Windows.KakaoTalk.Quiz
             var quiz = r.Next(chosungTitle.Quizzes);
             CurrentQuiz = quiz;
 
-            return $"[{chosungTitle.Description}] {quiz.Question}";
+            if (r.Next(5) == 3)
+            {
+                IsRandomTitle = true;
+                return $"[???] {quiz.Question}";
+            }
+            else
+            {
+                IsRandomTitle = false;
+                return $"[{chosungTitle.Description}] {quiz.Question}";
+            }
         }
 
         public static (bool, string) TryAnswer(string data)
@@ -85,6 +120,71 @@ namespace Gaten.Net.Windows.KakaoTalk.Quiz
             {
                 return (false, "");
             }
+        }
+
+        public static string GetScoreInfo()
+        {
+            var userScores = GetUserScores();
+            var topScores = userScores.OrderByDescending(x => x.Value).Take(20);
+            var builder = new StringBuilder();
+            int i = 1;
+            foreach(var item in topScores)
+            {
+                builder.AppendLine($"[{i,-2}] {item.Key,-12} {item.Value,-12}");
+                i++;
+            }
+            return builder.ToString();
+        }
+
+        public static Dictionary<string, int> GetUserScores()
+        {
+            var result = new Dictionary<string, int>();
+            var data = File.ReadAllLines(ScorePath);
+            foreach(var d in data)
+            {
+                var e = d.Split(',');
+                result.Add(e[0], int.Parse(e[1]));
+            }
+            return result;
+        }
+
+        public static void SetUserScores(Dictionary<string, int> scores)
+        {
+            var scoreData = new List<string>();
+            foreach(var score in scores)
+            {
+                scoreData.Add($"{score.Key},{score.Value}");
+            }
+            File.WriteAllLines(ScorePath, scoreData);
+        }
+
+        public static int GetUserScore(string userName)
+        {
+            var userScores = GetUserScores();
+            if (userScores.ContainsKey(userName))
+            {
+                return userScores[userName];
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public static int UpdateScore(string userName, int score)
+        {
+            var userScores = GetUserScores();
+            if(userScores.ContainsKey(userName))
+            {
+                userScores[userName] += score;
+            }
+            else
+            {
+                userScores.Add(userName, score);
+            }
+            SetUserScores(userScores);
+
+            return userScores[userName];
         }
     }
 }
